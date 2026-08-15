@@ -91,7 +91,12 @@
             this.labelControl12 = new DevExpress.XtraEditors.LabelControl();
             this.pictureBox8 = new System.Windows.Forms.PictureBox();
             this.tabNavigationPage1 = new DevExpress.XtraBars.Navigation.TabNavigationPage();
+            this.groupControl9 = new DevExpress.XtraEditors.GroupControl();
+            this.toggleSwitch20 = new DevExpress.XtraEditors.ToggleSwitch();
+            this.labelControl26 = new DevExpress.XtraEditors.LabelControl();
             this.groupControl5 = new DevExpress.XtraEditors.GroupControl();
+            this.simpleButton12 = new DevExpress.XtraEditors.SimpleButton();
+            this.labelControl29 = new DevExpress.XtraEditors.LabelControl();
             this.toggleSwitch18 = new DevExpress.XtraEditors.ToggleSwitch();
             this.labelControl25 = new DevExpress.XtraEditors.LabelControl();
             this.toggleSwitch17 = new DevExpress.XtraEditors.ToggleSwitch();
@@ -106,6 +111,8 @@
             this.comboBoxEdit1 = new DevExpress.XtraEditors.ImageComboBoxEdit();
             this.comboBoxEdit2 = new DevExpress.XtraEditors.ImageComboBoxEdit();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
+            this.labelControl27 = new DevExpress.XtraEditors.LabelControl();
+            this.toggleSwitch21 = new DevExpress.XtraEditors.ToggleSwitch();
             this.simpleButton7 = new DevExpress.XtraEditors.SimpleButton();
             this.checkEdit6 = new DevExpress.XtraEditors.CheckEdit();
             this.checkEdit5 = new DevExpress.XtraEditors.CheckEdit();
@@ -126,6 +133,11 @@
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.toggleSwitch1 = new DevExpress.XtraEditors.ToggleSwitch();
             this.tabNavigationPage2 = new DevExpress.XtraBars.Navigation.TabNavigationPage();
+            this.simpleButton11 = new DevExpress.XtraEditors.SimpleButton();
+            this.groupControl10 = new DevExpress.XtraEditors.GroupControl();
+            this.simpleButton10 = new DevExpress.XtraEditors.SimpleButton();
+            this.groupControl8 = new DevExpress.XtraEditors.GroupControl();
+            this.simpleButton9 = new DevExpress.XtraEditors.SimpleButton();
             this.groupControl7 = new DevExpress.XtraEditors.GroupControl();
             this.simpleButton8 = new DevExpress.XtraEditors.SimpleButton();
             this.groupControl6 = new DevExpress.XtraEditors.GroupControl();
@@ -133,12 +145,14 @@
             this.tabNavigationPage4 = new DevExpress.XtraBars.Navigation.TabNavigationPage();
             this.tabPane2 = new DevExpress.XtraBars.Navigation.TabPane();
             this.tabNavigationPage5 = new DevExpress.XtraBars.Navigation.TabNavigationPage();
+            this.labelControl28 = new DevExpress.XtraEditors.LabelControl();
             this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
             this.labelControl17 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl18 = new DevExpress.XtraEditors.LabelControl();
             this.uiAvatar1 = new Sunny.UI.UIAvatar();
             this.tabNavigationPage6 = new DevExpress.XtraBars.Navigation.TabNavigationPage();
+            this.webView23 = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.memoEdit1 = new DevExpress.XtraEditors.MemoEdit();
             this.badge1 = new ReaLTaiizor.Controls.Badge();
             this.uiBattery1 = new Sunny.UI.UIBattery();
@@ -156,12 +170,15 @@
             this.webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
             this.tabNavigationPage7 = new DevExpress.XtraBars.Navigation.TabNavigationPage();
+            this.webView22 = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
             this.simpleButton4 = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
-            this.groupControl8 = new DevExpress.XtraEditors.GroupControl();
-            this.simpleButton9 = new DevExpress.XtraEditors.SimpleButton();
             this.stepProgress1 = new HorizonUI.StepProgress();
+            this.simpleButton13 = new DevExpress.XtraEditors.SimpleButton();
+            this.simpleButton14 = new DevExpress.XtraEditors.SimpleButton();
+            this.simpleButton15 = new DevExpress.XtraEditors.SimpleButton();
+            this.simpleButton16 = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.tabPane1)).BeginInit();
             this.tabPane1.SuspendLayout();
             this.tabNavigationPage3.SuspendLayout();
@@ -214,6 +231,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch11.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
             this.tabNavigationPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl9)).BeginInit();
+            this.groupControl9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch20.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl5)).BeginInit();
             this.groupControl5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch18.Properties)).BeginInit();
@@ -226,6 +246,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxEdit2.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch21.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.checkEdit6.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.checkEdit5.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.checkEdit4.Properties)).BeginInit();
@@ -239,6 +260,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch2.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch1.Properties)).BeginInit();
             this.tabNavigationPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl10)).BeginInit();
+            this.groupControl10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl8)).BeginInit();
+            this.groupControl8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl7)).BeginInit();
             this.groupControl7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl6)).BeginInit();
@@ -248,13 +273,14 @@
             this.tabPane2.SuspendLayout();
             this.tabNavigationPage5.SuspendLayout();
             this.tabNavigationPage6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.webView23)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.memoEdit1.Properties)).BeginInit();
             this.checkBoxList1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webView21)).BeginInit();
+            this.tabNavigationPage7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.webView22)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.groupControl8)).BeginInit();
-            this.groupControl8.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabPane1
@@ -271,9 +297,9 @@
             this.tabNavigationPage2,
             this.tabNavigationPage3,
             this.tabNavigationPage4});
-            this.tabPane1.RegularSize = new System.Drawing.Size(719, 645);
+            this.tabPane1.RegularSize = new System.Drawing.Size(858, 690);
             this.tabPane1.SelectedPage = this.tabNavigationPage1;
-            this.tabPane1.Size = new System.Drawing.Size(719, 645);
+            this.tabPane1.Size = new System.Drawing.Size(858, 690);
             this.tabPane1.TabIndex = 0;
             this.tabPane1.Text = "tabPane1";
             // 
@@ -284,7 +310,7 @@
             this.tabNavigationPage3.Controls.Add(this.groupControl4);
             this.tabNavigationPage3.Controls.Add(this.groupControl3);
             this.tabNavigationPage3.Name = "tabNavigationPage3";
-            this.tabNavigationPage3.Size = new System.Drawing.Size(719, 618);
+            this.tabNavigationPage3.Size = new System.Drawing.Size(858, 663);
             // 
             // groupControl4
             // 
@@ -595,7 +621,7 @@
             this.groupControl3.Controls.Add(this.panelControl3);
             this.groupControl3.Controls.Add(this.panelControl4);
             this.groupControl3.Controls.Add(this.panelControl6);
-            this.groupControl3.Location = new System.Drawing.Point(12, 12);
+            this.groupControl3.Location = new System.Drawing.Point(88, 12);
             this.groupControl3.Name = "groupControl3";
             this.groupControl3.Size = new System.Drawing.Size(683, 566);
             this.groupControl3.TabIndex = 7;
@@ -951,15 +977,49 @@
             // 
             this.tabNavigationPage1.AutoScroll = true;
             this.tabNavigationPage1.Caption = "General Settings";
+            this.tabNavigationPage1.Controls.Add(this.groupControl9);
             this.tabNavigationPage1.Controls.Add(this.groupControl5);
             this.tabNavigationPage1.Controls.Add(this.groupControl2);
             this.tabNavigationPage1.Controls.Add(this.groupControl1);
             this.tabNavigationPage1.Name = "tabNavigationPage1";
-            this.tabNavigationPage1.Size = new System.Drawing.Size(719, 618);
+            this.tabNavigationPage1.Size = new System.Drawing.Size(858, 663);
             this.tabNavigationPage1.Paint += new System.Windows.Forms.PaintEventHandler(this.tabNavigationPage1_Paint);
+            // 
+            // groupControl9
+            // 
+            this.groupControl9.Controls.Add(this.toggleSwitch20);
+            this.groupControl9.Controls.Add(this.labelControl26);
+            this.groupControl9.Location = new System.Drawing.Point(467, 176);
+            this.groupControl9.Name = "groupControl9";
+            this.groupControl9.Size = new System.Drawing.Size(310, 402);
+            this.groupControl9.TabIndex = 3;
+            this.groupControl9.Text = "Library Settings";
+            // 
+            // toggleSwitch20
+            // 
+            this.toggleSwitch20.Location = new System.Drawing.Point(178, 38);
+            this.toggleSwitch20.Name = "toggleSwitch20";
+            this.toggleSwitch20.Properties.AllowFocused = false;
+            this.toggleSwitch20.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
+            this.toggleSwitch20.Properties.OffText = "Disabled";
+            this.toggleSwitch20.Properties.OnText = "Enabled";
+            this.toggleSwitch20.Size = new System.Drawing.Size(109, 19);
+            this.toggleSwitch20.TabIndex = 11;
+            this.toggleSwitch20.Toggled += new System.EventHandler(this.toggleSwitch20_Toggled);
+            // 
+            // labelControl26
+            // 
+            this.labelControl26.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.labelControl26.Location = new System.Drawing.Point(23, 40);
+            this.labelControl26.Name = "labelControl26";
+            this.labelControl26.Size = new System.Drawing.Size(86, 13);
+            this.labelControl26.TabIndex = 10;
+            this.labelControl26.Text = "Enable Full Library";
             // 
             // groupControl5
             // 
+            this.groupControl5.Controls.Add(this.simpleButton12);
+            this.groupControl5.Controls.Add(this.labelControl29);
             this.groupControl5.Controls.Add(this.toggleSwitch18);
             this.groupControl5.Controls.Add(this.labelControl25);
             this.groupControl5.Controls.Add(this.toggleSwitch17);
@@ -968,16 +1028,36 @@
             this.groupControl5.Controls.Add(this.labelControl21);
             this.groupControl5.Controls.Add(this.comboBoxEdit3);
             this.groupControl5.Controls.Add(this.labelControl16);
-            this.groupControl5.Location = new System.Drawing.Point(12, 404);
+            this.groupControl5.Location = new System.Drawing.Point(82, 404);
             this.groupControl5.Name = "groupControl5";
             this.groupControl5.Size = new System.Drawing.Size(379, 174);
             this.groupControl5.TabIndex = 2;
             this.groupControl5.Text = "UI Settings";
             // 
+            // simpleButton12
+            // 
+            this.simpleButton12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.simpleButton12.Location = new System.Drawing.Point(202, 62);
+            this.simpleButton12.Name = "simpleButton12";
+            this.simpleButton12.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
+            this.simpleButton12.Size = new System.Drawing.Size(97, 23);
+            this.simpleButton12.TabIndex = 4;
+            this.simpleButton12.Text = "Pick Font";
+            this.simpleButton12.Click += new System.EventHandler(this.simpleButton12_Click);
+            // 
+            // labelControl29
+            // 
+            this.labelControl29.Location = new System.Drawing.Point(33, 67);
+            this.labelControl29.Name = "labelControl29";
+            this.labelControl29.Size = new System.Drawing.Size(39, 13);
+            this.labelControl29.TabIndex = 10;
+            this.labelControl29.Text = "Ui Fonts";
+            // 
             // toggleSwitch18
             // 
             this.toggleSwitch18.EditValue = true;
-            this.toggleSwitch18.Location = new System.Drawing.Point(218, 132);
+            this.toggleSwitch18.Location = new System.Drawing.Point(202, 143);
             this.toggleSwitch18.Name = "toggleSwitch18";
             this.toggleSwitch18.Properties.AllowFocused = false;
             this.toggleSwitch18.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
@@ -990,7 +1070,7 @@
             // labelControl25
             // 
             this.labelControl25.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            this.labelControl25.Location = new System.Drawing.Point(15, 135);
+            this.labelControl25.Location = new System.Drawing.Point(33, 146);
             this.labelControl25.Name = "labelControl25";
             this.labelControl25.Size = new System.Drawing.Size(90, 13);
             this.labelControl25.TabIndex = 8;
@@ -999,7 +1079,7 @@
             // toggleSwitch17
             // 
             this.toggleSwitch17.EditValue = true;
-            this.toggleSwitch17.Location = new System.Drawing.Point(218, 107);
+            this.toggleSwitch17.Location = new System.Drawing.Point(202, 118);
             this.toggleSwitch17.Name = "toggleSwitch17";
             this.toggleSwitch17.Properties.AllowFocused = false;
             this.toggleSwitch17.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
@@ -1012,7 +1092,7 @@
             // labelControl24
             // 
             this.labelControl24.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            this.labelControl24.Location = new System.Drawing.Point(15, 110);
+            this.labelControl24.Location = new System.Drawing.Point(33, 121);
             this.labelControl24.Name = "labelControl24";
             this.labelControl24.Size = new System.Drawing.Size(84, 13);
             this.labelControl24.TabIndex = 6;
@@ -1020,7 +1100,7 @@
             // 
             // toggleSwitch15
             // 
-            this.toggleSwitch15.Location = new System.Drawing.Point(218, 82);
+            this.toggleSwitch15.Location = new System.Drawing.Point(202, 93);
             this.toggleSwitch15.Name = "toggleSwitch15";
             this.toggleSwitch15.Properties.AllowFocused = false;
             this.toggleSwitch15.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
@@ -1033,7 +1113,7 @@
             // labelControl21
             // 
             this.labelControl21.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            this.labelControl21.Location = new System.Drawing.Point(15, 85);
+            this.labelControl21.Location = new System.Drawing.Point(33, 96);
             this.labelControl21.Name = "labelControl21";
             this.labelControl21.Size = new System.Drawing.Size(141, 13);
             this.labelControl21.TabIndex = 2;
@@ -1043,7 +1123,7 @@
             // 
             this.comboBoxEdit3.EditValue = "1600 x 900";
             this.comboBoxEdit3.Enabled = false;
-            this.comboBoxEdit3.Location = new System.Drawing.Point(218, 48);
+            this.comboBoxEdit3.Location = new System.Drawing.Point(202, 36);
             this.comboBoxEdit3.Name = "comboBoxEdit3";
             this.comboBoxEdit3.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -1054,7 +1134,7 @@
             // 
             // labelControl16
             // 
-            this.labelControl16.Location = new System.Drawing.Point(15, 51);
+            this.labelControl16.Location = new System.Drawing.Point(33, 39);
             this.labelControl16.Name = "labelControl16";
             this.labelControl16.Size = new System.Drawing.Size(82, 13);
             this.labelControl16.TabIndex = 0;
@@ -1066,7 +1146,7 @@
             this.groupControl2.Controls.Add(this.labelControl19);
             this.groupControl2.Controls.Add(this.comboBoxEdit1);
             this.groupControl2.Controls.Add(this.comboBoxEdit2);
-            this.groupControl2.Location = new System.Drawing.Point(397, 13);
+            this.groupControl2.Location = new System.Drawing.Point(467, 13);
             this.groupControl2.Name = "groupControl2";
             this.groupControl2.Size = new System.Drawing.Size(310, 157);
             this.groupControl2.TabIndex = 1;
@@ -1074,7 +1154,7 @@
             // 
             // labelControl20
             // 
-            this.labelControl20.Location = new System.Drawing.Point(14, 103);
+            this.labelControl20.Location = new System.Drawing.Point(23, 103);
             this.labelControl20.Name = "labelControl20";
             this.labelControl20.Size = new System.Drawing.Size(32, 13);
             this.labelControl20.TabIndex = 5;
@@ -1082,7 +1162,7 @@
             // 
             // labelControl19
             // 
-            this.labelControl19.Location = new System.Drawing.Point(14, 41);
+            this.labelControl19.Location = new System.Drawing.Point(23, 41);
             this.labelControl19.Name = "labelControl19";
             this.labelControl19.Size = new System.Drawing.Size(33, 13);
             this.labelControl19.TabIndex = 4;
@@ -1090,7 +1170,7 @@
             // 
             // comboBoxEdit1
             // 
-            this.comboBoxEdit1.Location = new System.Drawing.Point(14, 60);
+            this.comboBoxEdit1.Location = new System.Drawing.Point(23, 60);
             this.comboBoxEdit1.Name = "comboBoxEdit1";
             this.comboBoxEdit1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -1100,7 +1180,7 @@
             // 
             // comboBoxEdit2
             // 
-            this.comboBoxEdit2.Location = new System.Drawing.Point(14, 122);
+            this.comboBoxEdit2.Location = new System.Drawing.Point(23, 122);
             this.comboBoxEdit2.Name = "comboBoxEdit2";
             this.comboBoxEdit2.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -1110,6 +1190,8 @@
             // 
             // groupControl1
             // 
+            this.groupControl1.Controls.Add(this.labelControl27);
+            this.groupControl1.Controls.Add(this.toggleSwitch21);
             this.groupControl1.Controls.Add(this.simpleButton7);
             this.groupControl1.Controls.Add(this.checkEdit6);
             this.groupControl1.Controls.Add(this.checkEdit5);
@@ -1129,28 +1211,50 @@
             this.groupControl1.Controls.Add(this.toggleSwitch2);
             this.groupControl1.Controls.Add(this.labelControl1);
             this.groupControl1.Controls.Add(this.toggleSwitch1);
-            this.groupControl1.Location = new System.Drawing.Point(12, 13);
+            this.groupControl1.Location = new System.Drawing.Point(82, 13);
             this.groupControl1.Name = "groupControl1";
             this.groupControl1.Size = new System.Drawing.Size(379, 385);
             this.groupControl1.TabIndex = 0;
             this.groupControl1.Text = "Startup && Shutdown";
             // 
+            // labelControl27
+            // 
+            this.labelControl27.Location = new System.Drawing.Point(26, 91);
+            this.labelControl27.Name = "labelControl27";
+            this.labelControl27.Size = new System.Drawing.Size(106, 13);
+            this.labelControl27.TabIndex = 20;
+            this.labelControl27.Text = "Start Nexus maximized";
+            // 
+            // toggleSwitch21
+            // 
+            this.toggleSwitch21.Location = new System.Drawing.Point(266, 88);
+            this.toggleSwitch21.Name = "toggleSwitch21";
+            this.toggleSwitch21.Properties.AllowFocused = false;
+            this.toggleSwitch21.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
+            this.toggleSwitch21.Properties.OffText = "Off";
+            this.toggleSwitch21.Properties.OnText = "On";
+            this.toggleSwitch21.Size = new System.Drawing.Size(87, 19);
+            this.toggleSwitch21.TabIndex = 19;
+            this.toggleSwitch21.Toggled += new System.EventHandler(this.toggleSwitch21_Toggled);
+            // 
             // simpleButton7
             // 
             this.simpleButton7.AllowFocus = false;
+            this.simpleButton7.Cursor = System.Windows.Forms.Cursors.Hand;
             this.simpleButton7.ImageOptions.Image = global::Nexus_Launcher.Properties.Resources.icons8_info_94;
-            this.simpleButton7.Location = new System.Drawing.Point(326, 197);
+            this.simpleButton7.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            this.simpleButton7.Location = new System.Drawing.Point(241, 200);
             this.simpleButton7.Name = "simpleButton7";
             this.simpleButton7.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.simpleButton7.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            this.simpleButton7.Size = new System.Drawing.Size(25, 25);
+            this.simpleButton7.Size = new System.Drawing.Size(20, 20);
             this.simpleButton7.TabIndex = 18;
             this.simpleButton7.Click += new System.EventHandler(this.simpleButton7_Click);
             // 
             // checkEdit6
             // 
             this.checkEdit6.Enabled = false;
-            this.checkEdit6.Location = new System.Drawing.Point(46, 352);
+            this.checkEdit6.Location = new System.Drawing.Point(57, 352);
             this.checkEdit6.Name = "checkEdit6";
             this.checkEdit6.Properties.AllowFocused = false;
             this.checkEdit6.Properties.Caption = "Start Steam on Nexus startup";
@@ -1161,7 +1265,7 @@
             // checkEdit5
             // 
             this.checkEdit5.Enabled = false;
-            this.checkEdit5.Location = new System.Drawing.Point(46, 326);
+            this.checkEdit5.Location = new System.Drawing.Point(57, 326);
             this.checkEdit5.Name = "checkEdit5";
             this.checkEdit5.Properties.AllowFocused = false;
             this.checkEdit5.Properties.Caption = "Start Ubisoft Connect on Nexus startup";
@@ -1172,7 +1276,7 @@
             // checkEdit4
             // 
             this.checkEdit4.Enabled = false;
-            this.checkEdit4.Location = new System.Drawing.Point(46, 300);
+            this.checkEdit4.Location = new System.Drawing.Point(57, 300);
             this.checkEdit4.Name = "checkEdit4";
             this.checkEdit4.Properties.AllowFocused = false;
             this.checkEdit4.Properties.Caption = "Start GOG Galaxy on Nexus startup";
@@ -1183,7 +1287,7 @@
             // checkEdit3
             // 
             this.checkEdit3.Enabled = false;
-            this.checkEdit3.Location = new System.Drawing.Point(46, 274);
+            this.checkEdit3.Location = new System.Drawing.Point(57, 274);
             this.checkEdit3.Name = "checkEdit3";
             this.checkEdit3.Properties.AllowFocused = false;
             this.checkEdit3.Properties.Caption = "Start Epic Games on Nexus Startup";
@@ -1194,7 +1298,7 @@
             // checkEdit2
             // 
             this.checkEdit2.Enabled = false;
-            this.checkEdit2.Location = new System.Drawing.Point(46, 248);
+            this.checkEdit2.Location = new System.Drawing.Point(57, 248);
             this.checkEdit2.Name = "checkEdit2";
             this.checkEdit2.Properties.AllowFocused = false;
             this.checkEdit2.Properties.Caption = "Start EA App on Nexus startup";
@@ -1205,7 +1309,7 @@
             // checkEdit1
             // 
             this.checkEdit1.Enabled = false;
-            this.checkEdit1.Location = new System.Drawing.Point(46, 222);
+            this.checkEdit1.Location = new System.Drawing.Point(57, 222);
             this.checkEdit1.Name = "checkEdit1";
             this.checkEdit1.Properties.AllowFocused = false;
             this.checkEdit1.Properties.Caption = "Start BattleNet on Nexus startup";
@@ -1215,19 +1319,19 @@
             // 
             // toggleSwitch19
             // 
-            this.toggleSwitch19.Location = new System.Drawing.Point(229, 200);
+            this.toggleSwitch19.Location = new System.Drawing.Point(266, 200);
             this.toggleSwitch19.Name = "toggleSwitch19";
             this.toggleSwitch19.Properties.AllowFocused = false;
             this.toggleSwitch19.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             this.toggleSwitch19.Properties.OffText = "Off";
             this.toggleSwitch19.Properties.OnText = "On";
-            this.toggleSwitch19.Size = new System.Drawing.Size(98, 19);
+            this.toggleSwitch19.Size = new System.Drawing.Size(87, 19);
             this.toggleSwitch19.TabIndex = 11;
             this.toggleSwitch19.Toggled += new System.EventHandler(this.toggleSwitch19_Toggled);
             // 
             // labelControl4
             // 
-            this.labelControl4.Location = new System.Drawing.Point(14, 203);
+            this.labelControl4.Location = new System.Drawing.Point(26, 203);
             this.labelControl4.Name = "labelControl4";
             this.labelControl4.Size = new System.Drawing.Size(209, 13);
             this.labelControl4.TabIndex = 10;
@@ -1235,7 +1339,7 @@
             // 
             // labelControl23
             // 
-            this.labelControl23.Location = new System.Drawing.Point(14, 150);
+            this.labelControl23.Location = new System.Drawing.Point(26, 166);
             this.labelControl23.Name = "labelControl23";
             this.labelControl23.Size = new System.Drawing.Size(107, 13);
             this.labelControl23.TabIndex = 9;
@@ -1243,7 +1347,7 @@
             // 
             // comboBoxEdit4
             // 
-            this.comboBoxEdit4.Location = new System.Drawing.Point(185, 147);
+            this.comboBoxEdit4.Location = new System.Drawing.Point(196, 163);
             this.comboBoxEdit4.Name = "comboBoxEdit4";
             this.comboBoxEdit4.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -1262,7 +1366,9 @@
             // 
             // labelControl22
             // 
-            this.labelControl22.Location = new System.Drawing.Point(14, 116);
+            this.labelControl22.Appearance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.labelControl22.Appearance.Options.UseForeColor = true;
+            this.labelControl22.Location = new System.Drawing.Point(26, 141);
             this.labelControl22.Name = "labelControl22";
             this.labelControl22.Size = new System.Drawing.Size(138, 13);
             this.labelControl22.TabIndex = 7;
@@ -1270,19 +1376,19 @@
             // 
             // toggleSwitch16
             // 
-            this.toggleSwitch16.Location = new System.Drawing.Point(229, 113);
+            this.toggleSwitch16.Location = new System.Drawing.Point(266, 138);
             this.toggleSwitch16.Name = "toggleSwitch16";
             this.toggleSwitch16.Properties.AllowFocused = false;
             this.toggleSwitch16.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             this.toggleSwitch16.Properties.OffText = "Off";
             this.toggleSwitch16.Properties.OnText = "On";
-            this.toggleSwitch16.Size = new System.Drawing.Size(98, 19);
+            this.toggleSwitch16.Size = new System.Drawing.Size(87, 19);
             this.toggleSwitch16.TabIndex = 6;
             this.toggleSwitch16.Toggled += new System.EventHandler(this.toggleSwitch16_Toggled);
             // 
             // labelControl3
             // 
-            this.labelControl3.Location = new System.Drawing.Point(15, 91);
+            this.labelControl3.Location = new System.Drawing.Point(26, 116);
             this.labelControl3.Name = "labelControl3";
             this.labelControl3.Size = new System.Drawing.Size(192, 13);
             this.labelControl3.TabIndex = 5;
@@ -1290,19 +1396,19 @@
             // 
             // toggleSwitch3
             // 
-            this.toggleSwitch3.Location = new System.Drawing.Point(229, 88);
+            this.toggleSwitch3.Location = new System.Drawing.Point(266, 113);
             this.toggleSwitch3.Name = "toggleSwitch3";
             this.toggleSwitch3.Properties.AllowFocused = false;
             this.toggleSwitch3.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             this.toggleSwitch3.Properties.OffText = "Off";
             this.toggleSwitch3.Properties.OnText = "On";
-            this.toggleSwitch3.Size = new System.Drawing.Size(98, 19);
+            this.toggleSwitch3.Size = new System.Drawing.Size(87, 19);
             this.toggleSwitch3.TabIndex = 4;
             this.toggleSwitch3.Toggled += new System.EventHandler(this.toggleSwitch3_Toggled);
             // 
             // labelControl2
             // 
-            this.labelControl2.Location = new System.Drawing.Point(15, 66);
+            this.labelControl2.Location = new System.Drawing.Point(26, 66);
             this.labelControl2.Name = "labelControl2";
             this.labelControl2.Size = new System.Drawing.Size(103, 13);
             this.labelControl2.TabIndex = 3;
@@ -1310,19 +1416,19 @@
             // 
             // toggleSwitch2
             // 
-            this.toggleSwitch2.Location = new System.Drawing.Point(229, 63);
+            this.toggleSwitch2.Location = new System.Drawing.Point(266, 63);
             this.toggleSwitch2.Name = "toggleSwitch2";
             this.toggleSwitch2.Properties.AllowFocused = false;
             this.toggleSwitch2.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             this.toggleSwitch2.Properties.OffText = "Off";
             this.toggleSwitch2.Properties.OnText = "On";
-            this.toggleSwitch2.Size = new System.Drawing.Size(98, 19);
+            this.toggleSwitch2.Size = new System.Drawing.Size(87, 19);
             this.toggleSwitch2.TabIndex = 2;
             this.toggleSwitch2.Toggled += new System.EventHandler(this.toggleSwitch2_Toggled);
             // 
             // labelControl1
             // 
-            this.labelControl1.Location = new System.Drawing.Point(15, 41);
+            this.labelControl1.Location = new System.Drawing.Point(26, 41);
             this.labelControl1.Name = "labelControl1";
             this.labelControl1.Size = new System.Drawing.Size(173, 13);
             this.labelControl1.TabIndex = 1;
@@ -1330,29 +1436,79 @@
             // 
             // toggleSwitch1
             // 
-            this.toggleSwitch1.Location = new System.Drawing.Point(229, 38);
+            this.toggleSwitch1.Location = new System.Drawing.Point(266, 38);
             this.toggleSwitch1.Name = "toggleSwitch1";
             this.toggleSwitch1.Properties.AllowFocused = false;
             this.toggleSwitch1.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             this.toggleSwitch1.Properties.OffText = "Off";
             this.toggleSwitch1.Properties.OnText = "On";
-            this.toggleSwitch1.Size = new System.Drawing.Size(98, 19);
+            this.toggleSwitch1.Size = new System.Drawing.Size(87, 19);
             this.toggleSwitch1.TabIndex = 0;
             this.toggleSwitch1.Toggled += new System.EventHandler(this.toggleSwitch1_Toggled);
             // 
             // tabNavigationPage2
             // 
             this.tabNavigationPage2.Caption = "Advanced Settings";
+            this.tabNavigationPage2.Controls.Add(this.simpleButton11);
+            this.tabNavigationPage2.Controls.Add(this.groupControl10);
             this.tabNavigationPage2.Controls.Add(this.groupControl8);
             this.tabNavigationPage2.Controls.Add(this.groupControl7);
             this.tabNavigationPage2.Controls.Add(this.groupControl6);
             this.tabNavigationPage2.Name = "tabNavigationPage2";
-            this.tabNavigationPage2.Size = new System.Drawing.Size(719, 618);
+            this.tabNavigationPage2.Size = new System.Drawing.Size(858, 663);
+            // 
+            // simpleButton11
+            // 
+            this.simpleButton11.Location = new System.Drawing.Point(576, 588);
+            this.simpleButton11.Name = "simpleButton11";
+            this.simpleButton11.Size = new System.Drawing.Size(270, 23);
+            this.simpleButton11.TabIndex = 1;
+            this.simpleButton11.Text = "Open Nexus Launcher config folder";
+            this.simpleButton11.Click += new System.EventHandler(this.simpleButton11_Click);
+            // 
+            // groupControl10
+            // 
+            this.groupControl10.Controls.Add(this.simpleButton14);
+            this.groupControl10.Controls.Add(this.simpleButton10);
+            this.groupControl10.Location = new System.Drawing.Point(123, 124);
+            this.groupControl10.Name = "groupControl10";
+            this.groupControl10.Size = new System.Drawing.Size(200, 100);
+            this.groupControl10.TabIndex = 2;
+            this.groupControl10.Text = "Open Nexus Launcher Log";
+            // 
+            // simpleButton10
+            // 
+            this.simpleButton10.Location = new System.Drawing.Point(19, 72);
+            this.simpleButton10.Name = "simpleButton10";
+            this.simpleButton10.Size = new System.Drawing.Size(137, 23);
+            this.simpleButton10.TabIndex = 0;
+            this.simpleButton10.Text = "Open Log";
+            this.simpleButton10.Click += new System.EventHandler(this.simpleButton10_Click);
+            // 
+            // groupControl8
+            // 
+            this.groupControl8.Controls.Add(this.simpleButton16);
+            this.groupControl8.Controls.Add(this.simpleButton9);
+            this.groupControl8.Location = new System.Drawing.Point(535, 18);
+            this.groupControl8.Name = "groupControl8";
+            this.groupControl8.Size = new System.Drawing.Size(200, 100);
+            this.groupControl8.TabIndex = 2;
+            this.groupControl8.Text = "Clear Artwork Cache && Resync";
+            // 
+            // simpleButton9
+            // 
+            this.simpleButton9.Location = new System.Drawing.Point(19, 72);
+            this.simpleButton9.Name = "simpleButton9";
+            this.simpleButton9.Size = new System.Drawing.Size(137, 23);
+            this.simpleButton9.TabIndex = 0;
+            this.simpleButton9.Text = "Rebuild Cache";
+            this.simpleButton9.Click += new System.EventHandler(this.simpleButton9_Click);
             // 
             // groupControl7
             // 
+            this.groupControl7.Controls.Add(this.simpleButton15);
             this.groupControl7.Controls.Add(this.simpleButton8);
-            this.groupControl7.Location = new System.Drawing.Point(218, 18);
+            this.groupControl7.Location = new System.Drawing.Point(329, 18);
             this.groupControl7.Name = "groupControl7";
             this.groupControl7.Size = new System.Drawing.Size(200, 100);
             this.groupControl7.TabIndex = 2;
@@ -1360,7 +1516,11 @@
             // 
             // simpleButton8
             // 
-            this.simpleButton8.Location = new System.Drawing.Point(32, 50);
+            this.simpleButton8.Appearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.simpleButton8.Appearance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.simpleButton8.Appearance.Options.UseBorderColor = true;
+            this.simpleButton8.Appearance.Options.UseForeColor = true;
+            this.simpleButton8.Location = new System.Drawing.Point(19, 72);
             this.simpleButton8.Name = "simpleButton8";
             this.simpleButton8.Size = new System.Drawing.Size(137, 23);
             this.simpleButton8.TabIndex = 0;
@@ -1369,8 +1529,9 @@
             // 
             // groupControl6
             // 
+            this.groupControl6.Controls.Add(this.simpleButton13);
             this.groupControl6.Controls.Add(this.simpleButton5);
-            this.groupControl6.Location = new System.Drawing.Point(12, 18);
+            this.groupControl6.Location = new System.Drawing.Point(123, 18);
             this.groupControl6.Name = "groupControl6";
             this.groupControl6.Size = new System.Drawing.Size(200, 100);
             this.groupControl6.TabIndex = 1;
@@ -1378,7 +1539,7 @@
             // 
             // simpleButton5
             // 
-            this.simpleButton5.Location = new System.Drawing.Point(32, 50);
+            this.simpleButton5.Location = new System.Drawing.Point(19, 72);
             this.simpleButton5.Name = "simpleButton5";
             this.simpleButton5.Size = new System.Drawing.Size(137, 23);
             this.simpleButton5.TabIndex = 0;
@@ -1390,7 +1551,7 @@
             this.tabNavigationPage4.Caption = "About Nexus";
             this.tabNavigationPage4.Controls.Add(this.tabPane2);
             this.tabNavigationPage4.Name = "tabNavigationPage4";
-            this.tabNavigationPage4.Size = new System.Drawing.Size(719, 618);
+            this.tabNavigationPage4.Size = new System.Drawing.Size(858, 663);
             // 
             // tabPane2
             // 
@@ -1406,15 +1567,16 @@
             this.tabNavigationPage5,
             this.tabNavigationPage7,
             this.tabNavigationPage6});
-            this.tabPane2.RegularSize = new System.Drawing.Size(719, 618);
+            this.tabPane2.RegularSize = new System.Drawing.Size(858, 663);
             this.tabPane2.SelectedPage = this.tabNavigationPage5;
-            this.tabPane2.Size = new System.Drawing.Size(719, 618);
+            this.tabPane2.Size = new System.Drawing.Size(858, 663);
             this.tabPane2.TabIndex = 1;
             this.tabPane2.Text = "tabPane2";
             // 
             // tabNavigationPage5
             // 
             this.tabNavigationPage5.Caption = "Nexus Updates";
+            this.tabNavigationPage5.Controls.Add(this.labelControl28);
             this.tabNavigationPage5.Controls.Add(this.simpleButton2);
             this.tabNavigationPage5.Controls.Add(this.simpleButton3);
             this.tabNavigationPage5.Controls.Add(this.labelControl17);
@@ -1422,15 +1584,25 @@
             this.tabNavigationPage5.Controls.Add(this.uiAvatar1);
             this.tabNavigationPage5.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("tabNavigationPage5.ImageOptions.Image")));
             this.tabNavigationPage5.Name = "tabNavigationPage5";
-            this.tabNavigationPage5.Size = new System.Drawing.Size(719, 591);
+            this.tabNavigationPage5.Size = new System.Drawing.Size(858, 636);
+            // 
+            // labelControl28
+            // 
+            this.labelControl28.Appearance.Font = new System.Drawing.Font("Tahoma", 8F);
+            this.labelControl28.Appearance.Options.UseFont = true;
+            this.labelControl28.Location = new System.Drawing.Point(432, 496);
+            this.labelControl28.Name = "labelControl28";
+            this.labelControl28.Size = new System.Drawing.Size(29, 13);
+            this.labelControl28.TabIndex = 5;
+            this.labelControl28.Text = "Build: ";
             // 
             // simpleButton2
             // 
             this.simpleButton2.AllowFocus = false;
-            this.simpleButton2.Location = new System.Drawing.Point(189, 261);
+            this.simpleButton2.Location = new System.Drawing.Point(259, 447);
             this.simpleButton2.Name = "simpleButton2";
             this.simpleButton2.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            this.simpleButton2.Size = new System.Drawing.Size(167, 23);
+            this.simpleButton2.Size = new System.Drawing.Size(167, 43);
             this.simpleButton2.TabIndex = 4;
             this.simpleButton2.Text = "Check for installer updates";
             this.simpleButton2.Click += new System.EventHandler(this.simpleButton2_Click);
@@ -1438,10 +1610,10 @@
             // simpleButton3
             // 
             this.simpleButton3.AllowFocus = false;
-            this.simpleButton3.Location = new System.Drawing.Point(362, 261);
+            this.simpleButton3.Location = new System.Drawing.Point(432, 447);
             this.simpleButton3.Name = "simpleButton3";
             this.simpleButton3.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            this.simpleButton3.Size = new System.Drawing.Size(167, 23);
+            this.simpleButton3.Size = new System.Drawing.Size(167, 43);
             this.simpleButton3.TabIndex = 3;
             this.simpleButton3.Text = "Check for program updates";
             this.simpleButton3.Click += new System.EventHandler(this.simpleButton3_Click);
@@ -1450,7 +1622,7 @@
             // 
             this.labelControl17.Appearance.Font = new System.Drawing.Font("Tahoma", 8F);
             this.labelControl17.Appearance.Options.UseFont = true;
-            this.labelControl17.Location = new System.Drawing.Point(292, 232);
+            this.labelControl17.Location = new System.Drawing.Point(259, 496);
             this.labelControl17.Name = "labelControl17";
             this.labelControl17.Size = new System.Drawing.Size(77, 13);
             this.labelControl17.TabIndex = 2;
@@ -1458,38 +1630,41 @@
             // 
             // labelControl18
             // 
-            this.labelControl18.Appearance.Font = new System.Drawing.Font("Tahoma", 14F);
+            this.labelControl18.Appearance.Font = new System.Drawing.Font("Tahoma", 18F);
             this.labelControl18.Appearance.Options.UseFont = true;
-            this.labelControl18.Location = new System.Drawing.Point(292, 203);
+            this.labelControl18.Location = new System.Drawing.Point(344, 356);
             this.labelControl18.Name = "labelControl18";
-            this.labelControl18.Size = new System.Drawing.Size(135, 23);
+            this.labelControl18.Size = new System.Drawing.Size(170, 29);
             this.labelControl18.TabIndex = 1;
             this.labelControl18.Text = "Nexus Launcher";
             // 
             // uiAvatar1
             // 
-            this.uiAvatar1.AvatarSize = 100;
+            this.uiAvatar1.AvatarSize = 350;
+            this.uiAvatar1.BackColor = System.Drawing.Color.Transparent;
+            this.uiAvatar1.FillColor = System.Drawing.Color.Transparent;
             this.uiAvatar1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.uiAvatar1.Icon = Sunny.UI.UIAvatar.UIIcon.Image;
-            this.uiAvatar1.Image = global::Nexus_Launcher.Properties.Resources.dfveffb_9b262552_e352_4348_aefc_8e699002c946;
-            this.uiAvatar1.Location = new System.Drawing.Point(292, 88);
+            this.uiAvatar1.Image = global::Nexus_Launcher.Properties.Resources.NexusAbstract;
+            this.uiAvatar1.Location = new System.Drawing.Point(309, 128);
             this.uiAvatar1.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiAvatar1.Name = "uiAvatar1";
-            this.uiAvatar1.Size = new System.Drawing.Size(135, 109);
-            this.uiAvatar1.SymbolSize = 50;
+            this.uiAvatar1.Size = new System.Drawing.Size(240, 240);
+            this.uiAvatar1.SymbolSize = 128;
             this.uiAvatar1.TabIndex = 0;
             this.uiAvatar1.Text = "uiAvatar1";
             // 
             // tabNavigationPage6
             // 
             this.tabNavigationPage6.Caption = "Made with";
+            this.tabNavigationPage6.Controls.Add(this.webView23);
             this.tabNavigationPage6.Controls.Add(this.memoEdit1);
-            this.tabNavigationPage6.Controls.Add(this.stepProgress1);
             this.tabNavigationPage6.Controls.Add(this.badge1);
             this.tabNavigationPage6.Controls.Add(this.uiBattery1);
             this.tabNavigationPage6.Controls.Add(this.chatListBox1);
             this.tabNavigationPage6.Controls.Add(this.metroButton1);
             this.tabNavigationPage6.Controls.Add(this.dioLabel1);
+            this.tabNavigationPage6.Controls.Add(this.stepProgress1);
             this.tabNavigationPage6.Controls.Add(this.bitmaskSelectorDropDown1);
             this.tabNavigationPage6.Controls.Add(this.terminalControl1);
             this.tabNavigationPage6.Controls.Add(this.afxButton1);
@@ -1502,15 +1677,31 @@
             this.tabNavigationPage6.Controls.Add(this.zedGraphControl1);
             this.tabNavigationPage6.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("tabNavigationPage6.ImageOptions.Image")));
             this.tabNavigationPage6.Name = "tabNavigationPage6";
-            this.tabNavigationPage6.Size = new System.Drawing.Size(719, 618);
+            this.tabNavigationPage6.Size = new System.Drawing.Size(858, 636);
+            // 
+            // webView23
+            // 
+            this.webView23.AllowExternalDrop = true;
+            this.webView23.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.webView23.CreationProperties = null;
+            this.webView23.DefaultBackgroundColor = System.Drawing.Color.White;
+            this.webView23.Location = new System.Drawing.Point(0, 23);
+            this.webView23.Name = "webView23";
+            this.webView23.Size = new System.Drawing.Size(858, 579);
+            this.webView23.Source = new System.Uri("https://guardbyte.me/downloads/Nexus%20Launcher/madewith.html", System.UriKind.Absolute);
+            this.webView23.TabIndex = 16;
+            this.webView23.ZoomFactor = 1D;
             // 
             // memoEdit1
             // 
             this.memoEdit1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.memoEdit1.Location = new System.Drawing.Point(0, 0);
             this.memoEdit1.Name = "memoEdit1";
-            this.memoEdit1.Size = new System.Drawing.Size(719, 618);
+            this.memoEdit1.Size = new System.Drawing.Size(858, 636);
             this.memoEdit1.TabIndex = 0;
+            this.memoEdit1.Visible = false;
             // 
             // badge1
             // 
@@ -1702,23 +1893,41 @@
             // tabNavigationPage7
             // 
             this.tabNavigationPage7.Caption = "EULA & Agreements";
+            this.tabNavigationPage7.Controls.Add(this.webView22);
             this.tabNavigationPage7.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("tabNavigationPage7.ImageOptions.Image")));
             this.tabNavigationPage7.Name = "tabNavigationPage7";
-            this.tabNavigationPage7.Size = new System.Drawing.Size(719, 618);
+            this.tabNavigationPage7.Size = new System.Drawing.Size(858, 636);
+            // 
+            // webView22
+            // 
+            this.webView22.AllowExternalDrop = true;
+            this.webView22.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.webView22.CreationProperties = null;
+            this.webView22.DefaultBackgroundColor = System.Drawing.Color.White;
+            this.webView22.Location = new System.Drawing.Point(0, 23);
+            this.webView22.Name = "webView22";
+            this.webView22.Size = new System.Drawing.Size(858, 579);
+            this.webView22.Source = new System.Uri("https://guardbyte.me/downloads/Nexus%20Launcher/eula.html", System.UriKind.Absolute);
+            this.webView22.TabIndex = 0;
+            this.webView22.ZoomFactor = 1D;
             // 
             // panelControl1
             // 
             this.panelControl1.Controls.Add(this.simpleButton4);
             this.panelControl1.Controls.Add(this.simpleButton1);
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelControl1.Location = new System.Drawing.Point(0, 611);
+            this.panelControl1.Location = new System.Drawing.Point(0, 656);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(719, 34);
+            this.panelControl1.Size = new System.Drawing.Size(858, 34);
             this.panelControl1.TabIndex = 1;
             // 
             // simpleButton4
             // 
-            this.simpleButton4.Location = new System.Drawing.Point(582, 6);
+            this.simpleButton4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.simpleButton4.Location = new System.Drawing.Point(714, 6);
             this.simpleButton4.Name = "simpleButton4";
             this.simpleButton4.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
             this.simpleButton4.Size = new System.Drawing.Size(132, 23);
@@ -1728,31 +1937,15 @@
             // 
             // simpleButton1
             // 
-            this.simpleButton1.Location = new System.Drawing.Point(444, 6);
+            this.simpleButton1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.simpleButton1.Location = new System.Drawing.Point(576, 6);
             this.simpleButton1.Name = "simpleButton1";
             this.simpleButton1.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
             this.simpleButton1.Size = new System.Drawing.Size(132, 23);
             this.simpleButton1.TabIndex = 2;
             this.simpleButton1.Text = "Save Settings";
             this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
-            // 
-            // groupControl8
-            // 
-            this.groupControl8.Controls.Add(this.simpleButton9);
-            this.groupControl8.Location = new System.Drawing.Point(12, 124);
-            this.groupControl8.Name = "groupControl8";
-            this.groupControl8.Size = new System.Drawing.Size(200, 100);
-            this.groupControl8.TabIndex = 2;
-            this.groupControl8.Text = "Clear Artwork Cache && Resync";
-            // 
-            // simpleButton9
-            // 
-            this.simpleButton9.Location = new System.Drawing.Point(32, 50);
-            this.simpleButton9.Name = "simpleButton9";
-            this.simpleButton9.Size = new System.Drawing.Size(137, 23);
-            this.simpleButton9.TabIndex = 0;
-            this.simpleButton9.Text = "Rebuild Cache";
-            this.simpleButton9.Click += new System.EventHandler(this.simpleButton9_Click);
             // 
             // stepProgress1
             // 
@@ -1767,12 +1960,69 @@
             this.stepProgress1.Value = 0;
             this.stepProgress1.Visible = false;
             // 
+            // simpleButton13
+            // 
+            this.simpleButton13.AllowFocus = false;
+            this.simpleButton13.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.simpleButton13.ImageOptions.Image = global::Nexus_Launcher.Properties.Resources.icons8_info_94;
+            this.simpleButton13.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            this.simpleButton13.Location = new System.Drawing.Point(162, 74);
+            this.simpleButton13.Name = "simpleButton13";
+            this.simpleButton13.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
+            this.simpleButton13.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
+            this.simpleButton13.Size = new System.Drawing.Size(20, 20);
+            this.simpleButton13.TabIndex = 19;
+            this.simpleButton13.Click += new System.EventHandler(this.simpleButton13_Click);
+            // 
+            // simpleButton14
+            // 
+            this.simpleButton14.AllowFocus = false;
+            this.simpleButton14.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.simpleButton14.ImageOptions.Image = global::Nexus_Launcher.Properties.Resources.icons8_info_94;
+            this.simpleButton14.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            this.simpleButton14.Location = new System.Drawing.Point(162, 74);
+            this.simpleButton14.Name = "simpleButton14";
+            this.simpleButton14.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
+            this.simpleButton14.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
+            this.simpleButton14.Size = new System.Drawing.Size(20, 20);
+            this.simpleButton14.TabIndex = 19;
+            this.simpleButton14.Click += new System.EventHandler(this.simpleButton14_Click);
+            // 
+            // simpleButton15
+            // 
+            this.simpleButton15.AllowFocus = false;
+            this.simpleButton15.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.simpleButton15.ImageOptions.Image = global::Nexus_Launcher.Properties.Resources.icons8_info_94;
+            this.simpleButton15.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            this.simpleButton15.Location = new System.Drawing.Point(162, 74);
+            this.simpleButton15.Name = "simpleButton15";
+            this.simpleButton15.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
+            this.simpleButton15.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
+            this.simpleButton15.Size = new System.Drawing.Size(20, 20);
+            this.simpleButton15.TabIndex = 19;
+            this.simpleButton15.Click += new System.EventHandler(this.simpleButton15_Click);
+            // 
+            // simpleButton16
+            // 
+            this.simpleButton16.AllowFocus = false;
+            this.simpleButton16.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.simpleButton16.ImageOptions.Image = global::Nexus_Launcher.Properties.Resources.icons8_info_94;
+            this.simpleButton16.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            this.simpleButton16.Location = new System.Drawing.Point(162, 74);
+            this.simpleButton16.Name = "simpleButton16";
+            this.simpleButton16.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
+            this.simpleButton16.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
+            this.simpleButton16.Size = new System.Drawing.Size(20, 20);
+            this.simpleButton16.TabIndex = 19;
+            this.simpleButton16.Click += new System.EventHandler(this.simpleButton16_Click);
+            // 
             // SettingsForm
             // 
+            this.ActiveGlowColor = System.Drawing.Color.Transparent;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(719, 645);
+            this.ClientSize = new System.Drawing.Size(858, 690);
             this.Controls.Add(this.panelControl1);
             this.Controls.Add(this.tabPane1);
             this.DoubleBuffered = true;
@@ -1783,7 +2033,8 @@
             this.MinimizeBox = false;
             this.Name = "SettingsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "SettingsForm";
+            this.SurfaceMaterial = DevExpress.XtraEditors.SurfaceMaterial.Acrylic;
+            this.Text = "Nexus Launcher Settings";
             this.Load += new System.EventHandler(this.SettingsForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.tabPane1)).EndInit();
             this.tabPane1.ResumeLayout(false);
@@ -1848,6 +2099,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch11.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
             this.tabNavigationPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl9)).EndInit();
+            this.groupControl9.ResumeLayout(false);
+            this.groupControl9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch20.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl5)).EndInit();
             this.groupControl5.ResumeLayout(false);
             this.groupControl5.PerformLayout();
@@ -1863,6 +2118,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
             this.groupControl1.ResumeLayout(false);
             this.groupControl1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch21.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.checkEdit6.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.checkEdit5.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.checkEdit4.Properties)).EndInit();
@@ -1876,6 +2132,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch2.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch1.Properties)).EndInit();
             this.tabNavigationPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl10)).EndInit();
+            this.groupControl10.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl8)).EndInit();
+            this.groupControl8.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.groupControl7)).EndInit();
             this.groupControl7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.groupControl6)).EndInit();
@@ -1887,13 +2147,14 @@
             this.tabNavigationPage5.PerformLayout();
             this.tabNavigationPage6.ResumeLayout(false);
             this.tabNavigationPage6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.webView23)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.memoEdit1.Properties)).EndInit();
             this.checkBoxList1.ResumeLayout(true);
             ((System.ComponentModel.ISupportInitialize)(this.webView21)).EndInit();
+            this.tabNavigationPage7.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.webView22)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.groupControl8)).EndInit();
-            this.groupControl8.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2031,5 +2292,22 @@
         public DevExpress.XtraEditors.GroupControl groupControl2;
         private DevExpress.XtraEditors.GroupControl groupControl8;
         private DevExpress.XtraEditors.SimpleButton simpleButton9;
+        private DevExpress.XtraEditors.GroupControl groupControl9;
+        private DevExpress.XtraEditors.ToggleSwitch toggleSwitch20;
+        private DevExpress.XtraEditors.LabelControl labelControl26;
+        private DevExpress.XtraEditors.LabelControl labelControl27;
+        private DevExpress.XtraEditors.ToggleSwitch toggleSwitch21;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webView22;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webView23;
+        private DevExpress.XtraEditors.GroupControl groupControl10;
+        private DevExpress.XtraEditors.SimpleButton simpleButton10;
+        private DevExpress.XtraEditors.SimpleButton simpleButton11;
+        private DevExpress.XtraEditors.LabelControl labelControl28;
+        private DevExpress.XtraEditors.SimpleButton simpleButton12;
+        private DevExpress.XtraEditors.LabelControl labelControl29;
+        private DevExpress.XtraEditors.SimpleButton simpleButton14;
+        private DevExpress.XtraEditors.SimpleButton simpleButton16;
+        private DevExpress.XtraEditors.SimpleButton simpleButton15;
+        private DevExpress.XtraEditors.SimpleButton simpleButton13;
     }
 }

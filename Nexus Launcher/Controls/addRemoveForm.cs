@@ -5,6 +5,7 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using Nexus_Launcher.Helpers;
 using Nexus_Launcher.Models;
+using Nexus_Launcher.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,6 +33,9 @@ namespace Nexus_Launcher.Forms
         private async void addRemoveForm_Load(object sender, EventArgs e)
         {
             await LoadNexusGamesAsync();
+            FontManager.ApplyFont(
+    this,
+    Settings.Default.UIFont);
         }
         private void add()
         {
@@ -142,6 +146,7 @@ namespace Nexus_Launcher.Forms
             }
             catch (Exception ex)
             {
+                Program.LogCrash(ex);
                 MessageBox.Show(ex.ToString());
             }
         }

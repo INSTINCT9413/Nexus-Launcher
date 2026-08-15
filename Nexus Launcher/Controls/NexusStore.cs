@@ -1,6 +1,8 @@
 ﻿using DevExpress.XtraEditors;
 using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.WinForms;
+using Nexus_Launcher.Helpers;
+using Nexus_Launcher.Properties;
 using Nexus_Launcher.Services;
 using System;
 using System.Collections.Generic;
@@ -20,7 +22,7 @@ namespace Nexus_Launcher.Controls
     {
         public string NexusStoreUrl =
             "https://horizonsocial.media/apps/nexus.html";
-
+        public static CoreWebView2Environment sharedEnvironment;
         public NexusStore()
         {
             InitializeComponent();
@@ -30,6 +32,9 @@ namespace Nexus_Launcher.Controls
             object sender,
             EventArgs e)
         {
+            FontManager.ApplyFont(
+    this,
+    Settings.Default.UIFont);
             try
             {
                 await InitializeBrowserAsync();
@@ -45,6 +50,7 @@ namespace Nexus_Launcher.Controls
 
                 webView21.Source =
                     new Uri(NexusStoreUrl);
+                sharedEnvironment = webView21.CoreWebView2.Environment;
             }
             catch (Exception ex)
             {

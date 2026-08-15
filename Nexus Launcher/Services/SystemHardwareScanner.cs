@@ -81,6 +81,7 @@ namespace Nexus_Launcher.Services
             }
             catch (Exception ex)
             {
+                Program.LogCrash(ex);
                 var errorDict = new Dictionary<string, string> { { "Error", $"Failed to query {wmiClass}: {ex.Message}" } };
                 componentList.Add(errorDict);
             }

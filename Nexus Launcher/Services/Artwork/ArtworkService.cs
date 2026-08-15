@@ -10,6 +10,14 @@ namespace Nexus_Launcher.Services.Artwork
 {
     internal static class ArtworkService
     {
+        private const int MaxWorkers = 4;
+
+        private static bool WorkersStarted;
+
+        private static int ActiveDownloads;
+
+        private static readonly object WorkerLock =
+            new object();
         private static readonly ConcurrentQueue<GameInfo> DownloadQueue =
             new ConcurrentQueue<GameInfo>();
 
@@ -17,7 +25,7 @@ namespace Nexus_Launcher.Services.Artwork
             new AutoResetEvent(false);
         private static readonly List<GameInfo> registeredGames =
     new List<GameInfo>();
-        private static bool WorkerStarted;
+        
 
         public static event Action<GameInfo> ArtworkDownloaded;
         public static Task CurrentDownloadTask
@@ -33,16 +41,17 @@ namespace Nexus_Launcher.Services.Artwork
         private static TaskCompletionSource<bool>
             QueueCompletion =
                 new TaskCompletionSource<bool>();
+        public static int totalArtworkJobs;
+        public static int completedArtworkJobs;
+
         public static int TotalArtworkJobs
         {
-            get;
-            set;
+            get => totalArtworkJobs;
         }
 
         public static int CompletedArtworkJobs
         {
-            get;
-            set;
+            get => completedArtworkJobs;
         }
         public delegate void ArtworkProgressHandler(
     int completed,
@@ -74,8 +83,7 @@ namespace Nexus_Launcher.Services.Artwork
                 registeredGames.Add(game);
             }
 
-            // Every registered game counts toward the total.
-            TotalArtworkJobs++;
+            
 
             ArtworkCache.LoadCachedArtwork(game);
 
@@ -85,17 +93,11 @@ namespace Nexus_Launcher.Services.Artwork
 
             if (game.HasArtwork)
             {
-                CompletedArtworkJobs++;
-
-                ArtworkDownloaded?.Invoke(game);
-
-                ArtworkProgressChanged?.Invoke(
-                    CompletedArtworkJobs,
-                    TotalArtworkJobs);
-
+               
                 return;
             }
-
+            // Every registered game counts toward the total.
+            Interlocked.Increment(ref totalArtworkJobs);
             //----------------------------------------------------
             // Needs downloading
             //----------------------------------------------------
@@ -118,12 +120,18 @@ namespace Nexus_Launcher.Services.Artwork
 
         private static void StartWorker()
         {
-            if (WorkerStarted)
-                return;
+            lock (WorkerLock)
+            {
+                if (WorkersStarted)
+                    return;
 
-            WorkerStarted = true;
+                WorkersStarted = true;
 
-            Task.Run(WorkerLoop);
+                for (int i = 0; i < MaxWorkers; i++)
+                {
+                    Task.Run(WorkerLoop);
+                }
+            }
         }
 
         private static async Task WorkerLoop()
@@ -134,16 +142,22 @@ namespace Nexus_Launcher.Services.Artwork
 
                 while (DownloadQueue.TryDequeue(out GameInfo game))
                 {
+                    Interlocked.Increment(ref ActiveDownloads);
+
                     try
                     {
                         await DownloadArtwork(game);
                     }
-                    catch
+                    catch (Exception ex)
                     {
+                        Program.LogCrash(ex);
+                        System.Diagnostics.Debug.WriteLine(
+                            ex.ToString());
                     }
-                    lock (WorkerSync)
+                    finally
                     {
-                        if (DownloadQueue.IsEmpty)
+                        if (Interlocked.Decrement(ref ActiveDownloads) == 0 &&
+                            DownloadQueue.IsEmpty)
                         {
                             QueueCompletion.TrySetResult(true);
                         }
@@ -155,7 +169,8 @@ namespace Nexus_Launcher.Services.Artwork
         {
             lock (WorkerSync)
             {
-                if (DownloadQueue.IsEmpty)
+                // Nothing needed downloading.
+                if (TotalArtworkJobs == 0)
                 {
                     QueueCompletion.TrySetResult(true);
                 }
@@ -195,7 +210,7 @@ namespace Nexus_Launcher.Services.Artwork
                 //----------------------------------------------------
                 // Platform specific lookup
                 //----------------------------------------------------
-
+                
                 switch (game.Launcher)
                 {
                     case "Steam":
@@ -251,59 +266,77 @@ namespace Nexus_Launcher.Services.Artwork
                     steamGridGame.Id;
 
                 //----------------------------------------------------
-                // Grid
+                // Request artwork simultaneously
                 //----------------------------------------------------
 
-                SteamGridImage grid =
-                    await SteamGridDbClient.GetGridAsync(
+                Task<SteamGridImage> gridTask =
+                    SteamGridDbClient.GetGridAsync(
                         steamGridGame.Id);
 
-                System.Diagnostics.Debug.WriteLine(
-                    $"Grid Found: {grid != null}");
+                Task<SteamGridImage> heroTask =
+                    SteamGridDbClient.GetHeroAsync(
+                        steamGridGame.Id);
+
+                Task<SteamGridImage> logoTask =
+                    SteamGridDbClient.GetLogoAsync(
+                        steamGridGame.Id);
+
+                await Task.WhenAll(
+                    gridTask,
+                    heroTask,
+                    logoTask);
+
+                SteamGridImage grid = gridTask.Result;
+                SteamGridImage hero = heroTask.Result;
+                SteamGridImage logo = logoTask.Result;
+
+                //----------------------------------------------------
+                // Download artwork simultaneously
+                //----------------------------------------------------
+
+                List<Task<bool>> downloadTasks =
+                    new List<Task<bool>>();
+
+                List<string> downloadNames =
+                    new List<string>();
 
                 if (grid != null)
                 {
-                    bool gridSuccess =
-                        await SteamGridDbClient.DownloadFileAsync(
+                    downloadTasks.Add(
+                        SteamGridDbClient.DownloadFileAsync(
                             grid.Url,
-                            ArtworkCache.GetGridPath(game));
+                            ArtworkCache.GetGridPath(game)));
 
-                    System.Diagnostics.Debug.WriteLine(
-                        $"Grid Success: {gridSuccess}");
+                    downloadNames.Add("Grid");
                 }
-
-                //----------------------------------------------------
-                // Hero
-                //----------------------------------------------------
-
-                SteamGridImage hero =
-                    await SteamGridDbClient.GetHeroAsync(
-                        steamGridGame.Id);
 
                 if (hero != null)
                 {
-                    bool heroSuccess =
-                        await SteamGridDbClient.DownloadFileAsync(
+                    downloadTasks.Add(
+                        SteamGridDbClient.DownloadFileAsync(
                             hero.Url,
-                            ArtworkCache.GetHeroPath(game));
+                            ArtworkCache.GetHeroPath(game)));
 
-                    System.Diagnostics.Debug.WriteLine(
-                        $"Hero Success: {heroSuccess}");
+                    downloadNames.Add("Hero");
                 }
-
-                //----------------------------------------------------
-                // Logo
-                //----------------------------------------------------
-
-                SteamGridImage logo =
-                    await SteamGridDbClient.GetLogoAsync(
-                        steamGridGame.Id);
 
                 if (logo != null)
                 {
-                    await SteamGridDbClient.DownloadFileAsync(
-                        logo.Url,
-                        ArtworkCache.GetLogoPath(game));
+                    downloadTasks.Add(
+                        SteamGridDbClient.DownloadFileAsync(
+                            logo.Url,
+                            ArtworkCache.GetLogoPath(game)));
+
+                    downloadNames.Add("Logo");
+                }
+
+                bool[] results =
+                    await Task.WhenAll(downloadTasks);
+
+                for (int i = 0; i < results.Length; i++)
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        $"{downloadNames[i]} Success: {results[i]}");
                 }
 
                 //----------------------------------------------------
@@ -317,15 +350,21 @@ namespace Nexus_Launcher.Services.Artwork
                 System.Diagnostics.Debug.WriteLine(
                     "Downloaded artwork for: " + game.Name);
 
-                await Task.Delay(500);
+                
             }
             finally
             {
-                CompletedArtworkJobs++;
+
+                int completed = Interlocked.Increment(ref completedArtworkJobs);
 
                 ArtworkProgressChanged?.Invoke(
-                    CompletedArtworkJobs,
+                    completed,
                     TotalArtworkJobs);
+
+                SplashHelper.UpdateArtworkProgress(
+                    completed,
+                    TotalArtworkJobs);
+               
             }
         }
     }

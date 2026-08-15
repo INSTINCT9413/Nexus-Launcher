@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Nexus_Launcher.Helpers;
+using Nexus_Launcher.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +17,13 @@ namespace Nexus_Launcher
         public TEST()
         {
             InitializeComponent();
+        }
+
+        private void TEST_Load(object sender, EventArgs e)
+        {
+            FontManager.ApplyFont(
+    this,
+    Settings.Default.UIFont);
         }
     }
 }

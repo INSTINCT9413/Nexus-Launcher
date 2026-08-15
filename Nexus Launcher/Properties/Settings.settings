@@ -113,5 +113,17 @@
     <Setting Name="gogPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="enableFullLibrary" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="StartMaximized" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="EALibraryPaths" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="UIFont" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Segoe UI</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

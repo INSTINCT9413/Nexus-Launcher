@@ -217,18 +217,13 @@ namespace Nexus_Launcher.Services.Artwork
         //----------------------------------------------------
 
         public static async Task<SteamGridImage> GetGridAsync(
-            int steamGridId)
+    int steamGridId)
         {
-
             ImageResponse result =
                 await GetAsync<ImageResponse>(
                     "grids/game/" +
                     steamGridId +
                     "?dimensions=600x900");
-            System.Diagnostics.Debug.WriteLine(
-    Newtonsoft.Json.JsonConvert.SerializeObject(
-        result.Data[0],
-        Newtonsoft.Json.Formatting.Indented));
 
             if (result == null ||
                 result.Data == null ||
@@ -236,6 +231,11 @@ namespace Nexus_Launcher.Services.Artwork
             {
                 return null;
             }
+
+            System.Diagnostics.Debug.WriteLine(
+                Newtonsoft.Json.JsonConvert.SerializeObject(
+                    result.Data[0],
+                    Newtonsoft.Json.Formatting.Indented));
 
             return result.Data[0];
         }
@@ -245,22 +245,24 @@ namespace Nexus_Launcher.Services.Artwork
         //----------------------------------------------------
 
         public static async Task<SteamGridImage> GetHeroAsync(
-            int steamGridId)
+    int steamGridId)
         {
             ImageResponse result =
                 await GetAsync<ImageResponse>(
                     "heroes/game/" +
                     steamGridId);
-            System.Diagnostics.Debug.WriteLine(
-    Newtonsoft.Json.JsonConvert.SerializeObject(
-        result.Data[0],
-        Newtonsoft.Json.Formatting.Indented));
+
             if (result == null ||
                 result.Data == null ||
                 result.Data.Count == 0)
             {
                 return null;
             }
+
+            System.Diagnostics.Debug.WriteLine(
+                Newtonsoft.Json.JsonConvert.SerializeObject(
+                    result.Data[0],
+                    Newtonsoft.Json.Formatting.Indented));
 
             return result.Data[0];
         }
@@ -342,6 +344,7 @@ namespace Nexus_Launcher.Services.Artwork
             }
             catch (Exception ex)
             {
+                Program.LogCrash(ex);
                 System.Diagnostics.Debug.WriteLine("DOWNLOAD FAILED");
                 System.Diagnostics.Debug.WriteLine(imageUrl);
                 System.Diagnostics.Debug.WriteLine(ex.ToString());

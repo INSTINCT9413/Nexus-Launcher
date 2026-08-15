@@ -1,6 +1,8 @@
 ﻿using AdamsLair.WinForms.Properties;
 using DevExpress.XtraEditors;
 using Nexus_Launcher.Controls;
+using Nexus_Launcher.Helpers;
+using Nexus_Launcher.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -69,6 +71,7 @@ namespace Nexus_Launcher.Services
             }
             catch (Exception ex)
             {
+                Program.LogCrash(ex);
                 System.Diagnostics.Debug.WriteLine($"Failed to fetch profile picture: {ex.Message}");
             }
 
@@ -77,6 +80,9 @@ namespace Nexus_Launcher.Services
 
         private void UserAccount_Load(object sender, EventArgs e)
         {
+            FontManager.ApplyFont(
+    this,
+    Settings.Default.UIFont);
             string avatarPath = GetUserAccountPicturePath();
             if (!string.IsNullOrEmpty(avatarPath) && File.Exists(avatarPath))
             {

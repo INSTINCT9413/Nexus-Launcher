@@ -44,6 +44,7 @@ namespace Nexus_Launcher.Helpers
                 }
                 catch (Exception ex)
                 {
+                    Program.LogCrash(ex);
                     Console.WriteLine($"An error occurred while searching for '{nameOfExe}' in '{path}': {ex.Message}");
                     return null;
                 }
@@ -51,6 +52,7 @@ namespace Nexus_Launcher.Helpers
             }
             catch (Exception ex)
             {
+                Program.LogCrash(ex);
                 Console.WriteLine($"An error occurred while accessing the directory '{path}': {ex.Message}");
                 return null;
             }

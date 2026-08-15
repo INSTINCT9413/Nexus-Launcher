@@ -470,5 +470,52 @@ namespace Nexus_Launcher.Properties {
                 this["gogPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool enableFullLibrary {
+            get {
+                return ((bool)(this["enableFullLibrary"]));
+            }
+            set {
+                this["enableFullLibrary"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool StartMaximized {
+            get {
+                return ((bool)(this["StartMaximized"]));
+            }
+            set {
+                this["StartMaximized"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection EALibraryPaths {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["EALibraryPaths"]));
+            }
+            set {
+                this["EALibraryPaths"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI")]
+        public string UIFont {
+            get {
+                return ((string)(this["UIFont"]));
+            }
+            set {
+                this["UIFont"] = value;
+            }
+        }
     }
 }

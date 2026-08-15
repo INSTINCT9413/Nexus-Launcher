@@ -712,6 +712,18 @@
     <Compile Include="Controls\driveRowControl.Designer.cs">
       <DependentUpon>driveRowControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\EASettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EASettings.Designer.cs">
+      <DependentUpon>EASettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\fullLibraryControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\fullLibraryControl.Designer.cs">
+      <DependentUpon>fullLibraryControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\GOGSettings.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -723,6 +735,12 @@
     </Compile>
     <Compile Include="Controls\LauncherCard.Designer.cs">
       <DependentUpon>LauncherCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LibraryDetailControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\LibraryDetailControl.Designer.cs">
+      <DependentUpon>LibraryDetailControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\MyRigControl.cs">
       <SubType>UserControl</SubType>
@@ -758,6 +776,7 @@
       <DependentUpon>FirstTimeSetupForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\BattleNetArtWorkHelper.cs" />
+    <Compile Include="Helpers\FontManager.cs" />
     <Compile Include="Helpers\GetThirdPartydll.cs" />
     <Compile Include="Helpers\IconHelper.cs" />
     <Compile Include="Helpers\NexusAddRemoveManager.cs" />
@@ -772,10 +791,13 @@
       <DependentUpon>MainView.cs</DependentUpon>
     </Compile>
     <Compile Include="MainViewModel.cs" />
+    <Compile Include="Models\BuildInfo.cs" />
     <Compile Include="Models\EpicManifest.cs" />
     <Compile Include="Models\GameInfo.cs" />
+    <Compile Include="Models\InstalledProgram.cs" />
     <Compile Include="Models\LauncherDefinition.cs" />
     <Compile Include="Models\LauncherInfo.cs" />
+    <Compile Include="Models\UpdateInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Artwork\ArtworkCache.cs" />
@@ -786,11 +808,19 @@
     <Compile Include="Services\Artwork\SteamGridModels.cs" />
     <Compile Include="Services\BattleNetScannerService.cs" />
     <Compile Include="Services\BrowserProfileManager.cs" />
+    <Compile Include="Services\ClientResetDefinitions.cs" />
+    <Compile Include="Services\ClientResetService.cs" />
     <Compile Include="Services\EAScannerService.cs" />
     <Compile Include="Services\EpicScannerService.cs" />
+    <Compile Include="Services\GameLauncherService.cs" />
     <Compile Include="Services\GOGScannerService.cs" />
+    <Compile Include="Services\InstalledBuild.cs" />
+    <Compile Include="Services\InstalledUpdateInfo.cs" />
     <Compile Include="Services\LauncherScannerService.cs" />
     <Compile Include="Services\LauncherStartupService.cs" />
+    <Compile Include="Services\LibrarySelectionService.cs" />
+    <Compile Include="Services\LibraryService.cs" />
+    <Compile Include="Services\LibraryTileLoader.cs" />
     <Compile Include="Services\ShortcutImporter.cs" />
     <Compile Include="Services\SteamScannerService.cs" />
     <Compile Include="Controls\UserAccount.cs">
@@ -801,7 +831,14 @@
     </Compile>
     <Compile Include="Services\SystemHardwareScanner.cs" />
     <Compile Include="Services\UbisoftScannerService.cs" />
+    <Compile Include="Services\UninstallerService.cs" />
+    <Compile Include="Services\UpdateChecker.cs" />
+    <Compile Include="Services\UpdateDownloader.cs" />
+    <Compile Include="Services\UpdaterEndpoints.cs" />
+    <Compile Include="Services\UpdateService.cs" />
+    <Compile Include="Services\UpdateState.cs" />
     <Compile Include="Services\XboxScannerService.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -830,6 +867,12 @@
     <EmbeddedResource Include="Controls\driveRowControl.resx">
       <DependentUpon>driveRowControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EASettings.resx">
+      <DependentUpon>EASettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\fullLibraryControl.resx">
+      <DependentUpon>fullLibraryControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\GOGSettings.resx">
       <DependentUpon>GOGSettings.cs</DependentUpon>
     </EmbeddedResource>
@@ -838,6 +881,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\addRemoveForm.resx">
       <DependentUpon>addRemoveForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LibraryDetailControl.resx">
+      <DependentUpon>LibraryDetailControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MyRigControl.resx">
       <DependentUpon>MyRigControl.cs</DependentUpon>

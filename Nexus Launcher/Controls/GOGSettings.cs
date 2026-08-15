@@ -1,4 +1,5 @@
 ﻿using DevExpress.XtraEditors;
+using Nexus_Launcher.Helpers;
 using Nexus_Launcher.Properties;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,9 @@ namespace Nexus_Launcher.Controls
 
         private void GOGSettings_Load(object sender, EventArgs e)
         {
+            FontManager.ApplyFont(
+    this,
+    Settings.Default.UIFont);
             labelControl1.Text =
                 "Default Path:\n" +
                 MainView.gogPath +
@@ -24,6 +28,7 @@ namespace Nexus_Launcher.Controls
 
             LoadGogLibraryPaths();
             UpdateGogPathsLabel();
+            xtraTabControl1.SelectedTabPage = xtraTabPage2;
         }
 
         private void LoadGogLibraryPaths()

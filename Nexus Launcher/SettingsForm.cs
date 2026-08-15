@@ -8,8 +8,11 @@ using DevExpress.XtraSplashScreen;
 using Microsoft.Win32;
 using Nexus_Launcher.Controls;
 using Nexus_Launcher.Helpers;
+using Nexus_Launcher.Models;
 using Nexus_Launcher.Properties;
+using Nexus_Launcher.Services;
 using Nexus_Launcher.Services.Artwork;
+using Nexus_Launcher.Services.Update;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,6 +24,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -88,9 +92,13 @@ namespace Nexus_Launcher
 
         private void SettingsForm_Load(object sender, EventArgs e)
         {
+            FontManager.ApplyFont(
+    this,
+    Settings.Default.UIFont);
             try
             {
-                labelControl17.Text = $"Version: {Assembly.GetExecutingAssembly().GetName().Version}";
+                labelControl17.Text = $"Version: {BuildInfo.Version}";
+                labelControl28.Text = $"Build: {InstalledBuild.Current.build}";
                 AutoStart = Settings.Default.AutoStart;
                 MinimizeOnClose = Settings.Default.MinimizeOnClose;
                 StartMinimized = Settings.Default.StartMinimized;
@@ -138,6 +146,9 @@ namespace Nexus_Launcher
 
                 toggleSwitch17.IsOn = Settings.Default.ViewType;
                 toggleSwitch18.IsOn = Settings.Default.RootDisplayMode;
+                toggleSwitch20.IsOn = Settings.Default.enableFullLibrary;
+                toggleSwitch21.IsOn = Settings.Default.StartMaximized;
+                labelControl29.Text = "UI Font (" + Settings.Default.UIFont + ")";
                 GetdllInfo();
             }
             catch (Exception)
@@ -241,10 +252,20 @@ namespace Nexus_Launcher
 
         private void toggleSwitch2_Toggled(object sender, EventArgs e)
         {
+            if (toggleSwitch2.IsOn && toggleSwitch21.IsOn)
+            {
+                StartMinimized = true;
+                toggleSwitch21.IsOn = false;
+                Settings.Default.StartMinimized = true;
+                Settings.Default.StartMaximized = false;
+                Settings.Default.Save();
+            }
             if (toggleSwitch2.IsOn)
             {
                 StartMinimized = true;
+                
                 Settings.Default.StartMinimized = true;
+                
                 Settings.Default.Save();
             }
             else
@@ -540,12 +561,35 @@ namespace Nexus_Launcher
         private void simpleButton2_Click(object sender, EventArgs e)
         {
             string updater = Application.StartupPath + @"\updater.exe";
+            string updaterLNK = Application.StartupPath + @"\Check for updates.lnk";
             string updaterini = Application.StartupPath + @"\updater.ini";
-            if (File.Exists(updater) && (File.Exists(updaterini)))
+            if (File.Exists(updaterLNK) && (File.Exists(updaterini)))
             {
                 try
                 {
-                    System.Diagnostics.Process.Start(updater);
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = updaterLNK,
+                        UseShellExecute = true,
+                        Verb = "runas"
+                    });
+                    //System.Diagnostics.Process.Start(updaterLNK);
+                }
+                catch
+                {
+                    XtraMessageBox.Show("Updater failed");
+                }
+            }
+            else if (File.Exists(updater) && (File.Exists(updaterini)))
+            {
+                try
+                {
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = updater,
+                        UseShellExecute = true,
+                        Verb = "runas"
+                    });
                 }
                 catch
                 {
@@ -622,9 +666,29 @@ namespace Nexus_Launcher
         {
             try
             {
-                Process.Start(Application.StartupPath + @"\Nexus Uninstall.lnk");
+                if (XtraMessageBox.Show(
+                    "Are you sure you want to uninstall Nexus Launcher?\n\n" +
+                    "This will launch the Nexus Launcher uninstaller.",
+                    "Confirm Uninstall",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    Process.Start(
+                        Application.StartupPath +
+                        @"\Nexus Uninstall.lnk");
+                }
             }
-            catch (Exception ex) { XtraMessageBox.Show("Could not find uninstall path. Please uninstall via control panel!"); }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+
+                XtraMessageBox.Show(
+                    "Could not locate the Nexus Launcher uninstaller.\n\n" +
+                    "Please uninstall Nexus Launcher through Windows Settings or the Control Panel.",
+                    "Uninstall Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
 
         private void simpleButton6_Click(object sender, EventArgs e)
@@ -780,7 +844,30 @@ namespace Nexus_Launcher
 
         private void simpleButton8_Click(object sender, EventArgs e)
         {
-            OpenUserSettingsFolder();
+            try
+            {
+                if (XtraMessageBox.Show(
+                    "The configuration file contains Nexus Launcher's saved settings and preferences.\n\n" +
+                    "Editing this file incorrectly may cause settings to reset or prevent certain features from working correctly.\n\n" +
+                    "Do you want to open the configuration file?",
+                    "Open Configuration File",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    OpenUserSettingsFile();
+                }
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+
+                XtraMessageBox.Show(
+                    "The configuration file could not be opened.",
+                    "Open Configuration File",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            
         }
         public static void OpenUserSettingsFolder()
         {
@@ -808,38 +895,299 @@ namespace Nexus_Launcher
             }
             catch (Exception ex)
             {
+                Program.LogCrash(ex);
                 Console.WriteLine($"Error finding user settings: {ex.Message}");
             }
         }
-
-        private void simpleButton3_Click(object sender, EventArgs e)
+        public static void OpenUserSettingsFile()
         {
-            throw new Exception("Testing global crash handler.");
+            try
+            {
+                // 1. Force .NET to look up the active user.config path
+                Configuration userConfig = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
+                string configFilePath = userConfig.FilePath;
+
+                // 2. Open the config file directly
+                if (File.Exists(configFilePath))
+                {
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = configFilePath,
+                        UseShellExecute = true // Opens it with the default text editor/XML viewer
+                    });
+                }
+                else
+                {
+                    // Note: The file doesn't actually get created on disk until you call Settings.Default.Save() at least once!
+                    Console.WriteLine("The user.config file hasn't been created yet. Call Settings.Default.Save() first.");
+
+                    // Optional Fallback: Open the directory if the file isn't there yet
+                    string configDirectory = Path.GetDirectoryName(configFilePath);
+                    if (Directory.Exists(configDirectory))
+                    {
+                        Process.Start(new ProcessStartInfo
+                        {
+                            FileName = "explorer.exe",
+                            Arguments = $"\"{configDirectory}\"",
+                            UseShellExecute = true
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+                Console.WriteLine($"Error opening user settings: {ex.Message}");
+            }
+        }
+        public static void OpenCrashLogFile()
+        {
+            try
+            {
+                // 1. Get the directory containing user.config and locate CrashLog.txt
+                Configuration userConfig = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
+                string configDirectory = Path.GetDirectoryName(userConfig.FilePath);
+                string crashLogPath = Path.Combine(configDirectory, "CrashLog.txt");
+
+                // 2. Open the file directly
+                if (File.Exists(crashLogPath))
+                {
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = crashLogPath,
+                        UseShellExecute = true // Tells Windows to use the default app associated with .txt
+                    });
+                }
+                else
+                {
+                    Console.WriteLine("CrashLog.txt does not exist yet.");
+
+                    // Optional Fallback: If the file doesn't exist, open the directory instead
+                    if (Directory.Exists(configDirectory))
+                    {
+                        Process.Start(new ProcessStartInfo
+                        {
+                            FileName = "explorer.exe",
+                            Arguments = $"\"{configDirectory}\"",
+                            UseShellExecute = true
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+                Console.WriteLine($"Error opening crash log: {ex.Message}");
+            }
+        }
+
+        private async void simpleButton3_Click(object sender, EventArgs e)
+        {
+            UpdateInfo update =
+        await UpdateChecker.CheckAsync();
+
+            if (update == null)
+            {
+                MessageBox.Show(
+                    "Unable to contact the update server.");
+
+                return;
+            }
+
+            if (update.build <= UpdateState.InstalledBuild)
+            {
+                MessageBox.Show(
+                    "Nexus Launcher is up to date.");
+
+                return;
+            }
+
+            DialogResult result =
+                MessageBox.Show(
+                    "Build " + update.build +
+                    " is available.\n\nDownload now?",
+                    "Update Available",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Information);
+
+            if (result != DialogResult.Yes)
+                return;
+
+            string package =
+                await UpdateDownloader.DownloadAsync(update);
+
+            UpdateService.LaunchUpdater(package);
+            Environment.Exit(0);
         }
 
         public void simpleButton9_Click(object sender, EventArgs e)
         {
-           
-            ArtworkService.TotalArtworkJobs = 0;
-            ArtworkService.CompletedArtworkJobs = 0;
-            XtraMessageBox.Show("Nexus Launcher must restart to resync the artwork cache.", "Restarting...");
-            
-            
+
+            if (XtraMessageBox.Show(
+    "Rebuilding the artwork cache will clear all cached artwork and metadata before creating a fresh cache.\n\n" +
+    "Nexus Launcher will close and automatically restart to begin the rebuild process.\n\n" +
+    "Depending on the size of your game libraries, the rebuild may take several minutes.\n\n" +
+    "Do you want to continue?",
+    "Rebuild Artwork Cache",
+    MessageBoxButtons.YesNo,
+    MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                return;
+            }
+
+            Interlocked.Exchange(ref ArtworkService.totalArtworkJobs, 0);
+            Interlocked.Exchange(ref ArtworkService.completedArtworkJobs, 0);
+
+            XtraMessageBox.Show(
+                "Nexus Launcher will now restart and begin rebuilding the artwork cache.",
+                "Restarting...",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+
             _mainview.appExit = true;
             Program._mutex.Dispose();
 
-            Application.Restart();
-            try
-            {
-                _mainview.ReleaseArtworkImages();
-            }
-            catch (Exception)
-            {
+            Process process = new Process();
 
-             
-            }
+            process.StartInfo.FileName =
+                Path.Combine(
+                    Application.StartupPath,
+                    "ClearArtworkCache.bat");
+
+            process.StartInfo.UseShellExecute = false;
+
+            process.Start();
+
             Environment.Exit(0);
         }
-        
+
+        private void toggleSwitch20_Toggled(object sender, EventArgs e)
+        {
+            if (toggleSwitch20.IsOn)
+            {
+                Properties.Settings.Default.enableFullLibrary = true;
+                _mainview.barButtonItem13.Visibility = DevExpress.XtraBars.BarItemVisibility.Always;
+                Settings.Default.Save();
+            }
+            else
+            {
+                Properties.Settings.Default.enableFullLibrary = false;
+                _mainview.barButtonItem13.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
+                Settings.Default.Save();
+            }
+        }
+
+        private void toggleSwitch21_Toggled(object sender, EventArgs e)
+        {
+            if (toggleSwitch21.IsOn && toggleSwitch2.IsOn)
+            {
+                toggleSwitch2.IsOn = false;
+                Properties.Settings.Default.StartMaximized = true;
+                Properties.Settings.Default.StartMinimized = false;
+                Settings.Default.Save();
+            }
+            if (toggleSwitch21.IsOn)
+            {
+                
+                Properties.Settings.Default.StartMaximized = true;
+                
+                Settings.Default.Save();
+            }
+            else
+            {
+                Properties.Settings.Default.StartMaximized = false;
+                
+                Settings.Default.Save();
+            }
+        }
+
+        private void simpleButton10_Click(object sender, EventArgs e)
+        {
+            OpenCrashLogFile();
+        }
+
+        private void simpleButton11_Click(object sender, EventArgs e)
+        {
+            OpenUserSettingsFolder();
+        }
+
+        private void simpleButton12_Click(object sender, EventArgs e)
+        {
+            FontDialog dlg =
+    new FontDialog();
+
+            dlg.Font =
+                this.Font;
+
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                Settings.Default.UIFont =
+                    dlg.Font.FontFamily.Name;
+
+                Settings.Default.Save();
+
+                FontManager.ApplyFontToAllOpenForms(
+                    Settings.Default.UIFont);
+                labelControl29.Text = "UI Font (" + Settings.Default.UIFont + ")";
+            }
+        }
+
+        private void simpleButton13_Click(object sender, EventArgs e)
+        {
+            XtraMessageBox.Show(
+    "The Nexus Launcher uninstaller only removes Nexus Launcher itself.\n\n" +
+
+    "• Your installed games will NOT be removed.\n" +
+    "• Third-party launchers (Steam, EA App, Epic Games, Ubisoft Connect, etc.) will NOT be removed.\n" +
+    "• Most settings and configuration files may be kept so they can be restored if you reinstall Nexus Launcher.\n\n" +
+
+    "If you want to completely remove all traces of Nexus Launcher, you can manually delete any remaining configuration files after uninstalling.",
+    "About Uninstalling",
+    MessageBoxButtons.OK,
+    MessageBoxIcon.Information);
+        }
+
+        private void simpleButton15_Click(object sender, EventArgs e)
+        {
+            XtraMessageBox.Show(
+    "The configuration file contains Nexus Launcher's saved settings, preferences, and other application data.\n\n" +
+
+    "Advanced users can edit this file directly to customize settings, troubleshoot issues, or restore a previous configuration.\n\n" +
+
+    "Any changes made while Nexus Launcher is running may be overwritten when the application closes. For best results, close Nexus Launcher before editing the file and consider creating a backup beforehand.",
+    "Configuration File Information",
+    MessageBoxButtons.OK,
+    MessageBoxIcon.Information);
+        }
+
+        private void simpleButton16_Click(object sender, EventArgs e)
+        {
+            XtraMessageBox.Show(
+    "Rebuild Cache clears Nexus Launcher's existing cache and creates a fresh one.\n\n" +
+
+    "This process rescans your installed games and launchers, then rebuilds artwork, icons, logos, metadata, and other cached information.\n\n" +
+
+    "Use this option if artwork is missing, game information appears incorrect, duplicate entries are shown, or after making significant changes to your game libraries.\n\n" +
+
+    "Rebuilding the cache does not affect your installed games or personal settings, but it may take several minutes to complete depending on the size of your libraries.",
+    "About Rebuild Cache",
+    MessageBoxButtons.OK,
+    MessageBoxIcon.Information);
+        }
+
+        private void simpleButton14_Click(object sender, EventArgs e)
+        {
+            XtraMessageBox.Show(
+    "The Nexus Launcher log file contains diagnostic information recorded while the application is running.\n\n" +
+
+    "Logs can help identify startup issues, game detection problems, update failures, and other unexpected behavior. They are also useful when reporting bugs or requesting support.\n\n" +
+
+    "The log file is updated automatically while Nexus Launcher is running and may contain timestamps, system information, and error details.\n\n" +
+
+    "You can safely view the log file at any time, but avoid editing or deleting it while Nexus Launcher is running.",
+    "About the Log File",
+    MessageBoxButtons.OK,
+    MessageBoxIcon.Information);
+        }
     }
 }

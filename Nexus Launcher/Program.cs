@@ -37,6 +37,36 @@ namespace Nexus_Launcher
         [STAThread]
         static void Main()
         {
+            
+
+            
+            try
+            {
+                //if (File.Exists(Application.StartupPath + @"\latest.json"))
+                //{
+                //    File.Delete(Application.StartupPath + @"\latest.json");
+                //}
+                if (!Settings.Default.SettingsUpgraded)
+                {
+                    Settings.Default.Upgrade();
+                    
+
+                    Settings.Default.SettingsUpgraded = true;
+                    
+                    Settings.Default.Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogCrash(ex);
+                System.Diagnostics.Debug.WriteLine(
+                    "Settings upgrade failed: " + ex);
+
+                // Optional:
+                // Settings.Default.Reset();
+                // Settings.Default.SettingsUpgraded = true;
+                // Settings.Default.Save();
+            }
             Application.SetUnhandledExceptionMode(
                 UnhandledExceptionMode.CatchException);
 
@@ -49,6 +79,7 @@ namespace Nexus_Launcher
             try
             {
                 MainInternal();
+                
             }
             catch (Exception ex)
             {
@@ -83,9 +114,9 @@ namespace Nexus_Launcher
             if (!createdNew)
             {
                 var mess = MessageBox.Show(
-                    "Nexus Launcher is already running.\n\rDo you want to show the existing instance?",
+                    "Nexus Launcher is already running.\n\r\n\rDo you want to show the existing instance?(Yes)\n\r\n\rDo you want to force close the existing instance\n\rand restart?(No)\n\r\n\rDo you want to cancel and do nothing?(Cancel)",
                     "Nexus Launcher",
-                    MessageBoxButtons.YesNo,
+                    MessageBoxButtons.YesNoCancel,
                     MessageBoxIcon.Information);
 
                 if (mess == DialogResult.Yes)
@@ -101,8 +132,30 @@ namespace Nexus_Launcher
                     {
                     }
                 }
+                else
+                {
+                    if (mess == DialogResult.No)
+                    {
+                        try
+                        {
+                            Process currentProcess =
+                                Process.GetCurrentProcess();
+                            foreach (var process in Process.GetProcessesByName(currentProcess.ProcessName))
+                            {
+                                if (process.Id != currentProcess.Id)
+                                {
+                                    process.Kill();
+                                    Application.Restart();
+                                }
+                            }
+                        }
+                        catch
+                        {
+                        }
+                    }
+                }
 
-                return;
+                    return;
             }
 
             _showEvent =
@@ -111,7 +164,7 @@ namespace Nexus_Launcher
                     EventResetMode.AutoReset,
                     "NexusLauncher_Show");
 
-            SplashScreenManager.ShowForm(typeof(WaitForm1));
+            SplashScreenManager.ShowForm(MainFormInstance, typeof(WaitForm1), true, true, false);
 
             //Batteries.Init();
             //Batteries_V2.Init();
@@ -119,7 +172,7 @@ namespace Nexus_Launcher
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            UpgradeSettings();
+            //UpgradeSettings();
 
             if (Settings.Default.GOGLibraryPaths == null)
             {
@@ -220,7 +273,7 @@ namespace Nexus_Launcher
             }
         }
 
-        private static void LogCrash(
+        public static void LogCrash(
             Exception ex)
         {
             try
@@ -240,16 +293,19 @@ namespace Nexus_Launcher
                     Path.Combine(
                         logFolder,
                         "CrashLog.txt");
-
+                
                 StringBuilder sb =
                     new StringBuilder();
 
-                sb.AppendLine("===== Nexus Launcher Crash =====");
-                sb.AppendLine(DateTime.Now.ToString());
+                sb.AppendLine("===== Nexus Launcher Crash & Unhandled Events Log =====");
+                sb.AppendLine("Log Time: " + DateTime.Now.ToString());
                 sb.AppendLine();
 
                 sb.AppendLine("Application Version:");
                 sb.AppendLine(Application.ProductVersion);
+                sb.AppendLine();
+                sb.AppendLine("Build:");
+                sb.AppendLine(BuildInfo.Build.ToString());
                 sb.AppendLine();
 
                 sb.AppendLine("OS Version:");
@@ -284,9 +340,17 @@ namespace Nexus_Launcher
                 sb.AppendLine("========================================");
                 sb.AppendLine();
 
-                File.AppendAllText(
-                    logFile,
-                    sb.ToString());
+
+
+                string newEntry = sb.ToString();
+
+                // Read existing content if the file already exists; otherwise, default to empty string
+                string existingContent = File.Exists(logFile)
+                    ? File.ReadAllText(logFile)
+                    : string.Empty;
+
+                // Write the new entry first, followed by the historical logs
+                File.WriteAllText(logFile, newEntry + existingContent);
             }
             catch
             {

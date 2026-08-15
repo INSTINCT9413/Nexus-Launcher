@@ -75,6 +75,7 @@
             this.simpleButton1.Size = new System.Drawing.Size(119, 45);
             this.simpleButton1.TabIndex = 7;
             this.simpleButton1.Text = "Reset";
+            this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
             // 
             // labelControl2
             // 

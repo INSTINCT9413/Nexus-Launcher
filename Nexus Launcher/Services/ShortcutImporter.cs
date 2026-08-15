@@ -1,5 +1,6 @@
 ﻿using DevExpress.Skins.XtraForm;
 using IWshRuntimeLibrary;
+using Nexus_Launcher;
 using Nexus_Launcher.Helpers;
 using Nexus_Launcher.Models;
 using System;
@@ -124,6 +125,7 @@ public static class ShortcutImporter
             }
             catch (Exception ex)
             {
+                Program.LogCrash(ex);
                 MessageBox.Show(
                     $"Failed to import:\n{file}\n\n{ex.Message}",
                     "Import Error",

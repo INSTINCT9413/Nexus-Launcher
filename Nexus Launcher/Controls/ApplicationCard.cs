@@ -1,4 +1,8 @@
-﻿using DevExpress.XtraEditors;
+﻿using DevExpress.DXTemplateGallery.Extensions;
+using DevExpress.XtraEditors;
+using Microsoft.Web.WebView2.Core;
+using Nexus_Launcher.Helpers;
+using Nexus_Launcher.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,9 +37,14 @@ namespace Nexus_Launcher.Controls
         public Image _library { get; set; }
         public string _selectedGroup { get; set; }
         public string _executablePath { get; set; }
+        public string _gameStoreLink { get; set; }
+        
         public ApplicationCard()
         {
             InitializeComponent();
+
+            
+            
         }
 
         private void dropDownButton1_Click(object sender, EventArgs e)
@@ -50,16 +59,22 @@ namespace Nexus_Launcher.Controls
                     if (!isSteamRunning)
                     {
                         // Start Steam normally first so it can initialize its background hooks
-                        Process.Start(new ProcessStartInfo { FileName = exePathSteam, UseShellExecute = true });
+                        Process.Start(new ProcessStartInfo { FileName = exePathSteam, UseShellExecute = true, WorkingDirectory = Path.GetDirectoryName(exePathSteam) });
 
                         // Give it 3 to 5 seconds to load up before sending the game instruction
                         Thread.Sleep(4000);
                     }
-                    Process.Start(
-                    "steam://rungameid/" + _gameID);
+                    Process.Start( new ProcessStartInfo
+                    {
+                        FileName =
+                    "steam://rungameid/" + _gameID,
+                        UseShellExecute = true,
+                        WorkingDirectory = Path.GetDirectoryName(_executablePath)
+                    });
                 }
                 catch (Exception ex)
                 {
+                    Program.LogCrash(ex);
                     MessageBox.Show(
                         "Failed to launch the application: " + ex.Message);
                 }
@@ -120,7 +135,7 @@ namespace Nexus_Launcher.Controls
                     else
                     {
                        
-                        Process.Start(new ProcessStartInfo { FileName = _executablePath, Arguments = launchParams + " " + _productID, UseShellExecute = true });
+                        Process.Start(new ProcessStartInfo { FileName = _executablePath, Arguments = launchParams + " " + _productID, UseShellExecute = true, WorkingDirectory = Path.GetDirectoryName(_executablePath) });
                     }
                    
                     //MessageBox.Show(_executablePath + _productID);
@@ -128,6 +143,7 @@ namespace Nexus_Launcher.Controls
                 }
                 catch (Exception ex)
                 {
+                    Program.LogCrash(ex);
                     MessageBox.Show(
                         "Failed to launch the application: " + ex.Message);
                 }
@@ -152,6 +168,7 @@ namespace Nexus_Launcher.Controls
                 }
                 catch (Exception ex)
                 {
+                    Program.LogCrash(ex);
                     MessageBox.Show(
                         "Failed to launch the application: " + ex.Message);
                 }
@@ -172,7 +189,8 @@ namespace Nexus_Launcher.Controls
                                 FileName =
                                     _EAShortuct,
                                 UseShellExecute =
-                                    true
+                                    true,
+                                WorkingDirectory = Path.GetDirectoryName(_executablePath)
                             });
 
                         return;
@@ -180,7 +198,7 @@ namespace Nexus_Launcher.Controls
                 }
                 catch (Exception ex)
                 {
-
+                    Program.LogCrash(ex);
                 }
             }
             else if (_selectedGroup == "Ubisoft Connect")
@@ -197,25 +215,27 @@ namespace Nexus_Launcher.Controls
                                    _UbisoftURI,
 
                                 UseShellExecute =
-                                    true
+                                    true,
+                                WorkingDirectory = Path.GetDirectoryName(_executablePath)
                             });
 
                         return;
                     }
                 }
                 catch (Exception ex)
-                { 
-
+                {
+                    Program.LogCrash(ex);
                 }
             }
             else if (_selectedGroup == "Nexus Launcher")
             {
                 try
                 {
-                    Process.Start(_executablePath);
+                    Process.Start( new ProcessStartInfo { FileName = _executablePath, UseShellExecute = true, WorkingDirectory = Path.GetDirectoryName(_executablePath) });
                 }
                 catch (Exception ex)
                 {
+                    Program.LogCrash(ex);
                     MessageBox.Show(
                         "Failed to launch the application: " + ex.Message);
                 }
@@ -227,8 +247,164 @@ namespace Nexus_Launcher.Controls
             labelControl2 .Text = _executablePath;
             labelControl1.Text = _name;
             dropDownButton1.Text = "Play ";
+            
             //pictureEdit1.Image = _library;
             //pictureEdit2.Image = _header;
         }
+
+        private async void ApplicationCard_Load(object sender, EventArgs e)
+        {
+            FontManager.ApplyFont(
+    this,
+    Settings.Default.UIFont);
+            try
+            {
+                await InitializeBrowserAsync();
+
+                webView21.CoreWebView2.NewWindowRequested -=
+                    CoreWebView2_NewWindowRequested;
+
+                webView21.CoreWebView2.NewWindowRequested +=
+                    CoreWebView2_NewWindowRequested;
+
+                webView21.CoreWebView2.NavigationCompleted +=
+                    CoreWebView2_NavigationCompleted;
+
+                webView21.Source =
+                    new Uri(_gameStoreLink);
+                //sharedEnvironment = webView21.CoreWebView2.Environment;
+            }
+            catch (Exception ex)
+            {
+               // XtraMessageBox.Show(ex.ToString(),"Browser Error");
+            }
+
+        }
+        public async Task InitializeBrowserAsync()
+        {
+            if (webView21.CoreWebView2 != null)
+                return;
+
+            string profilePath =
+                Path.Combine(
+                    Application.StartupPath,
+                    "BrowserProfile");
+
+            Directory.CreateDirectory(
+                profilePath);
+
+            CoreWebView2Environment env =
+                await CoreWebView2Environment.CreateAsync(
+                    null,
+                    profilePath);
+
+             
+            await webView21.EnsureCoreWebView2Async();
+            webView21.CoreWebView2.Settings.AreDefaultContextMenusEnabled =
+                true;
+
+            webView21.CoreWebView2.Settings.AreDevToolsEnabled =
+                true;
+
+            webView21.CoreWebView2.Settings.IsStatusBarEnabled =
+                false;
+
+            webView21.CoreWebView2.Settings.IsZoomControlEnabled =
+                true;
+
+            webView21.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled =
+                true;
+        }
+        private void CoreWebView2_NewWindowRequested(
+            object sender,
+            CoreWebView2NewWindowRequestedEventArgs e)
+        {
+            try
+            {
+                e.Handled = true;
+
+                webView21.CoreWebView2.Navigate(
+                    e.Uri);
+            }
+            catch
+            {
+            }
+        }
+
+        private void CoreWebView2_NavigationCompleted(
+            object sender,
+            CoreWebView2NavigationCompletedEventArgs e)
+        {
+            try
+            {
+                if (!e.IsSuccess)
+                {
+                    // XtraMessageBox.Show("Failed to load page.","Nexus Store");
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        public void Navigate(
+            string url)
+        {
+            try
+            {
+                if (webView21.CoreWebView2 == null)
+                    return;
+
+                webView21.CoreWebView2.Navigate(
+                    url);
+            }
+            catch
+            {
+            }
+        }
+
+        public void GoBack()
+        {
+            if (webView21.CoreWebView2?.CanGoBack == true)
+            {
+                webView21.CoreWebView2.GoBack();
+            }
+        }
+
+        public void GoForward()
+        {
+            if (webView21.CoreWebView2?.CanGoForward == true)
+            {
+                webView21.CoreWebView2.GoForward();
+            }
+        }
+
+        public void RefreshPage()
+        {
+            webView21.CoreWebView2?.Reload();
+        }
+
+        public void NavigateHome()
+        {
+            
+        }
+
+        private void webView21_NavigationStarting(object sender, CoreWebView2NavigationStartingEventArgs e)
+        {
+          webView22.Visible = true;
+          webView22.BringToFront();
+        }
+
+        private void webView21_NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
+        {
+            webView22.Visible = false;
+        }
+
+        private void dropDownButton2_Click(object sender, EventArgs e)
+        {
+            webView21.Reload();
+        }
+
+        
     }
 }

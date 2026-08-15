@@ -55,8 +55,8 @@
             this.xtraTabControl1.Size = new System.Drawing.Size(697, 451);
             this.xtraTabControl1.TabIndex = 0;
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
-            this.xtraTabPage1,
-            this.xtraTabPage2});
+            this.xtraTabPage2,
+            this.xtraTabPage1});
             // 
             // xtraTabPage1
             // 
@@ -97,7 +97,7 @@
             // 
             this.labelControl2.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.labelControl2.Appearance.Options.UseFont = true;
-            this.labelControl2.Location = new System.Drawing.Point(17, 101);
+            this.labelControl2.Location = new System.Drawing.Point(17, 133);
             this.labelControl2.Name = "labelControl2";
             this.labelControl2.Size = new System.Drawing.Size(96, 20);
             this.labelControl2.TabIndex = 4;
@@ -107,7 +107,7 @@
             // 
             this.labelControl1.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
             this.labelControl1.Appearance.Options.UseFont = true;
-            this.labelControl1.Location = new System.Drawing.Point(17, 52);
+            this.labelControl1.Location = new System.Drawing.Point(17, 54);
             this.labelControl1.Name = "labelControl1";
             this.labelControl1.Size = new System.Drawing.Size(117, 25);
             this.labelControl1.TabIndex = 3;

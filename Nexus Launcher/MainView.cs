@@ -1,9 +1,12 @@
 ﻿using CCWin.SkinControl;
+using CCWin.Win32;
 using DevExpress.LookAndFeel;
 using DevExpress.Utils;
 using DevExpress.Utils.Extensions;
+using DevExpress.XtraBars;
 using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraEditors;
+using DevExpress.XtraRichEdit.Import.Html;
 using DevExpress.XtraSplashScreen;
 using DevExpress.XtraWaitForm;
 using Microsoft.Win32;
@@ -12,12 +15,12 @@ using Nexus_Launcher.Forms;
 using Nexus_Launcher.Helpers;
 using Nexus_Launcher.Models;
 using Nexus_Launcher.Properties;
-
 using Nexus_Launcher.Services;
 using Nexus_Launcher.Services.Artwork;
 using Ookii.Dialogs.WinForms;
 using QlmControls.v10;
 using Sunny.UI;
+using DevExpress.Utils.Html;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -41,11 +44,12 @@ namespace Nexus_Launcher
 {
     public partial class MainView : DevExpress.XtraBars.FluentDesignSystem.FluentDesignForm
     {
+
         // Variables (sort later)
         public MainView mainView;
+        public WaitForm1 waitForm1;
         public static string fullUserName = UserPrincipal.Current.DisplayName;
         public virtual string Title { get; set; } = "Nexus Launcher";
-
         public virtual string VersionTitle { get; set; } = "Version: " + Version;
         public static string Version = Application.ProductVersion;
         readonly static string NexusPath = Application.StartupPath;
@@ -53,6 +57,7 @@ namespace Nexus_Launcher
         readonly LauncherCard launcherCard = new LauncherCard();
         readonly NexusStore nexusStore = new NexusStore();
         readonly UserAccount userAccount = new UserAccount();
+        fullLibraryControl fullLibrary = new fullLibraryControl();
         static bool notiShown = false;
         public bool appExit = false;
         readonly List<LauncherDefinition> launchers = new List<LauncherDefinition>();
@@ -61,7 +66,18 @@ namespace Nexus_Launcher
         public string selectedGroup;
         private FileSystemWatcher steamWatcher;
         private CancellationTokenSource steamReloadToken;
-
+        SteamScannerService steamscanner =
+                        new SteamScannerService();
+        EpicScannerService epicscanner =
+                    new EpicScannerService();
+        GOGScannerService gogscanner =
+                    new GOGScannerService();
+        BattleNetScannerService battleNetscanner =
+                    new BattleNetScannerService();
+        EAScannerService eascanner =
+                    new EAScannerService();
+        UbisoftScannerService ubisoftscanner =
+                    new UbisoftScannerService();
         LauncherInfo steamInfo = new LauncherInfo
         {
             Name = "Steam",
@@ -138,18 +154,22 @@ namespace Nexus_Launcher
         public static string windowsStorePath = sysDisk + @"Program Files\WindowsApps\Microsoft.WindowsStore_8wekyb3d8bbwe";
         public static string paradoxLauncherPath = sysDisk + @"Users\" + currentUser + @"\AppData\Local\Programs\Paradox Interactive\launcher";
         public static string eaAppPath = !string.IsNullOrWhiteSpace(Settings.Default.eaPath) ? Path.GetDirectoryName(Settings.Default.eaPath) : string.Empty;
-
+        public static string originPath = sysDisk + @"Program Files (x86)\Origin";
+        public static string eaGamesPath = sysDisk + @"Program Files\EA Games";
         public string aboutNexusLauncher = "Nexus Launcher is a unified game and application launcher designed to bring all of your gaming platforms together in one place. It automatically detects supported launchers such as Steam, Epic Games, GOG Galaxy, Ubisoft Connect, EA App, Battle.net, and others, allowing you to browse and launch your installed games from a single interface. Nexus Launcher also supports custom applications, making it easy to organize games, tools, and programs in one centralized library. Built with performance and customization in mind, Nexus Launcher aims to simplify game management while providing a clean, modern experience for PC gamers.";
-        
+        private readonly ContextMenuStrip gameContextMenu = new ContextMenuStrip();
+        private readonly PopupMenu gameContextMenu0 = new PopupMenu();
+        private GameInfo selectedGame;
         public MainView()
         {
+            
             System.Diagnostics.Debug.WriteLine("Hello Debug");
             Console.WriteLine("Hello Console");
             InitializeComponent();
             ArtworkService.ArtworkDownloaded += ArtworkService_ArtworkDownloaded;
             SplashScreenManager.Default.SetWaitFormDescription("Initializing...");
             ThemesSettings settings =
-    ThemeSettingsManager.Load();
+            ThemeSettingsManager.Load();
             EnableAcrylicAccent = true;
             if (!string.IsNullOrWhiteSpace(
                 settings.SkinName))
@@ -249,6 +269,7 @@ namespace Nexus_Launcher
             }
             catch (Exception ex)
             {
+                Program.LogCrash(ex);
                 XtraMessageBox.Show(
                     ex.ToString());
             }
@@ -348,6 +369,7 @@ namespace Nexus_Launcher
             }
             catch (Exception ex)
             {
+                Program.LogCrash(ex);
                 XtraMessageBox.Show(ex.ToString());
             }
         }
@@ -443,6 +465,7 @@ namespace Nexus_Launcher
             }
             catch (Exception ex)
             {
+                Program.LogCrash(ex);
                 XtraMessageBox.Show(ex.ToString());
             }
         }
@@ -536,6 +559,7 @@ namespace Nexus_Launcher
             }
             catch (Exception ex)
             {
+                Program.LogCrash(ex);
                 XtraMessageBox.Show(ex.ToString());
             }
         }
@@ -671,6 +695,7 @@ namespace Nexus_Launcher
             }
             catch (Exception ex)
             {
+                Program.LogCrash(ex);
                 XtraMessageBox.Show(
                     ex.ToString());
             }
@@ -823,6 +848,7 @@ namespace Nexus_Launcher
             }
             catch (Exception ex)
             {
+                Program.LogCrash(ex);
                 XtraMessageBox.Show(
                     ex.ToString());
             }
@@ -890,45 +916,53 @@ namespace Nexus_Launcher
         #endregion
         private async void MainView_Load_1(object sender, EventArgs e)
         {
+            FontManager.ApplyFont(
+    this,
+    Settings.Default.UIFont);
             
+            Hide();
+            accordionControl2.Enabled = false;
+            barButtonItem13.Enabled = false;
             // Disables the focus rectangle globally for all DevExpress SimpleButtons
             DevExpress.XtraEditors.WindowsFormsSettings.FocusRectStyle = DevExpress.Utils.Paint.DXDashStyle.None;
-            this.Hide();
             if (Settings.Default.StartMinimized)
             {
-             
-                    Hide();
+                Hide();
 
-                    ShowInTaskbar = false;
+                ShowInTaskbar = false;
+                notifyIcon1.Visible = true;
 
-                    notifyIcon1.Visible = true;
-
-                    if (notiShown == false)
-                    {
-                        notifyIcon1.ShowBalloonTip(
+                if (!notiShown)
+                {
+                    notifyIcon1.ShowBalloonTip(
                         3000,
                         "Nexus Launcher",
                         "Nexus Launcher has started and is running in the system tray.",
                         ToolTipIcon.Info);
-                        notiShown = true;
-                    }
 
-
-                    
+                    notiShown = true;
                 }
-
+            }
             else
             {
-                this.WindowState = FormWindowState.Normal;
+                BeginInvoke(new Action(() =>
+                {
+                    WindowState = Settings.Default.StartMaximized
+                        ? FormWindowState.Maximized
+                        : FormWindowState.Normal;
+
+                    Show();
+                    Activate();
+                }));
+
                 if (!Settings.Default.HideEANotice)
                 {
                     taskDialog1.ShowDialog(this);
-                    
                 }
             }
-            
+
             this.Text = Title;
-            this.barStaticItem1.Caption = VersionTitle;
+            this.barStaticItem1.Caption = InstalledBuild.Display;
             //aloneTextBox1.Text = NexusPath;
             
             barButtonItem4.Caption = fullUserName;
@@ -937,11 +971,13 @@ namespace Nexus_Launcher
             launcherCard.Dock = DockStyle.Fill;
             nexusStore.Dock = DockStyle.Fill;
             userAccount.Dock = DockStyle.Fill;
+            fullLibrary.Dock = DockStyle.Fill;
             //applicationCard.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             splitContainerControl1.Panel2.Controls.Add(applicationCard);
             splitContainerControl1.Panel2.Controls.Add(launcherCard);
             launcherCard.xtraTabPage4.Controls.Add(nexusStore);
             splitContainerControl1.Panel2.Controls.Add(userAccount);
+            splitContainerControl1.Panel2.Controls.Add(fullLibrary);
             applicationCard.Visible = false;
             launcherCard.Visible = false;
             nexusStore.Visible = false;
@@ -1141,7 +1177,16 @@ namespace Nexus_Launcher
                     {
                         accordionControl2.ViewType = AccordionControlViewType.Standard;
                     }
-            await LauncherStartupService.StartConfiguredLaunchersAsync();
+            if (Settings.Default.enableFullLibrary == true)
+            {
+                barButtonItem13.Visibility = DevExpress.XtraBars.BarItemVisibility.Always;
+            }
+            else
+            {
+                barButtonItem13.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
+            }
+                await LauncherStartupService.StartConfiguredLaunchersAsync();
+            BuildGameContextMenu();
         }
         public void FocusGOGSettings()
         {
@@ -1411,7 +1456,25 @@ namespace Nexus_Launcher
                 groupWargaming.Tag = wargamingInfo;
             }
             ShowHideLaunchers();
+            LibraryService.Clear();
 
+            LibraryService.AddGames(
+                steamscanner.ScanGames(steamPath));
+
+            LibraryService.AddGames(
+                epicscanner.ScanGames());
+
+            LibraryService.AddGames(
+                gogscanner.ScanGames());
+
+            LibraryService.AddGames(
+                battleNetscanner.ScanGames());
+
+            LibraryService.AddGames(
+                eascanner.ScanGames());
+
+            LibraryService.AddGames(
+                ubisoftscanner.ScanGames());
         }
         private async void ShowHideLaunchers()
         {
@@ -1510,13 +1573,21 @@ namespace Nexus_Launcher
             await Task.Delay(1500);
             ArtworkService.FinishRegistration();
             SplashHelper.UpdateStatus("Downloading Artwork, Please Wait...");
+            
             await ArtworkService.QueueFinished;
+            accordionControl2.Enabled = true;
+            barButtonItem13.Enabled = true;
             SplashScreenManager.CloseForm();
             taskbarAssistant2.ProgressMode = DevExpress.Utils.Taskbar.Core.TaskbarButtonProgressMode.NoProgress;
+            groupNexus.Text = $"Nexus ({groupNexus.Elements.Count})";
+            groupEA.Text = $"EA ({groupEA.Elements.Count})";
+            groupEpic.Text = $"Epic Games ({groupEpic.Elements.Count})";
+            groupGOG.Text = $"GOG ({groupGOG.Elements.Count})";
+            groupSteam.Text = $"Steam ({groupSteam.Elements.Count})";
+            groupUbisoft.Text = $"Ubisoft ({groupUbisoft.Elements.Count})";
+            groupBattleNet.Text = $"Battle.net ({groupBattleNet.Elements.Count})";
         }
-        private void ArtworkService_ArtworkProgressChanged(
-    int completed,
-    int total)
+        private void ArtworkService_ArtworkProgressChanged(int completed, int total)
         {
             if (InvokeRequired)
             {
@@ -1569,7 +1640,7 @@ namespace Nexus_Launcher
 
                     item.Text =
                         game.Name;
-
+                    game.Launcher = "Nexus Launcher";
                     item.Style =
                         ElementStyle.Item;
 
@@ -1581,6 +1652,7 @@ namespace Nexus_Launcher
             }
             catch (Exception ex)
             {
+                Program.LogCrash(ex);
                 XtraMessageBox.Show(ex.ToString());
             }
 
@@ -1592,11 +1664,10 @@ namespace Nexus_Launcher
             {
                 await Task.Run(() =>
                 {
-                    SteamScannerService scanner =
-                        new SteamScannerService();
+                    
 
                     LauncherInfo updated =
-                        scanner.ScanSteam(
+                        steamscanner.ScanSteam(
                             steamInfo.InstallPath);
 
                     steamInfo.Games =
@@ -1612,6 +1683,7 @@ namespace Nexus_Launcher
             }
             catch (Exception ex)
             {
+                Program.LogCrash(ex);
                 XtraMessageBox.Show(ex.ToString());
             }
         }
@@ -1673,12 +1745,10 @@ namespace Nexus_Launcher
             {
                 await Task.Run(() =>
                 {
-                    EpicScannerService scanner =
-                    new EpicScannerService();
+                    
 
                     epicInfo.Games =
-                        scanner.ScanGames();
-
+                        epicscanner.ScanGames();
                     foreach (GameInfo game in epicInfo.Games)
                     {
                         AccordionControlElement item =
@@ -1701,6 +1771,7 @@ namespace Nexus_Launcher
             }
             catch (Exception ex)
             {
+                Program.LogCrash(ex);
                 XtraMessageBox.Show(ex.ToString());
             }
         }
@@ -1732,13 +1803,12 @@ namespace Nexus_Launcher
         {
             try
             {
-                BattleNetScannerService scanner =
-                    new BattleNetScannerService();
+                
 
                 battleNetInfo.Games =
                     await Task.Run(() =>
                     {
-                        return scanner.ScanGames();
+                        return battleNetscanner.ScanGames();
                     });
 
                 PopulateBattleNetGames(
@@ -1746,6 +1816,7 @@ namespace Nexus_Launcher
             }
             catch (Exception ex)
             {
+                Program.LogCrash(ex);
                 XtraMessageBox.Show(
                     ex.ToString());
             }
@@ -1789,13 +1860,12 @@ namespace Nexus_Launcher
         {
             try
             {
-                GOGScannerService scanner =
-                    new GOGScannerService();
+                
 
                 List<GameInfo> games =
                     await Task.Run(() =>
                     {
-                        return scanner.ScanGames();
+                        return gogscanner.ScanGames();
                     });
                 
                 groupGOG.Elements.Clear();
@@ -1824,6 +1894,7 @@ namespace Nexus_Launcher
                         }
                         catch(Exception ex)
                         {
+                            Program.LogCrash(ex);
                             XtraMessageBox.Show("ERROR: " + ex.Message);
                         }
                     }
@@ -1834,6 +1905,7 @@ namespace Nexus_Launcher
             }
             catch (Exception ex)
             {
+                Program.LogCrash(ex);
                 XtraMessageBox.Show(ex.ToString());
             }
 
@@ -1842,13 +1914,12 @@ namespace Nexus_Launcher
         {
             try
             {
-                EAScannerService scanner =
-                    new EAScannerService();
+                
 
                 List<GameInfo> games =
                     await Task.Run(() =>
                     {
-                        return scanner.ScanGames();
+                        return eascanner.ScanGames();
                     });
 
                 groupEA.Elements.Clear();
@@ -1892,7 +1963,8 @@ namespace Nexus_Launcher
             }
             catch (Exception ex)
             {
-                   XtraMessageBox.Show(
+                Program.LogCrash(ex);
+                XtraMessageBox.Show(
                     ex.ToString());
             }
         }
@@ -1900,13 +1972,12 @@ namespace Nexus_Launcher
         {
             try
             {
-                UbisoftScannerService scanner =
-                    new UbisoftScannerService();
+               
 
                 List<GameInfo> games =
                     await Task.Run(() =>
                     {
-                        return scanner.ScanGames();
+                        return ubisoftscanner.ScanGames();
                     });
 
                 groupUbisoft.Elements.Clear();
@@ -1950,6 +2021,7 @@ namespace Nexus_Launcher
             }
             catch (Exception ex)
             {
+                Program.LogCrash(ex);
                 XtraMessageBox.Show(
                     ex.ToString());
             }
@@ -1989,6 +2061,7 @@ namespace Nexus_Launcher
             }
             catch (Exception ex)
             {
+                Program.LogCrash(ex);
                 XtraMessageBox.Show(
                     ex.ToString());
             }
@@ -2020,35 +2093,45 @@ namespace Nexus_Launcher
         }
         private void accordionControl2_StateChanged(object sender, EventArgs e)
         {
-            if (accordionControl2.OptionsMinimizing.State == AccordionControlState.Minimized)
+            // Always wrap Suspend/Resume layout in a try-finally block
+            accordionControl2.SuspendLayout();
+            try
             {
-                
-                splitContainerControl1.SplitterPosition = 60;
-                foreach (AccordionControlElement group in accordionControl2.Elements)
+                if (accordionControl2.OptionsMinimizing.State == AccordionControlState.Minimized)
                 {
-                    foreach (AccordionControlElement item in group.Elements)
+                    splitContainerControl1.SplitterPosition = 60;
+
+                    foreach (AccordionControlElement group in accordionControl2.Elements)
                     {
-                        if (item.Style == ElementStyle.Item)
+                        foreach (AccordionControlElement item in group.Elements)
                         {
-                            item.Visible = false;
+                            if (item.Style == ElementStyle.Item)
+                            {
+                                item.Visible = false;
+                            }
+                        }
+                    }
+                }
+                else if (accordionControl2.OptionsMinimizing.State == AccordionControlState.Normal)
+                {
+                    splitContainerControl1.SplitterPosition = 400;
+
+                    foreach (AccordionControlElement group in accordionControl2.Elements)
+                    {
+                        foreach (AccordionControlElement item in group.Elements)
+                        {
+                            if (item.Style == ElementStyle.Item)
+                            {
+                                item.Visible = true;
+                            }
                         }
                     }
                 }
             }
-            else
+            finally
             {
-
-                splitContainerControl1.SplitterPosition = 400;
-                foreach (AccordionControlElement group in accordionControl2.Elements)
-                {
-                    foreach (AccordionControlElement item in group.Elements)
-                    {
-                        if (item.Style == ElementStyle.Item)
-                        {
-                            item.Visible = true;
-                        }
-                    }
-                }
+                // THIS WAS MISSING: It forces the control to recalculate and paint the changes
+                accordionControl2.ResumeLayout();
             }
         }
 
@@ -2106,6 +2189,7 @@ namespace Nexus_Launcher
                 }
                 catch (Exception ex)
                 {
+                    Program.LogCrash(ex);
                     XtraMessageBox.Show("Failed to open Nexus Store: " + ex.Message);
                 }
             }
@@ -2125,6 +2209,7 @@ namespace Nexus_Launcher
                 }
                 catch (Exception ex)
                 {
+                    Program.LogCrash(ex);
                     XtraMessageBox.Show("Failed to launch Windows Store: " + ex.Message);
                 }
             }
@@ -2142,6 +2227,7 @@ namespace Nexus_Launcher
                 }
                 catch (Exception ex)
                 {
+                    Program.LogCrash(ex);
                     XtraMessageBox.Show(ex.ToString());
                 }
             }
@@ -2220,11 +2306,15 @@ namespace Nexus_Launcher
 
         private void accordionControl2_ElementClick(object sender, ElementClickEventArgs e)
         {
+            // Get game from Tag
+            GameInfo game =
+                e.Element.Tag as GameInfo;
             applicationCard.BringToFront();
             applicationCard._header = null;
             applicationCard._icon = null;
             applicationCard._library = null;
             nexusStore.Visible = true;
+            
             //applicationCard._selectedGroup = null;
             // Ignore groups
             if (e.Element.Style != ElementStyle.Item)
@@ -2237,12 +2327,14 @@ namespace Nexus_Launcher
                     launcherCard._selectedGroup = "Steam";
                     nexusStore.NexusStoreUrl = "https://store.steampowered.com/";
                     nexusStore.webView21.Source = new Uri(nexusStore.NexusStoreUrl);
+                    applicationCard._gameStoreLink = nexusStore.NexusStoreUrl;
                     launcherCard.Visible = true;
                     applicationCard.Visible = false;
                     launcherCard.clientName = "Steam";
                     launcherCard.clientIcon = Resources.Steam_icon_logo_svg; // Replace with actual path to Steam icon
                     launcherCard.isNexusLauncher = false;
                     launcherCard.HideGOGSettings();
+                    launcherCard.HideEASettings();
                     ResumeLayout();
                 }
                 if (e.Element == groupEpic)
@@ -2259,6 +2351,7 @@ namespace Nexus_Launcher
                     launcherCard.clientIcon = Resources.epic_games_black_logo_icon_147139; // Replace with actual path to Epic Games icon
                     launcherCard.isNexusLauncher = false;
                     launcherCard.HideGOGSettings();
+                    launcherCard.HideEASettings();
                     ResumeLayout();
                 }
                 if (e.Element == groupNexus)
@@ -2275,6 +2368,7 @@ namespace Nexus_Launcher
                     launcherCard.clientIcon = Resources.dfveffb_9b262552_e352_4348_aefc_8e699002c946; // Replace with actual path to Nexus Launcher icon
                     launcherCard.isNexusLauncher = true;
                     launcherCard.HideGOGSettings();
+                    launcherCard.HideEASettings();
                     ResumeLayout();
                 }
                 if (e.Element == groupBattleNet)
@@ -2294,6 +2388,7 @@ namespace Nexus_Launcher
                     launcherCard.clientIcon = Resources.unnamed; // Replace with actual path to Battle.net icon
                     launcherCard.isNexusLauncher = false;
                     launcherCard.HideGOGSettings();
+                    launcherCard.HideEASettings();
                     ResumeLayout();
                 }
                 if (e.Element == groupGOG)
@@ -2310,6 +2405,7 @@ namespace Nexus_Launcher
                     launcherCard.clientIcon = Resources.d8ac3b01ba19729174a8f1e63c9e937c; // Replace with actual path to GOG Galaxy icon
                     launcherCard.isNexusLauncher = false;
                     launcherCard.ShowGOGSettings();
+                    launcherCard.HideEASettings();
                     ResumeLayout();
                 }
                 if (e.Element == groupUbisoft)
@@ -2326,6 +2422,7 @@ namespace Nexus_Launcher
                     launcherCard.clientIcon = Resources._1024x1024; // Replace with actual path to Ubisoft Connect icon
                     launcherCard.isNexusLauncher = false;
                     launcherCard.HideGOGSettings();
+                    launcherCard.HideEASettings();
                     ResumeLayout();
                 }
                 if (e.Element == groupParadox)
@@ -2342,6 +2439,7 @@ namespace Nexus_Launcher
                     launcherCard.clientIcon = Resources.Paradox_Interactive_logo; // Replace with actual path to Paradox Launcher icon
                     launcherCard.isNexusLauncher = false;
                     launcherCard.HideGOGSettings();
+                    launcherCard.HideEASettings();
                     ResumeLayout();
                 }
                 if (e.Element == groupAmazon)
@@ -2357,6 +2455,7 @@ namespace Nexus_Launcher
                     launcherCard.clientIcon = Resources.amazon_games_icon; // Replace with actual path to Amazon Games Game Center icon
                     launcherCard.isNexusLauncher = false;
                     launcherCard.HideGOGSettings();
+                    launcherCard.HideEASettings();
                     ResumeLayout();
                 }
                 if (e.Element == groupEA)
@@ -2373,6 +2472,7 @@ namespace Nexus_Launcher
                     launcherCard.clientIcon = Resources._256x256; // Replace with actual path to EA App icon
                     launcherCard.isNexusLauncher = false;
                     launcherCard.HideGOGSettings();
+                    launcherCard.ShowEASettings();
                     ResumeLayout();
                 }
                 if (e.Element == groupWargaming)
@@ -2388,6 +2488,7 @@ namespace Nexus_Launcher
                     launcherCard.clientIcon = Resources.wargaming; // Replace with actual path to Wargaming icon
                     launcherCard.isNexusLauncher = false;
                     launcherCard.HideGOGSettings();
+                    launcherCard.HideEASettings();
                     ResumeLayout();
                 }
                 if (e.Element == groupXbox)
@@ -2403,6 +2504,7 @@ namespace Nexus_Launcher
                     launcherCard.clientIcon = Resources.apps_60199_13798539581762600_abe1643f_1704_4a4d_a61b_47ccc25da012; // Replace with actual path to Windows Store icon
                     launcherCard.isNexusLauncher = false;
                     launcherCard.HideGOGSettings();
+                    launcherCard.HideEASettings();
                     ResumeLayout();
                 }
                 if (e.Element == groupWindowsStore)
@@ -2418,18 +2520,15 @@ namespace Nexus_Launcher
                     launcherCard.clientIcon = Resources.apps_22118_9007199266252480_94f4e265_68d4_4ddc_a67b_b29c8d3021c8; // Replace with actual path to GOG Galaxy icon
                     launcherCard.isNexusLauncher = false;
                     launcherCard.HideGOGSettings();
+                    launcherCard.HideEASettings();
                     ResumeLayout();
                 }
                 
             }
-
-            // Get game from Tag
-            GameInfo game =
-                e.Element.Tag as GameInfo;
+            
 
             if (game == null)
                 return;
-            
             try
             {
                 applicationCard.Visible = true;
@@ -2442,6 +2541,8 @@ namespace Nexus_Launcher
                 applicationCard._name = game.Name;
                 applicationCard._executablePath = game.ExecutablePath;
                 applicationCard._productID = game.ProductId;
+
+                
 
                 if (File.Exists(game.LogoPath))
                 {
@@ -2478,12 +2579,87 @@ namespace Nexus_Launcher
                 //Process.Start(
                 //    "steam://rungameid/" +
                 //    game.AppId);
+                if (game.Launcher == "Steam")
+                {
 
+                    applicationCard.webView21.Source = new Uri("https://store.steampowered.com/app/" + game.AppId);
+                    //MessageBox.Show("Nexus Launcher - Steam - " + applicationCard.webView21.Source);
+                }
+                if (game.Launcher == "Epic Games")
+                {
+                    string formattedName = game.Name.Replace(" ", "-").Replace("'", "").ToLower();
+                    applicationCard.webView21.Source = new Uri("https://store.epicgames.com/p/" + formattedName);
+                    //MessageBox.Show("Nexus Launcher - Epic Games - " + applicationCard.webView21.Source);
+                }
+                if (game.Launcher == "Battle.net" && game.Name == "StarCraft")
+                {
+                    string formattedName = game.Name.Replace(" ", "-").Replace("'", "").ToLower() + "-remastered";
+                    applicationCard.webView21.Source = new Uri("https://us.shop.battle.net/en-us/product/" + formattedName);
+                    //MessageBox.Show("Nexus Launcher - Battle.net - " + applicationCard.webView21.Source);
+                }
+                else if (game.Launcher == "Battle.net")
+                {
+                    string formattedName = game.Name.Replace(" ", "-").Replace("'", "").ToLower();
+                    applicationCard.webView21.Source = new Uri("https://us.shop.battle.net/en-us/product/" + formattedName);
+                    //MessageBox.Show("Nexus Launcher - Battle.net - " + applicationCard.webView21.Source);
+                }
+                if (game.Launcher == "GOG")
+                {
+                    string formattedName = game.Name.Replace(" - ", "_").Replace(" ", "_").Replace("-", "_").ToLower();
+                    applicationCard.webView21.Source = new Uri("https://www.gog.com/en/game/" + formattedName);
+                    //MessageBox.Show("Nexus Launcher - GOG - " + applicationCard.webView21.Source);
+                }
+                if (game.Launcher == "EA")
+                {
+                    string gameSerise;
+                    if (game.Name.Contains("FIFA"))
+                    {
+                        gameSerise = "fifa";
+                    }
+                    else if (game.Name.Contains("Battlefield"))
+                    {
+                        gameSerise = "battlefield";
+                    }
+                    else if (game.Name.Contains("Need for Speed"))
+                    {
+                        gameSerise = "need-for-speed";
+                    }
+                    else if (game.Name.Contains("The Sims"))
+                    {
+                        gameSerise = "the-sims";
+                    }
+                    else if (game.Name.Contains("Apex Legends"))
+                    {
+                        gameSerise = "apex-legends";
+                    }
+                    else if (game.Name.Contains("Star Wars"))
+                    {
+                        gameSerise = "star-wars";
+                    }
+                    else if (game.Name.Contains("Command and Conquer") || game.Name.Contains("Command & Conquer"))
+                    {
+                        gameSerise = "command-and-conquer";
+                    }
+                    else
+                    {
+                        gameSerise = game.Name;
+                    }
+                    string formattedName1 = gameSerise + "/";
+                    string formattedName2 = game.Name.Replace("&", "and").Replace("™", "").Replace(" - ", "-").Replace(" ", "-").Replace("'", "").ToLower();
+                    applicationCard.webView21.Source = new Uri("https://www.ea.com/games/"+ formattedName1 + formattedName2);
+                    //MessageBox.Show("Nexus Launcher - EA App - " + applicationCard.webView21.Source);
+                }
+                if (game.Launcher == "Ubisoft" || game.Launcher == "Nexus Launcher" || game.Launcher == string.Empty)
+                {
+                    
+                    applicationCard.webView21.Source = new Uri("https://guardbyte.me/downloads/Nexus%20Launcher/store-not-supported.html");
+                    //MessageBox.Show("Nexus Launcher - Ubisoft Connect - " + applicationCard.webView21.Source);
+                }
             }
             catch (Exception ex)
             {
-                XtraMessageBox.Show(
-                    ex.Message + " "+ ex.Source+ ex.InnerException, "test");
+                Program.LogCrash(ex);
+                // XtraMessageBox.Show( ex.Message + " "+ ex.Source+ ex.InnerException, "test");
             }
         }
 
@@ -2578,10 +2754,22 @@ namespace Nexus_Launcher
                     {
                         e.Cancel = true;
                     }
+                    if (result == DialogResult.Yes)
+                    {
+                        // Dispose watchers and cancel tokens
+                        disposeClose();
+                        Environment.Exit(0);
+                    }
+
                 }
             }
+
+            disposeClose();
             
-            
+
+        }
+        public void disposeClose()
+        {
             //Dispose anything needed to end
             steamWatcher?.Dispose();
             steamReloadToken?.Cancel();
@@ -2601,8 +2789,12 @@ namespace Nexus_Launcher
             DisposeEAWatchers();
             eaReloadToken?.Cancel();
             eaReloadToken?.Dispose();
+            notifyIcon1.Visible = false;
+            notifyIcon1.Dispose();
+            
+            Thread.Sleep(2000);
+            
         }
-
         private void barButtonItem5_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             SettingsForm settingsForm = new SettingsForm(this);
@@ -2673,9 +2865,9 @@ namespace Nexus_Launcher
 
         private void barButtonItem10_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            this.Dispose();
-            Application.ExitThread();
-            Application.Exit();
+            
+            Environment.Exit(0);
+            //Application.Exit();
             
         }
 
@@ -2782,44 +2974,26 @@ namespace Nexus_Launcher
            
         }
 
-        private async void barButtonItem13_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private void barButtonItem13_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            SteamGridGame game =
-        await SteamGridDbClient.LookupSteamAsync(620);
-
-            if (game == null)
+            accordionControl2.SuspendLayout();
+            try
             {
-                MessageBox.Show("Game not found.");
-                return;
+                // Set the state first so the event fires cleanly
+                accordionControl2.OptionsMinimizing.State = AccordionControlState.Minimized;
+
+                // If you want everything collapsed when they expand it later:
+                //accordionControl2.CollapseAll();
+
+                fullLibrary.Show();
+                fullLibrary.BringToFront();
+                fullLibrary.Visible = true;
+                fullLibrary.PopulateLibrary();
             }
-
-            SteamGridImage grid =
-                await SteamGridDbClient.GetGridAsync(game.Id);
-
-            SteamGridImage hero =
-                await SteamGridDbClient.GetHeroAsync(game.Id);
-
-            string folder =
-                Path.Combine(
-                    Environment.GetFolderPath(
-                        Environment.SpecialFolder.Desktop),
-                    "SteamGridTest");
-
-            if (grid != null)
+            finally
             {
-                await SteamGridDbClient.DownloadFileAsync(
-                    grid.Url,
-                    Path.Combine(folder, "grid.jpg"));
+                accordionControl2.ResumeLayout();
             }
-
-            if (hero != null)
-            {
-                await SteamGridDbClient.DownloadFileAsync(
-                    hero.Url,
-                    Path.Combine(folder, "hero.jpg"));
-            }
-
-            MessageBox.Show("Finished");
         }
         private void ArtworkService_ArtworkDownloaded(GameInfo game)
         {
@@ -2878,9 +3052,457 @@ namespace Nexus_Launcher
             ArtworkCache.ClearCache();
             ArtworkService.RedownloadAllArtwork();
         }
+        private void BuildGameContextMenu()
+        {
+            gameContextMenu.Items.Clear();
+
+            gameContextMenu.Items.Add(
+                "Play",
+                null,
+                PlayGame_Click);
+
+            gameContextMenu.Items.Add(
+                "Browse Local Files",
+                null,
+                BrowseFiles_Click);
+
+            gameContextMenu.Items.Add(
+                "Open Install Folder",
+                null,
+                OpenFolder_Click);
+
+            gameContextMenu.Items.Add(
+                new ToolStripSeparator());
+
+            gameContextMenu.Items.Add(
+                "Uninstall",
+                null,
+                Uninstall_Click);
+        }
+        private void PlayGame_Click(
+    object sender,
+    EventArgs e)
+        {
+            if (selectedGame == null)
+                return;
+
+            //LaunchGame(selectedGame);
+        }
+
+        private void BrowseFiles_Click(
+            object sender,
+            EventArgs e)
+        {
+            if (selectedGame == null)
+                return;
+
+            if (!string.IsNullOrWhiteSpace(
+                selectedGame.ExecutablePath))
+            {
+                Process.Start(
+                    "explorer.exe",
+                    "/select,\"" +
+                    selectedGame.ExecutablePath +
+                    "\"");
+            }
+        }
+
+        private void OpenFolder_Click(
+            object sender,
+            EventArgs e)
+        {
+            if (selectedGame == null)
+                return;
+
+            if (Directory.Exists(
+                selectedGame.InstallPath))
+            {
+                Process.Start(
+                    "explorer.exe",
+                    selectedGame.InstallPath);
+            }
+        }
+
+        private void Uninstall_Click(
+            object sender,
+            EventArgs e)
+        {
+            if (selectedGame == null)
+                return;
+
+            // Steam for now
+            Process.Start(
+                "steam://uninstall/" +
+                selectedGame.ProductId);
+        }
         private void accordionControl2_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void fluentDesignFormControl2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void accordionControl2_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right)
+                return;
+
+            AccordionControl accordion =
+                sender as AccordionControl;
+
+            var hit =
+                accordion.CalcHitInfo(e.Location);
+
+            if (hit.ItemInfo == null)
+                return;
+
+            AccordionControlElement element =
+                hit.ItemInfo.Element;
+
+            if (element == null)
+                return;
+
+            selectedGame =
+                element.Tag as GameInfo;
+
+            if (selectedGame == null)
+                return;
+
+            //gameContextMenu.Show(accordion, e.Location);
+            popupMenu2.ShowPopup(Cursor.Position);
+        }
+
+        private void contextPlay_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (applicationCard._selectedGroup == "Steam")
+            {
+                try
+                {
+                    string exePathSteam = MainView.sysDisk + @"Program Files (x86)\Steam\Steam.exe";
+                    bool isSteamRunning = Process.GetProcessesByName("Steam").Any();
+                    if (!isSteamRunning)
+                    {
+                        // Start Steam normally first so it can initialize its background hooks
+                        Process.Start(new ProcessStartInfo { FileName = exePathSteam, UseShellExecute = true, WorkingDirectory = Path.GetDirectoryName(exePathSteam) });
+
+                        // Give it 3 to 5 seconds to load up before sending the game instruction
+                        Thread.Sleep(4000);
+                    }
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName =
+                    "steam://rungameid/" + applicationCard._gameID,
+                        UseShellExecute = true,
+                        WorkingDirectory = Path.GetDirectoryName(applicationCard._executablePath)
+                    });
+                }
+                catch (Exception ex)
+                {
+                    Program.LogCrash(ex);
+                    MessageBox.Show(
+                        "Failed to launch the application: " + ex.Message);
+                }
+
+            }
+            else if (applicationCard._selectedGroup == "Epic Games")
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName =
+           "com.epicgames.launcher://apps/" +
+           applicationCard._launchString +
+           "?action=launch&silent=true",
+                    UseShellExecute = true
+                });
+            }
+            else if (applicationCard._selectedGroup == "Battle.net")
+            {
+                try
+                {
+
+                    string exePath = MainView.sysDisk + @"Program Files (x86)\Battle.net\Battle.net.exe";
+                    string launchParams = "-nostreamline -sso -launch -uid";
+                    string diabloIVParams = "-launch";
+                    // 1. Force your product ID to uppercase if required by Blizzard's system
+                    string cleanProductID = applicationCard._productID.ToUpper();
+
+                    // 2. Check if Battle.net is already running in the background
+                    bool isBnetRunning = Process.GetProcessesByName("Battle.net").Any();
+
+                    if (!isBnetRunning)
+                    {
+                        // Start Battle.net normally first so it can initialize its background hooks
+                        Process.Start(new ProcessStartInfo { FileName = exePath, UseShellExecute = true });
+
+                        // Give it 3 to 5 seconds to load up before sending the game instruction
+                        Thread.Sleep(4000);
+                    }
+
+                    // 3. Send the execution command (Now it will successfully trigger the game!)
+                    //Process.Start(new ProcessStartInfo
+                    //{
+                    //    FileName = exePath,
+                    //    Arguments = $@"--exec=""launch {cleanProductID}""",
+                    //    UseShellExecute = true
+                    //});
+                    if (applicationCard._productID == "fenris")
+                    {
+                        // Explicitly launch DiabloIV with Battlenet process, passing argument
+                        Process.Start(new ProcessStartInfo
+                        {
+                            FileName = exePath,
+
+                            // This forces Windows to read the correct 'battlenet://' URI association
+                            Arguments = "--exec=\"launch Fen\"",
+                            UseShellExecute = true,
+                            Verb = "runas"
+                        });
+
+                    }
+                    else
+                    {
+
+                        Process.Start(new ProcessStartInfo { FileName = applicationCard._executablePath, Arguments = launchParams + " " + applicationCard._productID, UseShellExecute = true, WorkingDirectory = Path.GetDirectoryName(applicationCard._executablePath) });
+                    }
+
+                    //MessageBox.Show(_executablePath + _productID);
+
+                }
+                catch (Exception ex)
+                {
+                    Program.LogCrash(ex);
+                    MessageBox.Show(
+                        "Failed to launch the application: " + ex.Message);
+                }
+            }
+            else if (applicationCard._selectedGroup == "GOG")
+            {
+                try
+                {
+
+                    Process.Start(
+                        new ProcessStartInfo
+                        {
+                            FileName =
+                                applicationCard._goglnk,
+
+                            UseShellExecute =
+                                true
+                        });
+
+
+
+                }
+                catch (Exception ex)
+                {
+                    Program.LogCrash(ex);
+                    MessageBox.Show(
+                        "Failed to launch the application: " + ex.Message);
+                }
+            }
+            else if (applicationCard._selectedGroup == "EA App")
+            {
+                try
+                {
+                    //labelControl1.Text = _EAShortuct;
+                    if (!string.IsNullOrWhiteSpace(
+    applicationCard._EAShortuct) &&
+    File.Exists(
+        applicationCard._EAShortuct))
+                    {
+                        Process.Start(
+                            new ProcessStartInfo
+                            {
+                                FileName =
+                                    applicationCard._EAShortuct,
+                                UseShellExecute =
+                                    true,
+                                WorkingDirectory = Path.GetDirectoryName(applicationCard._executablePath)
+                            });
+
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Program.LogCrash(ex);
+                }
+            }
+            else if (applicationCard._selectedGroup == "Ubisoft Connect")
+            {
+                try
+                {
+                    if (!string.IsNullOrWhiteSpace(
+    applicationCard._UbisoftURI))
+                    {
+                        Process.Start(
+                            new ProcessStartInfo
+                            {
+                                FileName =
+                                   applicationCard._UbisoftURI,
+
+                                UseShellExecute =
+                                    true,
+                                WorkingDirectory = Path.GetDirectoryName(applicationCard._executablePath)
+                            });
+
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Program.LogCrash(ex);
+                }
+            }
+            else if (applicationCard._selectedGroup == "Nexus Launcher")
+            {
+                try
+                {
+                    Process.Start(new ProcessStartInfo { FileName = applicationCard._executablePath, UseShellExecute = true, WorkingDirectory = Path.GetDirectoryName(applicationCard._executablePath) });
+                }
+                catch (Exception ex)
+                {
+                    Program.LogCrash(ex);
+                    MessageBox.Show(
+                        "Failed to launch the application: " + ex.Message);
+                }
+            }
+        }
+
+        private void contextVerify_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (applicationCard._selectedGroup == "Steam")
+            {
+                if (XtraMessageBox.Show(
+    "You are about to verify / repair " + applicationCard._name +"\nThis will open Steam and start validating and may take some time to finish!\n\nDo you want to continue?",
+    "Verify & Repair",
+    MessageBoxButtons.YesNo,
+    MessageBoxIcon.Question) != DialogResult.Yes)
+                {
+                    return;
+                }
+                Process.Start("steam://validate/" + applicationCard._gameID);
+            }
+            else if (applicationCard._selectedGroup == "Epic Games")
+            {
+                
+            }
+            else if (applicationCard._selectedGroup == "Battle.net")
+            {
+                
+            }
+            else if (applicationCard._selectedGroup == "GOG")
+            {
+                
+            }
+            else if (applicationCard._selectedGroup == "EA App")
+            {
+                
+            }
+            else if (applicationCard._selectedGroup == "Ubisoft Connect")
+            {
+                
+                
+            }
+            else if (applicationCard._selectedGroup == "Nexus Launcher")
+            {
+                
+            }
+        }
+
+        private void contextUninstall_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+            //if (applicationCard._selectedGroup == "Steam")
+            //{
+            //    Process.Start("steam://uninstall/" + applicationCard._gameID);
+            //}
+            //else if (applicationCard._selectedGroup == "Epic Games")
+            //{
+
+            //}
+            //else if (applicationCard._selectedGroup == "Battle.net")
+            //{
+
+            //}
+            //else if (applicationCard._selectedGroup == "GOG")
+            //{
+
+            //}
+            //else if (applicationCard._selectedGroup == "EA App")
+            //{
+
+            //}
+            //else if (applicationCard._selectedGroup == "Ubisoft Connect")
+            //{
+
+
+            //}
+            //else if (applicationCard._selectedGroup == "Nexus Launcher")
+            //{
+
+            //}
+            if (selectedGame == null)
+                return;
+
+            UninstallerService.UninstallResult result =
+                UninstallerService.Uninstall(
+                    selectedGame);
+            if (!result.Success)
+            {
+                XtraMessageBox.Show(
+                "Launcher: " + selectedGame.Launcher +
+                "\n\nGame: " + selectedGame.Name +
+                "\n\nInstall Path: " + selectedGame.InstallPath +
+                "\n\nProduct ID: " + selectedGame.ProductId +
+                "\n\nSuccess: " + result.Success +
+                "\n\nMethod: " + result.Method +
+                "\n\nDetails:\n" + result.Message,
+                "Uninstall Debug",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+            }
+            
+        }
+
+        private void contextBrowse_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Process.Start(
+            "explorer.exe",
+            "/select,\"" +
+            applicationCard._executablePath +
+            "\"");
+        }
+
+        private void contextCopyName_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Clipboard.SetText(applicationCard._name);
+        }
+
+        private void contextCopyID_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Clipboard.SetText(applicationCard._gameID.ToString());
+        }
+
+        private void contextCopyGPath_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Clipboard.SetText(applicationCard._executablePath);
+        }
+
+        private void contextCopyFPath_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            string inputFolder = applicationCard._executablePath;
+            int lastIndex = inputFolder.LastIndexOf('\\');
+            if (lastIndex != -1)
+            {
+                // Remove starting from the last backslash to the end of the string
+                string result = inputFolder.Substring(0, lastIndex);
+                Clipboard.SetText(result);
+            }
+           
         }
     }    
 }

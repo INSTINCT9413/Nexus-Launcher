@@ -366,3 +366,5 @@ FodyWeavers.xsd
 # Ignore large archive files
 *.rar
 *.zip
+/Deploy Builds/Files/GPUCache/
+/Deploy Builds

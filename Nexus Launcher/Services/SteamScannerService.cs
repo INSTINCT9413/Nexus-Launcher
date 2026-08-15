@@ -191,10 +191,14 @@ namespace Nexus_Launcher.Services
                         if (game == null)
                             continue;
 
+                        if (ShouldIgnoreSteamGame(game))
+                            continue;
+
                         games.Add(game);
                     }
                     catch (Exception ex)
                     {
+                        Program.LogCrash(ex);
                         System.Diagnostics.Debug.WriteLine(
                             ex.ToString());
                     }
@@ -412,5 +416,54 @@ namespace Nexus_Launcher.Services
 
             return null;
         }
+        private bool ShouldIgnoreSteamGame(GameInfo game)
+        {
+            if (game == null)
+                return true;
+
+            string name =
+                (game.Name ?? string.Empty)
+                .ToLowerInvariant();
+
+            //------------------------------------------------
+            // Steam system apps
+            //------------------------------------------------
+
+            if (name.Contains("steamworks common redistributables"))
+                return true;
+
+            if (name.Contains("steam linux runtime"))
+                return true;
+
+            if (name.Contains("proton"))
+                return true;
+
+            if (name.Contains("steam runtime"))
+                return true;
+
+            if (name.Contains("source sdk"))
+                return true;
+
+            if (name.Contains("dedicated server"))
+                return true;
+
+            if (name.Contains("server"))
+                return true;
+
+            if (name.Contains("redistributable"))
+                return true;
+
+            if (name.Contains("benchmark"))
+                return true;
+
+            if (name.Contains("soundtrack"))
+                return true;
+
+            if (name.Contains("demo"))
+                return true;
+
+            return false;
+        }
     }
+
 }

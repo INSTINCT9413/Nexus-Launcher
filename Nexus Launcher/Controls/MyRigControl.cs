@@ -1,4 +1,6 @@
 ﻿using CCWin.Win32.Const;
+using Nexus_Launcher.Helpers;
+using Nexus_Launcher.Properties;
 using Nexus_Launcher.Services;
 using System;
 using System.Collections.Generic;
@@ -24,6 +26,9 @@ namespace Nexus_Launcher.Controls
 
         private void MyRigControl_Load(object sender, EventArgs e)
         {
+            FontManager.ApplyFont(
+    this,
+    Settings.Default.UIFont);
             var HardwareInfo = SHS.GetAllHardwareInfo();
             var sb = new StringBuilder();
             foreach (var component in HardwareInfo)

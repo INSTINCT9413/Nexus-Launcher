@@ -93,7 +93,7 @@ namespace Nexus_Launcher.Services
                                 Path.GetDirectoryName(
                                     game.ExecutablePath);
                         }
-                    game.Launcher = "Battlenet";
+                    game.Launcher = "Battle.net";
                         game.LaunchUri =
                             gameData.launch_uri;
 

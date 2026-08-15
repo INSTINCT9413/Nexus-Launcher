@@ -257,6 +257,7 @@ namespace Nexus_Launcher.Services.Artwork
             }
             catch (Exception ex)
             {
+                Program.LogCrash(ex);
                 System.Diagnostics.Debug.WriteLine(ex);
 
                 return false;

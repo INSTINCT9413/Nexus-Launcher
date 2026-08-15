@@ -1,6 +1,8 @@
 ﻿using DevExpress.XtraEditors;
 using HorizonUI;
 using Nexus_Launcher.Forms;
+using Nexus_Launcher.Helpers;
+using Nexus_Launcher.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,6 +20,7 @@ namespace Nexus_Launcher.Controls
     {
         readonly addRemoveForm addRemove = new addRemoveForm();
         public GOGSettings gogSettings = new GOGSettings();
+        public EASettings eaSettings = new EASettings();    
         public bool isNexusLauncher { get; set; }
         public string _selectedGroup { get; set; }
         public string clientName
@@ -37,21 +40,26 @@ namespace Nexus_Launcher.Controls
 
         private void LauncherCard_Load(object sender, EventArgs e)
         {
+            FontManager.ApplyFont(
+    this,
+    Settings.Default.UIFont);
             addRemove.Dock = DockStyle.Fill;
             gogSettings.Dock = DockStyle.Fill;
+            eaSettings.Dock = DockStyle.Fill;
             xtraTabPage3.Controls.Add(addRemove);
             xtraTabPage2.Controls.Add(gogSettings);
+            xtraTabPage2.Controls.Add(eaSettings);
             gogSettings.Visible = false;
+            eaSettings.Visible = false;
             addRemove.Show();
         }
         public void ShowGOGSettings()
         {
-            if (_selectedGroup == "GOG")
-            {
+            
                 gogSettings.Show();
                 gogSettings.Visible = true;
                 gogSettings.BringToFront();
-            }
+            
         }
         public void HideGOGSettings()
         {
@@ -59,6 +67,22 @@ namespace Nexus_Launcher.Controls
             {
                 gogSettings.Visible = false;
                 gogSettings.Hide();
+            }
+        }
+        public void ShowEASettings()
+        {
+
+            eaSettings.Show();
+            eaSettings.Visible = true;
+            eaSettings.BringToFront();
+
+        }
+        public void HideEASettings()
+        {
+            if (_selectedGroup != "EA")
+            {
+                eaSettings.Visible = false;
+                eaSettings.Hide();
             }
         }
         private void timer1_Tick(object sender, EventArgs e)
@@ -83,6 +107,11 @@ namespace Nexus_Launcher.Controls
         private void xtraTabControl1_StyleChanged(object sender, EventArgs e)
         {
                 
+        }
+
+        private void simpleButton1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

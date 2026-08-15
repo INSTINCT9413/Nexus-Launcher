@@ -30,6 +30,7 @@
         {
             DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions buttonImageOptions1 = new DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions();
             DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions buttonImageOptions2 = new DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions();
+            DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions buttonImageOptions3 = new DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions();
             this.uiAvatar1 = new Sunny.UI.UIAvatar();
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
             this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
@@ -97,8 +98,9 @@
             this.groupControl5.AppearanceCaption.Options.UseFont = true;
             this.groupControl5.Controls.Add(this.labelControl1);
             this.groupControl5.Controls.Add(this.uiAvatar1);
+            buttonImageOptions1.Image = global::Nexus_Launcher.Properties.Resources.icons8_refresh_28;
             this.groupControl5.CustomHeaderButtons.AddRange(new DevExpress.XtraEditors.ButtonPanel.IBaseButton[] {
-            new DevExpress.XtraEditors.ButtonsPanelControl.GroupBoxButton("Button", false, buttonImageOptions1, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, false, null, true, false, true, null, -1)});
+            new DevExpress.XtraEditors.ButtonsPanelControl.GroupBoxButton("Button", false, buttonImageOptions1, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1)});
             this.groupControl5.CustomHeaderButtonsLocation = DevExpress.Utils.GroupElementLocation.AfterText;
             this.groupControl5.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupControl5.GroupStyle = DevExpress.Utils.GroupStyle.Card;
@@ -126,6 +128,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupControl4.AppearanceCaption.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.groupControl4.AppearanceCaption.Options.UseFont = true;
+            buttonImageOptions2.Image = global::Nexus_Launcher.Properties.Resources.icons8_refresh_28;
+            this.groupControl4.CustomHeaderButtons.AddRange(new DevExpress.XtraEditors.ButtonPanel.IBaseButton[] {
+            new DevExpress.XtraEditors.ButtonsPanelControl.GroupBoxButton("Button", false, buttonImageOptions2, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1)});
+            this.groupControl4.CustomHeaderButtonsLocation = DevExpress.Utils.GroupElementLocation.AfterText;
             this.groupControl4.FireScrollEventOnMouseWheel = true;
             this.groupControl4.GroupStyle = DevExpress.Utils.GroupStyle.Card;
             this.groupControl4.Location = new System.Drawing.Point(-1, 186);
@@ -138,9 +144,9 @@
             // 
             this.groupControl3.AppearanceCaption.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.groupControl3.AppearanceCaption.Options.UseFont = true;
-            buttonImageOptions2.Image = global::Nexus_Launcher.Properties.Resources.icons8_refresh_28;
+            buttonImageOptions3.Image = global::Nexus_Launcher.Properties.Resources.icons8_refresh_28;
             this.groupControl3.CustomHeaderButtons.AddRange(new DevExpress.XtraEditors.ButtonPanel.IBaseButton[] {
-            new DevExpress.XtraEditors.ButtonsPanelControl.GroupBoxButton("Refresh", false, buttonImageOptions2, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, 2)});
+            new DevExpress.XtraEditors.ButtonsPanelControl.GroupBoxButton("Refresh", false, buttonImageOptions3, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, 2)});
             this.groupControl3.CustomHeaderButtonsLocation = DevExpress.Utils.GroupElementLocation.AfterText;
             this.groupControl3.Dock = System.Windows.Forms.DockStyle.Right;
             this.groupControl3.GroupStyle = DevExpress.Utils.GroupStyle.Card;
