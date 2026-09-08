@@ -23,7 +23,7 @@ The goal of Nexus Launcher is to make it easier to discover, organize, and launc
 - 🔄 Automatic updates
 - 🧹 Cache and library management
 - 🎨 Customizable interface
-- 📦 [Add additional feature]
+- 📦 Much more to come!
 
 ---
 
@@ -33,13 +33,16 @@ Nexus Launcher is designed to support games from multiple platforms.
 
 ### Currently Supported
 
+- [x] Nexus Launcher (Natively)
 - [x] Steam
-- [ ] Ubisoft Connect
-- [ ] EA
-- [ ] Battle.net
-- [ ] Epic Games
-- [ ] GOG
-- [ ] Nexus Launcher
+- [x] Ubisoft Connect
+- [x] EA
+- [x] Battle.net
+- [x] Epic Games
+- [x] GOG
+- [ ] Amazon Games (Deprecated)
+- [ ] Paradox Launcher (Deprecated)
+- [ ] Windows Store / Xbox App (Planned)
 
 > **Note:** Support status can change as development continues.
 
@@ -49,13 +52,14 @@ Nexus Launcher is designed to support games from multiple platforms.
 
 ### Launcher Support
 
+- [x] Nexus Launcher (Natively)
 - [x] Steam
-- [ ] Ubisoft Connect
-- [ ] EA
-- [ ] Battle.net
-- [ ] Epic Games
-- [ ] GOG
-- [ ] Nexus Launcher
+- [x] Ubisoft Connect
+- [x] EA
+- [x] Battle.net
+- [x] Epic Games
+- [x] GOG
+- [ ] Windows Store / Xbox App (Planned)
 
 ### Planned Features
 
@@ -79,23 +83,23 @@ Nexus Launcher is designed to support games from multiple platforms.
 
 | Requirement | Specification |
 |---|---|
-| Operating System | Windows [VERSION] |
+| Operating System | Windows 10 |
 | Architecture | 64-bit |
-| Processor | [CPU REQUIREMENT] |
-| Memory | [RAM REQUIREMENT] |
-| Storage | [STORAGE REQUIREMENT] |
-| .NET | [.NET VERSION] |
+| Processor | Intel Core i3 / AMD Ryzen 3 or equivalent |
+| Memory | 4 GB RAM |
+| Storage | 500 MB available space |
+| .NET | .Net 4.8 |
 
 ### Recommended
 
 | Requirement | Specification |
 |---|---|
-| Operating System | Windows [VERSION] |
+| Operating System | Windows 11 |
 | Architecture | 64-bit |
-| Processor | [CPU REQUIREMENT] |
-| Memory | [RAM REQUIREMENT] |
-| Storage | [STORAGE REQUIREMENT] |
-| .NET | [.NET VERSION] |
+| Processor | Intel Core i5 / AMD Ryzen 5 or better |
+| Memory | 8 GB RAM or more |
+| Storage | 1 GB available space |
+| .NET | .Net 4.8 |
 
 ---
 
@@ -105,29 +109,15 @@ Nexus Launcher is designed to support games from multiple platforms.
 
 Download the latest version of Nexus Launcher from:
 
-**[Download Nexus Launcher](YOUR_DOWNLOAD_URL)**
+**[Download Nexus Launcher](https://guardbyte.me/downloads/Nexus%20Launcher/index.html#download)**
 
 ### Installation Steps
 
 1. Download the latest release.
-2. Extract the downloaded package if necessary.
-3. Run `Nexus Launcher.exe`.
-4. Complete the initial setup.
-5. Allow Nexus Launcher to scan your installed game libraries.
-6. Start playing.
-
----
-
-## 🚀 Getting Started
-
-After launching Nexus Launcher for the first time:
-
-1. [Step]
-2. [Step]
-3. [Step]
-4. [Step]
-
-Once setup is complete, your detected games will appear in your Nexus game library.
+2. Run `Nexus Launcher.exe`.
+3. Complete the initial setup.
+4. Allow Nexus Launcher to scan your installed game libraries.
+5. Start playing.
 
 ---
 
@@ -138,25 +128,29 @@ Nexus Launcher organizes detected games into groups based on their associated la
 Example:
 
 ```text
-Nexus Launcher
-│
+Nexus Launcher Program
+
+├── Nexus
+│   ├── Game/Program
+│   ├── Game/Program
+│   └── Game/Program
 ├── Steam
-│   ├── Game 1
-│   ├── Game 2
-│   └── Game 3
+│   ├── Game
+│   ├── Game
+│   └── Game
 │
 ├── Ubisoft Connect
-│   ├── Game 4
-│   └── Game 5
+│   ├── Game
+│   └── Game
 │
 ├── EA
-│   └── Game 6
+│   └── Game
 │
 ├── Battle.net
-│   └── Game 7
+│   └── Game
 │
 ├── Epic Games
-│   └── Game 8
+│   └── Game
 │
 └── GOG
-    └── Game 9
+    └── Game
