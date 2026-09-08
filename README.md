@@ -157,7 +157,7 @@ Nexus Launcher Program
 
 ### Game Library
 <p align="center">
-    <img src="https://github.com/INSTINCT9413/Nexus-Launcher/blob/master/Nexus%20Launcher/Assets/MainView" width="850">
+    <img src="https://github.com/INSTINCT9413/Nexus-Launcher/blob/master/Nexus%20Launcher/Assets/MainView.png" width="850">
 </p>
 
 ### Game Details
