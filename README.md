@@ -126,8 +126,6 @@ Download the latest version of Nexus Launcher from:
 Nexus Launcher organizes detected games into groups based on their associated launcher.
 
 Example:
-
-```text
 Nexus Launcher Program
 
 ├── Nexus
