@@ -405,6 +405,14 @@ namespace Nexus_Launcher.Controls
             webView21.Reload();
         }
 
-        
+        private void dropDownButton3_Click(object sender, EventArgs e)
+        {
+            splitContainerControl1.SplitterPosition = 0;
+        }
+
+        private void dropDownButton4_Click(object sender, EventArgs e)
+        {
+           
+        }
     }
 }

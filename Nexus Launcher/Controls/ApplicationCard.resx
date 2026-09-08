@@ -121,6 +121,25 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="dropDownButton3.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
+        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAAwdEVYdFRpdGxlAENhbGVuZGFyO1NjaGVkdWxlcjtT
+        bmFwO0ZpdDtBZGp1c3Q7RXhwYW5kOzaFBygAAAK1SURBVDhPjdPrS1NxHMfxk3ft8oeo0MU0urkepKak
+        qGluShaBgqQr0ZXVwnSaA7vIdKWktjO1ppZdMAkjVrbNubkmZBQMBbVH2sW5q+ds+8Tv5xxFD+rBi995
+        8P2++cGPw3QOGBmGYbYwDBMWFP6fyCzZY8KUar32bt8kNhig3KQ2QMka0MHqqXaVHgqVDooHOrT1TGiD
+        ESacDAYCoGzzX5FRcAG2uSUEAoG/+IPaeibAMEwECUR0sAa4vTyVfkKMtPwqpOVXwuXl4fLwcHqDPDxc
+        bg5+fwC3u9+RQCQJRCpU7+ng5sLR3HN02OnhgicPh5uH083B4ebg8wdws0tLAlE0QK4TGvTwuK9+QQc3
+        8Fhzc3/w+QKQ33sTCkRdVpRA1i+ArE8AmVqABoJNxXVClYresfOwu7gQ3udHi/I1CUSTQLS4NQXmpRsw
+        LzXDtNiEqUUZphZkMC40wrjQAGn3QdidHLXq5MDxfsgU4yQQQwOV8r10cNha+JsCDFkLoJu/irrOA1h1
+        rOMnxWGd86Oh7VUoEFPRnATdvBQaSz4003nQWHKpR9O50NokkLTvp8s/HOtIOVKMj5/mUH9rjARiSSC2
+        rHE3HRww56DflIMBczb6TdnoMx3H+OcqVN/Zh/auQaQIREhOFSL5sBDS1pckEEcDZ+t3YfyLGOxUFlhj
+        FtjJTLDGTKgmj2F0tgxVrcn4Zvfiu92LpEMnMTNrwxX5KAlsJYG4M9KdGJ0tR68hA736dPTo00PniLUU
+        FfIkrNi9NLJi99DnvtTynAS20YDoYiJGZkrxxHoKj60lGP5QjCGLCIOWImimi1Au20MXl+1eLK96sObm
+        IWmiAXqD6MLqeC2JEEJJIkSSBAhrEyCsiUdRTQJO1+VB0vSMqpU9pcTXHr7dfAXyR5EPcp3t/7AjiHyT
+        nbBft1lZYdt4GXsAAAAASUVORK5CYII=
+</value>
+  </data>
   <data name="dropDownButton2.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAADV0RVh0VGl0

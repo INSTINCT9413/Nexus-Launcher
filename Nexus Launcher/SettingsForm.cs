@@ -596,6 +596,10 @@ namespace Nexus_Launcher
                     XtraMessageBox.Show("Updater failed");
                 }
             }
+            else
+            {
+                XtraMessageBox.Show("Updater not found");
+            }
         }
 
         private void toggleSwitch15_Toggled(object sender, EventArgs e)
@@ -988,7 +992,7 @@ namespace Nexus_Launcher
 
             if (update == null)
             {
-                MessageBox.Show(
+                XtraMessageBox.Show(
                     "Unable to contact the update server.");
 
                 return;
@@ -996,14 +1000,14 @@ namespace Nexus_Launcher
 
             if (update.build <= UpdateState.InstalledBuild)
             {
-                MessageBox.Show(
+                XtraMessageBox.Show(
                     "Nexus Launcher is up to date.");
 
                 return;
             }
 
             DialogResult result =
-                MessageBox.Show(
+                XtraMessageBox.Show(
                     "Build " + update.build +
                     " is available.\n\nDownload now?",
                     "Update Available",
@@ -1188,6 +1192,32 @@ namespace Nexus_Launcher
     "About the Log File",
     MessageBoxButtons.OK,
     MessageBoxIcon.Information);
+        }
+
+        private void hyperlinkLabelControl1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start("https://github.com/INSTINCT9413/Nexus-Launcher");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private void hyperlinkLabelControl2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start("https://guardbyte.me/downloads/Nexus%20Launcher/index.html#download");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

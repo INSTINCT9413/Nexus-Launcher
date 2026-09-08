@@ -141,10 +141,10 @@
         zqAqhwI7gIANBGwgYAMBmwNfcIY3INK6lQAAAABJRU5ErkJggg==
 </value>
   </data>
-  <assembly alias="DevExpress.Data.v26.1" name="DevExpress.Data.v26.1, Version=26.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-  <data name="resource.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v26.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <assembly alias="DevExpress.Data.v22.2" name="DevExpress.Data.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <data name="resource.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v22.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjI2LjEsIFZlcnNpb249MjYuMS4z
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIyLjIsIFZlcnNpb249MjIuMi4z
         LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
         dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAADIDAAAC77u/
         PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
@@ -186,9 +186,9 @@
         zqAqhwI7gIANBGwgYAMBmwNfcIY3INK6lQAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="resource.SvgImage1" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v26.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="resource.SvgImage1" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v22.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjI2LjEsIFZlcnNpb249MjYuMS4z
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIyLjIsIFZlcnNpb249MjIuMi4z
         LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
         dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAADIDAAAC77u/
         PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
@@ -230,9 +230,9 @@
         zqAqhwI7gIANBGwgYAMBmwNfcIY3INK6lQAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="resource.SvgImage2" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v26.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="resource.SvgImage2" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v22.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjI2LjEsIFZlcnNpb249MjYuMS4z
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIyLjIsIFZlcnNpb249MjIuMi4z
         LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
         dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAADIDAAAC77u/
         PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
@@ -264,9 +264,9 @@
         AAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="resource.SvgImage3" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v26.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="resource.SvgImage3" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v22.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjI2LjEsIFZlcnNpb249MjYuMS4z
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIyLjIsIFZlcnNpb249MjIuMi4z
         LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
         dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAADIDAAAC77u/
         PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
@@ -298,9 +298,9 @@
         AAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="resource.SvgImage4" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v26.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="resource.SvgImage4" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v22.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjI2LjEsIFZlcnNpb249MjYuMS4z
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIyLjIsIFZlcnNpb249MjIuMi4z
         LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
         dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAADIDAAAC77u/
         PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
@@ -317,112 +317,6 @@
         My41LDMuNSwzLjVjMS45LDAsMy41LTEuNiwzLjUtMy41ICAgYzAsMS45LDEuNiwzLjUsMy41LDMuNXMz
         LjUtMS42LDMuNS0zLjVjMCwxLjksMS42LDMuNSwzLjUsMy41czMuNS0xLjYsMy41LTMuNVYxMFY4TDI2
         LDR6IiBjbGFzcz0iUmVkIiAvPg0KICA8L2c+DQo8L3N2Zz4L
-</value>
-  </data>
-  <data name="accordionControl2.HtmlTemplates.FooterElement.Styles" xml:space="preserve">
-    <value>body {
-	padding: 1px;
-}
-.item {
-	border-radius: 6px;
-	padding: 10px;
-}
-:root:hover .item {
-	background-color: @ControlText/0.05;
-}
-:root:active .item {
-	background-color: @ControlText/0.1;
-}
-:root:select .item {
-	background-color: @ControlText/0.1;
-}
-.item-image {
-	fill: @ControlText/0.5;
-	width: 40px;
-	height: 40px;
-}
-:root:active .item-image {
-	fill: @ControlText/0.25;
-}
-.image-container {
-	width: 40px;
-	height: 40px;
-}</value>
-  </data>
-  <data name="accordionControl2.HtmlTemplates.FooterOverflowButton.Styles" xml:space="preserve">
-    <value>body {
-	padding: 2px;
-}
-
-.item {
-	border-radius: 4px;
-	padding: 10px;
-}
-
-:root:hover .item {
-	background-color: @ControlText/0.05;
-}
-
-:root:active .item {
-	background-color: @ControlText/0.1;
-}
-
-:root:select .item {
-	background-color: @ControlText/0.1;
-}
-
-.image-container {
-	width: 35px;
-	height: 35px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.more-icon {
-	width: 35px;
-	height: 35px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.dot {
-	width: 5px;
-	height: 5px;
-	margin: 2px;
-	border-radius: 3px;
-	background-color: @ControlText/0.5;
-}
-
-:root:active .dot {
-	background-color: @ControlText/0.25;
-}</value>
-  </data>
-  <data name="accordionControl2.HtmlTemplates.FooterOverflowButton.Template" xml:space="preserve">
-    <value>&lt;div id="dx-item" class="item"&gt;
-	&lt;div class="image-container"&gt;
-		&lt;div class="more-icon"&gt;
-			&lt;div class="dot"&gt;&lt;/div&gt;
-			&lt;div class="dot"&gt;&lt;/div&gt;
-			&lt;div class="dot"&gt;&lt;/div&gt;
-		&lt;/div&gt;
-	&lt;/div&gt;
-&lt;/div&gt;</value>
-  </data>
-  <data name="accordionControl2.HtmlTemplates.FooterPanel.Styles" xml:space="preserve">
-    <value>.footer-panel {
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	padding: 5px;
-	background-color: @Control;
-}
-
-.content {
-	flex-grow: 1;
-	display: flex;
-	background-color: @HighlightAlternate/0.01;
 </value>
   </data>
   <data name="labelControl1.Text" xml:space="preserve">
@@ -768,6 +662,48 @@
         u+vBf6u/Nn8D/ztrWafENREAAAAASUVORK5CYII=
 </value>
   </data>
+  <data name="barSubItem5.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
+        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAAzdEVYdFRpdGxlAEltYWdlO1Bob3RvO1BpY3R1cmU7
+        RGlhZ3JhbTtGaWd1cmU7ZHJhdztwYWludBXVxnAAAABuSURBVDhPY/j//z8DJRhMdHd3/ycHoxhAKqCv
+        Ad+fH/v//nwfmIYBkgwAaX57og5MwwBJBhDtgtvPPv4vWz4dTBMCWA0AaYZhQoYQNADZEGwuI8oAmCZ0
+        PkkGYMM4DSAFYBhADoYbQAnGECAVAwCvkESDmuc32AAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="barSubItem5.ImageOptions.LargeImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
+        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAAzdEVYdFRpdGxlAEltYWdlO1Bob3RvO1BpY3R1cmU7
+        RGlhZ3JhbTtGaWd1cmU7ZHJhdztwYWludBXVxnAAAADcSURBVFhH7ZM9CsJAEIVzaksvsGCrN7D3FHYW
+        loJ2diILVjYjLzCwmUk2G9aZBfHBB8lbwvv8SUdEXUtU4Y0qvFGFN4ObEAJ5kBWwzl/ATOAdb/S6Huh5
+        2vTgGp2MiQCG4nlHj+N6ADopYSKATyvHGZylMRHAVy6HGZyl+U2B5j9B8z8hYvoaXu6RVvttD65rslgg
+        Hf+GxCKBsfFaiWKB3HiNRJFAyfiUBD8re06RgByZg8ek+JiEiQCPyY57F4EcqUQTAcASzQRAsYBlZgU8
+        mBRogSq8UYU3qvDmA2rFEGCg5XP2AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="barButtonItem3.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
+        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAALdEVYdFRpdGxlAEluZm87bRIthgAAAJtJREFUOE+t
+        k8ENgCAMRRnFabx1qZ51CpfoBq5j4gCYRzSBRiKKh5dAf/tDCwRRC45R1GZRW0VtO2FNDK3IzzeDqE2i
+        totarIBGDrmFAYHlpqAGucnkMsDVJz1BTTKgr9tjxxgD+PgJNSMiw/FiiwHMiEzYC62sGHBNXkg0nGD7
+        xaDaQoNBaqF7iN3XCF0PCbqf8mXy+TPlvPrOB0ynVNG/VjQvAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="barButtonItem3.ImageOptions.LargeImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
+        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAALdEVYdFRpdGxlAEluZm87bRIthgAAAX9JREFUWEfN
+        lzFuwzAMRdMjNFORK/Qs3HOETu3WrgXnInOPwiFX6NAb5BZBJxcvSAqZph0psqEOLzCcL+pboihp1XXd
+        qiWnH1HLYSNqW1Hbidpe1A6idjzDM+/4Dw1a335AroFHUXsXtW9R6zJBSxva+njZBu5E7UnUvoIOcqEt
+        MYjl408aeBC1jyDgrRCLmFkGEH4GQWohZs9EZIChyvnyH1F7FrW1qN2fn3nndR5i/01HZID58o0iXtKl
+        dI7xFugi6CM0QMbmJtw6MMBoeF0EfZxWhzfAsvHiMWoMAH31DFA4StZ5NAWvgW4M+tqkBqheXjTFJQlJ
+        wJIkTNmmBiihXrA0u9QAddwLlmafGmAz8YJJghwYaK5wSA2wo3nBJDMYOP4rA82noDgJZzDQS8LiZTiD
+        gd4yLC1EcxjoFaLSUlxrYFCKoWQzqjUw2IygZDuuMTC6HUPugaTGwOiBBHKPZLdy9UgGTQ+lqYk5R6Lo
+        WH6h6cUkpdnVzLPc5bQlv7HyoLzqqqMwAAAAAElFTkSuQmCC
+</value>
+  </data>
   <data name="barButtonItem4.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
@@ -818,28 +754,6 @@
         QmCC
 </value>
   </data>
-  <data name="barButtonItem3.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
-        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAALdEVYdFRpdGxlAEluZm87bRIthgAAAJtJREFUOE+t
-        k8ENgCAMRRnFabx1qZ51CpfoBq5j4gCYRzSBRiKKh5dAf/tDCwRRC45R1GZRW0VtO2FNDK3IzzeDqE2i
-        totarIBGDrmFAYHlpqAGucnkMsDVJz1BTTKgr9tjxxgD+PgJNSMiw/FiiwHMiEzYC62sGHBNXkg0nGD7
-        xaDaQoNBaqF7iN3XCF0PCbqf8mXy+TPlvPrOB0ynVNG/VjQvAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="barButtonItem3.ImageOptions.LargeImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
-        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAALdEVYdFRpdGxlAEluZm87bRIthgAAAX9JREFUWEfN
-        lzFuwzAMRdMjNFORK/Qs3HOETu3WrgXnInOPwiFX6NAb5BZBJxcvSAqZph0psqEOLzCcL+pboihp1XXd
-        qiWnH1HLYSNqW1Hbidpe1A6idjzDM+/4Dw1a335AroFHUXsXtW9R6zJBSxva+njZBu5E7UnUvoIOcqEt
-        MYjl408aeBC1jyDgrRCLmFkGEH4GQWohZs9EZIChyvnyH1F7FrW1qN2fn3nndR5i/01HZID58o0iXtKl
-        dI7xFugi6CM0QMbmJtw6MMBoeF0EfZxWhzfAsvHiMWoMAH31DFA4StZ5NAWvgW4M+tqkBqheXjTFJQlJ
-        wJIkTNmmBiihXrA0u9QAddwLlmafGmAz8YJJghwYaK5wSA2wo3nBJDMYOP4rA82noDgJZzDQS8LiZTiD
-        gd4yLC1EcxjoFaLSUlxrYFCKoWQzqjUw2IygZDuuMTC6HUPugaTGwOiBBHKPZLdy9UgGTQ+lqYk5R6Lo
-        WH6h6cUkpdnVzLPc5bQlv7HyoLzqqqMwAAAAAElFTkSuQmCC
-</value>
-  </data>
   <data name="barButtonItem6.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
@@ -888,9 +802,9 @@
         AABJRU5ErkJggg==
 </value>
   </data>
-  <data name="barButtonItem12.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v26.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="barButtonItem12.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v22.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjI2LjEsIFZlcnNpb249MjYuMS4z
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIyLjIsIFZlcnNpb249MjIuMi4z
         LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
         dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAANcBAAAC77u/
         PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
@@ -903,29 +817,6 @@
         LDQgIGw0LTRsMywzbC00LDRMMjMsMjB6IiBjbGFzcz0iUmVkIiAvPg0KPC9zdmc+Cw==
 </value>
   </data>
-  <data name="barSubItem5.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
-        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAAzdEVYdFRpdGxlAEltYWdlO1Bob3RvO1BpY3R1cmU7
-        RGlhZ3JhbTtGaWd1cmU7ZHJhdztwYWludBXVxnAAAABuSURBVDhPY/j//z8DJRhMdHd3/ycHoxhAKqCv
-        Ad+fH/v//nwfmIYBkgwAaX57og5MwwBJBhDtgtvPPv4vWz4dTBMCWA0AaYZhQoYQNADZEGwuI8oAmCZ0
-        PkkGYMM4DSAFYBhADoYbQAnGECAVAwCvkESDmuc32AAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="barSubItem5.ImageOptions.LargeImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
-        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAAzdEVYdFRpdGxlAEltYWdlO1Bob3RvO1BpY3R1cmU7
-        RGlhZ3JhbTtGaWd1cmU7ZHJhdztwYWludBXVxnAAAADcSURBVFhH7ZM9CsJAEIVzaksvsGCrN7D3FHYW
-        loJ2diILVjYjLzCwmUk2G9aZBfHBB8lbwvv8SUdEXUtU4Y0qvFGFN4ObEAJ5kBWwzl/ATOAdb/S6Huh5
-        2vTgGp2MiQCG4nlHj+N6ADopYSKATyvHGZylMRHAVy6HGZyl+U2B5j9B8z8hYvoaXu6RVvttD65rslgg
-        Hf+GxCKBsfFaiWKB3HiNRJFAyfiUBD8re06RgByZg8ek+JiEiQCPyY57F4EcqUQTAcASzQRAsYBlZgU8
-        mBRogSq8UYU3qvDmA2rFEGCg5XP2AAAAAElFTkSuQmCC
-</value>
-  </data>
-  <metadata name="workspaceManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>855, 17</value>
-  </metadata>
   <metadata name="taskDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
@@ -6036,8 +5927,5 @@ Thank you for helping test and shape Nexus Launcher.</value>
   </metadata>
   <metadata name="popupMenu2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>729, 17</value>
-  </metadata>
-  <metadata name="adornerUIManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1018, 17</value>
   </metadata>
 </root>

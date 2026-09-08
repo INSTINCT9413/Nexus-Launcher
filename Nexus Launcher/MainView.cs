@@ -40,6 +40,7 @@ using System.Windows.Forms;
 using static DevExpress.XtraEditors.ViewInfo.BaseListBoxViewInfo;
 using static Nexus_Launcher.MainView;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
+using DevExpress.Utils.VisualEffects;
 namespace Nexus_Launcher
 {
     public partial class MainView : DevExpress.XtraBars.FluentDesignSystem.FluentDesignForm
@@ -160,6 +161,10 @@ namespace Nexus_Launcher
         private readonly ContextMenuStrip gameContextMenu = new ContextMenuStrip();
         private readonly PopupMenu gameContextMenu0 = new PopupMenu();
         private GameInfo selectedGame;
+        private bool showUpdateBadge = false;
+        private Badge nexusUpdateBadge;
+        private bool updateAvailable;
+
         public MainView()
         {
             
@@ -167,10 +172,22 @@ namespace Nexus_Launcher
             Console.WriteLine("Hello Console");
             InitializeComponent();
             ArtworkService.ArtworkDownloaded += ArtworkService_ArtworkDownloaded;
+            if (barButtonItem3.Manager != null)
+            {
+                barButtonItem3.Manager.CustomDrawItem -= barManager1_CustomDrawItem;
+                barButtonItem3.Manager.CustomDrawItem += barManager1_CustomDrawItem;
+            }
+            if (updateAvailable == true)
+            {
+                badge1.Visible = true;
+            }
+            else { badge1.Visible = false; }
+            InitializeUpdateBadge();
             SplashScreenManager.Default.SetWaitFormDescription("Initializing...");
             ThemesSettings settings =
             ThemeSettingsManager.Load();
             EnableAcrylicAccent = true;
+            SurfaceMaterial = SurfaceMaterial.Acrylic;
             if (!string.IsNullOrWhiteSpace(
                 settings.SkinName))
             {
@@ -191,6 +208,92 @@ namespace Nexus_Launcher
                 Settings.Default.DefaultLauncher = "Nexus Launcher";
                 Settings.Default.Save();
             }
+        }
+        private void InitializeUpdateBadge()
+        {
+            nexusUpdateBadge = new Badge();
+
+            nexusUpdateBadge.Properties.Text = "!";
+
+            nexusUpdateBadge.Appearance.BackColor = Color.DarkOrange;
+            nexusUpdateBadge.Appearance.BorderColor = Color.Black;
+            nexusUpdateBadge.Appearance.ForeColor = Color.White;
+            nexusUpdateBadge.Appearance.Font =
+                new Font("Segoe UI", 8f, FontStyle.Bold);
+
+            nexusUpdateBadge.Properties.Location =
+                ContentAlignment.TopRight;
+
+            nexusUpdateBadge.Properties.Offset =
+                new Point(-4, 2);
+
+            nexusUpdateBadge.Visible = false;
+
+            adornerUIManager1.Elements.Add(nexusUpdateBadge);
+        }
+        public void SetUpdateBadge(bool visible)
+        {
+            showUpdateBadge = visible;
+
+            if (barButtonItem3 != null)
+                barButtonItem3.Refresh();
+        }
+        private void barManager1_CustomDrawItem(
+    object sender,
+    DevExpress.XtraBars.BarItemCustomDrawEventArgs e)
+        {
+            if (e.LinkInfo == null || e.LinkInfo.Link == null)
+                return;
+
+            if (e.LinkInfo.Link.Item != barButtonItem3)
+                return;
+
+            if (!updateAvailable)
+                return;
+
+            // Normal item
+            e.DrawBackground();
+            e.DrawBorder();
+            e.DrawGlyph();
+            e.DrawText();
+
+            int badgeSize = 16;
+
+            Rectangle badgeBounds = new Rectangle(
+                e.Bounds.Right - badgeSize - 6,
+                e.Bounds.Top + (e.Bounds.Height - badgeSize) / 2,
+                badgeSize,
+                badgeSize);
+
+            using (Brush brush =
+                new SolidBrush(nexusUpdateBadge.Appearance.BackColor))
+            {
+                e.Cache.FillEllipse(
+                    brush,
+                    badgeBounds);
+            }
+
+            using (Font font =
+                new Font(
+                    nexusUpdateBadge.Appearance.Font,
+                    FontStyle.Bold))
+            {
+                StringFormat format = new StringFormat
+                {
+                    Alignment = StringAlignment.Center,
+                    LineAlignment = StringAlignment.Center
+                };
+
+                e.Cache.DrawString(
+                    nexusUpdateBadge.Properties.Text,
+                    font,
+                    new SolidBrush(
+                        nexusUpdateBadge.Appearance.ForeColor),
+                    badgeBounds,
+                    format);
+            }
+
+            e.Handled = true;
         }
         public void RestoreLauncher()
         {
@@ -2093,13 +2196,17 @@ namespace Nexus_Launcher
         }
         private void accordionControl2_StateChanged(object sender, EventArgs e)
         {
-            // Always wrap Suspend/Resume layout in a try-finally block
-            accordionControl2.SuspendLayout();
+            // BeginUpdate stops DevExpress controls from repainting during batch property changes
+            accordionControl2.BeginUpdate();
             try
             {
-                if (accordionControl2.OptionsMinimizing.State == AccordionControlState.Minimized)
+                bool isMinimized = accordionControl2.OptionsMinimizing.State == AccordionControlState.Minimized;
+                bool isNormal = accordionControl2.OptionsMinimizing.State == AccordionControlState.Normal;
+
+                if (isMinimized || isNormal)
                 {
-                    splitContainerControl1.SplitterPosition = 60;
+                    splitContainerControl1.SplitterPosition = isMinimized ? 72 : 420;
+                    bool setVisible = !isMinimized; // false if Minimized, true if Normal
 
                     foreach (AccordionControlElement group in accordionControl2.Elements)
                     {
@@ -2107,22 +2214,7 @@ namespace Nexus_Launcher
                         {
                             if (item.Style == ElementStyle.Item)
                             {
-                                item.Visible = false;
-                            }
-                        }
-                    }
-                }
-                else if (accordionControl2.OptionsMinimizing.State == AccordionControlState.Normal)
-                {
-                    splitContainerControl1.SplitterPosition = 400;
-
-                    foreach (AccordionControlElement group in accordionControl2.Elements)
-                    {
-                        foreach (AccordionControlElement item in group.Elements)
-                        {
-                            if (item.Style == ElementStyle.Item)
-                            {
-                                item.Visible = true;
+                                item.Visible = setVisible;
                             }
                         }
                     }
@@ -2130,12 +2222,12 @@ namespace Nexus_Launcher
             }
             finally
             {
-                // THIS WAS MISSING: It forces the control to recalculate and paint the changes
-                accordionControl2.ResumeLayout();
+                // Unlocks control rendering and redraws everything once
+                accordionControl2.EndUpdate();
             }
         }
 
-        private void accordionControl2_ContextButtonClick(object sender, DevExpress.Utils.ContextItemClickEventArgs e)
+        private async void accordionControl2_ContextButtonClick(object sender, DevExpress.Utils.ContextItemClickEventArgs e)
         {
             
             // Get accordion element
@@ -2154,28 +2246,28 @@ namespace Nexus_Launcher
                 element.Tag as LauncherInfo;
             if ( button.Name == "refreshSteam")
             {
-                RefreshSteamLibraryAsync();
+                await RefreshSteamLibraryAsync();
 
             }
             if ( button.Name == "refreshBattlenet")
             {
-                RefreshBattleNetLibraryAsync();
+                await RefreshBattleNetLibraryAsync();
             }
             if (button.Name == "refreshEpic")
             {
-                RefreshEpicLibraryAsync();
+                await RefreshEpicLibraryAsync();
             }
             if (button.Name == "refreshGOG")
             {
-                RefreshGogLibraryAsync();
+                await RefreshGogLibraryAsync();
             }
             if (button.Name == "refreshEA")
             {
-                RefreshEALibraryAsync();
+                await RefreshEALibraryAsync();
             }
             if (button.Name == "refreshUbisoft")
             {
-                RefreshUbisoftLibraryAsync();
+                await RefreshUbisoftLibraryAsync();
             }
             if (button.Name == "nexusStore")
                 {
@@ -2525,8 +2617,8 @@ namespace Nexus_Launcher
                 }
                 
             }
-            
 
+            
             if (game == null)
                 return;
             try
@@ -2541,8 +2633,8 @@ namespace Nexus_Launcher
                 applicationCard._name = game.Name;
                 applicationCard._executablePath = game.ExecutablePath;
                 applicationCard._productID = game.ProductId;
+                applicationCard.splitContainerControl1.SplitterPosition = 420;
 
-                
 
                 if (File.Exists(game.LogoPath))
                 {
@@ -2550,7 +2642,7 @@ namespace Nexus_Launcher
                 }
                 else
                 {
-                    applicationCard._icon = Resources.NAicon;
+                    //applicationCard._icon = Resources.NAicon;
                 }
                 if (File.Exists(game.HeaderImagePath))
                 {
@@ -2570,7 +2662,7 @@ namespace Nexus_Launcher
                 }
                 else
                 {
-                    applicationCard._library = Resources.NA;
+                   //applicationCard._library = Resources.NA;
                 }
 
                 RefreshGameArtwork(game);
@@ -2583,30 +2675,35 @@ namespace Nexus_Launcher
                 {
 
                     applicationCard.webView21.Source = new Uri("https://store.steampowered.com/app/" + game.AppId);
+                    applicationCard._gameStoreLink = "https://store.steampowered.com/app/" + game.AppId;
                     //MessageBox.Show("Nexus Launcher - Steam - " + applicationCard.webView21.Source);
                 }
                 if (game.Launcher == "Epic Games")
                 {
                     string formattedName = game.Name.Replace(" ", "-").Replace("'", "").ToLower();
                     applicationCard.webView21.Source = new Uri("https://store.epicgames.com/p/" + formattedName);
+                    applicationCard._gameStoreLink = "https://store.epicgames.com/p/" + formattedName;
                     //MessageBox.Show("Nexus Launcher - Epic Games - " + applicationCard.webView21.Source);
                 }
                 if (game.Launcher == "Battle.net" && game.Name == "StarCraft")
                 {
                     string formattedName = game.Name.Replace(" ", "-").Replace("'", "").ToLower() + "-remastered";
                     applicationCard.webView21.Source = new Uri("https://us.shop.battle.net/en-us/product/" + formattedName);
+                    applicationCard._gameStoreLink = "https://us.shop.battle.net/en-us/product/" + formattedName;
                     //MessageBox.Show("Nexus Launcher - Battle.net - " + applicationCard.webView21.Source);
                 }
                 else if (game.Launcher == "Battle.net")
                 {
                     string formattedName = game.Name.Replace(" ", "-").Replace("'", "").ToLower();
                     applicationCard.webView21.Source = new Uri("https://us.shop.battle.net/en-us/product/" + formattedName);
+                    applicationCard._gameStoreLink = "https://us.shop.battle.net/en-us/product/" + formattedName;
                     //MessageBox.Show("Nexus Launcher - Battle.net - " + applicationCard.webView21.Source);
                 }
                 if (game.Launcher == "GOG")
                 {
                     string formattedName = game.Name.Replace(" - ", "_").Replace(" ", "_").Replace("-", "_").ToLower();
                     applicationCard.webView21.Source = new Uri("https://www.gog.com/en/game/" + formattedName);
+                    applicationCard._gameStoreLink = "https://www.gog.com/en/game/" + formattedName;
                     //MessageBox.Show("Nexus Launcher - GOG - " + applicationCard.webView21.Source);
                 }
                 if (game.Launcher == "EA")
@@ -2654,7 +2751,9 @@ namespace Nexus_Launcher
                     
                     applicationCard.webView21.Source = new Uri("https://guardbyte.me/downloads/Nexus%20Launcher/store-not-supported.html");
                     //MessageBox.Show("Nexus Launcher - Ubisoft Connect - " + applicationCard.webView21.Source);
+                  
                 }
+                
             }
             catch (Exception ex)
             {
@@ -3017,6 +3116,10 @@ namespace Nexus_Launcher
                 applicationCard.pictureEdit1.Image =
                     Image.FromFile(game.GridImagePath);
             }
+            else
+            {
+                applicationCard.pictureEdit1.Image = Properties.Resources.NA;
+            }
 
             if (File.Exists(game.HeroImagePath))
             {
@@ -3024,16 +3127,42 @@ namespace Nexus_Launcher
                 applicationCard.pictureEdit2.Image =
                     Image.FromFile(game.HeroImagePath);
             }
-            if (accordionControl2.ActiveGroup == groupNexus)
+            else
             {
                 applicationCard.pictureEdit2.Image = Properties.Resources.NAHE;
-                applicationCard.pictureEdit1.Image = Properties.Resources.NA;
+            }
+            if (accordionControl2.ActiveGroup == groupNexus)
+            {
+                applicationCard.pictureEdit2.Image = GetRandomNexusHeader();
+                applicationCard.pictureEdit1.Image = IconHelper.ExtractExeIcon(game.ExecutablePath);
+                applicationCard.pictureEdit1.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Squeeze;
+                applicationCard.pictureEdit1.Properties.ZoomPercent = -65;
+                applicationCard.Refresh();
+            }
+            else
+            {
+                applicationCard.pictureEdit1.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Stretch;
+                applicationCard.pictureEdit2.Properties.ZoomPercent = 100;
+                applicationCard.Refresh();
             }
             //if (File.Exists(game.LogoPath))
             //{
             //    pictureLogo.Image =
             //        Image.FromFile(game.LogoPath);
             //}
+        }
+        private readonly Random _random = new Random();
+
+        private Image GetRandomNexusHeader()
+        {
+            Image[] headers =
+            {
+        Properties.Resources.nexusHeader1,
+        Properties.Resources.nexusHeader2,
+        Properties.Resources.nexusHeader3
+    };
+
+            return headers[_random.Next(headers.Length)];
         }
         public void ReleaseArtworkImages()
         {
@@ -3503,6 +3632,18 @@ namespace Nexus_Launcher
                 Clipboard.SetText(result);
             }
            
+        }
+
+        private void barButtonItem14_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            updateAvailable = true;
+            TEST test = new TEST();
+            test.ShowDialog();
+        }
+
+        private void badge1_Click(object sender, EventArgs e)
+        {
+            barButtonItem3.PerformClick();
         }
     }    
 }

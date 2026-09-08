@@ -11,7 +11,7 @@ namespace Nexus_Launcher.Models
     {
         public static string Version => Application.ProductVersion;
 
-        public const int Build = 1010;
+        public const int Build = 1011;
 
         public static string Display => $@"v{Version} (Build: {Build})";
     }

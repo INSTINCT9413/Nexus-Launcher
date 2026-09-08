@@ -117,4 +117,298 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="formAssistant1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>205, 17</value>
+  </metadata>
+  <metadata name="htmlTemplateCollection1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="htmlTemplate1.Styles" xml:space="preserve">
+    <value>body{
+	padding: 30px;
+}
+.titlebar{
+	padding: 11px 12px 11px 11px;
+	display: flex;
+	flex-direction: row;
+	height: 40px;
+}
+.shadowframe{
+	height: 100%;
+	border-radius: 14px;
+	box-shadow: 0px 8px 24px 0px rgba(0, 0, 0, 0.1);
+}
+.frame{
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	border-radius: 14px;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	background-color: @Control;
+	box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.05);
+}
+.footerbar{
+	padding: 11px 11px 11px 10px;
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	height: 32px;
+	background-color: @ControlText/0.05;
+	border-radius: 0px 0px 13px 13px;
+}
+.contenttext{
+	display: flex;
+	justify-content: center;
+	align-items:center;
+	flex-direction: column;
+	align-self: center;
+	font: 14px 'Segoe UI';
+	color: @DisabledText/0.5;
+}
+.content{
+	flex-grow: 1;
+}
+.addimage {
+	padding: 8px;
+}
+.searchimage {
+	margin: 0px 0px 0px 4px;
+	padding: 8px;
+	opacity: 0.5;
+	align-self: center;
+}
+.panelspace{
+	flex-grow:1;
+}
+.button {
+	margin: 0px 4px 0px 4px;
+	padding: 8px;
+	opacity: 0.5;
+	object-fit: none;
+}
+.button:hover{
+	border-radius: 8px;
+	background-color: @ControlText/0.2;
+}
+.button:active{
+	opacity: 0.25;
+	border-radius: 8px;
+	background-color: @ControlText/0.2;
+}
+.logo{
+	margin: 0px 30px 0px 13px;
+	object-fit: none;
+}
+.searchbox{
+	display: flex;
+	flex-direction: row;
+	background-color: @ControlText/0.04;
+	border: 1px solid @ControlText/0.08;
+	height: 40px;
+	flex-grow: 1;
+	margin-left:40px;
+	margin-right:61px;
+	padding-right: 10px;
+	border-radius: 20px;
+}
+.searchedit{
+	flex-grow: 1;
+}
+.addbutton{
+	background-color: @Success;
+	height: 40px;
+	border-radius: 20px;
+	margin-right: 13px;
+	color: @White;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 0px 18px 0px 4px;
+}
+.addbutton:hover{
+	box-shadow: 0px 2px 8px @Success/0.5;
+}
+.addbutton:active{
+	opacity: 0.8;
+	box-shadow: initial;
+}
+.addbuttontext{
+	font: 14px 'Segoe UI';
+	align-self: center;
+	margin-bottom: 2px;
+	white-space: nowrap;
+}</value>
+  </data>
+  <data name="htmlTemplate1.Template" xml:space="preserve">
+    <value>&lt;div class="shadowframe"&gt;
+	&lt;div class="frame" id="frame"&gt;
+		&lt;div class="titlebar"&gt;
+			&lt;img class="logo" src="Logo" /&gt;
+			&lt;div class="searchbox"&gt;
+				&lt;img class="searchimage" src="Search" /&gt;
+				&lt;input class="searchedit" name="searchEdit"/&gt;
+			&lt;/div&gt;
+			&lt;div class="addbutton"&gt;
+				&lt;img class="addimage" src="Add" /&gt;
+				&lt;div class="addbuttontext"&gt;Add New&lt;/div&gt;
+			&lt;/div&gt;
+			&lt;img class="button" src="User" id="loginbutton" /&gt;
+			&lt;img class="button" src="Close" id="closebutton"/&gt;
+		&lt;/div&gt;
+		&lt;div class="content" id="content"&gt;
+			
+		&lt;/div&gt;
+		&lt;div class="footerbar"&gt;
+			&lt;img class="button" src="Back" id="backbutton" /&gt;
+			&lt;img class="button" src="Forward" id="forwardbutton" /&gt;
+			&lt;div class="panelspace"&gt;&lt;/div&gt;
+			&lt;img class="button" src="Info" id="infobutton" /&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</value>
+  </data>
+  <data name="TEST.HtmlTemplate.Styles" xml:space="preserve">
+    <value>body{
+	padding: 30px;
+}
+.titlebar{
+	padding: 11px 12px 11px 11px;
+	display: flex;
+	flex-direction: row;
+	height: 40px;
+}
+.shadowframe{
+	height: 100%;
+	border-radius: 14px;
+	box-shadow: 0px 8px 24px 0px rgba(0, 0, 0, 0.1);
+}
+.frame{
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	border-radius: 14px;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	background-color: @Control;
+	box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.05);
+}
+.footerbar{
+	padding: 11px 11px 11px 10px;
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	height: 32px;
+	background-color: @ControlText/0.05;
+	border-radius: 0px 0px 13px 13px;
+}
+.contenttext{
+	display: flex;
+	justify-content: center;
+	align-items:center;
+	flex-direction: column;
+	align-self: center;
+	font: 14px 'Segoe UI';
+	color: @DisabledText/0.5;
+}
+.content{
+	flex-grow: 1;
+}
+.addimage {
+	padding: 8px;
+}
+.searchimage {
+	margin: 0px 0px 0px 4px;
+	padding: 8px;
+	opacity: 0.5;
+	align-self: center;
+}
+.panelspace{
+	flex-grow:1;
+}
+.button {
+	margin: 0px 4px 0px 4px;
+	padding: 8px;
+	opacity: 0.5;
+	object-fit: none;
+}
+.button:hover{
+	border-radius: 8px;
+	background-color: @ControlText/0.2;
+}
+.button:active{
+	opacity: 0.25;
+	border-radius: 8px;
+	background-color: @ControlText/0.2;
+}
+.logo{
+	margin: 0px 30px 0px 13px;
+	object-fit: none;
+}
+.searchbox{
+	display: flex;
+	flex-direction: row;
+	background-color: @ControlText/0.04;
+	border: 1px solid @ControlText/0.08;
+	height: 40px;
+	flex-grow: 1;
+	margin-left:40px;
+	margin-right:61px;
+	padding-right: 10px;
+	border-radius: 20px;
+}
+.searchedit{
+	flex-grow: 1;
+}
+.addbutton{
+	background-color: @Success;
+	height: 40px;
+	border-radius: 20px;
+	margin-right: 13px;
+	color: @White;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 0px 18px 0px 4px;
+}
+.addbutton:hover{
+	box-shadow: 0px 2px 8px @Success/0.5;
+}
+.addbutton:active{
+	opacity: 0.8;
+	box-shadow: initial;
+}
+.addbuttontext{
+	font: 14px 'Segoe UI';
+	align-self: center;
+	margin-bottom: 2px;
+	white-space: nowrap;
+}</value>
+  </data>
+  <data name="TEST.HtmlTemplate.Template" xml:space="preserve">
+    <value>&lt;div class="shadowframe"&gt;
+	&lt;div class="frame" id="frame"&gt;
+		&lt;div class="titlebar"&gt;
+			&lt;img class="logo" src="Logo" /&gt;
+			&lt;div class="searchbox"&gt;
+				&lt;img class="searchimage" src="Search" /&gt;
+				&lt;input class="searchedit" name="searchEdit"/&gt;
+			&lt;/div&gt;
+			&lt;div class="addbutton"&gt;
+				&lt;img class="addimage" src="Add" /&gt;
+				&lt;div class="addbuttontext"&gt;Add New&lt;/div&gt;
+			&lt;/div&gt;
+			&lt;img class="button" src="User" id="loginbutton" /&gt;
+			&lt;img class="button" src="Close" id="closebutton"/&gt;
+		&lt;/div&gt;
+		&lt;div class="content" id="content"&gt;
+			
+		&lt;/div&gt;
+		&lt;div class="footerbar"&gt;
+			&lt;img class="button" src="Back" id="backbutton" /&gt;
+			&lt;img class="button" src="Forward" id="forwardbutton" /&gt;
+			&lt;div class="panelspace"&gt;&lt;/div&gt;
+			&lt;img class="button" src="Info" id="infobutton" /&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</value>
+  </data>
 </root>

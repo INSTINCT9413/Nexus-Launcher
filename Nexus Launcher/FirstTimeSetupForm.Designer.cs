@@ -120,7 +120,7 @@
             this.welcomeWizardPage1.Controls.Add(this.labelControl1);
             this.welcomeWizardPage1.IntroductionText = resources.GetString("welcomeWizardPage1.IntroductionText");
             this.welcomeWizardPage1.Name = "welcomeWizardPage1";
-            this.welcomeWizardPage1.Size = new System.Drawing.Size(636, 296);
+            this.welcomeWizardPage1.Size = new System.Drawing.Size(617, 296);
             this.welcomeWizardPage1.Text = "Welcome to Nexus Launcher!";
             // 
             // labelControl1
@@ -153,7 +153,7 @@
             this.wizardPage1.Controls.Add(this.pictureBox1);
             this.wizardPage1.Controls.Add(this.imageListBoxControl1);
             this.wizardPage1.Name = "wizardPage1";
-            this.wizardPage1.Size = new System.Drawing.Size(636, 296);
+            this.wizardPage1.Size = new System.Drawing.Size(617, 296);
             this.wizardPage1.Text = "Supported Launchers";
             // 
             // labelControl10
@@ -244,7 +244,7 @@
             this.panelControl1.Controls.Add(this.simpleButton2);
             this.panelControl1.Controls.Add(this.simpleButton1);
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelControl1.Location = new System.Drawing.Point(559, 0);
+            this.panelControl1.Location = new System.Drawing.Point(540, 0);
             this.panelControl1.Name = "panelControl1";
             this.panelControl1.Size = new System.Drawing.Size(77, 296);
             this.panelControl1.TabIndex = 7;
@@ -433,7 +433,7 @@
             this.completionWizardPage1.Controls.Add(this.simpleButton7);
             this.completionWizardPage1.Controls.Add(this.pictureBox7);
             this.completionWizardPage1.Name = "completionWizardPage1";
-            this.completionWizardPage1.Size = new System.Drawing.Size(636, 296);
+            this.completionWizardPage1.Size = new System.Drawing.Size(617, 296);
             this.completionWizardPage1.Text = "Nexus Launcher Is Ready!";
             // 
             // labelControl12
@@ -468,7 +468,7 @@
             // 
             this.wizardPage2.AutoScroll = true;
             this.wizardPage2.Name = "wizardPage2";
-            this.wizardPage2.Size = new System.Drawing.Size(636, 296);
+            this.wizardPage2.Size = new System.Drawing.Size(617, 296);
             this.wizardPage2.Text = "Nexus Launcher Settings";
             // 
             // FirstTimeSetupForm
