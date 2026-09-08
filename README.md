@@ -127,7 +127,7 @@ Nexus Launcher organizes detected games into groups based on their associated la
 
 Example:
 Nexus Launcher Program
-
+```Text
 ├── Nexus
 │   ├── Game/Program
 │   ├── Game/Program
@@ -152,7 +152,7 @@ Nexus Launcher Program
 │
 └── GOG
     └── Game
-
+```
 ## 📸 Gallery
 
 ### Game Library
