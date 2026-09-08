@@ -2,7 +2,7 @@
 
 > A modern game launcher and library manager designed to bring your games from multiple platforms together in one place.
 
-![Nexus Launcher](YOUR_BANNER_IMAGE_URL)
+![Nexus Launcher](https://guardbyte.me/downloads/Nexus%20Launcher/nexusHeader3.png)
 
 ## 📖 About
 
