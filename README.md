@@ -154,3 +154,20 @@ Nexus Launcher Program
 │
 └── GOG
     └── Game
+
+## 📸 Gallery
+
+### Game Library
+<p align="center">
+    <img src="screenshots/library.png" width="850">
+</p>
+
+### Game Details
+<p align="center">
+    <img src="screenshots/game-details.png" width="850">
+</p>
+
+### Nexus Menu
+<p align="center">
+    <img src="screenshots/menu.png" width="850">
+</p>
