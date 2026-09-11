@@ -1,7 +1,8 @@
-﻿using DevExpress.XtraPrinting.Native.WebClientUIControl;
-using Newtonsoft.Json;
+﻿
+
 using NexusUpdater.Models;
 using System.IO;
+using System.Runtime.Serialization.Json;
 
 namespace NexusUpdater.Services
 {
@@ -17,8 +18,16 @@ namespace NexusUpdater.Services
             if (!File.Exists(manifestPath))
                 return null;
 
-            return JsonConvert.DeserializeObject<UpdateManifest>(
-                File.ReadAllText(manifestPath));
+            DataContractJsonSerializer serializer =
+                new DataContractJsonSerializer(
+                    typeof(UpdateManifest));
+
+            using (FileStream stream =
+                File.OpenRead(manifestPath))
+            {
+                return serializer.ReadObject(stream)
+                    as UpdateManifest;
+            }
         }
     }
 }

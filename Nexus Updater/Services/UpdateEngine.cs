@@ -1,5 +1,4 @@
-﻿using DevExpress.XtraWaitForm;
-using Nexus_Updater;
+﻿using Nexus_Updater;
 using NexusUpdater.Models;
 using System;
 using System.IO;
@@ -62,7 +61,7 @@ namespace NexusUpdater.Services
 
             form.SetStatus("Installing update...");
             await Task.Delay(2000);
-            FileInstaller.Install(
+            await FileInstaller.Install(
      extractedFolder,
      installFolder,
      manifest,

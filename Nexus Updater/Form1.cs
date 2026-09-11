@@ -31,7 +31,7 @@ namespace Nexus_Updater
 
         private async void Form1_Load(object sender, EventArgs e)
         {
-            await Task.Delay(250);
+            await Task.Delay(2500);
 
             await UpdateEngine.Run(
     this,

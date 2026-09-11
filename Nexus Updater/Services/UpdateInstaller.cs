@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json;
-using NexusUpdater.Models;
+﻿using NexusUpdater.Models;
+using System;
 using System.IO;
 using System.IO.Compression;
+using System.Runtime.Serialization.Json;
+using System.Text;
 using System.Windows.Forms;
 
 namespace NexusUpdater.Services
@@ -38,61 +40,132 @@ namespace NexusUpdater.Services
             ZipFile.ExtractToDirectory(
                 packagePath,
                 tempFolder);
+
             string manifestPath =
                 Path.Combine(
-                tempFolder,
-                "manifest.json");
+                    tempFolder,
+                    "manifest.json");
+
             MessageBox.Show("Extracted");
+
             UpdateManifest manifest =
-                JsonConvert.DeserializeObject<UpdateManifest>(
-                    File.ReadAllText(manifestPath));
+                ReadManifest(manifestPath);
+
+            if (manifest == null)
+            {
+                MessageBox.Show(
+                    "The update manifest could not be read.",
+                    "Nexus Updater",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+                return false;
+            }
+
             MessageBox.Show("Manifest Read");
+
             //------------------------------------------------
             // Copy files
             //------------------------------------------------
 
             CopyDirectory(
                 Path.Combine(
-                tempFolder,
-                "Files"),
+                    tempFolder,
+                    "Files"),
                 installFolder);
+
             MessageBox.Show("Copied");
-            MessageBox.Show("About to save latest.json");
+
+            MessageBox.Show(
+                "About to save latest.json");
+
+            //------------------------------------------------
+            // Save installed version
+            //------------------------------------------------
 
             SaveInstalledVersion(
                 installFolder,
                 manifest);
+
             MessageBox.Show(
-    $"Writing Build: {manifest.build}");
+                "Writing Build: " +
+                manifest.build);
+
             //------------------------------------------------
             // Cleanup
             //------------------------------------------------
 
-            Directory.Delete(
-                tempFolder,
-                true);
+            if (Directory.Exists(tempFolder))
+            {
+                Directory.Delete(
+                    tempFolder,
+                    true);
+            }
 
             return true;
         }
-        private static void SaveInstalledVersion(
-    string installFolder,
-    UpdateManifest manifest)
-        {
-            string json =
-                JsonConvert.SerializeObject(
-                    new
-                    {
-                        build = manifest.build,
-                        version = manifest.version
-                    },
-                    Formatting.Indented);
 
-            File.WriteAllText(
+        // =========================================================
+        // READ MANIFEST
+        // =========================================================
+
+        private static UpdateManifest ReadManifest(
+            string manifestPath)
+        {
+            if (!File.Exists(manifestPath))
+                return null;
+
+            DataContractJsonSerializer serializer =
+                new DataContractJsonSerializer(
+                    typeof(UpdateManifest));
+
+            using (FileStream stream =
+                File.OpenRead(manifestPath))
+            {
+                return serializer.ReadObject(stream)
+                    as UpdateManifest;
+            }
+        }
+
+        // =========================================================
+        // SAVE INSTALLED VERSION
+        // =========================================================
+
+        private static void SaveInstalledVersion(
+            string installFolder,
+            UpdateManifest manifest)
+        {
+            string filePath =
                 Path.Combine(
                     installFolder,
-                    "latest.json"),
-                json);
+                    "latest.json");
+
+            DataContractJsonSerializer serializer =
+                new DataContractJsonSerializer(
+                    typeof(UpdateManifest));
+
+            using (MemoryStream stream =
+                new MemoryStream())
+            {
+                serializer.WriteObject(
+                    stream,
+                    manifest);
+
+                string json =
+                    Encoding.UTF8.GetString(
+                        stream.ToArray());
+
+                File.WriteAllText(
+                    filePath,
+                    json,
+                    Encoding.UTF8);
+            }
         }
+
+        // =========================================================
+        // COPY DIRECTORY
+        // =========================================================
+
         private static void CopyDirectory(
             string source,
             string destination)

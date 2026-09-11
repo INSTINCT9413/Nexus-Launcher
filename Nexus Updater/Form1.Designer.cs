@@ -44,7 +44,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18.25F);
-            this.label1.Location = new System.Drawing.Point(124, 107);
+            this.label1.Location = new System.Drawing.Point(124, 121);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(196, 29);
             this.label1.TabIndex = 0;
@@ -54,7 +54,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label2.Location = new System.Drawing.Point(156, 136);
+            this.label2.Location = new System.Drawing.Point(156, 150);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(145, 20);
             this.label2.TabIndex = 1;
@@ -64,7 +64,7 @@
             // 
             this.lblVersion.AutoSize = true;
             this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.lblVersion.Location = new System.Drawing.Point(101, 167);
+            this.lblVersion.Location = new System.Drawing.Point(101, 181);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(242, 20);
             this.lblVersion.TabIndex = 2;
@@ -93,7 +93,7 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = global::Nexus_Updater.Properties.Resources.dropbox;
-            this.pictureBox2.Location = new System.Drawing.Point(35, 92);
+            this.pictureBox2.Location = new System.Drawing.Point(34, 107);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(380, 280);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -103,7 +103,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::Nexus_Updater.Properties.Resources.NexusAbstractBIG;
-            this.pictureBox1.Location = new System.Drawing.Point(164, 1);
+            this.pictureBox1.Location = new System.Drawing.Point(160, 9);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(120, 120);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;

@@ -1,15 +1,18 @@
-﻿using Newtonsoft.Json;
+﻿
 using NexusUpdater.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Json;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace NexusUpdater.Services
 {
     internal static class FileInstaller
     {
-        public static void Install(
+        public static async Task Install(
     string extractedFolder,
     string installFolder,
     UpdateManifest manifest,
@@ -77,20 +80,31 @@ namespace NexusUpdater.Services
     string installFolder,
     UpdateManifest manifest)
         {
-            string json =
-                JsonConvert.SerializeObject(
-                    new
-                    {
-                        build = manifest.build,
-                        version = manifest.version
-                    },
-                    Formatting.Indented);
-
-            File.WriteAllText(
+            string filePath =
                 Path.Combine(
                     installFolder,
-                    "latest.json"),
-                json);
+                    "latest.json");
+
+            DataContractJsonSerializer serializer =
+                new DataContractJsonSerializer(
+                    typeof(UpdateManifest));
+
+            using (MemoryStream stream =
+                new MemoryStream())
+            {
+                serializer.WriteObject(
+                    stream,
+                    manifest);
+
+                string json =
+                    Encoding.UTF8.GetString(
+                        stream.ToArray());
+
+                File.WriteAllText(
+                    filePath,
+                    json,
+                    Encoding.UTF8);
+            }
         }
     }
 }
