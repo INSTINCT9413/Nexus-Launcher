@@ -2,7 +2,7 @@
 
 > A modern game launcher and library manager designed to bring your games from multiple platforms together in one place.
 
-![Nexus Launcher](https://github.com/INSTINCT9413/Nexus-Launcher/blob/master/Nexus%20Launcher/Resources/nexusHeader3.png)
+![Nexus Launcher](https://github.com/INSTINCT9413/Nexus-Launcher/blob/master/Nexus%20Launcher/Assets/nexusHeader3.png)
 
 ## 📖 About
 
@@ -157,15 +157,20 @@ Nexus Launcher Program
 
 ### Game Library
 <p align="center">
-    <img src="screenshots/library.png" width="850">
+    <img src="https://github.com/INSTINCT9413/Nexus-Launcher/blob/master/Nexus%20Launcher/Assets/MainView.png" width="850">
 </p>
 
 ### Game Details
 <p align="center">
-    <img src="screenshots/game-details.png" width="850">
+    <img src="https://github.com/INSTINCT9413/Nexus-Launcher/blob/master/Nexus%20Launcher/Assets/GameInfo.png" width="850">
 </p>
 
-### Nexus Menu
+### Settings
 <p align="center">
-    <img src="screenshots/menu.png" width="850">
+    <img src="https://github.com/INSTINCT9413/Nexus-Launcher/blob/master/Nexus%20Launcher/Assets/Settings1.png" width="850">
+</p>
+
+### Theming
+<p align="center">
+    <img src="https://github.com/INSTINCT9413/Nexus-Launcher/blob/master/Nexus%20Launcher/Assets/Themes.png" width="850">
 </p>
