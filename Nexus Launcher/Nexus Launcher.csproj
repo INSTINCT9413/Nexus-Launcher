@@ -16,6 +16,21 @@
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -774,6 +789,7 @@
     <Compile Include="Models\InstalledProgram.cs" />
     <Compile Include="Models\LauncherDefinition.cs" />
     <Compile Include="Models\LauncherInfo.cs" />
+    <Compile Include="Models\NexusLinksConfig.cs" />
     <Compile Include="Models\UpdateInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -798,6 +814,7 @@
     <Compile Include="Services\LibrarySelectionService.cs" />
     <Compile Include="Services\LibraryService.cs" />
     <Compile Include="Services\LibraryTileLoader.cs" />
+    <Compile Include="Services\NexusLinksService.cs" />
     <Compile Include="Services\ShortcutImporter.cs" />
     <Compile Include="Services\SteamScannerService.cs" />
     <Compile Include="Controls\UserAccount.cs">
@@ -922,6 +939,12 @@
   <ItemGroup>
     <Content Include="dfveffb-9b262552-e352-4348-aefc-8e699002c946.ico" />
     <Content Include="License-LGPL.txt" />
+    <None Include="Resources\zoom100_16x16.png" />
+    <None Include="Resources\fill_16x16.png" />
+    <None Include="Resources\down_32x32.png" />
+    <None Include="Resources\icons8-error-24.png" />
+    <None Include="Resources\Cancel1.svg" />
+    <None Include="Resources\Cancel.svg" />
     <None Include="Resources\nexusHeader3.png" />
     <None Include="Resources\nexusHeader2.png" />
     <None Include="Resources\nexusHeader1.png" />
@@ -999,6 +1022,18 @@
   -->
   <ItemGroup>
     <Analyzer Include="C:\Program Files\DevExpress 26.1\Components\Offline Packages\devexpress.data\26.1.4-pre-26179\analyzers\dotnet\DevExpress.Generator.dll" Visible="false" Condition="Exists('C:\Program Files\DevExpress 26.1\Components\Offline Packages\devexpress.data\26.1.4-pre-26179\analyzers\dotnet\DevExpress.Generator.dll')" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.8">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.8 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="..\packages\Magick.NET-Q8-AnyCPU.14.16.0\build\netstandard20\Magick.NET-Q8-AnyCPU.targets" Condition="Exists('..\packages\Magick.NET-Q8-AnyCPU.14.16.0\build\netstandard20\Magick.NET-Q8-AnyCPU.targets')" />
   <Import Project="..\packages\Microsoft.Web.WebView2.1.0.4129.50\build\Microsoft.Web.WebView2.targets" Condition="Exists('..\packages\Microsoft.Web.WebView2.1.0.4129.50\build\Microsoft.Web.WebView2.targets')" />

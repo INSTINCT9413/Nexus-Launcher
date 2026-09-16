@@ -151,6 +151,26 @@ namespace Nexus_Launcher.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type DevExpress.Utils.Svg.SvgImage.
+        /// </summary>
+        internal static DevExpress.Utils.Svg.SvgImage Cancel {
+            get {
+                object obj = ResourceManager.GetObject("Cancel", resourceCulture);
+                return ((DevExpress.Utils.Svg.SvgImage)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type DevExpress.Utils.Svg.SvgImage.
+        /// </summary>
+        internal static DevExpress.Utils.Svg.SvgImage Cancel1 {
+            get {
+                object obj = ResourceManager.GetObject("Cancel1", resourceCulture);
+                return ((DevExpress.Utils.Svg.SvgImage)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap ChatGPT_Image_Nov_23__2025__06_51_43_PM {
@@ -193,6 +213,16 @@ namespace Nexus_Launcher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap down_32x32 {
+            get {
+                object obj = ResourceManager.GetObject("down_32x32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap EA25px {
             get {
                 object obj = ResourceManager.GetObject("EA25px", resourceCulture);
@@ -223,6 +253,16 @@ namespace Nexus_Launcher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap fill_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("fill_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Gemini_Generated_Image_z7uygz7uygz7uygz {
             get {
                 object obj = ResourceManager.GetObject("Gemini_Generated_Image_z7uygz7uygz7uygz", resourceCulture);
@@ -236,6 +276,16 @@ namespace Nexus_Launcher.Properties {
         internal static System.Drawing.Bitmap GOG25px {
             get {
                 object obj = ResourceManager.GetObject("GOG25px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_error_24 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-error-24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -516,6 +566,16 @@ namespace Nexus_Launcher.Properties {
         internal static System.Drawing.Bitmap Xbox25px {
             get {
                 object obj = ResourceManager.GetObject("Xbox25px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap zoom100_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("zoom100_16x16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

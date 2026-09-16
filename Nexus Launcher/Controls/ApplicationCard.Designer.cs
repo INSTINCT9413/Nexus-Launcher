@@ -37,17 +37,25 @@
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.panelControl2 = new DevExpress.XtraEditors.PanelControl();
+            this.panelControl3 = new DevExpress.XtraEditors.PanelControl();
             this.webView22 = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
+            this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
             this.dropDownButton3 = new DevExpress.XtraEditors.DropDownButton();
             this.pictureEdit1 = new DevExpress.XtraEditors.PictureEdit();
             this.dropDownButton2 = new DevExpress.XtraEditors.DropDownButton();
             this.pictureEdit2 = new DevExpress.XtraEditors.PictureEdit();
+            this.dropDownButton6 = new DevExpress.XtraEditors.DropDownButton();
+            this.zoomTrackBarControl1 = new DevExpress.XtraEditors.ZoomTrackBarControl();
+            this.dropDownButton4 = new DevExpress.XtraEditors.DropDownButton();
+            this.dropDownButton5 = new DevExpress.XtraEditors.DropDownButton();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webView21)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl2)).BeginInit();
             this.panelControl2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl3)).BeginInit();
+            this.panelControl3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webView22)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1.Panel1)).BeginInit();
@@ -57,6 +65,8 @@
             this.splitContainerControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureEdit1.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureEdit2.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.zoomTrackBarControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.zoomTrackBarControl1.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // panelControl1
@@ -117,9 +127,11 @@
             this.webView21.ZoomFactor = 0.8D;
             this.webView21.NavigationStarting += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs>(this.webView21_NavigationStarting);
             this.webView21.NavigationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs>(this.webView21_NavigationCompleted);
+            this.webView21.ZoomFactorChanged += new System.EventHandler<System.EventArgs>(this.webView21_ZoomFactorChanged);
             // 
             // panelControl2
             // 
+            this.panelControl2.Controls.Add(this.panelControl3);
             this.panelControl2.Controls.Add(this.webView21);
             this.panelControl2.Controls.Add(this.webView22);
             this.panelControl2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -127,6 +139,20 @@
             this.panelControl2.Name = "panelControl2";
             this.panelControl2.Size = new System.Drawing.Size(1095, 441);
             this.panelControl2.TabIndex = 6;
+            // 
+            // panelControl3
+            // 
+            this.panelControl3.Controls.Add(this.labelControl3);
+            this.panelControl3.Controls.Add(this.dropDownButton6);
+            this.panelControl3.Controls.Add(this.zoomTrackBarControl1);
+            this.panelControl3.Controls.Add(this.dropDownButton4);
+            this.panelControl3.Controls.Add(this.dropDownButton5);
+            this.panelControl3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelControl3.Location = new System.Drawing.Point(2, 2);
+            this.panelControl3.Name = "panelControl3";
+            this.panelControl3.Size = new System.Drawing.Size(1091, 35);
+            this.panelControl3.TabIndex = 9;
+            this.panelControl3.Visible = false;
             // 
             // webView22
             // 
@@ -168,6 +194,14 @@
             this.splitContainerControl1.Size = new System.Drawing.Size(1095, 871);
             this.splitContainerControl1.SplitterPosition = 420;
             this.splitContainerControl1.TabIndex = 9;
+            // 
+            // labelControl3
+            // 
+            this.labelControl3.Location = new System.Drawing.Point(344, 11);
+            this.labelControl3.Name = "labelControl3";
+            this.labelControl3.Size = new System.Drawing.Size(26, 13);
+            this.labelControl3.TabIndex = 13;
+            this.labelControl3.Text = "200%";
             // 
             // dropDownButton3
             // 
@@ -224,6 +258,67 @@
             this.pictureEdit2.Size = new System.Drawing.Size(1091, 198);
             this.pictureEdit2.TabIndex = 0;
             // 
+            // dropDownButton6
+            // 
+            this.dropDownButton6.DropDownArrowStyle = DevExpress.XtraEditors.DropDownArrowStyle.Hide;
+            this.dropDownButton6.ImageOptions.Image = global::Nexus_Launcher.Properties.Resources.zoom100_16x16;
+            this.dropDownButton6.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            this.dropDownButton6.Location = new System.Drawing.Point(377, 6);
+            this.dropDownButton6.Name = "dropDownButton6";
+            this.dropDownButton6.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
+            this.dropDownButton6.Size = new System.Drawing.Size(24, 24);
+            this.dropDownButton6.TabIndex = 12;
+            this.dropDownButton6.ToolTip = "Shrink the store page";
+            this.dropDownButton6.ToolTipIconType = DevExpress.Utils.ToolTipIconType.Information;
+            this.dropDownButton6.ToolTipTitle = "Shrink";
+            this.dropDownButton6.Click += new System.EventHandler(this.dropDownButton6_Click);
+            // 
+            // zoomTrackBarControl1
+            // 
+            this.zoomTrackBarControl1.EditValue = 100;
+            this.zoomTrackBarControl1.Location = new System.Drawing.Point(65, 11);
+            this.zoomTrackBarControl1.Name = "zoomTrackBarControl1";
+            this.zoomTrackBarControl1.Properties.Maximum = 200;
+            this.zoomTrackBarControl1.Properties.Minimum = 75;
+            this.zoomTrackBarControl1.Size = new System.Drawing.Size(273, 13);
+            this.zoomTrackBarControl1.TabIndex = 11;
+            this.zoomTrackBarControl1.ToolTip = "Change zoom levels of the store";
+            this.zoomTrackBarControl1.ToolTipIconType = DevExpress.Utils.ToolTipIconType.Information;
+            this.zoomTrackBarControl1.ToolTipTitle = "Zoom Factor";
+            this.zoomTrackBarControl1.Value = 100;
+            this.zoomTrackBarControl1.ValueChanged += new System.EventHandler(this.zoomTrackBarControl1_ValueChanged);
+            this.zoomTrackBarControl1.EditValueChanged += new System.EventHandler(this.zoomTrackBarControl1_EditValueChanged);
+            // 
+            // dropDownButton4
+            // 
+            this.dropDownButton4.DropDownArrowStyle = DevExpress.XtraEditors.DropDownArrowStyle.Hide;
+            this.dropDownButton4.ImageOptions.Image = global::Nexus_Launcher.Properties.Resources.fill_16x16;
+            this.dropDownButton4.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            this.dropDownButton4.Location = new System.Drawing.Point(35, 5);
+            this.dropDownButton4.Name = "dropDownButton4";
+            this.dropDownButton4.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
+            this.dropDownButton4.Size = new System.Drawing.Size(24, 24);
+            this.dropDownButton4.TabIndex = 10;
+            this.dropDownButton4.ToolTip = "Shrink the store page";
+            this.dropDownButton4.ToolTipIconType = DevExpress.Utils.ToolTipIconType.Information;
+            this.dropDownButton4.ToolTipTitle = "Shrink";
+            this.dropDownButton4.Click += new System.EventHandler(this.dropDownButton4_Click_1);
+            // 
+            // dropDownButton5
+            // 
+            this.dropDownButton5.DropDownArrowStyle = DevExpress.XtraEditors.DropDownArrowStyle.Hide;
+            this.dropDownButton5.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("dropDownButton5.ImageOptions.Image")));
+            this.dropDownButton5.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            this.dropDownButton5.Location = new System.Drawing.Point(5, 5);
+            this.dropDownButton5.Name = "dropDownButton5";
+            this.dropDownButton5.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
+            this.dropDownButton5.Size = new System.Drawing.Size(24, 24);
+            this.dropDownButton5.TabIndex = 9;
+            this.dropDownButton5.ToolTip = "Reload the store page";
+            this.dropDownButton5.ToolTipIconType = DevExpress.Utils.ToolTipIconType.Information;
+            this.dropDownButton5.ToolTipTitle = "Reload";
+            this.dropDownButton5.Click += new System.EventHandler(this.dropDownButton5_Click);
+            // 
             // ApplicationCard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -238,6 +333,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.webView21)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl2)).EndInit();
             this.panelControl2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl3)).EndInit();
+            this.panelControl3.ResumeLayout(false);
+            this.panelControl3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webView22)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1.Panel1)).EndInit();
             this.splitContainerControl1.Panel1.ResumeLayout(false);
@@ -248,6 +346,8 @@
             this.splitContainerControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureEdit1.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureEdit2.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.zoomTrackBarControl1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.zoomTrackBarControl1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -266,5 +366,11 @@
         private DevExpress.XtraEditors.DropDownButton dropDownButton2;
         private DevExpress.XtraEditors.DropDownButton dropDownButton3;
         public DevExpress.XtraEditors.SplitContainerControl splitContainerControl1;
+        private DevExpress.XtraEditors.PanelControl panelControl3;
+        private DevExpress.XtraEditors.DropDownButton dropDownButton5;
+        public DevExpress.XtraEditors.DropDownButton dropDownButton4;
+        private DevExpress.XtraEditors.ZoomTrackBarControl zoomTrackBarControl1;
+        private DevExpress.XtraEditors.LabelControl labelControl3;
+        public DevExpress.XtraEditors.DropDownButton dropDownButton6;
     }
 }

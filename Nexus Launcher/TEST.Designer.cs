@@ -64,6 +64,7 @@
             this.HtmlTemplate.Styles = resources.GetString("TEST.HtmlTemplate.Styles");
             this.HtmlTemplate.Template = resources.GetString("TEST.HtmlTemplate.Template");
             this.HtmlText = "TEST";
+            this.IconOptions.SvgImage = global::Nexus_Launcher.Properties.Resources.Cancel1;
             this.Name = "TEST";
             this.Load += new System.EventHandler(this.TEST_Load);
             this.ResumeLayout(false);

@@ -425,6 +425,21 @@
 	background-color: @HighlightAlternate/0.01;
 </value>
   </data>
+  <data name="resource.SvgImage5" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v26.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjI2LjEsIFZlcnNpb249MjYuMS4z
+        LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
+        dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAK4BAAAC77u/
+        PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
+        IHZpZXdCb3g9IjAgMCAzMiAzMiIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
+        MjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWw6c3Bh
+        Y2U9InByZXNlcnZlIiBpZD0iTGF5ZXIxIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAz
+        MiAzMiI+DQogIDxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+CgkJLkdyZWVuCgkJewoJCQlmaWxsOiMwMzlD
+        MjM7CgkJCWZvbnQtZmFtaWx5OidkeC1mb250LWljb25zJzsKCQkJZm9udC1zaXplOjMycHg7CgkJfQoJ
+        PC9zdHlsZT4NCiAgPHRleHQgeD0iMHB4IiB5PSIzMnB4IiBjbGFzcz0iR3JlZW4iPu6ckzwvdGV4dD4N
+        Cjwvc3ZnPgs=
+</value>
+  </data>
   <data name="labelControl1.Text" xml:space="preserve">
     <value>┌──────────────────┐
 │ GAME INFO        │
@@ -768,6 +783,48 @@
         u+vBf6u/Nn8D/ztrWafENREAAAAASUVORK5CYII=
 </value>
   </data>
+  <data name="barSubItem5.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
+        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAAzdEVYdFRpdGxlAEltYWdlO1Bob3RvO1BpY3R1cmU7
+        RGlhZ3JhbTtGaWd1cmU7ZHJhdztwYWludBXVxnAAAABuSURBVDhPY/j//z8DJRhMdHd3/ycHoxhAKqCv
+        Ad+fH/v//nwfmIYBkgwAaX57og5MwwBJBhDtgtvPPv4vWz4dTBMCWA0AaYZhQoYQNADZEGwuI8oAmCZ0
+        PkkGYMM4DSAFYBhADoYbQAnGECAVAwCvkESDmuc32AAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="barSubItem5.ImageOptions.LargeImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
+        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAAzdEVYdFRpdGxlAEltYWdlO1Bob3RvO1BpY3R1cmU7
+        RGlhZ3JhbTtGaWd1cmU7ZHJhdztwYWludBXVxnAAAADcSURBVFhH7ZM9CsJAEIVzaksvsGCrN7D3FHYW
+        loJ2diILVjYjLzCwmUk2G9aZBfHBB8lbwvv8SUdEXUtU4Y0qvFGFN4ObEAJ5kBWwzl/ATOAdb/S6Huh5
+        2vTgGp2MiQCG4nlHj+N6ADopYSKATyvHGZylMRHAVy6HGZyl+U2B5j9B8z8hYvoaXu6RVvttD65rslgg
+        Hf+GxCKBsfFaiWKB3HiNRJFAyfiUBD8re06RgByZg8ek+JiEiQCPyY57F4EcqUQTAcASzQRAsYBlZgU8
+        mBRogSq8UYU3qvDmA2rFEGCg5XP2AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="barButtonItem3.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
+        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAALdEVYdFRpdGxlAEluZm87bRIthgAAAJtJREFUOE+t
+        k8ENgCAMRRnFabx1qZ51CpfoBq5j4gCYRzSBRiKKh5dAf/tDCwRRC45R1GZRW0VtO2FNDK3IzzeDqE2i
+        totarIBGDrmFAYHlpqAGucnkMsDVJz1BTTKgr9tjxxgD+PgJNSMiw/FiiwHMiEzYC62sGHBNXkg0nGD7
+        xaDaQoNBaqF7iN3XCF0PCbqf8mXy+TPlvPrOB0ynVNG/VjQvAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="barButtonItem3.ImageOptions.LargeImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
+        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAALdEVYdFRpdGxlAEluZm87bRIthgAAAX9JREFUWEfN
+        lzFuwzAMRdMjNFORK/Qs3HOETu3WrgXnInOPwiFX6NAb5BZBJxcvSAqZph0psqEOLzCcL+pboihp1XXd
+        qiWnH1HLYSNqW1Hbidpe1A6idjzDM+/4Dw1a335AroFHUXsXtW9R6zJBSxva+njZBu5E7UnUvoIOcqEt
+        MYjl408aeBC1jyDgrRCLmFkGEH4GQWohZs9EZIChyvnyH1F7FrW1qN2fn3nndR5i/01HZID58o0iXtKl
+        dI7xFugi6CM0QMbmJtw6MMBoeF0EfZxWhzfAsvHiMWoMAH31DFA4StZ5NAWvgW4M+tqkBqheXjTFJQlJ
+        wJIkTNmmBiihXrA0u9QAddwLlmafGmAz8YJJghwYaK5wSA2wo3nBJDMYOP4rA82noDgJZzDQS8LiZTiD
+        gd4yLC1EcxjoFaLSUlxrYFCKoWQzqjUw2IygZDuuMTC6HUPugaTGwOiBBHKPZLdy9UgGTQ+lqYk5R6Lo
+        WH6h6cUkpdnVzLPc5bQlv7HyoLzqqqMwAAAAAElFTkSuQmCC
+</value>
+  </data>
   <data name="barButtonItem4.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
@@ -816,28 +873,6 @@
         hLaJ9smJFgVtvboVQ7iKzSgcaooGBt+OP5zAZYHcRQOpIxm+Y+uR7LzGQOlQmvtFMdd8KA0mcCx/FbVL
         XjxO4UCsQQxikWOuY3kNXNgzUKTFgLd3oJWzLkuLAd47pr3d0WX5MzAkvwrktW+IcWEfAAAAAElFTkSu
         QmCC
-</value>
-  </data>
-  <data name="barButtonItem3.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
-        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAALdEVYdFRpdGxlAEluZm87bRIthgAAAJtJREFUOE+t
-        k8ENgCAMRRnFabx1qZ51CpfoBq5j4gCYRzSBRiKKh5dAf/tDCwRRC45R1GZRW0VtO2FNDK3IzzeDqE2i
-        totarIBGDrmFAYHlpqAGucnkMsDVJz1BTTKgr9tjxxgD+PgJNSMiw/FiiwHMiEzYC62sGHBNXkg0nGD7
-        xaDaQoNBaqF7iN3XCF0PCbqf8mXy+TPlvPrOB0ynVNG/VjQvAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="barButtonItem3.ImageOptions.LargeImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
-        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAALdEVYdFRpdGxlAEluZm87bRIthgAAAX9JREFUWEfN
-        lzFuwzAMRdMjNFORK/Qs3HOETu3WrgXnInOPwiFX6NAb5BZBJxcvSAqZph0psqEOLzCcL+pboihp1XXd
-        qiWnH1HLYSNqW1Hbidpe1A6idjzDM+/4Dw1a335AroFHUXsXtW9R6zJBSxva+njZBu5E7UnUvoIOcqEt
-        MYjl408aeBC1jyDgrRCLmFkGEH4GQWohZs9EZIChyvnyH1F7FrW1qN2fn3nndR5i/01HZID58o0iXtKl
-        dI7xFugi6CM0QMbmJtw6MMBoeF0EfZxWhzfAsvHiMWoMAH31DFA4StZ5NAWvgW4M+tqkBqheXjTFJQlJ
-        wJIkTNmmBiihXrA0u9QAddwLlmafGmAz8YJJghwYaK5wSA2wo3nBJDMYOP4rA82noDgJZzDQS8LiZTiD
-        gd4yLC1EcxjoFaLSUlxrYFCKoWQzqjUw2IygZDuuMTC6HUPugaTGwOiBBHKPZLdy9UgGTQ+lqYk5R6Lo
-        WH6h6cUkpdnVzLPc5bQlv7HyoLzqqqMwAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="barButtonItem6.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -901,26 +936,6 @@
         eWxlPg0KICA8cGF0aCBkPSJNMTYsMkM4LjMsMiwyLDguMywyLDE2czYuMywxNCwxNCwxNHMxNC02LjMs
         MTQtMTRTMjMuNywyLDE2LDJ6IE0yMywyMGwtMywzbC00LTRsLTQsNGwtMy0zbDQtNGwtNC00bDMtM2w0
         LDQgIGw0LTRsMywzbC00LDRMMjMsMjB6IiBjbGFzcz0iUmVkIiAvPg0KPC9zdmc+Cw==
-</value>
-  </data>
-  <data name="barSubItem5.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
-        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAAzdEVYdFRpdGxlAEltYWdlO1Bob3RvO1BpY3R1cmU7
-        RGlhZ3JhbTtGaWd1cmU7ZHJhdztwYWludBXVxnAAAABuSURBVDhPY/j//z8DJRhMdHd3/ycHoxhAKqCv
-        Ad+fH/v//nwfmIYBkgwAaX57og5MwwBJBhDtgtvPPv4vWz4dTBMCWA0AaYZhQoYQNADZEGwuI8oAmCZ0
-        PkkGYMM4DSAFYBhADoYbQAnGECAVAwCvkESDmuc32AAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="barSubItem5.ImageOptions.LargeImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
-        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAAzdEVYdFRpdGxlAEltYWdlO1Bob3RvO1BpY3R1cmU7
-        RGlhZ3JhbTtGaWd1cmU7ZHJhdztwYWludBXVxnAAAADcSURBVFhH7ZM9CsJAEIVzaksvsGCrN7D3FHYW
-        loJ2diILVjYjLzCwmUk2G9aZBfHBB8lbwvv8SUdEXUtU4Y0qvFGFN4ObEAJ5kBWwzl/ATOAdb/S6Huh5
-        2vTgGp2MiQCG4nlHj+N6ADopYSKATyvHGZylMRHAVy6HGZyl+U2B5j9B8z8hYvoaXu6RVvttD65rslgg
-        Hf+GxCKBsfFaiWKB3HiNRJFAyfiUBD8re06RgByZg8ek+JiEiQCPyY57F4EcqUQTAcASzQRAsYBlZgU8
-        mBRogSq8UYU3qvDmA2rFEGCg5XP2AAAAAElFTkSuQmCC
 </value>
   </data>
   <metadata name="workspaceManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -6040,4 +6055,138 @@ Thank you for helping test and shape Nexus Launcher.</value>
   <metadata name="adornerUIManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>1018, 17</value>
   </metadata>
+  <metadata name="htmlContentPopup1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 54</value>
+  </metadata>
+  <data name="htmlContentPopup1.HtmlTemplate.Styles" xml:space="preserve">
+    <value>body {
+	padding: 20px 20px 95px 20px;
+	margin-top: 70px;
+}
+.shadow {	
+	border-radius: 14px;
+	box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
+}
+.logo {
+	position: absolute;
+	top: 10px;
+	left:50%;
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
+	margin: auto;
+	width: 150px;
+	height: 150px;
+	border-radius: 90px;
+	background-color: @Control;
+	box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.5);
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	margin-left: -75px;
+}
+.logo-mask {
+	width: 140px;
+	height: 140px;
+ 	border-radius: 70px;
+ 	background-image: url("nexus-logo");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 105%;
+}
+.close {
+	width: 22px;
+	height: 22px;
+	border-radius: 5px;
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
+  	margin: 8px;
+}
+.close:hover {
+	background-color: @Black/0.2;	
+}
+.close-img {
+	fill: @Black/0.4;
+	width: 16px;
+	height: 16px;
+}
+.frame{
+	
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	border-radius: 14px;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	background-color: @Control;
+
+}
+.content {
+	margin-top: 60px;
+	flex-grow: 1;
+	width: 100%;
+	height: 100%;
+}
+
+.footerbar{
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	background-color: @ControlText/0.05;
+	border-radius: 0px 0px 13px 13px;
+}
+.button {
+	height: 50px;
+	width: 100%;	
+	font-family: 'Segoe UI Light';
+	font-weight: bold;
+	font-size: 18px;
+	display: flex; 
+	align-items: center;
+	justify-content: center;
+	border-radius: 0px 0px 13px 13px;		
+}
+.button:hover{
+	background-color: @Primary;
+	color: @Text;
+}
+
+/*Picture*/
+
+.image {
+	width: 32px;
+	height: 32px;
+}
+
+/*Bind to Collection*/
+
+.element {
+	margin: 2px;
+	background-color: ControlDark;
+}
+
+/*Picture*/
+
+.image0 {
+	width: 32px;
+	height: 32px;
+}</value>
+  </data>
+  <data name="htmlContentPopup1.HtmlTemplate.Template" xml:space="preserve">
+    <value>&lt;div class="shadow"&gt;
+	&lt;div class="frame"&gt;
+		&lt;div class="logo" id="frame"&gt;
+			&lt;div class="logo-mask"&gt;&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;div class="close" id="closebutton"&gt;
+			&lt;img class="close-img" src="close"&gt;
+		&lt;/div&gt;
+		&lt;div class="content" id="content"&gt;&lt;/div&gt;
+		&lt;div class="footerbar"&gt;
+			&lt;div class="button" id="dialogresult-ok"&gt;Login&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+</value>
+  </data>
 </root>

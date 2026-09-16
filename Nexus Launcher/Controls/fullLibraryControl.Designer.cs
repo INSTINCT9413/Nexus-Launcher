@@ -64,6 +64,7 @@
             // 
             // panelControl1
             // 
+            this.panelControl1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
             this.panelControl1.Controls.Add(this.simpleButton1);
             this.panelControl1.Controls.Add(this.labelControl1);
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -71,7 +72,7 @@
             this.panelControl1.MaximumSize = new System.Drawing.Size(0, 44);
             this.panelControl1.MinimumSize = new System.Drawing.Size(641, 0);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(997, 44);
+            this.panelControl1.Size = new System.Drawing.Size(641, 44);
             this.panelControl1.TabIndex = 1;
             // 
             // simpleButton1

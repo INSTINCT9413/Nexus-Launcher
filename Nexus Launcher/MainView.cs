@@ -41,6 +41,7 @@ using static DevExpress.XtraEditors.ViewInfo.BaseListBoxViewInfo;
 using static Nexus_Launcher.MainView;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using DevExpress.Utils.VisualEffects;
+using DevExpress.Mvvm.Native;
 namespace Nexus_Launcher
 {
     public partial class MainView : DevExpress.XtraBars.FluentDesignSystem.FluentDesignForm
@@ -49,6 +50,8 @@ namespace Nexus_Launcher
         // Variables (sort later)
         public MainView mainView;
         public WaitForm1 waitForm1;
+        private NexusLinksService _nexusLinksService;
+
         public static string fullUserName = UserPrincipal.Current.DisplayName;
         public virtual string Title { get; set; } = "Nexus Launcher";
         public virtual string VersionTitle { get; set; } = "Version: " + Version;
@@ -1017,8 +1020,22 @@ namespace Nexus_Launcher
             }
         }
         #endregion
+        private async Task LoadNexusLinksAsync()
+        {
+            bool loaded =
+                await _nexusLinksService.LoadAsync();
+
+            if (!loaded)
+            {
+                Program.LogCrash(
+                    new Exception(
+                        "Unable to load Nexus remote links."));
+            }
+        }
         private async void MainView_Load_1(object sender, EventArgs e)
         {
+            _nexusLinksService = new NexusLinksService();
+            await LoadNexusLinksAsync();
             FontManager.ApplyFont(
     this,
     Settings.Default.UIFont);
@@ -1108,7 +1125,20 @@ namespace Nexus_Launcher
         }
         private async void ApplyUIChanges()
         {
-            
+            LauncherLinks steam =
+    _nexusLinksService.Config.Steam;
+            LauncherLinks epic =
+    _nexusLinksService.Config.Epic;
+            LauncherLinks gog =
+    _nexusLinksService.Config.GOG;
+            LauncherLinks ubisoft =
+    _nexusLinksService.Config.Ubisoft;
+            LauncherLinks EA =
+    _nexusLinksService.Config.EA;
+            LauncherLinks battlenet =
+    _nexusLinksService.Config.BattleNet;
+            LauncherLinks nexus =
+    _nexusLinksService.Config.Nexus;
             if (Properties.Settings.Default.SidePanelRemember == true)
             {
                 simpleButton2.PerformClick();
@@ -1120,7 +1150,7 @@ namespace Nexus_Launcher
                     launcherCard.BringToFront();
                     applicationCard._selectedGroup = "EA App";
                     launcherCard._selectedGroup = "EA App";
-                    nexusStore.NexusStoreUrl = "https://www.ea.com/games/library/pc-download";
+                    nexusStore.NexusStoreUrl = EA.StoreUrl;
                     nexusStore.webView21.Source = new Uri(nexusStore.NexusStoreUrl);
                     launcherCard.Visible = true;
                     applicationCard.Visible = false;
@@ -1141,7 +1171,7 @@ namespace Nexus_Launcher
                     launcherCard.BringToFront();
                     applicationCard._selectedGroup = "Steam";
                     launcherCard._selectedGroup = "Steam";
-                    nexusStore.NexusStoreUrl = "https://store.steampowered.com/";
+                    nexusStore.NexusStoreUrl = steam.StoreUrl;
                     nexusStore.webView21.Source = new Uri(nexusStore.NexusStoreUrl);
                     launcherCard.Visible = true;
                     applicationCard.Visible = false;
@@ -1162,7 +1192,7 @@ namespace Nexus_Launcher
                     launcherCard.BringToFront();
                     applicationCard._selectedGroup = "Epic Games";
                     launcherCard._selectedGroup = "Epic Games";
-                    nexusStore.NexusStoreUrl = "https://www.epicgames.com/store/";
+                    nexusStore.NexusStoreUrl = epic.StoreUrl;
                     nexusStore.webView21.Source = new Uri(nexusStore.NexusStoreUrl);
                     launcherCard.Visible = true;
                     applicationCard.Visible = false;
@@ -1183,7 +1213,7 @@ namespace Nexus_Launcher
                     launcherCard.BringToFront();
                     applicationCard._selectedGroup = "Nexus Launcher";
                     launcherCard._selectedGroup = "Nexus Launcher";
-                    nexusStore.NexusStoreUrl = "https://horizonsocial.media/apps/nexus.html";
+                    nexusStore.NexusStoreUrl = nexus.StoreUrl;
                     nexusStore.webView21.Source = new Uri(nexusStore.NexusStoreUrl);
                     launcherCard.Visible = true;
                     applicationCard.Visible = false;
@@ -1204,7 +1234,7 @@ namespace Nexus_Launcher
                     launcherCard.BringToFront();
                     applicationCard._selectedGroup = "Battle.net";
                     launcherCard._selectedGroup = "Battle.net";
-                    nexusStore.NexusStoreUrl = "https://us.shop.battle.net/en-us#optLogin=true";
+                    nexusStore.NexusStoreUrl = battlenet.StoreUrl;
                     nexusStore.webView21.Source = new Uri(nexusStore.NexusStoreUrl);
                     launcherCard.Visible = true;
                     //change pictureboxedit2 sizemode
@@ -1228,7 +1258,7 @@ namespace Nexus_Launcher
                     launcherCard.BringToFront();
                     applicationCard._selectedGroup = "GOG";
                     launcherCard._selectedGroup = "GOG";
-                    nexusStore.NexusStoreUrl = "https://www.gog.com/en/games";
+                    nexusStore.NexusStoreUrl = gog.StoreUrl;
                     nexusStore.webView21.Source = new Uri(nexusStore.NexusStoreUrl);
                     launcherCard.Visible = true;
                     applicationCard.Visible = false;
@@ -1249,7 +1279,7 @@ namespace Nexus_Launcher
                     launcherCard.BringToFront();
                     applicationCard._selectedGroup = "Ubisoft Connect";
                     launcherCard._selectedGroup = "Ubisoft Connect";
-                    nexusStore.NexusStoreUrl = "https://store.ubisoft.com/us/home?lang=en_US";
+                    nexusStore.NexusStoreUrl = ubisoft.StoreUrl;
                     nexusStore.webView21.Source = new Uri(nexusStore.NexusStoreUrl);
                     launcherCard.Visible = true;
                     applicationCard.Visible = false;
@@ -1293,10 +1323,12 @@ namespace Nexus_Launcher
         }
         public void FocusGOGSettings()
         {
+            LauncherLinks gog =
+    _nexusLinksService.Config.GOG;
             SuspendLayout();
             launcherCard.BringToFront();
             applicationCard._selectedGroup = "GOG";
-            nexusStore.NexusStoreUrl = "https://www.gog.com/en/games";
+            nexusStore.NexusStoreUrl = gog.StoreUrl;
             nexusStore.webView21.Source = new Uri(nexusStore.NexusStoreUrl);
             launcherCard.Visible = true;
             applicationCard.Visible = false;
@@ -2227,69 +2259,128 @@ namespace Nexus_Launcher
             }
         }
 
-        private async void accordionControl2_ContextButtonClick(object sender, DevExpress.Utils.ContextItemClickEventArgs e)
+        private async void accordionControl2_ContextButtonClick(
+    object sender,
+    DevExpress.Utils.ContextItemClickEventArgs e)
         {
-            
-            // Get accordion element
+            // Get the Accordion item that owns the clicked context button.
             AccordionControlElement element =
                 e.DataItem as AccordionControlElement;
 
-            // Get clicked button
+            // Get the actual context button that was clicked.
             ContextButton button =
                 e.Item as ContextButton;
 
-            if (element == null)
+            // Make sure both objects are valid before doing anything else.
+            if (element == null || button == null)
                 return;
 
-            // Get launcher info
+            // IMPORTANT:
+            // Get the LauncherInfo directly from THIS Accordion item.
+            // This prevents information from a previously clicked item
+            // from being used.
             LauncherInfo launcher =
                 element.Tag as LauncherInfo;
-            if ( button.Name == "refreshSteam")
+
+
+            // =========================================================
+            // CONTEXT BUTTON 1
+            // =========================================================
+
+            if (button.Name == "accordionContextButton1")
+            {
+                // If you want this item to become the selected item
+                // before showing the popup, you can do that here.
+                if (accordionControl2.AllowItemSelection)
+                {
+                    GameInfo game = element.Tag as GameInfo;
+                    accordionControl2.SelectElement(element);
+                    applicationCard._name = element.Name;
+                    applicationCard._gameID = game.AppId;
+                    applicationCard._goglnk = game.ShortcutPath;
+                    applicationCard._EAShortuct = game.ExecutablePath;
+                    applicationCard._gameURI = game.ExecutablePath;
+                    applicationCard._UbisoftURI = game.LaunchUri;
+                    applicationCard._launchString = game.epicLauncherAppId;
+                    applicationCard._executablePath = game.ExecutablePath;
+                    applicationCard._productID = game.ProductId;
+                }
+
+                popupMenu2.ShowPopup(Cursor.Position);
+                return;
+            }
+
+
+            // =========================================================
+            // REFRESH BUTTONS
+            // =========================================================
+
+            if (button.Name == "refreshSteam")
             {
                 await RefreshSteamLibraryAsync();
-
+                return;
             }
-            if ( button.Name == "refreshBattlenet")
+            else if (button.Name == "refreshBattlenet")
             {
                 await RefreshBattleNetLibraryAsync();
+                return;
             }
-            if (button.Name == "refreshEpic")
+            else if (button.Name == "refreshEpic")
             {
                 await RefreshEpicLibraryAsync();
+                return;
             }
-            if (button.Name == "refreshGOG")
+            else if (button.Name == "refreshGOG")
             {
                 await RefreshGogLibraryAsync();
+                return;
             }
-            if (button.Name == "refreshEA")
+            else if (button.Name == "refreshEA")
             {
                 await RefreshEALibraryAsync();
+                return;
             }
-            if (button.Name == "refreshUbisoft")
+            else if (button.Name == "refreshUbisoft")
             {
                 await RefreshUbisoftLibraryAsync();
+                return;
             }
+
+
+            // =========================================================
+            // NEXUS STORE
+            // =========================================================
+
             if (button.Name == "nexusStore")
-                {
-                // Handle Nexus Store launch
+            {
                 try
                 {
                     nexusStore.Visible = true;
                     nexusStore.BringToFront();
+
                     launcherCard.BringToFront();
-                    launcherCard.xtraTabControl1.SelectedTabPage = launcherCard.xtraTabPage4;
+
+                    launcherCard.xtraTabControl1.SelectedTabPage =
+                        launcherCard.xtraTabPage4;
                 }
                 catch (Exception ex)
                 {
                     Program.LogCrash(ex);
-                    XtraMessageBox.Show("Failed to open Nexus Store: " + ex.Message);
+
+                    XtraMessageBox.Show(
+                        "Failed to open Nexus Store: " + ex.Message);
                 }
+
+                return;
             }
+
+
+            // =========================================================
+            // WINDOWS STORE
+            // =========================================================
 
             if (button.Name == "launchWindows")
             {
-
-                // Handle Windows Store launch
                 try
                 {
                     Process.Start(new ProcessStartInfo
@@ -2302,12 +2393,21 @@ namespace Nexus_Launcher
                 catch (Exception ex)
                 {
                     Program.LogCrash(ex);
-                    XtraMessageBox.Show("Failed to launch Windows Store: " + ex.Message);
+
+                    XtraMessageBox.Show(
+                        "Failed to launch Windows Store: " + ex.Message);
                 }
+
+                return;
             }
-            else if (button.Name == "launchXbox")
+
+
+            // =========================================================
+            // XBOX
+            // =========================================================
+
+            if (button.Name == "launchXbox")
             {
-                // Handle Xbox App launch
                 try
                 {
                     Process.Start(new ProcessStartInfo
@@ -2320,23 +2420,30 @@ namespace Nexus_Launcher
                 catch (Exception ex)
                 {
                     Program.LogCrash(ex);
-                    XtraMessageBox.Show(ex.ToString());
+
+                    XtraMessageBox.Show(
+                        "Failed to launch Xbox App: " + ex.Message);
                 }
+
+                return;
             }
+
+
+            // =========================================================
+            // EVERYTHING BELOW THIS POINT NEEDS LauncherInfo
+            // =========================================================
 
             if (launcher == null)
                 return;
 
-            
 
-            if (button == null)
-                return;
-
+            // =========================================================
             // OPEN FOLDER
+            // =========================================================
+
             if (button.Name == "openFolder")
             {
-                if (!Directory.Exists(
-                    launcher.InstallPath))
+                if (!Directory.Exists(launcher.InstallPath))
                 {
                     XtraMessageBox.Show(
                         "Folder not found.");
@@ -2344,45 +2451,61 @@ namespace Nexus_Launcher
                     return;
                 }
 
-                Process.Start(new ProcessStartInfo
+                try
                 {
-                    FileName =
-                        launcher.InstallPath,
-
-                    UseShellExecute = true
-                });
-            }
-          
-            // LAUNCH CLIENT
-            else if (button.Name == "launchClient")
-            {
-                { 
-                    if (!File.Exists(
-                    launcher.ExecutablePath))
-                    {
-                        XtraMessageBox.Show(
-                            "Launcher executable not found.");
-
-                        return;
-                    }
-
                     Process.Start(new ProcessStartInfo
                     {
-                        FileName =
-                            launcher.ExecutablePath,
+                        FileName = launcher.InstallPath,
+                        UseShellExecute = true
+                    });
+                }
+                catch (Exception ex)
+                {
+                    Program.LogCrash(ex);
+
+                    XtraMessageBox.Show(
+                        "Failed to open folder: " + ex.Message);
+                }
+
+                return;
+            }
+
+
+            // =========================================================
+            // LAUNCH CLIENT
+            // =========================================================
+
+            if (button.Name == "launchClient")
+            {
+                if (!File.Exists(launcher.ExecutablePath))
+                {
+                    XtraMessageBox.Show(
+                        "Launcher executable not found.");
+
+                    return;
+                }
+
+                try
+                {
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = launcher.ExecutablePath,
 
                         WorkingDirectory =
                             launcher.InstallPath,
 
                         UseShellExecute = true
                     });
-                    
                 }
-                
-            }
-            else
-            {
-                
+                catch (Exception ex)
+                {
+                    Program.LogCrash(ex);
+
+                    XtraMessageBox.Show(
+                        "Failed to launch client: " + ex.Message);
+                }
+
+                return;
             }
         }
         private void SaveCurrentTheme()
@@ -2401,6 +2524,20 @@ namespace Nexus_Launcher
             // Get game from Tag
             GameInfo game =
                 e.Element.Tag as GameInfo;
+            LauncherLinks steam =
+    _nexusLinksService.Config.Steam;
+            LauncherLinks epic =
+    _nexusLinksService.Config.Epic;
+            LauncherLinks gog =
+    _nexusLinksService.Config.GOG;
+            LauncherLinks ubisoft =
+    _nexusLinksService.Config.Ubisoft;
+            LauncherLinks EA =
+    _nexusLinksService.Config.EA;
+            LauncherLinks battlenet =
+    _nexusLinksService.Config.BattleNet;
+            LauncherLinks nexus =
+    _nexusLinksService.Config.Nexus;
             applicationCard.BringToFront();
             applicationCard._header = null;
             applicationCard._icon = null;
@@ -2417,7 +2554,7 @@ namespace Nexus_Launcher
                     launcherCard.BringToFront();
                     applicationCard._selectedGroup = "Steam";
                     launcherCard._selectedGroup = "Steam";
-                    nexusStore.NexusStoreUrl = "https://store.steampowered.com/";
+                    nexusStore.NexusStoreUrl = steam.StoreUrl;
                     nexusStore.webView21.Source = new Uri(nexusStore.NexusStoreUrl);
                     applicationCard._gameStoreLink = nexusStore.NexusStoreUrl;
                     launcherCard.Visible = true;
@@ -2435,7 +2572,7 @@ namespace Nexus_Launcher
                     launcherCard.BringToFront();
                     applicationCard._selectedGroup = "Epic Games";
                     launcherCard._selectedGroup = "Epic Games";
-                    nexusStore.NexusStoreUrl = "https://www.epicgames.com/store/";
+                    nexusStore.NexusStoreUrl = epic.StoreUrl;
                     nexusStore.webView21.Source = new Uri(nexusStore.NexusStoreUrl);
                     launcherCard.Visible = true;
                     applicationCard.Visible = false;
@@ -2452,7 +2589,7 @@ namespace Nexus_Launcher
                     launcherCard.BringToFront();
                     applicationCard._selectedGroup = "Nexus Launcher";
                     launcherCard._selectedGroup = "Nexus Launcher";
-                    nexusStore.NexusStoreUrl = "https://horizonsocial.media/apps/nexus.html";
+                    nexusStore.NexusStoreUrl = nexus.StoreUrl;
                     nexusStore.webView21.Source = new Uri(nexusStore.NexusStoreUrl);
                     launcherCard.Visible = true;
                     applicationCard.Visible = false;
@@ -2469,7 +2606,7 @@ namespace Nexus_Launcher
                     launcherCard.BringToFront();
                     applicationCard._selectedGroup = "Battle.net";
                     launcherCard._selectedGroup = "Battle.net";
-                    nexusStore.NexusStoreUrl = "https://us.shop.battle.net/en-us#optLogin=true";
+                    nexusStore.NexusStoreUrl = battlenet.StoreUrl;
                     nexusStore.webView21.Source = new Uri(nexusStore.NexusStoreUrl);
                     launcherCard.Visible = true;
                     //change pictureboxedit2 sizemode
@@ -2489,7 +2626,7 @@ namespace Nexus_Launcher
                     launcherCard.BringToFront();
                     applicationCard._selectedGroup = "GOG";
                     launcherCard._selectedGroup = "GOG";
-                    nexusStore.NexusStoreUrl = "https://www.gog.com/en/games";
+                    nexusStore.NexusStoreUrl = gog.StoreUrl;
                     nexusStore.webView21.Source = new Uri(nexusStore.NexusStoreUrl);
                     launcherCard.Visible = true;
                     applicationCard.Visible = false;
@@ -2506,7 +2643,7 @@ namespace Nexus_Launcher
                     launcherCard.BringToFront();
                     applicationCard._selectedGroup = "Ubisoft Connect";
                     launcherCard._selectedGroup = "Ubisoft Connect";
-                    nexusStore.NexusStoreUrl = "https://store.ubisoft.com/us/home?lang=en_US";
+                    nexusStore.NexusStoreUrl = ubisoft.StoreUrl;
                     nexusStore.webView21.Source = new Uri(nexusStore.NexusStoreUrl);
                     launcherCard.Visible = true;
                     applicationCard.Visible = false;
@@ -2556,7 +2693,7 @@ namespace Nexus_Launcher
                     launcherCard.BringToFront();
                     applicationCard._selectedGroup = "EA App";
                     launcherCard._selectedGroup = "EA App";
-                    nexusStore.NexusStoreUrl = "https://www.ea.com/games/library/pc-download";
+                    nexusStore.NexusStoreUrl = EA.StoreUrl;
                     nexusStore.webView21.Source = new Uri(nexusStore.NexusStoreUrl);
                     launcherCard.Visible = true;
                     applicationCard.Visible = false;
@@ -2634,7 +2771,7 @@ namespace Nexus_Launcher
                 applicationCard._executablePath = game.ExecutablePath;
                 applicationCard._productID = game.ProductId;
                 applicationCard.splitContainerControl1.SplitterPosition = 420;
-
+                applicationCard.dropDownButton4.PerformClick();
 
                 if (File.Exists(game.LogoPath))
                 {
@@ -2972,8 +3109,24 @@ namespace Nexus_Launcher
 
         private void barButtonItem4_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            userAccount.BringToFront();
-            userAccount.Visible = true;
+            int width = 500;
+            int height = 800;
+            ImageCollection loginImages = new ImageCollection
+            {
+                ImageSize = new Size(192, 192)
+            };
+            loginImages.AddImage(Properties.Resources.dfveffb_9b262552_e352_4348_aefc_8e699002c946, "nexus-logo");
+            loginImages.AddImage(Properties.Resources.icons8_error_24, "close");
+            Rectangle bounds = new Rectangle(
+                Location.X + (Width - width) / 2,
+                Location.Y + (Height - height) / 2,
+                width,
+                height
+            );
+            htmlContentPopup1.HtmlImages = loginImages;
+            htmlContentPopup1.Show(this, bounds);
+            //userAccount.BringToFront();
+            //userAccount.Visible = true;
         }
 
         private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
@@ -3266,7 +3419,7 @@ namespace Nexus_Launcher
         }
         private void accordionControl2_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void fluentDesignFormControl2_Click(object sender, EventArgs e)

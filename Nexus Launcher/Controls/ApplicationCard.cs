@@ -38,7 +38,7 @@ namespace Nexus_Launcher.Controls
         public string _selectedGroup { get; set; }
         public string _executablePath { get; set; }
         public string _gameStoreLink { get; set; }
-        
+        private bool _syncingZoom = false;
         public ApplicationCard()
         {
             InitializeComponent();
@@ -314,6 +314,7 @@ namespace Nexus_Launcher.Controls
 
             webView21.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled =
                 true;
+            UpdateZoomLabel(100);
         }
         private void CoreWebView2_NewWindowRequested(
             object sender,
@@ -408,11 +409,104 @@ namespace Nexus_Launcher.Controls
         private void dropDownButton3_Click(object sender, EventArgs e)
         {
             splitContainerControl1.SplitterPosition = 0;
+            webView21.Dock = DockStyle.None;
+            webView22.Dock = DockStyle.None;
+            webView22.Size = new Size(splitContainerControl1.Panel2.Width, splitContainerControl1.Panel2.Height - 5 );
+            webView21.Size = new Size(splitContainerControl1.Panel2.Width, splitContainerControl1.Panel2.Height - 5 );
+            webView21.Location = new Point(0, 35);
+            webView22.Location = new Point(0, 35);
+            webView22.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            webView21.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panelControl3.Visible = true;
         }
 
         private void dropDownButton4_Click(object sender, EventArgs e)
         {
            
+        }
+
+        private void dropDownButton5_Click(object sender, EventArgs e)
+        {
+            webView21.Reload();
+        }
+
+        private void dropDownButton4_Click_1(object sender, EventArgs e)
+        {
+            splitContainerControl1.SplitterPosition = 420;
+            panelControl3.Visible = false;
+            webView21.Dock = DockStyle.Fill;
+            webView22.Dock = DockStyle.Fill;
+            webView21.Location = new Point(0, 0);
+            webView22.Location = new Point(0, 0);
+            UpdateZoomLabel(100);
+        }
+
+        private void zoomTrackBarControl1_EditValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void zoomTrackBarControl1_ValueChanged(object sender, EventArgs e)
+        {
+            if (_syncingZoom)
+                return;
+
+            int zoomPercent = zoomTrackBarControl1.Value;
+
+            UpdateZoomLabel(zoomPercent);
+
+            if (webView21 == null || webView21.CoreWebView2 == null)
+                return;
+
+            try
+            {
+                _syncingZoom = true;
+
+                webView21.ZoomFactor = zoomPercent / 100.0;
+            }
+            finally
+            {
+                _syncingZoom = false;
+            }
+        }
+
+        private void webView21_ZoomFactorChanged(object sender, EventArgs e)
+        {
+            if (_syncingZoom)
+                return;
+
+            if (webView21 == null || webView21.CoreWebView2 == null)
+                return;
+
+            try
+            {
+                _syncingZoom = true;
+
+                int zoomPercent =
+                    (int)Math.Round(webView21.ZoomFactor * 100.0);
+
+                if (zoomPercent < zoomTrackBarControl1.Properties.Minimum)
+                    zoomPercent = zoomTrackBarControl1.Properties.Minimum;
+
+                if (zoomPercent > zoomTrackBarControl1.Properties.Maximum)
+                    zoomPercent = zoomTrackBarControl1.Properties.Maximum;
+
+                zoomTrackBarControl1.Value = zoomPercent;
+
+                UpdateZoomLabel(zoomPercent);
+            }
+            finally
+            {
+                _syncingZoom = false;
+            }
+        }
+        public void UpdateZoomLabel(int zoomPercent)
+        {
+            labelControl3.Text = zoomPercent + "%";
+        }
+        private void dropDownButton6_Click(object sender, EventArgs e)
+        {
+            zoomTrackBarControl1.Value = 100;
         }
     }
 }

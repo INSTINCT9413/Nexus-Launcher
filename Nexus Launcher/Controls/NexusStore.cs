@@ -115,6 +115,7 @@ namespace Nexus_Launcher.Controls
             object sender,
             CoreWebView2NavigationCompletedEventArgs e)
         {
+            webView22.Visible = false;
             try
             {
                 if (!e.IsSuccess)
@@ -169,6 +170,22 @@ namespace Nexus_Launcher.Controls
             webView21.Source =
                 new Uri(
                     NexusStoreUrl);
+        }
+
+        private void webView22_NavigationStarting(object sender, CoreWebView2NavigationStartingEventArgs e)
+        {
+            
+        }
+
+        private void webView21_NavigationStarting(object sender, CoreWebView2NavigationStartingEventArgs e)
+        {
+            webView22.Visible = true;
+            webView22.BringToFront();
+        }
+
+        private void webView21_NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
+        {
+            webView22.Visible = false;
         }
     }
 }
