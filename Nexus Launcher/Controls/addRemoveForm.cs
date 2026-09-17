@@ -1,4 +1,5 @@
-﻿using DevExpress.Mvvm.Native;
+﻿using DevExpress.CodeParser;
+using DevExpress.Mvvm.Native;
 using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
@@ -156,68 +157,49 @@ namespace Nexus_Launcher.Forms
 
         private async void simpleButton1_Click(object sender, EventArgs e)
         {
+            // 1. Folder Import Path (Toggle is ON)
             if (toggleSwitch1.IsOn)
             {
-                XtraFolderBrowserDialog folderBrowserDialog = new XtraFolderBrowserDialog
+                using (var folderBrowserDialog = new XtraFolderBrowserDialog
                 {
                     Description = "Select Folder Containing Shortcuts",
                     ShowNewFolderButton = false
-                };
-                if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+                })
                 {
-                    string selectedFolder =
-                        folderBrowserDialog.SelectedPath;
+                    if (folderBrowserDialog.ShowDialog() != DialogResult.OK) return;
 
-                    List<string> files =
-                        new List<string>();
+                    string selectedFolder = folderBrowserDialog.SelectedPath;
+                    var targetExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { ".lnk", ".url", ".exe" };
 
-                    files.AddRange(
-                        Directory.GetFiles(
-                            selectedFolder,
-                            "*.lnk",
-                            SearchOption.TopDirectoryOnly));
+                    bool hasValidFiles = Directory.EnumerateFiles(selectedFolder, "*.*", SearchOption.TopDirectoryOnly)
+                        .Any(file => targetExtensions.Contains(Path.GetExtension(file)));
 
-                    files.AddRange(
-                        Directory.GetFiles(
-                            selectedFolder,
-                            "*.url",
-                            SearchOption.TopDirectoryOnly));
-
-                    files.AddRange(
-                        Directory.GetFiles(
-                            selectedFolder,
-                            "*.exe",
-                            SearchOption.TopDirectoryOnly));
-
-                    if (files.Count == 0)
+                    if (!hasValidFiles)
                     {
                         MessageBox.Show(
                             "No shortcuts or executables found in the selected folder.",
                             "Error",
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Error);
-
                         return;
                     }
 
-                    ShortcutImporter.ImportFolder(
-                        selectedFolder);
-
-                    MainView mainView =
-                        this.FindForm() as MainView;
-
-                    if (mainView != null)
-                    {
-                        await mainView.LoadNexusGamesAsync();
-                    }
-
-                    await LoadNexusGamesAsync();
+                    ShortcutImporter.ImportFolder(selectedFolder);
+                    await RefreshGameViewsAsync();
                 }
             }
+            // 2. Toggle is OFF Path
             else
             {
-                if (string.IsNullOrWhiteSpace(textEdit1.Text) ||
-                string.IsNullOrWhiteSpace(textEdit2.Text))
+                // Special Action: TextEdit1 is empty but TextEdit2 has text -> forward the click
+                if (string.IsNullOrEmpty(textEdit1.Text) && string.IsNullOrEmpty(textEdit2.Text))
+                {
+                    simpleButton3.PerformClick();
+                    return;
+                }
+
+                // Regular Action: Manual validation & entry code
+                if (string.IsNullOrWhiteSpace(textEdit1.Text) || string.IsNullOrWhiteSpace(textEdit2.Text))
                 {
                     MessageBox.Show(
                         "Please fill in all fields.",
@@ -226,18 +208,27 @@ namespace Nexus_Launcher.Forms
                         MessageBoxIcon.Error);
                     return;
                 }
+
                 add();
-                MainView mainView = this.FindForm() as MainView;
-                if (mainView != null)
-                {
-                    await mainView.LoadNexusGamesAsync();
-                }
-                await LoadNexusGamesAsync();
-                textEdit1.Text = "";
-                textEdit2.Text = "";
+                await RefreshGameViewsAsync();
+
+                // Clear UI Inputs
+                textEdit1.Text = string.Empty;
+                textEdit2.Text = string.Empty;
                 pictureEdit1.Image = null;
             }
         }
+
+        private async Task RefreshGameViewsAsync()
+        {
+            if (this.FindForm() is MainView mainView)
+            {
+                await mainView.LoadNexusGamesAsync();
+            }
+            await LoadNexusGamesAsync();
+        }
+
+
 
         private async void simpleButton2_Click(object sender, EventArgs e)
         {
@@ -382,6 +373,7 @@ namespace Nexus_Launcher.Forms
                     pictureEdit1.Image =
                         IconHelper.ExtractExeIcon(
                             textEdit2.Text);
+                    textEdit1.Text = Path.GetFileNameWithoutExtension(textEdit2.Text);
                 }
             }
         }
