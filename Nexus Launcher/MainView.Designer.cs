@@ -29,49 +29,49 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton246 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton206 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton207 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton208 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton209 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton210 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton211 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton212 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton213 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton214 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton215 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton216 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton217 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton218 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton219 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton220 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton221 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton222 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton223 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton224 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton225 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton226 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton227 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton228 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton229 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton41 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton1 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton2 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton3 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton4 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton5 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton6 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton7 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton8 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton9 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton10 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton11 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton12 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton13 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton14 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton15 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton16 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton17 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton18 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton19 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton20 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton21 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton22 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton23 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton24 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton230 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton231 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton232 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton233 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton234 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton235 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton236 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton237 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton238 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton239 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton240 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton241 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton242 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton243 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton244 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton245 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
-            DevExpress.Utils.Animation.PushTransition pushTransition2 = new DevExpress.Utils.Animation.PushTransition();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton25 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton26 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton27 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton28 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton29 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton30 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton31 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton32 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton33 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton34 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton35 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton36 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton37 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton38 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton39 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.XtraBars.Navigation.AccordionContextButton accordionContextButton40 = new DevExpress.XtraBars.Navigation.AccordionContextButton();
+            DevExpress.Utils.Animation.PushTransition pushTransition1 = new DevExpress.Utils.Animation.PushTransition();
             this.repositoryItemTextEdit2 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             this.repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             this.accordionControl2 = new DevExpress.XtraBars.Navigation.AccordionControl();
@@ -95,15 +95,11 @@
             this.sidePanel1 = new DevExpress.XtraEditors.SidePanel();
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             this.groupControl3 = new DevExpress.XtraEditors.GroupControl();
-            this.progressPanel3 = new DevExpress.XtraWaitForm.ProgressPanel();
             this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
-            this.progressPanel2 = new DevExpress.XtraWaitForm.ProgressPanel();
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
-            this.progressPanel1 = new DevExpress.XtraWaitForm.ProgressPanel();
-            this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -255,12 +251,12 @@
             this.accordionControl2.HtmlTemplates.FooterOverflowButton.Template = resources.GetString("accordionControl2.HtmlTemplates.FooterOverflowButton.Template");
             this.accordionControl2.HtmlTemplates.FooterPanel.Styles = resources.GetString("accordionControl2.HtmlTemplates.FooterPanel.Styles");
             this.accordionControl2.HtmlTemplates.FooterPanel.Template = "<div class=\"footer-panel\">\r\n\t<div id=\"content\" class=\"content\"></div>\r\n</div>";
-            accordionContextButton246.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton246.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton246.Id = new System.Guid("d875e5a7-9cc3-40cd-849d-3570794a5d61");
-            accordionContextButton246.ImageOptionsCollection.ItemNormal.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("resource.SvgImage5")));
-            accordionContextButton246.Name = "accordionContextButton1";
-            this.accordionControl2.ItemContextButtons.Add(accordionContextButton246);
+            accordionContextButton41.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton41.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton41.Id = new System.Guid("d875e5a7-9cc3-40cd-849d-3570794a5d61");
+            accordionContextButton41.ImageOptionsCollection.ItemNormal.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("resource.SvgImage5")));
+            accordionContextButton41.Name = "accordionContextButton1";
+            this.accordionControl2.ItemContextButtons.Add(accordionContextButton41);
             this.accordionControl2.ItemHeight = -1;
             this.accordionControl2.Location = new System.Drawing.Point(0, 0);
             this.accordionControl2.Name = "accordionControl2";
@@ -282,31 +278,32 @@
             this.accordionControl2.FilterContent += new DevExpress.XtraBars.Navigation.FilterContentEventHandler(this.accordionControl2_FilterContent);
             this.accordionControl2.StateChanged += new System.EventHandler(this.accordionControl2_StateChanged);
             this.accordionControl2.Click += new System.EventHandler(this.accordionControl2_Click);
+            this.accordionControl2.MouseHover += new System.EventHandler(this.accordionControl2_MouseHover);
             this.accordionControl2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.accordionControl2_MouseUp);
             // 
             // groupNexus
             // 
-            accordionContextButton206.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton206.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton206.Id = new System.Guid("6ee0f7b5-1e09-4b71-9119-d4b6ca6a6af6");
-            accordionContextButton206.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_run_command_28;
-            accordionContextButton206.Name = "launchClient";
-            accordionContextButton206.ToolTip = "Run Nexus Launcher";
-            accordionContextButton207.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton207.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton207.Id = new System.Guid("ab1fa702-b6d6-4111-a99d-5dbd22ec9620");
-            accordionContextButton207.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_search_folder_28;
-            accordionContextButton207.Name = "openFolder";
-            accordionContextButton207.ToolTip = "Open Nexus Launcher\'s containing folder";
-            accordionContextButton208.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton208.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton208.Id = new System.Guid("2f1e3cca-055d-4bf3-b7dc-ea9915592ff8");
-            accordionContextButton208.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_stall_28;
-            accordionContextButton208.Name = "nexusStore";
-            accordionContextButton208.ToolTip = "Go to Nexus Store";
-            this.groupNexus.ContextButtons.Add(accordionContextButton206);
-            this.groupNexus.ContextButtons.Add(accordionContextButton207);
-            this.groupNexus.ContextButtons.Add(accordionContextButton208);
+            accordionContextButton1.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton1.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton1.Id = new System.Guid("6ee0f7b5-1e09-4b71-9119-d4b6ca6a6af6");
+            accordionContextButton1.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_run_command_28;
+            accordionContextButton1.Name = "launchClient";
+            accordionContextButton1.ToolTip = "Run Nexus Launcher";
+            accordionContextButton2.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton2.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton2.Id = new System.Guid("ab1fa702-b6d6-4111-a99d-5dbd22ec9620");
+            accordionContextButton2.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_search_folder_28;
+            accordionContextButton2.Name = "openFolder";
+            accordionContextButton2.ToolTip = "Open Nexus Launcher\'s containing folder";
+            accordionContextButton3.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton3.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton3.Id = new System.Guid("2f1e3cca-055d-4bf3-b7dc-ea9915592ff8");
+            accordionContextButton3.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_stall_28;
+            accordionContextButton3.Name = "nexusStore";
+            accordionContextButton3.ToolTip = "Go to Nexus Store";
+            this.groupNexus.ContextButtons.Add(accordionContextButton1);
+            this.groupNexus.ContextButtons.Add(accordionContextButton2);
+            this.groupNexus.ContextButtons.Add(accordionContextButton3);
             this.groupNexus.Expanded = true;
             this.groupNexus.ImageOptions.Image = global::Nexus_Launcher.Properties.Resources.Nexus25px;
             this.groupNexus.Name = "groupNexus";
@@ -316,34 +313,34 @@
             // 
             // groupSteam
             // 
-            accordionContextButton209.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton209.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton209.Id = new System.Guid("c62385e6-96a3-409f-a3af-7f018b59958e");
-            accordionContextButton209.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_run_command_28;
-            accordionContextButton209.Name = "launchClient";
-            accordionContextButton209.ToolTip = "Launch Steam Client";
-            accordionContextButton210.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton210.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton210.Id = new System.Guid("58efac6a-5fee-4058-aa45-7df33208d466");
-            accordionContextButton210.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_search_folder_28;
-            accordionContextButton210.Name = "openFolder";
-            accordionContextButton210.ToolTip = "Open Steam\'s containing folder";
-            accordionContextButton211.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton211.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton211.Id = new System.Guid("c6366730-24b9-4181-b6c2-635fa3b62a0e");
-            accordionContextButton211.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_refresh_28;
-            accordionContextButton211.Name = "refreshSteam";
-            accordionContextButton211.ToolTip = "Manually Refresh Steam List";
-            accordionContextButton212.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton212.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton212.Id = new System.Guid("1bf2decd-b84b-479e-a886-cfdf2e278a23");
-            accordionContextButton212.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_stall_28;
-            accordionContextButton212.Name = "nexusStore";
-            accordionContextButton212.ToolTip = "Go to Steam Store";
-            this.groupSteam.ContextButtons.Add(accordionContextButton209);
-            this.groupSteam.ContextButtons.Add(accordionContextButton210);
-            this.groupSteam.ContextButtons.Add(accordionContextButton211);
-            this.groupSteam.ContextButtons.Add(accordionContextButton212);
+            accordionContextButton4.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton4.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton4.Id = new System.Guid("c62385e6-96a3-409f-a3af-7f018b59958e");
+            accordionContextButton4.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_run_command_28;
+            accordionContextButton4.Name = "launchClient";
+            accordionContextButton4.ToolTip = "Launch Steam Client";
+            accordionContextButton5.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton5.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton5.Id = new System.Guid("58efac6a-5fee-4058-aa45-7df33208d466");
+            accordionContextButton5.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_search_folder_28;
+            accordionContextButton5.Name = "openFolder";
+            accordionContextButton5.ToolTip = "Open Steam\'s containing folder";
+            accordionContextButton6.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton6.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton6.Id = new System.Guid("c6366730-24b9-4181-b6c2-635fa3b62a0e");
+            accordionContextButton6.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_refresh_28;
+            accordionContextButton6.Name = "refreshSteam";
+            accordionContextButton6.ToolTip = "Manually Refresh Steam List";
+            accordionContextButton7.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton7.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton7.Id = new System.Guid("1bf2decd-b84b-479e-a886-cfdf2e278a23");
+            accordionContextButton7.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_stall_28;
+            accordionContextButton7.Name = "nexusStore";
+            accordionContextButton7.ToolTip = "Go to Steam Store";
+            this.groupSteam.ContextButtons.Add(accordionContextButton4);
+            this.groupSteam.ContextButtons.Add(accordionContextButton5);
+            this.groupSteam.ContextButtons.Add(accordionContextButton6);
+            this.groupSteam.ContextButtons.Add(accordionContextButton7);
             this.groupSteam.ImageOptions.Image = global::Nexus_Launcher.Properties.Resources.Steam25px;
             this.groupSteam.Name = "groupSteam";
             this.groupSteam.Text = "Steam";
@@ -351,34 +348,34 @@
             // 
             // groupEpic
             // 
-            accordionContextButton213.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton213.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton213.Id = new System.Guid("99082e90-3138-4c6d-bbeb-9a468422bc9f");
-            accordionContextButton213.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_run_command_28;
-            accordionContextButton213.Name = "launchClient";
-            accordionContextButton213.ToolTip = "Launch Epic Games";
-            accordionContextButton214.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton214.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton214.Id = new System.Guid("480def1e-7e4c-43e6-9323-f14389b6fcf7");
-            accordionContextButton214.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_search_folder_28;
-            accordionContextButton214.Name = "openFolder";
-            accordionContextButton214.ToolTip = "Open Epic Game\'s containing folder";
-            accordionContextButton215.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton215.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton215.Id = new System.Guid("6197912a-63b9-4d82-b679-982e383a144e");
-            accordionContextButton215.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_refresh_28;
-            accordionContextButton215.Name = "refreshEpic";
-            accordionContextButton215.ToolTip = "Manually refresh Epic Games game list";
-            accordionContextButton216.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton216.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton216.Id = new System.Guid("7b11afdf-0dce-4cfb-886b-98911d3a3d15");
-            accordionContextButton216.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_stall_28;
-            accordionContextButton216.Name = "nexusStore";
-            accordionContextButton216.ToolTip = "Go to Epic Games Store";
-            this.groupEpic.ContextButtons.Add(accordionContextButton213);
-            this.groupEpic.ContextButtons.Add(accordionContextButton214);
-            this.groupEpic.ContextButtons.Add(accordionContextButton215);
-            this.groupEpic.ContextButtons.Add(accordionContextButton216);
+            accordionContextButton8.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton8.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton8.Id = new System.Guid("99082e90-3138-4c6d-bbeb-9a468422bc9f");
+            accordionContextButton8.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_run_command_28;
+            accordionContextButton8.Name = "launchClient";
+            accordionContextButton8.ToolTip = "Launch Epic Games";
+            accordionContextButton9.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton9.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton9.Id = new System.Guid("480def1e-7e4c-43e6-9323-f14389b6fcf7");
+            accordionContextButton9.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_search_folder_28;
+            accordionContextButton9.Name = "openFolder";
+            accordionContextButton9.ToolTip = "Open Epic Game\'s containing folder";
+            accordionContextButton10.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton10.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton10.Id = new System.Guid("6197912a-63b9-4d82-b679-982e383a144e");
+            accordionContextButton10.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_refresh_28;
+            accordionContextButton10.Name = "refreshEpic";
+            accordionContextButton10.ToolTip = "Manually refresh Epic Games game list";
+            accordionContextButton11.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton11.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton11.Id = new System.Guid("7b11afdf-0dce-4cfb-886b-98911d3a3d15");
+            accordionContextButton11.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_stall_28;
+            accordionContextButton11.Name = "nexusStore";
+            accordionContextButton11.ToolTip = "Go to Epic Games Store";
+            this.groupEpic.ContextButtons.Add(accordionContextButton8);
+            this.groupEpic.ContextButtons.Add(accordionContextButton9);
+            this.groupEpic.ContextButtons.Add(accordionContextButton10);
+            this.groupEpic.ContextButtons.Add(accordionContextButton11);
             this.groupEpic.ImageOptions.Image = global::Nexus_Launcher.Properties.Resources.EpicGames25px;
             this.groupEpic.Name = "groupEpic";
             this.groupEpic.Text = "Epic Games";
@@ -386,34 +383,34 @@
             // 
             // groupBattleNet
             // 
-            accordionContextButton217.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton217.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton217.Id = new System.Guid("3d1e9b55-55c0-4ab0-9323-26f296e08e0f");
-            accordionContextButton217.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_run_command_28;
-            accordionContextButton217.Name = "launchClient";
-            accordionContextButton217.ToolTip = "Launch Battlenet";
-            accordionContextButton218.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton218.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton218.Id = new System.Guid("2453560c-55cc-448c-bc4d-98363b00f356");
-            accordionContextButton218.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_search_folder_28;
-            accordionContextButton218.Name = "openFolder";
-            accordionContextButton218.ToolTip = "Open Battlenet\'s containing folder";
-            accordionContextButton219.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton219.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton219.Id = new System.Guid("95ab6d61-4638-42ef-801b-f5550847e015");
-            accordionContextButton219.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_refresh_28;
-            accordionContextButton219.Name = "refreshBattlenet";
-            accordionContextButton219.ToolTip = "Manually refresh Battlenet game list";
-            accordionContextButton220.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton220.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton220.Id = new System.Guid("91b563d2-9d29-4c62-a2ff-70147598bdf7");
-            accordionContextButton220.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_stall_28;
-            accordionContextButton220.Name = "nexusStore";
-            accordionContextButton220.ToolTip = "Go to Battlenet Store";
-            this.groupBattleNet.ContextButtons.Add(accordionContextButton217);
-            this.groupBattleNet.ContextButtons.Add(accordionContextButton218);
-            this.groupBattleNet.ContextButtons.Add(accordionContextButton219);
-            this.groupBattleNet.ContextButtons.Add(accordionContextButton220);
+            accordionContextButton12.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton12.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton12.Id = new System.Guid("3d1e9b55-55c0-4ab0-9323-26f296e08e0f");
+            accordionContextButton12.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_run_command_28;
+            accordionContextButton12.Name = "launchClient";
+            accordionContextButton12.ToolTip = "Launch Battlenet";
+            accordionContextButton13.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton13.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton13.Id = new System.Guid("2453560c-55cc-448c-bc4d-98363b00f356");
+            accordionContextButton13.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_search_folder_28;
+            accordionContextButton13.Name = "openFolder";
+            accordionContextButton13.ToolTip = "Open Battlenet\'s containing folder";
+            accordionContextButton14.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton14.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton14.Id = new System.Guid("95ab6d61-4638-42ef-801b-f5550847e015");
+            accordionContextButton14.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_refresh_28;
+            accordionContextButton14.Name = "refreshBattlenet";
+            accordionContextButton14.ToolTip = "Manually refresh Battlenet game list";
+            accordionContextButton15.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton15.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton15.Id = new System.Guid("91b563d2-9d29-4c62-a2ff-70147598bdf7");
+            accordionContextButton15.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_stall_28;
+            accordionContextButton15.Name = "nexusStore";
+            accordionContextButton15.ToolTip = "Go to Battlenet Store";
+            this.groupBattleNet.ContextButtons.Add(accordionContextButton12);
+            this.groupBattleNet.ContextButtons.Add(accordionContextButton13);
+            this.groupBattleNet.ContextButtons.Add(accordionContextButton14);
+            this.groupBattleNet.ContextButtons.Add(accordionContextButton15);
             this.groupBattleNet.ImageOptions.Image = global::Nexus_Launcher.Properties.Resources.Battle_net25px;
             this.groupBattleNet.Name = "groupBattleNet";
             this.groupBattleNet.Text = "Battle.net";
@@ -421,34 +418,34 @@
             // 
             // groupGOG
             // 
-            accordionContextButton221.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton221.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton221.Id = new System.Guid("bfdbe6eb-f9b8-4179-a37d-324da9a499b8");
-            accordionContextButton221.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_run_command_28;
-            accordionContextButton221.Name = "launchClient";
-            accordionContextButton221.ToolTip = "Launch GOG Galaxy";
-            accordionContextButton222.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton222.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton222.Id = new System.Guid("59e2276b-bf96-4909-8ebd-8a20b8f796f2");
-            accordionContextButton222.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_search_folder_28;
-            accordionContextButton222.Name = "openFolder";
-            accordionContextButton222.ToolTip = "Open GOG Galxy\'s containing folder";
-            accordionContextButton223.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton223.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton223.Id = new System.Guid("0cedbcb1-1416-40de-a0db-2b69500fdaa9");
-            accordionContextButton223.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_refresh_28;
-            accordionContextButton223.Name = "refreshGOG";
-            accordionContextButton223.ToolTip = "Manually refresh GOG Galaxy game list";
-            accordionContextButton224.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton224.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton224.Id = new System.Guid("2b6583bb-6c96-4bd4-b535-c3bf16d7c395");
-            accordionContextButton224.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_stall_28;
-            accordionContextButton224.Name = "nexusStore";
-            accordionContextButton224.ToolTip = "Go to GOG Galaxy Store";
-            this.groupGOG.ContextButtons.Add(accordionContextButton221);
-            this.groupGOG.ContextButtons.Add(accordionContextButton222);
-            this.groupGOG.ContextButtons.Add(accordionContextButton223);
-            this.groupGOG.ContextButtons.Add(accordionContextButton224);
+            accordionContextButton16.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton16.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton16.Id = new System.Guid("bfdbe6eb-f9b8-4179-a37d-324da9a499b8");
+            accordionContextButton16.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_run_command_28;
+            accordionContextButton16.Name = "launchClient";
+            accordionContextButton16.ToolTip = "Launch GOG Galaxy";
+            accordionContextButton17.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton17.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton17.Id = new System.Guid("59e2276b-bf96-4909-8ebd-8a20b8f796f2");
+            accordionContextButton17.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_search_folder_28;
+            accordionContextButton17.Name = "openFolder";
+            accordionContextButton17.ToolTip = "Open GOG Galxy\'s containing folder";
+            accordionContextButton18.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton18.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton18.Id = new System.Guid("0cedbcb1-1416-40de-a0db-2b69500fdaa9");
+            accordionContextButton18.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_refresh_28;
+            accordionContextButton18.Name = "refreshGOG";
+            accordionContextButton18.ToolTip = "Manually refresh GOG Galaxy game list";
+            accordionContextButton19.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton19.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton19.Id = new System.Guid("2b6583bb-6c96-4bd4-b535-c3bf16d7c395");
+            accordionContextButton19.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_stall_28;
+            accordionContextButton19.Name = "nexusStore";
+            accordionContextButton19.ToolTip = "Go to GOG Galaxy Store";
+            this.groupGOG.ContextButtons.Add(accordionContextButton16);
+            this.groupGOG.ContextButtons.Add(accordionContextButton17);
+            this.groupGOG.ContextButtons.Add(accordionContextButton18);
+            this.groupGOG.ContextButtons.Add(accordionContextButton19);
             this.groupGOG.ImageOptions.Image = global::Nexus_Launcher.Properties.Resources.GOG25px;
             this.groupGOG.Name = "groupGOG";
             this.groupGOG.Text = "GOG";
@@ -456,30 +453,30 @@
             // 
             // groupUbisoft
             // 
-            accordionContextButton225.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton225.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton225.Id = new System.Guid("73aed1ed-55c7-4c62-8e66-234f6e554e15");
-            accordionContextButton225.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_run_command_28;
-            accordionContextButton225.Name = "launchClient";
-            accordionContextButton226.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton226.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton226.Id = new System.Guid("1afa8b48-f0d7-4000-99b4-0d0f10add740");
-            accordionContextButton226.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_search_folder_28;
-            accordionContextButton226.Name = "openFolder";
-            accordionContextButton227.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton227.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton227.Id = new System.Guid("7fb20547-1dbf-402c-8b04-57bc3b546f2a");
-            accordionContextButton227.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_stall_28;
-            accordionContextButton227.Name = "nexusStore";
-            accordionContextButton228.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton228.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton228.Id = new System.Guid("c779c103-774f-46ed-a574-f470198b81e3");
-            accordionContextButton228.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_refresh_28;
-            accordionContextButton228.Name = "refreshUbisoft";
-            this.groupUbisoft.ContextButtons.Add(accordionContextButton225);
-            this.groupUbisoft.ContextButtons.Add(accordionContextButton226);
-            this.groupUbisoft.ContextButtons.Add(accordionContextButton227);
-            this.groupUbisoft.ContextButtons.Add(accordionContextButton228);
+            accordionContextButton20.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton20.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton20.Id = new System.Guid("73aed1ed-55c7-4c62-8e66-234f6e554e15");
+            accordionContextButton20.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_run_command_28;
+            accordionContextButton20.Name = "launchClient";
+            accordionContextButton21.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton21.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton21.Id = new System.Guid("1afa8b48-f0d7-4000-99b4-0d0f10add740");
+            accordionContextButton21.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_search_folder_28;
+            accordionContextButton21.Name = "openFolder";
+            accordionContextButton22.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton22.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton22.Id = new System.Guid("7fb20547-1dbf-402c-8b04-57bc3b546f2a");
+            accordionContextButton22.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_stall_28;
+            accordionContextButton22.Name = "nexusStore";
+            accordionContextButton23.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton23.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton23.Id = new System.Guid("c779c103-774f-46ed-a574-f470198b81e3");
+            accordionContextButton23.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_refresh_28;
+            accordionContextButton23.Name = "refreshUbisoft";
+            this.groupUbisoft.ContextButtons.Add(accordionContextButton20);
+            this.groupUbisoft.ContextButtons.Add(accordionContextButton21);
+            this.groupUbisoft.ContextButtons.Add(accordionContextButton22);
+            this.groupUbisoft.ContextButtons.Add(accordionContextButton23);
             this.groupUbisoft.ImageOptions.Image = global::Nexus_Launcher.Properties.Resources.Ubisoft25px;
             this.groupUbisoft.Name = "groupUbisoft";
             this.groupUbisoft.Text = "Ubisoft";
@@ -487,24 +484,24 @@
             // 
             // groupParadox
             // 
-            accordionContextButton229.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton229.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton229.Id = new System.Guid("f39369b6-f90f-42d1-b21a-b523511ac1ec");
-            accordionContextButton229.ImageOptionsCollection.ItemNormal.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
-            accordionContextButton229.Name = "launchClient";
-            accordionContextButton230.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton230.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton230.Id = new System.Guid("c221a2dc-ba8c-4e9b-adef-8e06051961c4");
-            accordionContextButton230.ImageOptionsCollection.ItemNormal.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image1")));
-            accordionContextButton230.Name = "openFolder";
-            accordionContextButton231.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton231.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton231.Id = new System.Guid("a4c4ed78-6067-4edb-9ed3-492bd9a0390d");
-            accordionContextButton231.ImageOptionsCollection.ItemNormal.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("resource.SvgImage")));
-            accordionContextButton231.Name = "nexusStore";
-            this.groupParadox.ContextButtons.Add(accordionContextButton229);
-            this.groupParadox.ContextButtons.Add(accordionContextButton230);
-            this.groupParadox.ContextButtons.Add(accordionContextButton231);
+            accordionContextButton24.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton24.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton24.Id = new System.Guid("f39369b6-f90f-42d1-b21a-b523511ac1ec");
+            accordionContextButton24.ImageOptionsCollection.ItemNormal.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
+            accordionContextButton24.Name = "launchClient";
+            accordionContextButton25.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton25.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton25.Id = new System.Guid("c221a2dc-ba8c-4e9b-adef-8e06051961c4");
+            accordionContextButton25.ImageOptionsCollection.ItemNormal.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image1")));
+            accordionContextButton25.Name = "openFolder";
+            accordionContextButton26.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton26.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton26.Id = new System.Guid("a4c4ed78-6067-4edb-9ed3-492bd9a0390d");
+            accordionContextButton26.ImageOptionsCollection.ItemNormal.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("resource.SvgImage")));
+            accordionContextButton26.Name = "nexusStore";
+            this.groupParadox.ContextButtons.Add(accordionContextButton24);
+            this.groupParadox.ContextButtons.Add(accordionContextButton25);
+            this.groupParadox.ContextButtons.Add(accordionContextButton26);
             this.groupParadox.ImageOptions.Image = global::Nexus_Launcher.Properties.Resources.Paradox25px;
             this.groupParadox.Name = "groupParadox";
             this.groupParadox.Text = "Paradox";
@@ -512,24 +509,24 @@
             // 
             // groupAmazon
             // 
-            accordionContextButton232.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton232.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton232.Id = new System.Guid("186491ef-43e9-4149-808b-d542aa99705c");
-            accordionContextButton232.ImageOptionsCollection.ItemNormal.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image2")));
-            accordionContextButton232.Name = "launchClient";
-            accordionContextButton233.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton233.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton233.Id = new System.Guid("62c6bc40-b8d6-41d6-96df-f1d96d3d2205");
-            accordionContextButton233.ImageOptionsCollection.ItemNormal.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image3")));
-            accordionContextButton233.Name = "openFolder";
-            accordionContextButton234.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton234.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton234.Id = new System.Guid("b880fb71-a1e8-473d-8687-c54bb3a6db8f");
-            accordionContextButton234.ImageOptionsCollection.ItemNormal.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("resource.SvgImage1")));
-            accordionContextButton234.Name = "nexusStore";
-            this.groupAmazon.ContextButtons.Add(accordionContextButton232);
-            this.groupAmazon.ContextButtons.Add(accordionContextButton233);
-            this.groupAmazon.ContextButtons.Add(accordionContextButton234);
+            accordionContextButton27.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton27.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton27.Id = new System.Guid("186491ef-43e9-4149-808b-d542aa99705c");
+            accordionContextButton27.ImageOptionsCollection.ItemNormal.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image2")));
+            accordionContextButton27.Name = "launchClient";
+            accordionContextButton28.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton28.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton28.Id = new System.Guid("62c6bc40-b8d6-41d6-96df-f1d96d3d2205");
+            accordionContextButton28.ImageOptionsCollection.ItemNormal.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image3")));
+            accordionContextButton28.Name = "openFolder";
+            accordionContextButton29.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton29.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton29.Id = new System.Guid("b880fb71-a1e8-473d-8687-c54bb3a6db8f");
+            accordionContextButton29.ImageOptionsCollection.ItemNormal.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("resource.SvgImage1")));
+            accordionContextButton29.Name = "nexusStore";
+            this.groupAmazon.ContextButtons.Add(accordionContextButton27);
+            this.groupAmazon.ContextButtons.Add(accordionContextButton28);
+            this.groupAmazon.ContextButtons.Add(accordionContextButton29);
             this.groupAmazon.ImageOptions.Image = global::Nexus_Launcher.Properties.Resources.AmazonGames25px;
             this.groupAmazon.Name = "groupAmazon";
             this.groupAmazon.Text = "Amazon Games";
@@ -537,30 +534,30 @@
             // 
             // groupEA
             // 
-            accordionContextButton235.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton235.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton235.Id = new System.Guid("c9a25fc8-ff17-460c-a284-5a846786b32c");
-            accordionContextButton235.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_run_command_28;
-            accordionContextButton235.Name = "launchClient";
-            accordionContextButton236.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton236.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton236.Id = new System.Guid("14d668fd-eadd-45cf-a5a5-ec544a46c16f");
-            accordionContextButton236.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_search_folder_28;
-            accordionContextButton236.Name = "openFolder";
-            accordionContextButton237.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton237.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton237.Id = new System.Guid("14f5289d-fafe-44e2-85f4-a9e8beb010b2");
-            accordionContextButton237.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_stall_28;
-            accordionContextButton237.Name = "nexusStore";
-            accordionContextButton238.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton238.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton238.Id = new System.Guid("ff7a1ba6-f69f-4069-95ce-141871863002");
-            accordionContextButton238.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_refresh_28;
-            accordionContextButton238.Name = "refreshEA";
-            this.groupEA.ContextButtons.Add(accordionContextButton235);
-            this.groupEA.ContextButtons.Add(accordionContextButton236);
-            this.groupEA.ContextButtons.Add(accordionContextButton237);
-            this.groupEA.ContextButtons.Add(accordionContextButton238);
+            accordionContextButton30.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton30.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton30.Id = new System.Guid("c9a25fc8-ff17-460c-a284-5a846786b32c");
+            accordionContextButton30.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_run_command_28;
+            accordionContextButton30.Name = "launchClient";
+            accordionContextButton31.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton31.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton31.Id = new System.Guid("14d668fd-eadd-45cf-a5a5-ec544a46c16f");
+            accordionContextButton31.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_search_folder_28;
+            accordionContextButton31.Name = "openFolder";
+            accordionContextButton32.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton32.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton32.Id = new System.Guid("14f5289d-fafe-44e2-85f4-a9e8beb010b2");
+            accordionContextButton32.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_stall_28;
+            accordionContextButton32.Name = "nexusStore";
+            accordionContextButton33.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton33.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton33.Id = new System.Guid("ff7a1ba6-f69f-4069-95ce-141871863002");
+            accordionContextButton33.ImageOptionsCollection.ItemNormal.Image = global::Nexus_Launcher.Properties.Resources.icons8_refresh_28;
+            accordionContextButton33.Name = "refreshEA";
+            this.groupEA.ContextButtons.Add(accordionContextButton30);
+            this.groupEA.ContextButtons.Add(accordionContextButton31);
+            this.groupEA.ContextButtons.Add(accordionContextButton32);
+            this.groupEA.ContextButtons.Add(accordionContextButton33);
             this.groupEA.ImageOptions.Image = global::Nexus_Launcher.Properties.Resources.EA25px;
             this.groupEA.Name = "groupEA";
             this.groupEA.Text = "EA";
@@ -568,24 +565,24 @@
             // 
             // groupWargaming
             // 
-            accordionContextButton239.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton239.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton239.Id = new System.Guid("b6bf6950-3778-4e03-983b-b1a8a87e5592");
-            accordionContextButton239.ImageOptionsCollection.ItemNormal.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image4")));
-            accordionContextButton239.Name = "launchClient";
-            accordionContextButton240.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton240.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton240.Id = new System.Guid("6a2b9a6e-99ed-4441-913b-a57c2d686cff");
-            accordionContextButton240.ImageOptionsCollection.ItemNormal.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image5")));
-            accordionContextButton240.Name = "openFolder";
-            accordionContextButton241.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton241.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton241.Id = new System.Guid("c184300f-c707-43b6-972d-3ebf5d606b59");
-            accordionContextButton241.ImageOptionsCollection.ItemNormal.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("resource.SvgImage2")));
-            accordionContextButton241.Name = "nexusStore";
-            this.groupWargaming.ContextButtons.Add(accordionContextButton239);
-            this.groupWargaming.ContextButtons.Add(accordionContextButton240);
-            this.groupWargaming.ContextButtons.Add(accordionContextButton241);
+            accordionContextButton34.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton34.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton34.Id = new System.Guid("b6bf6950-3778-4e03-983b-b1a8a87e5592");
+            accordionContextButton34.ImageOptionsCollection.ItemNormal.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image4")));
+            accordionContextButton34.Name = "launchClient";
+            accordionContextButton35.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton35.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton35.Id = new System.Guid("6a2b9a6e-99ed-4441-913b-a57c2d686cff");
+            accordionContextButton35.ImageOptionsCollection.ItemNormal.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image5")));
+            accordionContextButton35.Name = "openFolder";
+            accordionContextButton36.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton36.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton36.Id = new System.Guid("c184300f-c707-43b6-972d-3ebf5d606b59");
+            accordionContextButton36.ImageOptionsCollection.ItemNormal.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("resource.SvgImage2")));
+            accordionContextButton36.Name = "nexusStore";
+            this.groupWargaming.ContextButtons.Add(accordionContextButton34);
+            this.groupWargaming.ContextButtons.Add(accordionContextButton35);
+            this.groupWargaming.ContextButtons.Add(accordionContextButton36);
             this.groupWargaming.ImageOptions.Image = global::Nexus_Launcher.Properties.Resources.Wargaming25px;
             this.groupWargaming.Name = "groupWargaming";
             this.groupWargaming.Text = "Wargaming";
@@ -593,19 +590,19 @@
             // 
             // groupXbox
             // 
-            accordionContextButton242.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton242.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton242.Id = new System.Guid("6cd9003e-6f6a-4ab2-ac44-1fccfe966192");
-            accordionContextButton242.ImageOptionsCollection.ItemNormal.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image6")));
-            accordionContextButton242.Name = "launchXbox";
-            accordionContextButton242.Tag = "Xbox";
-            accordionContextButton243.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton243.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton243.Id = new System.Guid("2ebb31b0-68bf-4468-9237-4bfb150fb561");
-            accordionContextButton243.ImageOptionsCollection.ItemNormal.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("resource.SvgImage3")));
-            accordionContextButton243.Name = "nexusStore";
-            this.groupXbox.ContextButtons.Add(accordionContextButton242);
-            this.groupXbox.ContextButtons.Add(accordionContextButton243);
+            accordionContextButton37.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton37.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton37.Id = new System.Guid("6cd9003e-6f6a-4ab2-ac44-1fccfe966192");
+            accordionContextButton37.ImageOptionsCollection.ItemNormal.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image6")));
+            accordionContextButton37.Name = "launchXbox";
+            accordionContextButton37.Tag = "Xbox";
+            accordionContextButton38.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton38.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton38.Id = new System.Guid("2ebb31b0-68bf-4468-9237-4bfb150fb561");
+            accordionContextButton38.ImageOptionsCollection.ItemNormal.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("resource.SvgImage3")));
+            accordionContextButton38.Name = "nexusStore";
+            this.groupXbox.ContextButtons.Add(accordionContextButton37);
+            this.groupXbox.ContextButtons.Add(accordionContextButton38);
             this.groupXbox.ImageOptions.Image = global::Nexus_Launcher.Properties.Resources.Xbox25px;
             this.groupXbox.Name = "groupXbox";
             this.groupXbox.Text = "Xbox";
@@ -613,19 +610,19 @@
             // 
             // groupWindowsStore
             // 
-            accordionContextButton244.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton244.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton244.Id = new System.Guid("f36aefe1-829b-4d7b-8491-4925f9f0a81b");
-            accordionContextButton244.ImageOptionsCollection.ItemNormal.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image7")));
-            accordionContextButton244.Name = "launchWindows";
-            accordionContextButton244.Tag = "Windows";
-            accordionContextButton245.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
-            accordionContextButton245.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
-            accordionContextButton245.Id = new System.Guid("cf34253b-0f3c-4e88-a02e-17d5192375d1");
-            accordionContextButton245.ImageOptionsCollection.ItemNormal.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("resource.SvgImage4")));
-            accordionContextButton245.Name = "nexusStore";
-            this.groupWindowsStore.ContextButtons.Add(accordionContextButton244);
-            this.groupWindowsStore.ContextButtons.Add(accordionContextButton245);
+            accordionContextButton39.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton39.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton39.Id = new System.Guid("f36aefe1-829b-4d7b-8491-4925f9f0a81b");
+            accordionContextButton39.ImageOptionsCollection.ItemNormal.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image7")));
+            accordionContextButton39.Name = "launchWindows";
+            accordionContextButton39.Tag = "Windows";
+            accordionContextButton40.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center;
+            accordionContextButton40.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far;
+            accordionContextButton40.Id = new System.Guid("cf34253b-0f3c-4e88-a02e-17d5192375d1");
+            accordionContextButton40.ImageOptionsCollection.ItemNormal.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("resource.SvgImage4")));
+            accordionContextButton40.Name = "nexusStore";
+            this.groupWindowsStore.ContextButtons.Add(accordionContextButton39);
+            this.groupWindowsStore.ContextButtons.Add(accordionContextButton40);
             this.groupWindowsStore.ImageOptions.Image = global::Nexus_Launcher.Properties.Resources.WindowsStore25px;
             this.groupWindowsStore.Name = "groupWindowsStore";
             this.groupWindowsStore.Text = "Windows Store";
@@ -710,7 +707,6 @@
             // 
             // groupControl3
             // 
-            this.groupControl3.Controls.Add(this.progressPanel3);
             this.groupControl3.Controls.Add(this.labelControl3);
             this.groupControl3.GroupStyle = DevExpress.Utils.GroupStyle.Card;
             this.groupControl3.Location = new System.Drawing.Point(12, 582);
@@ -718,18 +714,6 @@
             this.groupControl3.Size = new System.Drawing.Size(275, 276);
             this.groupControl3.TabIndex = 2;
             this.groupControl3.Text = "System Stats";
-            // 
-            // progressPanel3
-            // 
-            this.progressPanel3.Appearance.BackColor = System.Drawing.Color.Transparent;
-            this.progressPanel3.Appearance.Options.UseBackColor = true;
-            this.progressPanel3.FrameInterval = 200;
-            this.progressPanel3.Location = new System.Drawing.Point(16, 107);
-            this.progressPanel3.Name = "progressPanel3";
-            this.progressPanel3.Size = new System.Drawing.Size(246, 66);
-            this.progressPanel3.TabIndex = 3;
-            this.progressPanel3.Text = "progressPanel3";
-            this.progressPanel3.WaitAnimationType = DevExpress.Utils.Animation.WaitingAnimatorType.Bar;
             // 
             // labelControl3
             // 
@@ -743,7 +727,6 @@
             // 
             // groupControl2
             // 
-            this.groupControl2.Controls.Add(this.progressPanel2);
             this.groupControl2.Controls.Add(this.labelControl2);
             this.groupControl2.GroupStyle = DevExpress.Utils.GroupStyle.Card;
             this.groupControl2.Location = new System.Drawing.Point(12, 306);
@@ -751,18 +734,6 @@
             this.groupControl2.Size = new System.Drawing.Size(275, 272);
             this.groupControl2.TabIndex = 2;
             this.groupControl2.Text = "Recently Played";
-            // 
-            // progressPanel2
-            // 
-            this.progressPanel2.Appearance.BackColor = System.Drawing.Color.Transparent;
-            this.progressPanel2.Appearance.Options.UseBackColor = true;
-            this.progressPanel2.FrameInterval = 200;
-            this.progressPanel2.Location = new System.Drawing.Point(16, 95);
-            this.progressPanel2.Name = "progressPanel2";
-            this.progressPanel2.Size = new System.Drawing.Size(246, 66);
-            this.progressPanel2.TabIndex = 2;
-            this.progressPanel2.Text = "progressPanel2";
-            this.progressPanel2.WaitAnimationType = DevExpress.Utils.Animation.WaitingAnimatorType.Bar;
             // 
             // labelControl2
             // 
@@ -791,8 +762,6 @@
             // 
             // groupControl1
             // 
-            this.groupControl1.Controls.Add(this.progressPanel1);
-            this.groupControl1.Controls.Add(this.labelControl4);
             this.groupControl1.Controls.Add(this.labelControl1);
             this.groupControl1.GroupStyle = DevExpress.Utils.GroupStyle.Card;
             this.groupControl1.Location = new System.Drawing.Point(12, 28);
@@ -800,28 +769,6 @@
             this.groupControl1.Size = new System.Drawing.Size(275, 274);
             this.groupControl1.TabIndex = 1;
             this.groupControl1.Text = "Launcher && Game Info";
-            // 
-            // progressPanel1
-            // 
-            this.progressPanel1.Appearance.BackColor = System.Drawing.Color.Transparent;
-            this.progressPanel1.Appearance.Options.UseBackColor = true;
-            this.progressPanel1.FrameInterval = 200;
-            this.progressPanel1.Location = new System.Drawing.Point(29, 109);
-            this.progressPanel1.Name = "progressPanel1";
-            this.progressPanel1.Size = new System.Drawing.Size(246, 66);
-            this.progressPanel1.TabIndex = 1;
-            this.progressPanel1.Text = "progressPanel1";
-            this.progressPanel1.WaitAnimationType = DevExpress.Utils.Animation.WaitingAnimatorType.Bar;
-            // 
-            // labelControl4
-            // 
-            this.labelControl4.Location = new System.Drawing.Point(129, 100);
-            this.labelControl4.Name = "labelControl4";
-            this.labelControl4.Size = new System.Drawing.Size(94, 104);
-            this.labelControl4.TabIndex = 1;
-            this.labelControl4.Text = "Steam Summary\r\n245 Games\r\n\r\nInstalled: 123\r\nReady To Play: 115\r\n\r\nLast Scan:\r\n5 m" +
-    "inutes ago";
-            this.labelControl4.Visible = false;
             // 
             // labelControl1
             // 
@@ -1214,7 +1161,7 @@
             // workspaceManager1
             // 
             this.workspaceManager1.TargetControl = this;
-            this.workspaceManager1.TransitionType = pushTransition2;
+            this.workspaceManager1.TransitionType = pushTransition1;
             // 
             // barLargeButtonItem2
             // 
@@ -1649,10 +1596,6 @@
         private DevExpress.XtraLayout.LayoutControlGroup Root;
         private DevExpress.XtraEditors.LabelControl labelControl3;
         private DevExpress.XtraEditors.LabelControl labelControl2;
-        private DevExpress.XtraEditors.LabelControl labelControl4;
-        private DevExpress.XtraWaitForm.ProgressPanel progressPanel3;
-        private DevExpress.XtraWaitForm.ProgressPanel progressPanel2;
-        private DevExpress.XtraWaitForm.ProgressPanel progressPanel1;
         private DevExpress.XtraBars.BarButtonItem barButtonItem11;
         private DevExpress.XtraBars.BarButtonItem barButtonItem12;
         private DevExpress.XtraEditors.SimpleButton simpleButton2;

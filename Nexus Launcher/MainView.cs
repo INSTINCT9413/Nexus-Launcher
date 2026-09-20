@@ -17,6 +17,7 @@ using Nexus_Launcher.Models;
 using Nexus_Launcher.Properties;
 using Nexus_Launcher.Services;
 using Nexus_Launcher.Services.Artwork;
+using Nexus_Launcher.Services.Library;
 using Ookii.Dialogs.WinForms;
 using QlmControls.v10;
 using Sunny.UI;
@@ -42,6 +43,7 @@ using static Nexus_Launcher.MainView;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using DevExpress.Utils.VisualEffects;
 using DevExpress.Mvvm.Native;
+using Microsoft.VisualBasic.Devices;
 namespace Nexus_Launcher
 {
     public partial class MainView : DevExpress.XtraBars.FluentDesignSystem.FluentDesignForm
@@ -82,6 +84,10 @@ namespace Nexus_Launcher
                     new EAScannerService();
         UbisoftScannerService ubisoftscanner =
                     new UbisoftScannerService();
+        XboxScannerService xboxscanner =
+                    new XboxScannerService();
+        private List<GameInfo> xboxGames =
+                    new List<GameInfo>();
         LauncherInfo steamInfo = new LauncherInfo
         {
             Name = "Steam",
@@ -164,6 +170,30 @@ namespace Nexus_Launcher
         private readonly ContextMenuStrip gameContextMenu = new ContextMenuStrip();
         private readonly PopupMenu gameContextMenu0 = new PopupMenu();
         private GameInfo selectedGame;
+
+        // Favourites and user created groups, see
+        // BuildLibraryOrganizationMenu.
+        private BarButtonItem contextFavorite;
+        private BarSubItem contextMoveToGroup;
+        private BarButtonItem contextNewGroup;
+        private PopupMenu libraryGroupMenu;
+        private BarButtonItem contextRenameGroup;
+        private BarButtonItem contextDeleteGroup;
+        private BarButtonItem contextMoveGroupUp;
+        private BarButtonItem contextMoveGroupDown;
+        private LibraryGroup selectedLibraryGroup;
+        private AccordionControlElement selectedLauncherGroup;
+
+        // The "Move to Group" entries are rebuilt on every right click,
+        // so the previous batch has to be unregistered each time.
+        private readonly List<BarButtonItem> groupTargetItems =
+            new List<BarButtonItem>();
+
+        // Side panel trackers.
+        private System.Windows.Forms.Timer sidePanelTimer;
+        private GameInfo sidePanelGame;
+        private AccordionControlElement sidePanelLauncher;
+        private int sidePanelTicks;
         private bool showUpdateBadge = false;
         private Badge nexusUpdateBadge;
         private bool updateAvailable;
@@ -1093,6 +1123,9 @@ namespace Nexus_Launcher
             userAccount.Dock = DockStyle.Fill;
             fullLibrary.Dock = DockStyle.Fill;
             //applicationCard.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            applicationCard.FavoriteChanged +=
+                ApplicationCard_FavoriteChanged;
+
             splitContainerControl1.Panel2.Controls.Add(applicationCard);
             splitContainerControl1.Panel2.Controls.Add(launcherCard);
             launcherCard.xtraTabPage4.Controls.Add(nexusStore);
@@ -1320,6 +1353,7 @@ namespace Nexus_Launcher
             }
                 await LauncherStartupService.StartConfiguredLaunchersAsync();
             BuildGameContextMenu();
+            InitializeSidePanel();
         }
         public void FocusGOGSettings()
         {
@@ -1529,8 +1563,8 @@ namespace Nexus_Launcher
                 installedXboxApp;
             if (installedXboxApp)
             {
-                //groupXbox.Tag = xboxAppInfo;
-                //await LoadXboxGamesAsync();
+                SplashHelper.UpdateStatus("Loading Xbox Games...");
+                await LoadXboxGamesAsync();
             }
             // Windows Store
             bool installedWindowsStore = IsMicrosoftStoreInstalled();
@@ -1610,6 +1644,10 @@ namespace Nexus_Launcher
 
             LibraryService.AddGames(
                 ubisoftscanner.ScanGames());
+
+            // Xbox games were already scanned by LoadXboxGamesAsync
+            LibraryService.AddGames(
+                xboxGames);
         }
         private async void ShowHideLaunchers()
         {
@@ -1721,6 +1759,7 @@ namespace Nexus_Launcher
             groupSteam.Text = $"Steam ({groupSteam.Elements.Count})";
             groupUbisoft.Text = $"Ubisoft ({groupUbisoft.Elements.Count})";
             groupBattleNet.Text = $"Battle.net ({groupBattleNet.Elements.Count})";
+            groupXbox.Text = $"Xbox ({groupXbox.Elements.Count})";
         }
         private void ArtworkService_ArtworkProgressChanged(int completed, int total)
         {
@@ -1758,7 +1797,8 @@ namespace Nexus_Launcher
                         return NexusAddRemoveManager.Load();
                     });
 
-                groupNexus.Elements.Clear();
+                List<AccordionControlElement> items =
+                    new List<AccordionControlElement>();
 
                 foreach (GameInfo game in games)
                 {
@@ -1782,8 +1822,13 @@ namespace Nexus_Launcher
                     item.Tag =
                         game;
 
-                    groupNexus.Elements.Add(item);
+                    items.Add(item);
                 }
+
+                AccordionLibraryOrganizer.Arrange(
+                    groupNexus,
+                    "Nexus Launcher",
+                    items);
             }
             catch (Exception ex)
             {
@@ -1825,7 +1870,8 @@ namespace Nexus_Launcher
         private void PopulateSteamGames(
     LauncherInfo steamInfo)
         {
-            groupSteam.Elements.Clear();
+            List<AccordionControlElement> items =
+                new List<AccordionControlElement>();
 
             foreach (GameInfo game in steamInfo.Games)
             {
@@ -1869,10 +1915,13 @@ namespace Nexus_Launcher
                     // debugging this.Text += " - " + game.IconPath;
 
 
-                    groupSteam
-                        .Elements
-                        .Add(item);
+                    items.Add(item);
             }
+
+            AccordionLibraryOrganizer.Arrange(
+                groupSteam,
+                "Steam",
+                items);
         }
         private async Task LoadEpicGamesAsync( LauncherInfo epicInfo)
         {
@@ -1913,7 +1962,8 @@ namespace Nexus_Launcher
         private void PopulateEpicGames(
     LauncherInfo epicInfo)
         {
-            groupEpic.Elements.Clear();
+            List<AccordionControlElement> items =
+                new List<AccordionControlElement>();
 
             foreach (GameInfo game in epicInfo.Games)
             {
@@ -1930,8 +1980,13 @@ namespace Nexus_Launcher
                     game;
                 item.Image = IconHelper.ExtractExeIcon(game.ExecutablePath);
 
-                groupEpic.Elements.Add(item);
+                items.Add(item);
             }
+
+            AccordionLibraryOrganizer.Arrange(
+                groupEpic,
+                "Epic Games",
+                items);
         }
         private async Task LoadBattleNetGamesAsync(
     LauncherInfo battleNetInfo)
@@ -1959,7 +2014,8 @@ namespace Nexus_Launcher
         private void PopulateBattleNetGames(
     LauncherInfo battleNetInfo)
         {
-            groupBattleNet.Elements.Clear();
+            List<AccordionControlElement> items =
+                new List<AccordionControlElement>();
 
             foreach (GameInfo game in battleNetInfo.Games)
             {
@@ -1986,10 +2042,13 @@ namespace Nexus_Launcher
                             game.ExecutablePath);
                 }
 
-                groupBattleNet
-                    .Elements
-                    .Add(item);
+                items.Add(item);
             }
+
+            AccordionLibraryOrganizer.Arrange(
+                groupBattleNet,
+                "Battle.net",
+                items);
         }
         private async Task LoadGogGamesAsync()
         {
@@ -2003,7 +2062,8 @@ namespace Nexus_Launcher
                         return gogscanner.ScanGames();
                     });
                 
-                groupGOG.Elements.Clear();
+                List<AccordionControlElement> items =
+                    new List<AccordionControlElement>();
 
                 foreach (GameInfo game in games)
                 {
@@ -2034,9 +2094,14 @@ namespace Nexus_Launcher
                         }
                     }
 
-                    groupGOG.Elements.Add(item);
-                    
+                    items.Add(item);
+
                 }
+
+                AccordionLibraryOrganizer.Arrange(
+                    groupGOG,
+                    "GOG",
+                    items);
             }
             catch (Exception ex)
             {
@@ -2057,7 +2122,8 @@ namespace Nexus_Launcher
                         return eascanner.ScanGames();
                     });
 
-                groupEA.Elements.Clear();
+                List<AccordionControlElement> items =
+                    new List<AccordionControlElement>();
 
                 foreach (GameInfo game in games)
                 {
@@ -2093,8 +2159,13 @@ namespace Nexus_Launcher
                     {
                     }
 
-                    groupEA.Elements.Add(item);
+                    items.Add(item);
                 }
+
+                AccordionLibraryOrganizer.Arrange(
+                    groupEA,
+                    "EA App",
+                    items);
             }
             catch (Exception ex)
             {
@@ -2115,7 +2186,8 @@ namespace Nexus_Launcher
                         return ubisoftscanner.ScanGames();
                     });
 
-                groupUbisoft.Elements.Clear();
+                List<AccordionControlElement> items =
+                    new List<AccordionControlElement>();
 
                 foreach (GameInfo game in games)
                 {
@@ -2151,8 +2223,13 @@ namespace Nexus_Launcher
                     {
                     }
 
-                    groupUbisoft.Elements.Add(item);
+                    items.Add(item);
                 }
+
+                AccordionLibraryOrganizer.Arrange(
+                    groupUbisoft,
+                    "Ubisoft Connect",
+                    items);
             }
             catch (Exception ex)
             {
@@ -2165,16 +2242,17 @@ namespace Nexus_Launcher
         {
             try
             {
-                XboxScannerService scanner =
-                    new XboxScannerService();
-
                 List<GameInfo> games =
                     await Task.Run(() =>
                     {
-                        return scanner.ScanGames();
+                        return xboxscanner.ScanGames();
                     });
 
-                groupXbox.Elements.Clear();
+                xboxGames =
+                    games;
+
+                List<AccordionControlElement> items =
+                    new List<AccordionControlElement>();
 
                 foreach (GameInfo game in games)
                 {
@@ -2190,9 +2268,38 @@ namespace Nexus_Launcher
                     item.Tag =
                         game;
 
-                    groupXbox.Elements.Add(
-                        item);
+                    // Xbox games are Store packages, so use the
+                    // package logo instead of an executable icon.
+                    try
+                    {
+                        if (!string.IsNullOrWhiteSpace(
+                            game.IconPath) &&
+                            File.Exists(
+                                game.IconPath))
+                        {
+                            using (Image logo =
+                                Image.FromFile(
+                                    game.IconPath))
+                            {
+                                item.ImageOptions.Image =
+                                    ResizeImage(
+                                        logo,
+                                        32,
+                                        32);
+                            }
+                        }
+                    }
+                    catch
+                    {
+                    }
+
+                    items.Add(item);
                 }
+
+                AccordionLibraryOrganizer.Arrange(
+                    groupXbox,
+                    "Xbox",
+                    items);
             }
             catch (Exception ex)
             {
@@ -2242,13 +2349,9 @@ namespace Nexus_Launcher
 
                     foreach (AccordionControlElement group in accordionControl2.Elements)
                     {
-                        foreach (AccordionControlElement item in group.Elements)
-                        {
-                            if (item.Style == ElementStyle.Item)
-                            {
-                                item.Visible = setVisible;
-                            }
-                        }
+                        SetItemsVisible(
+                            group,
+                            setVisible);
                     }
                 }
             }
@@ -2256,6 +2359,32 @@ namespace Nexus_Launcher
             {
                 // Unlocks control rendering and redraws everything once
                 accordionControl2.EndUpdate();
+            }
+        }
+
+        /// <summary>
+        /// Games can now sit inside a user created group, so this has
+        /// to walk the whole branch rather than just its direct
+        /// children.
+        /// </summary>
+        private void SetItemsVisible(
+            AccordionControlElement parent,
+            bool visible)
+        {
+            foreach (AccordionControlElement child in parent.Elements)
+            {
+                if (child.Style == ElementStyle.Item)
+                {
+                    child.Visible = visible;
+                }
+                else
+                {
+                    child.Visible = visible;
+
+                    SetItemsVisible(
+                        child,
+                        visible);
+                }
             }
         }
 
@@ -2521,6 +2650,31 @@ namespace Nexus_Launcher
 
         private void accordionControl2_ElementClick(object sender, ElementClickEventArgs e)
         {
+            // A user created group only expands and collapses, it does
+            // not swap the panel on the right.
+            if (e.Element.Tag is LibraryGroup)
+                return;
+
+            // Point the side panel at whatever was just clicked: a game
+            // shows its own detail, a launcher header its summary.
+            if (e.Element.Style == ElementStyle.Item)
+            {
+                sidePanelGame =
+                    e.Element.Tag as GameInfo;
+
+                sidePanelLauncher =
+                    AccordionLibraryOrganizer.GetLauncherGroup(
+                        e.Element);
+            }
+            else
+            {
+                sidePanelGame = null;
+
+                sidePanelLauncher = e.Element;
+            }
+
+            RefreshSidePanelInfo();
+
             // Get game from Tag
             GameInfo game =
                 e.Element.Tag as GameInfo;
@@ -2761,6 +2915,7 @@ namespace Nexus_Launcher
             try
             {
                 applicationCard.Visible = true;
+                applicationCard.CurrentGame = game;
                 applicationCard._gameID = game.AppId;
                 applicationCard._goglnk = game.ShortcutPath;
                 applicationCard._EAShortuct = game.ExecutablePath;
@@ -2770,6 +2925,11 @@ namespace Nexus_Launcher
                 applicationCard._name = game.Name;
                 applicationCard._executablePath = game.ExecutablePath;
                 applicationCard._productID = game.ProductId;
+                applicationCard._appUserModelId = game.AppUserModelId;
+                if (game.Launcher == "Xbox")
+                {
+                    applicationCard._selectedGroup = "Xbox";
+                }
                 applicationCard.splitContainerControl1.SplitterPosition = 420;
                 applicationCard.dropDownButton4.PerformClick();
 
@@ -2779,7 +2939,7 @@ namespace Nexus_Launcher
                 }
                 else
                 {
-                    //applicationCard._icon = Resources.NAicon;
+                    applicationCard._icon = Resources.NAicon;
                 }
                 if (File.Exists(game.HeaderImagePath))
                 {
@@ -2799,7 +2959,7 @@ namespace Nexus_Launcher
                 }
                 else
                 {
-                   //applicationCard._library = Resources.NA;
+                   applicationCard._library = Resources.NA;
                 }
 
                 RefreshGameArtwork(game);
@@ -2882,6 +3042,12 @@ namespace Nexus_Launcher
                     string formattedName2 = game.Name.Replace("&", "and").Replace("™", "").Replace(" - ", "-").Replace(" ", "-").Replace("'", "").ToLower();
                     applicationCard.webView21.Source = new Uri("https://www.ea.com/games/"+ formattedName1 + formattedName2);
                     //MessageBox.Show("Nexus Launcher - EA App - " + applicationCard.webView21.Source);
+                }
+                if (game.Launcher == "Xbox")
+                {
+                    string xboxStoreLink = "https://apps.microsoft.com/search?query=" + Uri.EscapeDataString(game.Name) + "&hl=en-US&gl=US";
+                    applicationCard.webView21.Source = new Uri(xboxStoreLink);
+                    applicationCard._gameStoreLink = xboxStoreLink;
                 }
                 if (game.Launcher == "Ubisoft" || game.Launcher == "Nexus Launcher" || game.Launcher == string.Empty)
                 {
@@ -3282,7 +3448,7 @@ namespace Nexus_Launcher
             }
             else
             {
-                applicationCard.pictureEdit2.Image = Properties.Resources.NAHE;
+                applicationCard.pictureEdit2.Image = GetRandomNexusHeader();
             }
             if (accordionControl2.ActiveGroup == groupNexus)
             {
@@ -3298,6 +3464,7 @@ namespace Nexus_Launcher
                 applicationCard.pictureEdit2.Properties.ZoomPercent = 100;
                 applicationCard.Refresh();
             }
+
             //if (File.Exists(game.LogoPath))
             //{
             //    pictureLogo.Image =
@@ -3360,6 +3527,621 @@ namespace Nexus_Launcher
                 "Uninstall",
                 null,
                 Uninstall_Click);
+
+            BuildLibraryOrganizationMenu();
+        }
+
+        //--------------------------------------------------------------
+        // Favourites and user created groups
+        //--------------------------------------------------------------
+
+        /// <summary>
+        /// Adds the favourite and group entries to the game context
+        /// menu, and builds the separate menu shown when a user
+        /// created group is right clicked.
+        /// </summary>
+        public void BuildLibraryOrganizationMenu()
+        {
+            if (contextFavorite != null)
+                return;
+
+            contextFavorite =
+                new BarButtonItem(
+                    barManager1,
+                    "Add to Favourites");
+
+            contextFavorite.ItemClick +=
+                ContextFavorite_ItemClick;
+
+            ApplyMenuIcon(
+                contextFavorite,
+                LibraryGroupIcons.MenuFavorite);
+
+            contextMoveToGroup =
+                new BarSubItem(
+                    barManager1,
+                    "Move to Group");
+
+            ApplyMenuIcon(
+                contextMoveToGroup,
+                LibraryGroupIcons.MenuMoveToGroup);
+
+            contextNewGroup =
+                new BarButtonItem(
+                    barManager1,
+                    "New Group...");
+
+            contextNewGroup.ItemClick +=
+                ContextNewGroup_ItemClick;
+
+            ApplyMenuIcon(
+                contextNewGroup,
+                LibraryGroupIcons.MenuNewGroup);
+
+            // Slot these in straight after Play and before Copy, which
+            // the designer placed at index 1.
+            popupMenu2.ItemLinks.Insert(
+                1,
+                contextFavorite).BeginGroup = true;
+
+            popupMenu2.ItemLinks.Insert(
+                2,
+                contextMoveToGroup);
+
+            libraryGroupMenu =
+                new PopupMenu(barManager1);
+
+            contextRenameGroup =
+                new BarButtonItem(
+                    barManager1,
+                    "Edit Group...");
+
+            contextRenameGroup.ItemClick +=
+                ContextRenameGroup_ItemClick;
+
+            ApplyMenuIcon(
+                contextRenameGroup,
+                LibraryGroupIcons.MenuEditGroup);
+
+            contextDeleteGroup =
+                new BarButtonItem(
+                    barManager1,
+                    "Delete Group");
+
+            contextDeleteGroup.ItemClick +=
+                ContextDeleteGroup_ItemClick;
+
+            ApplyMenuIcon(
+                contextDeleteGroup,
+                LibraryGroupIcons.MenuDeleteGroup);
+
+            contextMoveGroupUp =
+                new BarButtonItem(
+                    barManager1,
+                    "Move Up");
+
+            contextMoveGroupUp.ItemClick +=
+                ContextMoveGroupUp_ItemClick;
+
+            ApplyMenuIcon(
+                contextMoveGroupUp,
+                LibraryGroupIcons.MenuMoveUp);
+
+            contextMoveGroupDown =
+                new BarButtonItem(
+                    barManager1,
+                    "Move Down");
+
+            contextMoveGroupDown.ItemClick +=
+                ContextMoveGroupDown_ItemClick;
+
+            ApplyMenuIcon(
+                contextMoveGroupDown,
+                LibraryGroupIcons.MenuMoveDown);
+
+            libraryGroupMenu.AddItem(contextRenameGroup);
+            libraryGroupMenu.AddItem(contextDeleteGroup);
+
+            libraryGroupMenu.AddItem(
+                contextMoveGroupUp).BeginGroup = true;
+
+            libraryGroupMenu.AddItem(contextMoveGroupDown);
+
+            // Group headers take their text colour from the skin, so
+            // they have to be redrawn when the user switches theme.
+            UserLookAndFeel.Default.StyleChanged +=
+                LookAndFeel_StyleChanged;
+        }
+
+        private void LookAndFeel_StyleChanged(
+            object sender,
+            EventArgs e)
+        {
+            accordionControl2.BeginUpdate();
+
+            try
+            {
+                AccordionLibraryOrganizer.RearrangeAll();
+            }
+            finally
+            {
+                accordionControl2.EndUpdate();
+            }
+        }
+
+        //--------------------------------------------------------------
+        // Side panel trackers
+        //--------------------------------------------------------------
+
+        /// <summary>
+        /// Takes the three side panel boxes off their placeholder
+        /// spinners and starts feeding them real data.
+        /// </summary>
+        private void InitializeSidePanel()
+        {
+            ConfigureSidePanelLabel(labelControl1);
+            ConfigureSidePanelLabel(labelControl2);
+            ConfigureSidePanelLabel(labelControl3);
+
+            // The designer left this one overlapping labelControl1,
+            // which is what made the panel look garbled. One label per
+            // box instead.
+            //labelControl4.Visible = false;
+
+            
+
+            // The first CPU counter read always returns zero.
+            SystemStatsService.Prime();
+
+            PlayTrackingService.Changed +=
+                PlayTracking_Changed;
+
+            sidePanelTimer =
+                new System.Windows.Forms.Timer();
+
+            sidePanelTimer.Interval = 2000;
+
+            sidePanelTimer.Tick +=
+                SidePanelTimer_Tick;
+
+            sidePanelTimer.Start();
+
+            RefreshSidePanel();
+        }
+
+        private void ConfigureSidePanelLabel(
+            LabelControl label)
+        {
+            label.Visible = true;
+            label.Dock = DockStyle.Fill;
+            label.Padding = new Padding(12, 6, 10, 10);
+
+            label.AutoSizeMode =
+                LabelAutoSizeMode.None;
+
+            label.Appearance.TextOptions.WordWrap =
+                DevExpress.Utils.WordWrap.Wrap;
+
+            label.Appearance.TextOptions.VAlignment =
+                DevExpress.Utils.VertAlignment.Top;
+
+            label.Appearance.TextOptions.HAlignment =
+                DevExpress.Utils.HorzAlignment.Near;
+
+            label.Appearance.Options.UseTextOptions = true;
+        }
+
+        private void SidePanelTimer_Tick(
+            object sender,
+            EventArgs e)
+        {
+            RefreshSystemStats();
+
+            // The other two only change on a launch or a selection, so
+            // they are refreshed occasionally just to keep the "x
+            // minutes ago" lines honest.
+            sidePanelTicks++;
+
+            if (sidePanelTicks % 15 == 0)
+            {
+                RefreshSidePanelInfo();
+
+                RefreshRecentlyPlayed();
+            }
+        }
+
+        private void PlayTracking_Changed()
+        {
+            // Raised from the session watcher on a worker thread.
+            if (IsDisposed || !IsHandleCreated)
+                return;
+
+            try
+            {
+                BeginInvoke(new Action(() =>
+                {
+                    RefreshSidePanelInfo();
+
+                    RefreshRecentlyPlayed();
+                }));
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+            }
+        }
+
+        private void RefreshSidePanel()
+        {
+            RefreshSidePanelInfo();
+
+            RefreshRecentlyPlayed();
+
+            RefreshSystemStats();
+        }
+
+        /// <summary>
+        /// Shows the selected game, falling back to a summary of the
+        /// selected launcher.
+        /// </summary>
+        private void RefreshSidePanelInfo()
+        {
+            string text =
+                SidePanelPresenter.BuildGameInfo(
+                    sidePanelGame);
+
+            if (text == null)
+            {
+                text =
+                    SidePanelPresenter.BuildLauncherSummary(
+                        AccordionLibraryOrganizer.GetLauncherName(
+                            sidePanelLauncher),
+                        AccordionLibraryOrganizer.GetGames(
+                            sidePanelLauncher),
+                        AccordionLibraryOrganizer.GetLastScan(
+                            sidePanelLauncher));
+            }
+
+            labelControl1.Text = text;
+        }
+
+        private void RefreshRecentlyPlayed()
+        {
+            labelControl2.Text =
+                SidePanelPresenter.BuildRecentlyPlayed();
+        }
+
+        private void RefreshSystemStats()
+        {
+            labelControl3.Text =
+                SidePanelPresenter.BuildSystemStats(
+                    SystemStatsService.Read());
+        }
+
+        /// <summary>
+        /// Puts an SVG glyph on a menu item. SVG rather than a bitmap
+        /// so the glyph recolours itself with the active skin.
+        /// </summary>
+        private void ApplyMenuIcon(
+            BarItem item,
+            string key)
+        {
+            item.ImageOptions.SvgImage =
+                LibraryGroupIcons.GetSvgImage(key);
+
+            item.ImageOptions.SvgImageSize =
+                new Size(16, 16);
+
+            item.ImageOptions.SvgImageColorizationMode =
+                DevExpress.Utils.SvgImageColorizationMode.CommonPalette;
+        }
+
+        /// <summary>
+        /// Refreshes the favourite caption and the list of groups the
+        /// selected game can be moved into.
+        /// </summary>
+        private void RefreshLibraryOrganizationMenu()
+        {
+            contextFavorite.Caption =
+                LibraryOrganizationService.IsFavorite(selectedGame)
+                    ? "Remove from Favourites"
+                    : "Add to Favourites";
+
+            foreach (BarButtonItem previous in groupTargetItems)
+            {
+                barManager1.Items.Remove(previous);
+            }
+
+            groupTargetItems.Clear();
+
+            contextMoveToGroup.ItemLinks.Clear();
+
+            LibraryGroup current =
+                LibraryOrganizationService.GetGroupFor(selectedGame);
+
+            AddGroupTarget(
+                "Ungrouped",
+                null,
+                current == null,
+                null);
+
+            foreach (LibraryGroup group in
+                LibraryOrganizationService.GetGroups(
+                    GetSelectedLauncherName()))
+            {
+                AddGroupTarget(
+                    group.Name,
+                    group.Id,
+                    current != null && current.Id == group.Id,
+                    group);
+            }
+
+            contextMoveToGroup.AddItem(
+                contextNewGroup).BeginGroup = true;
+        }
+
+        private void AddGroupTarget(
+            string caption,
+            string groupId,
+            bool selected,
+            LibraryGroup group)
+        {
+            BarButtonItem item =
+                new BarButtonItem(
+                    barManager1,
+                    caption);
+
+            // Each entry wears the icon of the group it points at, so
+            // the submenu matches what is drawn in the accordion.
+            Image custom =
+                group != null
+                    ? LibraryGroupIcons.GetCustomImage(
+                        group.IconPath,
+                        new Size(16, 16))
+                    : null;
+
+            if (custom != null)
+            {
+                item.ImageOptions.Image = custom;
+            }
+            else if (group != null)
+            {
+                ApplyMenuIcon(
+                    item,
+                    string.IsNullOrWhiteSpace(group.IconKey)
+                        ? LibraryGroupIcons.DefaultKey
+                        : group.IconKey);
+            }
+            else
+            {
+                ApplyMenuIcon(
+                    item,
+                    LibraryGroupIcons.MenuUngrouped);
+            }
+
+            item.ButtonStyle =
+                BarButtonStyle.Check;
+
+            item.Down =
+                selected;
+
+            item.Tag =
+                groupId;
+
+            item.ItemClick +=
+                GroupTarget_ItemClick;
+
+            groupTargetItems.Add(item);
+
+            contextMoveToGroup.AddItem(item);
+        }
+
+        /// <summary>
+        /// The launcher the right clicked element belongs to.
+        /// </summary>
+        private string GetSelectedLauncherName()
+        {
+            string launcher =
+                AccordionLibraryOrganizer.GetLauncherName(
+                    selectedLauncherGroup);
+
+            if (!string.IsNullOrWhiteSpace(launcher))
+                return launcher;
+
+            return selectedGame != null
+                ? selectedGame.Launcher
+                : null;
+        }
+
+        /// <summary>
+        /// Redraws the launcher that was just reorganised, reusing the
+        /// items already built so nothing has to be rescanned.
+        /// </summary>
+        private void RefreshSelectedLauncher()
+        {
+            if (selectedLauncherGroup == null)
+                return;
+
+            accordionControl2.BeginUpdate();
+
+            try
+            {
+                AccordionLibraryOrganizer.Rearrange(
+                    selectedLauncherGroup);
+            }
+            finally
+            {
+                accordionControl2.EndUpdate();
+            }
+        }
+
+        private void ContextFavorite_ItemClick(
+            object sender,
+            ItemClickEventArgs e)
+        {
+            if (selectedGame == null)
+                return;
+
+            LibraryOrganizationService.ToggleFavorite(
+                selectedGame);
+
+            RefreshSelectedLauncher();
+
+            // Keep the star on the card in step when the menu was used
+            // on the game the card is already showing.
+            if (ReferenceEquals(
+                applicationCard.CurrentGame,
+                selectedGame))
+            {
+                applicationCard.RefreshFavoriteDisplay();
+            }
+        }
+
+        /// <summary>
+        /// The favourite star on the application card was clicked.
+        /// </summary>
+        private void ApplicationCard_FavoriteChanged(
+            object sender,
+            EventArgs e)
+        {
+            accordionControl2.BeginUpdate();
+
+            try
+            {
+                AccordionLibraryOrganizer.RearrangeFor(
+                    applicationCard.CurrentGame);
+            }
+            finally
+            {
+                accordionControl2.EndUpdate();
+            }
+        }
+
+        private void GroupTarget_ItemClick(
+            object sender,
+            ItemClickEventArgs e)
+        {
+            if (selectedGame == null)
+                return;
+
+            LibraryOrganizationService.AssignToGroup(
+                selectedGame,
+                e.Item.Tag as string);
+
+            RefreshSelectedLauncher();
+        }
+
+        private void ContextNewGroup_ItemClick(
+            object sender,
+            ItemClickEventArgs e)
+        {
+            string launcher =
+                GetSelectedLauncherName();
+
+            if (string.IsNullOrWhiteSpace(launcher))
+                return;
+
+            using (GroupEditorForm editor =
+                new GroupEditorForm(
+                    "New Group",
+                    null))
+            {
+                if (editor.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                LibraryGroup group =
+                    LibraryOrganizationService.CreateGroup(
+                        launcher,
+                        editor.GroupName,
+                        editor.IconKey,
+                        editor.IconPath);
+
+                if (group != null && selectedGame != null)
+                {
+                    LibraryOrganizationService.AssignToGroup(
+                        selectedGame,
+                        group.Id);
+                }
+            }
+
+            RefreshSelectedLauncher();
+        }
+
+        private void ContextRenameGroup_ItemClick(
+            object sender,
+            ItemClickEventArgs e)
+        {
+            if (selectedLibraryGroup == null)
+                return;
+
+            using (GroupEditorForm editor =
+                new GroupEditorForm(
+                    "Edit Group",
+                    selectedLibraryGroup))
+            {
+                if (editor.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                LibraryOrganizationService.UpdateGroup(
+                    selectedLibraryGroup.Id,
+                    editor.GroupName,
+                    editor.IconKey,
+                    editor.IconPath);
+            }
+
+            RefreshSelectedLauncher();
+        }
+
+        private void ContextDeleteGroup_ItemClick(
+            object sender,
+            ItemClickEventArgs e)
+        {
+            if (selectedLibraryGroup == null)
+                return;
+
+            DialogResult result =
+                XtraMessageBox.Show(
+                    "Delete the group \"" +
+                    selectedLibraryGroup.Name +
+                    "\"? The games in it stay in your library.",
+                    "Delete Group",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+            if (result != DialogResult.Yes)
+                return;
+
+            LibraryOrganizationService.DeleteGroup(
+                selectedLibraryGroup.Id);
+
+            RefreshSelectedLauncher();
+        }
+
+        private void ContextMoveGroupUp_ItemClick(
+            object sender,
+            ItemClickEventArgs e)
+        {
+            MoveSelectedGroup(-1);
+        }
+
+        private void ContextMoveGroupDown_ItemClick(
+            object sender,
+            ItemClickEventArgs e)
+        {
+            MoveSelectedGroup(1);
+        }
+
+        private void MoveSelectedGroup(
+            int offset)
+        {
+            if (selectedLibraryGroup == null)
+                return;
+
+            LibraryOrganizationService.MoveGroup(
+                selectedLibraryGroup.Id,
+                offset);
+
+            RefreshSelectedLauncher();
         }
         private void PlayGame_Click(
     object sender,
@@ -3447,11 +4229,31 @@ namespace Nexus_Launcher
             if (element == null)
                 return;
 
+            // The menus are normally built during startup, but a right
+            // click can beat that.
+            BuildLibraryOrganizationMenu();
+
+            selectedLauncherGroup =
+                AccordionLibraryOrganizer.GetLauncherGroup(element);
+
+            // Right clicking one of the user's own groups offers the
+            // group actions instead of the game actions.
+            selectedLibraryGroup =
+                element.Tag as LibraryGroup;
+
+            if (selectedLibraryGroup != null)
+            {
+                libraryGroupMenu.ShowPopup(Cursor.Position);
+                return;
+            }
+
             selectedGame =
                 element.Tag as GameInfo;
 
             if (selectedGame == null)
                 return;
+
+            RefreshLibraryOrganizationMenu();
 
             //gameContextMenu.Show(accordion, e.Location);
             popupMenu2.ShowPopup(Cursor.Position);
@@ -3459,6 +4261,12 @@ namespace Nexus_Launcher
 
         private void contextPlay_ItemClick(object sender, ItemClickEventArgs e)
         {
+            // This path builds its own launch command rather than going
+            // through GameLauncherService, so it has to report the
+            // launch itself.
+            PlayTrackingService.RecordLaunch(
+                applicationCard.CurrentGame);
+
             if (applicationCard._selectedGroup == "Steam")
             {
                 try
@@ -3639,6 +4447,15 @@ namespace Nexus_Launcher
                     Program.LogCrash(ex);
                 }
             }
+            else if (applicationCard._selectedGroup == "Xbox")
+            {
+                if (!XboxScannerService.LaunchGame(
+                    applicationCard._appUserModelId))
+                {
+                    MessageBox.Show(
+                        "Failed to launch the application: " + applicationCard._name);
+                }
+            }
             else if (applicationCard._selectedGroup == "Nexus Launcher")
             {
                 try
@@ -3797,6 +4614,11 @@ namespace Nexus_Launcher
         private void badge1_Click(object sender, EventArgs e)
         {
             barButtonItem3.PerformClick();
+        }
+
+        private void accordionControl2_MouseHover(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.Hand;
         }
     }    
 }

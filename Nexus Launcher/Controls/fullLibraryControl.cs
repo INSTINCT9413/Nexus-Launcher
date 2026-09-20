@@ -25,6 +25,19 @@ namespace Nexus_Launcher.Controls
         private Point targetLocation;
 
         private bool hoverVisible;
+        private readonly Random _random = new Random();
+
+        private Image GetRandomNexusHeader()
+        {
+            Image[] headers =
+            {
+        Properties.Resources.nexusHeader1,
+        Properties.Resources.nexusHeader2,
+        Properties.Resources.nexusHeader3
+    };
+
+            return headers[_random.Next(headers.Length)];
+        }
         public fullLibraryControl()
         {
             InitializeComponent();
@@ -60,6 +73,10 @@ namespace Nexus_Launcher.Controls
             if (File.Exists(game.HeroImagePath))
             {
                 libraryDetailControl1.BackgroundImage = Image.FromFile(game.HeroImagePath);
+            }
+            else
+            {
+                libraryDetailControl1.BackgroundImage = GetRandomNexusHeader();
             }
             LibrarySelectionService.Select(game);
             splitContainerControl1.PanelVisibility = DevExpress.XtraEditors.SplitPanelVisibility.Both;

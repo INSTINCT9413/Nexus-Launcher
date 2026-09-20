@@ -35,104 +35,83 @@
             this.groupControl4 = new DevExpress.XtraEditors.GroupControl();
             this.panelControl12 = new DevExpress.XtraEditors.PanelControl();
             this.uiLight6 = new Sunny.UI.UILight();
+            this.toggleSwitch14 = new DevExpress.XtraEditors.ToggleSwitch();
             this.labelControl15 = new DevExpress.XtraEditors.LabelControl();
+            this.pictureBox11 = new System.Windows.Forms.PictureBox();
             this.panelControl10 = new DevExpress.XtraEditors.PanelControl();
             this.uiLight5 = new Sunny.UI.UILight();
+            this.toggleSwitch13 = new DevExpress.XtraEditors.ToggleSwitch();
             this.labelControl14 = new DevExpress.XtraEditors.LabelControl();
+            this.pictureBox10 = new System.Windows.Forms.PictureBox();
             this.panelControl7 = new DevExpress.XtraEditors.PanelControl();
             this.uiLight8 = new Sunny.UI.UILight();
+            this.toggleSwitch10 = new DevExpress.XtraEditors.ToggleSwitch();
             this.labelControl11 = new DevExpress.XtraEditors.LabelControl();
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.panelControl8 = new DevExpress.XtraEditors.PanelControl();
             this.uiLight9 = new Sunny.UI.UILight();
+            this.toggleSwitch9 = new DevExpress.XtraEditors.ToggleSwitch();
             this.labelControl10 = new DevExpress.XtraEditors.LabelControl();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.panelControl11 = new DevExpress.XtraEditors.PanelControl();
             this.uiLight4 = new Sunny.UI.UILight();
+            this.toggleSwitch12 = new DevExpress.XtraEditors.ToggleSwitch();
             this.labelControl13 = new DevExpress.XtraEditors.LabelControl();
+            this.pictureBox9 = new System.Windows.Forms.PictureBox();
             this.groupControl3 = new DevExpress.XtraEditors.GroupControl();
             this.panelControl5 = new DevExpress.XtraEditors.PanelControl();
             this.simpleButton6 = new DevExpress.XtraEditors.SimpleButton();
             this.uiLight11 = new Sunny.UI.UILight();
+            this.toggleSwitch7 = new DevExpress.XtraEditors.ToggleSwitch();
             this.labelControl8 = new DevExpress.XtraEditors.LabelControl();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.panelControl9 = new DevExpress.XtraEditors.PanelControl();
             this.uiLight10 = new Sunny.UI.UILight();
+            this.toggleSwitch8 = new DevExpress.XtraEditors.ToggleSwitch();
             this.labelControl9 = new DevExpress.XtraEditors.LabelControl();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.panelControl2 = new DevExpress.XtraEditors.PanelControl();
             this.uiLight1 = new Sunny.UI.UILight();
+            this.toggleSwitch4 = new DevExpress.XtraEditors.ToggleSwitch();
             this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panelControl3 = new DevExpress.XtraEditors.PanelControl();
             this.uiLight2 = new Sunny.UI.UILight();
+            this.toggleSwitch5 = new DevExpress.XtraEditors.ToggleSwitch();
             this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panelControl4 = new DevExpress.XtraEditors.PanelControl();
             this.uiLight3 = new Sunny.UI.UILight();
+            this.toggleSwitch6 = new DevExpress.XtraEditors.ToggleSwitch();
             this.labelControl7 = new DevExpress.XtraEditors.LabelControl();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.panelControl6 = new DevExpress.XtraEditors.PanelControl();
             this.uiLight7 = new Sunny.UI.UILight();
+            this.toggleSwitch11 = new DevExpress.XtraEditors.ToggleSwitch();
             this.labelControl12 = new DevExpress.XtraEditors.LabelControl();
+            this.pictureBox8 = new System.Windows.Forms.PictureBox();
             this.tabNavigationPage1 = new DevExpress.XtraBars.Navigation.TabNavigationPage();
             this.groupControl9 = new DevExpress.XtraEditors.GroupControl();
+            this.toggleSwitch20 = new DevExpress.XtraEditors.ToggleSwitch();
             this.labelControl26 = new DevExpress.XtraEditors.LabelControl();
             this.groupControl5 = new DevExpress.XtraEditors.GroupControl();
             this.simpleButton12 = new DevExpress.XtraEditors.SimpleButton();
             this.labelControl29 = new DevExpress.XtraEditors.LabelControl();
+            this.toggleSwitch18 = new DevExpress.XtraEditors.ToggleSwitch();
             this.labelControl25 = new DevExpress.XtraEditors.LabelControl();
+            this.toggleSwitch17 = new DevExpress.XtraEditors.ToggleSwitch();
             this.labelControl24 = new DevExpress.XtraEditors.LabelControl();
+            this.toggleSwitch15 = new DevExpress.XtraEditors.ToggleSwitch();
             this.labelControl21 = new DevExpress.XtraEditors.LabelControl();
+            this.comboBoxEdit3 = new DevExpress.XtraEditors.ComboBoxEdit();
             this.labelControl16 = new DevExpress.XtraEditors.LabelControl();
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
             this.labelControl20 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl19 = new DevExpress.XtraEditors.LabelControl();
-            this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
-            this.labelControl27 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl23 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl22 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
-            this.tabNavigationPage2 = new DevExpress.XtraBars.Navigation.TabNavigationPage();
-            this.simpleButton11 = new DevExpress.XtraEditors.SimpleButton();
-            this.groupControl10 = new DevExpress.XtraEditors.GroupControl();
-            this.simpleButton10 = new DevExpress.XtraEditors.SimpleButton();
-            this.groupControl8 = new DevExpress.XtraEditors.GroupControl();
-            this.simpleButton9 = new DevExpress.XtraEditors.SimpleButton();
-            this.groupControl7 = new DevExpress.XtraEditors.GroupControl();
-            this.simpleButton8 = new DevExpress.XtraEditors.SimpleButton();
-            this.groupControl6 = new DevExpress.XtraEditors.GroupControl();
-            this.simpleButton5 = new DevExpress.XtraEditors.SimpleButton();
-            this.tabNavigationPage4 = new DevExpress.XtraBars.Navigation.TabNavigationPage();
-            this.tabPane2 = new DevExpress.XtraBars.Navigation.TabPane();
-            this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
-            this.simpleButton4 = new DevExpress.XtraEditors.SimpleButton();
-            this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
-            this.toggleSwitch14 = new DevExpress.XtraEditors.ToggleSwitch();
-            this.pictureBox11 = new System.Windows.Forms.PictureBox();
-            this.toggleSwitch13 = new DevExpress.XtraEditors.ToggleSwitch();
-            this.pictureBox10 = new System.Windows.Forms.PictureBox();
-            this.toggleSwitch10 = new DevExpress.XtraEditors.ToggleSwitch();
-            this.pictureBox7 = new System.Windows.Forms.PictureBox();
-            this.toggleSwitch9 = new DevExpress.XtraEditors.ToggleSwitch();
-            this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.toggleSwitch12 = new DevExpress.XtraEditors.ToggleSwitch();
-            this.pictureBox9 = new System.Windows.Forms.PictureBox();
-            this.toggleSwitch7 = new DevExpress.XtraEditors.ToggleSwitch();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.toggleSwitch8 = new DevExpress.XtraEditors.ToggleSwitch();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.toggleSwitch4 = new DevExpress.XtraEditors.ToggleSwitch();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.toggleSwitch5 = new DevExpress.XtraEditors.ToggleSwitch();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.toggleSwitch6 = new DevExpress.XtraEditors.ToggleSwitch();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.toggleSwitch11 = new DevExpress.XtraEditors.ToggleSwitch();
-            this.pictureBox8 = new System.Windows.Forms.PictureBox();
-            this.toggleSwitch20 = new DevExpress.XtraEditors.ToggleSwitch();
-            this.toggleSwitch18 = new DevExpress.XtraEditors.ToggleSwitch();
-            this.toggleSwitch17 = new DevExpress.XtraEditors.ToggleSwitch();
-            this.toggleSwitch15 = new DevExpress.XtraEditors.ToggleSwitch();
-            this.comboBoxEdit3 = new DevExpress.XtraEditors.ComboBoxEdit();
             this.comboBoxEdit1 = new DevExpress.XtraEditors.ImageComboBoxEdit();
             this.comboBoxEdit2 = new DevExpress.XtraEditors.ImageComboBoxEdit();
+            this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
+            this.labelControl27 = new DevExpress.XtraEditors.LabelControl();
             this.toggleSwitch21 = new DevExpress.XtraEditors.ToggleSwitch();
             this.simpleButton7 = new DevExpress.XtraEditors.SimpleButton();
             this.checkEdit6 = new DevExpress.XtraEditors.CheckEdit();
@@ -142,16 +121,36 @@
             this.checkEdit2 = new DevExpress.XtraEditors.CheckEdit();
             this.checkEdit1 = new DevExpress.XtraEditors.CheckEdit();
             this.toggleSwitch19 = new DevExpress.XtraEditors.ToggleSwitch();
+            this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl23 = new DevExpress.XtraEditors.LabelControl();
             this.comboBoxEdit4 = new DevExpress.XtraEditors.ComboBoxEdit();
+            this.labelControl22 = new DevExpress.XtraEditors.LabelControl();
             this.toggleSwitch16 = new DevExpress.XtraEditors.ToggleSwitch();
+            this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
             this.toggleSwitch3 = new DevExpress.XtraEditors.ToggleSwitch();
+            this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.toggleSwitch2 = new DevExpress.XtraEditors.ToggleSwitch();
+            this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.toggleSwitch1 = new DevExpress.XtraEditors.ToggleSwitch();
+            this.tabNavigationPage2 = new DevExpress.XtraBars.Navigation.TabNavigationPage();
+            this.simpleButton11 = new DevExpress.XtraEditors.SimpleButton();
+            this.groupControl10 = new DevExpress.XtraEditors.GroupControl();
             this.simpleButton14 = new DevExpress.XtraEditors.SimpleButton();
+            this.simpleButton10 = new DevExpress.XtraEditors.SimpleButton();
+            this.groupControl8 = new DevExpress.XtraEditors.GroupControl();
             this.simpleButton16 = new DevExpress.XtraEditors.SimpleButton();
+            this.simpleButton9 = new DevExpress.XtraEditors.SimpleButton();
+            this.groupControl7 = new DevExpress.XtraEditors.GroupControl();
             this.simpleButton15 = new DevExpress.XtraEditors.SimpleButton();
+            this.simpleButton8 = new DevExpress.XtraEditors.SimpleButton();
+            this.groupControl6 = new DevExpress.XtraEditors.GroupControl();
             this.simpleButton13 = new DevExpress.XtraEditors.SimpleButton();
+            this.simpleButton5 = new DevExpress.XtraEditors.SimpleButton();
+            this.tabNavigationPage4 = new DevExpress.XtraBars.Navigation.TabNavigationPage();
+            this.tabPane2 = new DevExpress.XtraBars.Navigation.TabPane();
             this.tabNavigationPage5 = new DevExpress.XtraBars.Navigation.TabNavigationPage();
+            this.hyperlinkLabelControl2 = new DevExpress.XtraEditors.HyperlinkLabelControl();
+            this.hyperlinkLabelControl1 = new DevExpress.XtraEditors.HyperlinkLabelControl();
             this.labelControl28 = new DevExpress.XtraEditors.LabelControl();
             this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
@@ -178,9 +177,10 @@
             this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
             this.tabNavigationPage7 = new DevExpress.XtraBars.Navigation.TabNavigationPage();
             this.webView22 = new Microsoft.Web.WebView2.WinForms.WebView2();
+            this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
+            this.simpleButton4 = new DevExpress.XtraEditors.SimpleButton();
+            this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
             this.stepProgress1 = new HorizonUI.StepProgress();
-            this.hyperlinkLabelControl1 = new DevExpress.XtraEditors.HyperlinkLabelControl();
-            this.hyperlinkLabelControl2 = new DevExpress.XtraEditors.HyperlinkLabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.tabPane1)).BeginInit();
             this.tabPane1.SuspendLayout();
             this.tabNavigationPage3.SuspendLayout();
@@ -188,80 +188,66 @@
             this.groupControl4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl12)).BeginInit();
             this.panelControl12.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch14.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl10)).BeginInit();
             this.panelControl10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch13.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl7)).BeginInit();
             this.panelControl7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch10.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl8)).BeginInit();
             this.panelControl8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch9.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl11)).BeginInit();
             this.panelControl11.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch12.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl3)).BeginInit();
             this.groupControl3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl5)).BeginInit();
             this.panelControl5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch7.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl9)).BeginInit();
             this.panelControl9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch8.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl2)).BeginInit();
             this.panelControl2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch4.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl3)).BeginInit();
             this.panelControl3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch5.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl4)).BeginInit();
             this.panelControl4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch6.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl6)).BeginInit();
             this.panelControl6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch11.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
             this.tabNavigationPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl9)).BeginInit();
             this.groupControl9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch20.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl5)).BeginInit();
             this.groupControl5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
-            this.groupControl2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
-            this.groupControl1.SuspendLayout();
-            this.tabNavigationPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.groupControl10)).BeginInit();
-            this.groupControl10.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.groupControl8)).BeginInit();
-            this.groupControl8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.groupControl7)).BeginInit();
-            this.groupControl7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.groupControl6)).BeginInit();
-            this.groupControl6.SuspendLayout();
-            this.tabNavigationPage4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tabPane2)).BeginInit();
-            this.tabPane2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
-            this.panelControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch14.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch13.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch10.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch9.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch12.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch7.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch8.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch4.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch5.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch6.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch11.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch20.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch18.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch17.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch15.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxEdit3.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
+            this.groupControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxEdit1.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxEdit2.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
+            this.groupControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch21.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.checkEdit6.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.checkEdit5.Properties)).BeginInit();
@@ -275,6 +261,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch3.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch2.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch1.Properties)).BeginInit();
+            this.tabNavigationPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl10)).BeginInit();
+            this.groupControl10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl8)).BeginInit();
+            this.groupControl8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl7)).BeginInit();
+            this.groupControl7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl6)).BeginInit();
+            this.groupControl6.SuspendLayout();
+            this.tabNavigationPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tabPane2)).BeginInit();
+            this.tabPane2.SuspendLayout();
             this.tabNavigationPage5.SuspendLayout();
             this.tabNavigationPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webView23)).BeginInit();
@@ -283,6 +281,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.webView21)).BeginInit();
             this.tabNavigationPage7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webView22)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
+            this.panelControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabPane1
@@ -320,7 +320,6 @@
             this.groupControl4.Controls.Add(this.panelControl10);
             this.groupControl4.Controls.Add(this.panelControl7);
             this.groupControl4.Controls.Add(this.panelControl8);
-            this.groupControl4.Controls.Add(this.panelControl11);
             this.groupControl4.Location = new System.Drawing.Point(701, 12);
             this.groupControl4.Name = "groupControl4";
             this.groupControl4.Size = new System.Drawing.Size(263, 548);
@@ -353,6 +352,18 @@
             this.uiLight6.TabIndex = 14;
             this.uiLight6.Text = "uiLight6";
             // 
+            // toggleSwitch14
+            // 
+            this.toggleSwitch14.Enabled = false;
+            this.toggleSwitch14.Location = new System.Drawing.Point(81, 34);
+            this.toggleSwitch14.Name = "toggleSwitch14";
+            this.toggleSwitch14.Properties.AllowFocused = false;
+            this.toggleSwitch14.Properties.OffText = "Hide";
+            this.toggleSwitch14.Properties.OnText = "Show";
+            this.toggleSwitch14.Size = new System.Drawing.Size(122, 19);
+            this.toggleSwitch14.TabIndex = 3;
+            this.toggleSwitch14.Toggled += new System.EventHandler(this.toggleSwitch14_Toggled);
+            // 
             // labelControl15
             // 
             this.labelControl15.Appearance.Font = new System.Drawing.Font("Tahoma", 14F);
@@ -362,6 +373,16 @@
             this.labelControl15.Size = new System.Drawing.Size(97, 23);
             this.labelControl15.TabIndex = 2;
             this.labelControl15.Text = "Wargaming";
+            // 
+            // pictureBox11
+            // 
+            this.pictureBox11.Image = global::Nexus_Launcher.Properties.Resources.wargaming;
+            this.pictureBox11.Location = new System.Drawing.Point(5, 5);
+            this.pictureBox11.Name = "pictureBox11";
+            this.pictureBox11.Size = new System.Drawing.Size(70, 70);
+            this.pictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox11.TabIndex = 1;
+            this.pictureBox11.TabStop = false;
             // 
             // panelControl10
             // 
@@ -388,6 +409,18 @@
             this.uiLight5.TabIndex = 13;
             this.uiLight5.Text = "uiLight5";
             // 
+            // toggleSwitch13
+            // 
+            this.toggleSwitch13.Enabled = false;
+            this.toggleSwitch13.Location = new System.Drawing.Point(81, 34);
+            this.toggleSwitch13.Name = "toggleSwitch13";
+            this.toggleSwitch13.Properties.AllowFocused = false;
+            this.toggleSwitch13.Properties.OffText = "Hide";
+            this.toggleSwitch13.Properties.OnText = "Show";
+            this.toggleSwitch13.Size = new System.Drawing.Size(122, 19);
+            this.toggleSwitch13.TabIndex = 3;
+            this.toggleSwitch13.Toggled += new System.EventHandler(this.toggleSwitch13_Toggled);
+            // 
             // labelControl14
             // 
             this.labelControl14.Appearance.Font = new System.Drawing.Font("Tahoma", 14F);
@@ -397,6 +430,16 @@
             this.labelControl14.Size = new System.Drawing.Size(125, 23);
             this.labelControl14.TabIndex = 2;
             this.labelControl14.Text = "Windows Store";
+            // 
+            // pictureBox10
+            // 
+            this.pictureBox10.Image = global::Nexus_Launcher.Properties.Resources.apps_22118_9007199266252480_94f4e265_68d4_4ddc_a67b_b29c8d3021c8;
+            this.pictureBox10.Location = new System.Drawing.Point(5, 5);
+            this.pictureBox10.Name = "pictureBox10";
+            this.pictureBox10.Size = new System.Drawing.Size(70, 70);
+            this.pictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox10.TabIndex = 1;
+            this.pictureBox10.TabStop = false;
             // 
             // panelControl7
             // 
@@ -424,6 +467,18 @@
             this.uiLight8.TabIndex = 16;
             this.uiLight8.Text = "uiLight8";
             // 
+            // toggleSwitch10
+            // 
+            this.toggleSwitch10.Enabled = false;
+            this.toggleSwitch10.Location = new System.Drawing.Point(81, 34);
+            this.toggleSwitch10.Name = "toggleSwitch10";
+            this.toggleSwitch10.Properties.AllowFocused = false;
+            this.toggleSwitch10.Properties.OffText = "Hide";
+            this.toggleSwitch10.Properties.OnText = "Show";
+            this.toggleSwitch10.Size = new System.Drawing.Size(122, 19);
+            this.toggleSwitch10.TabIndex = 3;
+            this.toggleSwitch10.Toggled += new System.EventHandler(this.toggleSwitch10_Toggled);
+            // 
             // labelControl11
             // 
             this.labelControl11.Appearance.Font = new System.Drawing.Font("Tahoma", 14F);
@@ -433,6 +488,16 @@
             this.labelControl11.Size = new System.Drawing.Size(129, 23);
             this.labelControl11.TabIndex = 2;
             this.labelControl11.Text = "Amazon Games";
+            // 
+            // pictureBox7
+            // 
+            this.pictureBox7.Image = global::Nexus_Launcher.Properties.Resources.amazon_games_icon;
+            this.pictureBox7.Location = new System.Drawing.Point(5, 5);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(70, 70);
+            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox7.TabIndex = 1;
+            this.pictureBox7.TabStop = false;
             // 
             // panelControl8
             // 
@@ -459,6 +524,18 @@
             this.uiLight9.TabIndex = 17;
             this.uiLight9.Text = "uiLight9";
             // 
+            // toggleSwitch9
+            // 
+            this.toggleSwitch9.Enabled = false;
+            this.toggleSwitch9.Location = new System.Drawing.Point(81, 34);
+            this.toggleSwitch9.Name = "toggleSwitch9";
+            this.toggleSwitch9.Properties.AllowFocused = false;
+            this.toggleSwitch9.Properties.OffText = "Hide";
+            this.toggleSwitch9.Properties.OnText = "Show";
+            this.toggleSwitch9.Size = new System.Drawing.Size(122, 19);
+            this.toggleSwitch9.TabIndex = 3;
+            this.toggleSwitch9.Toggled += new System.EventHandler(this.toggleSwitch9_Toggled);
+            // 
             // labelControl10
             // 
             this.labelControl10.Appearance.Font = new System.Drawing.Font("Tahoma", 14F);
@@ -469,15 +546,25 @@
             this.labelControl10.TabIndex = 2;
             this.labelControl10.Text = "Paradox Launcher";
             // 
+            // pictureBox6
+            // 
+            this.pictureBox6.Image = global::Nexus_Launcher.Properties.Resources.Paradox_Interactive_logo;
+            this.pictureBox6.Location = new System.Drawing.Point(5, 5);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(70, 70);
+            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox6.TabIndex = 1;
+            this.pictureBox6.TabStop = false;
+            // 
             // panelControl11
             // 
             this.panelControl11.Controls.Add(this.uiLight4);
             this.panelControl11.Controls.Add(this.toggleSwitch12);
             this.panelControl11.Controls.Add(this.labelControl13);
             this.panelControl11.Controls.Add(this.pictureBox9);
-            this.panelControl11.Location = new System.Drawing.Point(6, 32);
+            this.panelControl11.Location = new System.Drawing.Point(14, 560);
             this.panelControl11.Name = "panelControl11";
-            this.panelControl11.Size = new System.Drawing.Size(250, 80);
+            this.panelControl11.Size = new System.Drawing.Size(654, 80);
             this.panelControl11.TabIndex = 6;
             // 
             // uiLight4
@@ -494,6 +581,18 @@
             this.uiLight4.TabIndex = 12;
             this.uiLight4.Text = "uiLight4";
             // 
+            // toggleSwitch12
+            // 
+            this.toggleSwitch12.EditValue = true;
+            this.toggleSwitch12.Location = new System.Drawing.Point(81, 34);
+            this.toggleSwitch12.Name = "toggleSwitch12";
+            this.toggleSwitch12.Properties.AllowFocused = false;
+            this.toggleSwitch12.Properties.OffText = "Hide";
+            this.toggleSwitch12.Properties.OnText = "Show";
+            this.toggleSwitch12.Size = new System.Drawing.Size(122, 19);
+            this.toggleSwitch12.TabIndex = 3;
+            this.toggleSwitch12.Toggled += new System.EventHandler(this.toggleSwitch12_Toggled);
+            // 
             // labelControl13
             // 
             this.labelControl13.Appearance.Font = new System.Drawing.Font("Tahoma", 14F);
@@ -504,6 +603,16 @@
             this.labelControl13.TabIndex = 2;
             this.labelControl13.Text = "Xbox App";
             // 
+            // pictureBox9
+            // 
+            this.pictureBox9.Image = global::Nexus_Launcher.Properties.Resources.apps_60199_13798539581762600_abe1643f_1704_4a4d_a61b_47ccc25da012;
+            this.pictureBox9.Location = new System.Drawing.Point(5, 5);
+            this.pictureBox9.Name = "pictureBox9";
+            this.pictureBox9.Size = new System.Drawing.Size(70, 70);
+            this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox9.TabIndex = 1;
+            this.pictureBox9.TabStop = false;
+            // 
             // groupControl3
             // 
             this.groupControl3.CaptionImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("groupControl3.CaptionImageOptions.SvgImage")));
@@ -511,11 +620,12 @@
             this.groupControl3.Controls.Add(this.panelControl9);
             this.groupControl3.Controls.Add(this.panelControl2);
             this.groupControl3.Controls.Add(this.panelControl3);
+            this.groupControl3.Controls.Add(this.panelControl11);
             this.groupControl3.Controls.Add(this.panelControl4);
             this.groupControl3.Controls.Add(this.panelControl6);
             this.groupControl3.Location = new System.Drawing.Point(88, 12);
             this.groupControl3.Name = "groupControl3";
-            this.groupControl3.Size = new System.Drawing.Size(683, 566);
+            this.groupControl3.Size = new System.Drawing.Size(683, 670);
             this.groupControl3.TabIndex = 7;
             this.groupControl3.Text = "Supported Launchers";
             // 
@@ -554,6 +664,17 @@
             this.uiLight11.TabIndex = 19;
             this.uiLight11.Text = "uiLight11";
             // 
+            // toggleSwitch7
+            // 
+            this.toggleSwitch7.Location = new System.Drawing.Point(81, 34);
+            this.toggleSwitch7.Name = "toggleSwitch7";
+            this.toggleSwitch7.Properties.AllowFocused = false;
+            this.toggleSwitch7.Properties.OffText = "Hide";
+            this.toggleSwitch7.Properties.OnText = "Show";
+            this.toggleSwitch7.Size = new System.Drawing.Size(122, 19);
+            this.toggleSwitch7.TabIndex = 5;
+            this.toggleSwitch7.Toggled += new System.EventHandler(this.toggleSwitch7_Toggled);
+            // 
             // labelControl8
             // 
             this.labelControl8.Appearance.Font = new System.Drawing.Font("Tahoma", 14F);
@@ -563,6 +684,16 @@
             this.labelControl8.Size = new System.Drawing.Size(39, 23);
             this.labelControl8.TabIndex = 4;
             this.labelControl8.Text = "GOG";
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Image = global::Nexus_Launcher.Properties.Resources.d8ac3b01ba19729174a8f1e63c9e937c;
+            this.pictureBox4.Location = new System.Drawing.Point(5, 5);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(70, 70);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox4.TabIndex = 2;
+            this.pictureBox4.TabStop = false;
             // 
             // panelControl9
             // 
@@ -589,6 +720,17 @@
             this.uiLight10.TabIndex = 18;
             this.uiLight10.Text = "uiLight10";
             // 
+            // toggleSwitch8
+            // 
+            this.toggleSwitch8.Location = new System.Drawing.Point(81, 34);
+            this.toggleSwitch8.Name = "toggleSwitch8";
+            this.toggleSwitch8.Properties.AllowFocused = false;
+            this.toggleSwitch8.Properties.OffText = "Hide";
+            this.toggleSwitch8.Properties.OnText = "Show";
+            this.toggleSwitch8.Size = new System.Drawing.Size(122, 19);
+            this.toggleSwitch8.TabIndex = 6;
+            this.toggleSwitch8.Toggled += new System.EventHandler(this.toggleSwitch8_Toggled);
+            // 
             // labelControl9
             // 
             this.labelControl9.Appearance.Font = new System.Drawing.Font("Tahoma", 14F);
@@ -598,6 +740,16 @@
             this.labelControl9.Size = new System.Drawing.Size(131, 23);
             this.labelControl9.TabIndex = 5;
             this.labelControl9.Text = "Ubisoft Connect";
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.Image = global::Nexus_Launcher.Properties.Resources._1024x1024;
+            this.pictureBox5.Location = new System.Drawing.Point(5, 5);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(70, 70);
+            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox5.TabIndex = 1;
+            this.pictureBox5.TabStop = false;
             // 
             // panelControl2
             // 
@@ -624,6 +776,17 @@
             this.uiLight1.TabIndex = 9;
             this.uiLight1.Text = "uiLight1";
             // 
+            // toggleSwitch4
+            // 
+            this.toggleSwitch4.Location = new System.Drawing.Point(81, 34);
+            this.toggleSwitch4.Name = "toggleSwitch4";
+            this.toggleSwitch4.Properties.AllowFocused = false;
+            this.toggleSwitch4.Properties.OffText = "Hide";
+            this.toggleSwitch4.Properties.OnText = "Show";
+            this.toggleSwitch4.Size = new System.Drawing.Size(122, 19);
+            this.toggleSwitch4.TabIndex = 2;
+            this.toggleSwitch4.Toggled += new System.EventHandler(this.toggleSwitch4_Toggled);
+            // 
             // labelControl5
             // 
             this.labelControl5.Appearance.Font = new System.Drawing.Font("Tahoma", 14F);
@@ -633,6 +796,16 @@
             this.labelControl5.Size = new System.Drawing.Size(53, 23);
             this.labelControl5.TabIndex = 1;
             this.labelControl5.Text = "Steam";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::Nexus_Launcher.Properties.Resources.Steam_icon_logo_svg;
+            this.pictureBox1.Location = new System.Drawing.Point(5, 5);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(70, 70);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
             // panelControl3
             // 
@@ -659,6 +832,17 @@
             this.uiLight2.TabIndex = 10;
             this.uiLight2.Text = "uiLight2";
             // 
+            // toggleSwitch5
+            // 
+            this.toggleSwitch5.Location = new System.Drawing.Point(81, 34);
+            this.toggleSwitch5.Name = "toggleSwitch5";
+            this.toggleSwitch5.Properties.AllowFocused = false;
+            this.toggleSwitch5.Properties.OffText = "Hide";
+            this.toggleSwitch5.Properties.OnText = "Show";
+            this.toggleSwitch5.Size = new System.Drawing.Size(122, 19);
+            this.toggleSwitch5.TabIndex = 3;
+            this.toggleSwitch5.Toggled += new System.EventHandler(this.toggleSwitch5_Toggled);
+            // 
             // labelControl6
             // 
             this.labelControl6.Appearance.Font = new System.Drawing.Font("Tahoma", 14F);
@@ -668,6 +852,16 @@
             this.labelControl6.Size = new System.Drawing.Size(98, 23);
             this.labelControl6.TabIndex = 2;
             this.labelControl6.Text = "Epic Games";
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::Nexus_Launcher.Properties.Resources.epic_games_black_logo_icon_147139;
+            this.pictureBox2.Location = new System.Drawing.Point(5, 5);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(70, 70);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 1;
+            this.pictureBox2.TabStop = false;
             // 
             // panelControl4
             // 
@@ -694,6 +888,17 @@
             this.uiLight3.TabIndex = 11;
             this.uiLight3.Text = "uiLight3";
             // 
+            // toggleSwitch6
+            // 
+            this.toggleSwitch6.Location = new System.Drawing.Point(81, 34);
+            this.toggleSwitch6.Name = "toggleSwitch6";
+            this.toggleSwitch6.Properties.AllowFocused = false;
+            this.toggleSwitch6.Properties.OffText = "Hide";
+            this.toggleSwitch6.Properties.OnText = "Show";
+            this.toggleSwitch6.Size = new System.Drawing.Size(122, 19);
+            this.toggleSwitch6.TabIndex = 4;
+            this.toggleSwitch6.Toggled += new System.EventHandler(this.toggleSwitch6_Toggled);
+            // 
             // labelControl7
             // 
             this.labelControl7.Appearance.Font = new System.Drawing.Font("Tahoma", 14F);
@@ -703,6 +908,16 @@
             this.labelControl7.Size = new System.Drawing.Size(80, 23);
             this.labelControl7.TabIndex = 3;
             this.labelControl7.Text = "Battle.net";
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = global::Nexus_Launcher.Properties.Resources.unnamed;
+            this.pictureBox3.Location = new System.Drawing.Point(5, 5);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(70, 70);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox3.TabIndex = 1;
+            this.pictureBox3.TabStop = false;
             // 
             // panelControl6
             // 
@@ -729,6 +944,17 @@
             this.uiLight7.TabIndex = 15;
             this.uiLight7.Text = "uiLight7";
             // 
+            // toggleSwitch11
+            // 
+            this.toggleSwitch11.Location = new System.Drawing.Point(81, 34);
+            this.toggleSwitch11.Name = "toggleSwitch11";
+            this.toggleSwitch11.Properties.AllowFocused = false;
+            this.toggleSwitch11.Properties.OffText = "Hide";
+            this.toggleSwitch11.Properties.OnText = "Show";
+            this.toggleSwitch11.Size = new System.Drawing.Size(122, 19);
+            this.toggleSwitch11.TabIndex = 3;
+            this.toggleSwitch11.Toggled += new System.EventHandler(this.toggleSwitch11_Toggled);
+            // 
             // labelControl12
             // 
             this.labelControl12.Appearance.Font = new System.Drawing.Font("Tahoma", 14F);
@@ -738,6 +964,16 @@
             this.labelControl12.Size = new System.Drawing.Size(61, 23);
             this.labelControl12.TabIndex = 2;
             this.labelControl12.Text = "EA App";
+            // 
+            // pictureBox8
+            // 
+            this.pictureBox8.Image = global::Nexus_Launcher.Properties.Resources._256x256;
+            this.pictureBox8.Location = new System.Drawing.Point(5, 5);
+            this.pictureBox8.Name = "pictureBox8";
+            this.pictureBox8.Size = new System.Drawing.Size(70, 70);
+            this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox8.TabIndex = 1;
+            this.pictureBox8.TabStop = false;
             // 
             // tabNavigationPage1
             // 
@@ -760,6 +996,18 @@
             this.groupControl9.Size = new System.Drawing.Size(310, 402);
             this.groupControl9.TabIndex = 3;
             this.groupControl9.Text = "Library Settings";
+            // 
+            // toggleSwitch20
+            // 
+            this.toggleSwitch20.Location = new System.Drawing.Point(178, 38);
+            this.toggleSwitch20.Name = "toggleSwitch20";
+            this.toggleSwitch20.Properties.AllowFocused = false;
+            this.toggleSwitch20.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
+            this.toggleSwitch20.Properties.OffText = "Disabled";
+            this.toggleSwitch20.Properties.OnText = "Enabled";
+            this.toggleSwitch20.Size = new System.Drawing.Size(109, 19);
+            this.toggleSwitch20.TabIndex = 11;
+            this.toggleSwitch20.Toggled += new System.EventHandler(this.toggleSwitch20_Toggled);
             // 
             // labelControl26
             // 
@@ -808,6 +1056,19 @@
             this.labelControl29.TabIndex = 10;
             this.labelControl29.Text = "Ui Fonts";
             // 
+            // toggleSwitch18
+            // 
+            this.toggleSwitch18.EditValue = true;
+            this.toggleSwitch18.Location = new System.Drawing.Point(202, 143);
+            this.toggleSwitch18.Name = "toggleSwitch18";
+            this.toggleSwitch18.Properties.AllowFocused = false;
+            this.toggleSwitch18.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
+            this.toggleSwitch18.Properties.OffText = "Default";
+            this.toggleSwitch18.Properties.OnText = "Footer";
+            this.toggleSwitch18.Size = new System.Drawing.Size(143, 19);
+            this.toggleSwitch18.TabIndex = 9;
+            this.toggleSwitch18.Toggled += new System.EventHandler(this.toggleSwitch18_Toggled);
+            // 
             // labelControl25
             // 
             this.labelControl25.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
@@ -816,6 +1077,19 @@
             this.labelControl25.Size = new System.Drawing.Size(90, 13);
             this.labelControl25.TabIndex = 8;
             this.labelControl25.Text = "Root Display Mode";
+            // 
+            // toggleSwitch17
+            // 
+            this.toggleSwitch17.EditValue = true;
+            this.toggleSwitch17.Location = new System.Drawing.Point(202, 118);
+            this.toggleSwitch17.Name = "toggleSwitch17";
+            this.toggleSwitch17.Properties.AllowFocused = false;
+            this.toggleSwitch17.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
+            this.toggleSwitch17.Properties.OffText = "Standard";
+            this.toggleSwitch17.Properties.OnText = "Hamburger Menu";
+            this.toggleSwitch17.Size = new System.Drawing.Size(143, 19);
+            this.toggleSwitch17.TabIndex = 7;
+            this.toggleSwitch17.Toggled += new System.EventHandler(this.toggleSwitch17_Toggled);
             // 
             // labelControl24
             // 
@@ -826,6 +1100,18 @@
             this.labelControl24.TabIndex = 6;
             this.labelControl24.Text = "Library View Type";
             // 
+            // toggleSwitch15
+            // 
+            this.toggleSwitch15.Location = new System.Drawing.Point(202, 93);
+            this.toggleSwitch15.Name = "toggleSwitch15";
+            this.toggleSwitch15.Properties.AllowFocused = false;
+            this.toggleSwitch15.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
+            this.toggleSwitch15.Properties.OffText = "Off";
+            this.toggleSwitch15.Properties.OnText = "On";
+            this.toggleSwitch15.Size = new System.Drawing.Size(98, 19);
+            this.toggleSwitch15.TabIndex = 5;
+            this.toggleSwitch15.Toggled += new System.EventHandler(this.toggleSwitch15_Toggled);
+            // 
             // labelControl21
             // 
             this.labelControl21.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
@@ -834,6 +1120,19 @@
             this.labelControl21.Size = new System.Drawing.Size(141, 13);
             this.labelControl21.TabIndex = 2;
             this.labelControl21.Text = "Info sidebar collapsed on start";
+            // 
+            // comboBoxEdit3
+            // 
+            this.comboBoxEdit3.EditValue = "1600 x 900";
+            this.comboBoxEdit3.Enabled = false;
+            this.comboBoxEdit3.Location = new System.Drawing.Point(202, 36);
+            this.comboBoxEdit3.Name = "comboBoxEdit3";
+            this.comboBoxEdit3.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.comboBoxEdit3.Properties.Items.AddRange(new object[] {
+            "1600 x 900"});
+            this.comboBoxEdit3.Size = new System.Drawing.Size(98, 20);
+            this.comboBoxEdit3.TabIndex = 1;
             // 
             // labelControl16
             // 
@@ -871,6 +1170,26 @@
             this.labelControl19.TabIndex = 4;
             this.labelControl19.Text = "Theme";
             // 
+            // comboBoxEdit1
+            // 
+            this.comboBoxEdit1.Location = new System.Drawing.Point(23, 60);
+            this.comboBoxEdit1.Name = "comboBoxEdit1";
+            this.comboBoxEdit1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.comboBoxEdit1.Size = new System.Drawing.Size(158, 20);
+            this.comboBoxEdit1.TabIndex = 2;
+            this.comboBoxEdit1.SelectedIndexChanged += new System.EventHandler(this.comboBoxEdit1_SelectedIndexChanged);
+            // 
+            // comboBoxEdit2
+            // 
+            this.comboBoxEdit2.Location = new System.Drawing.Point(23, 122);
+            this.comboBoxEdit2.Name = "comboBoxEdit2";
+            this.comboBoxEdit2.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.comboBoxEdit2.Size = new System.Drawing.Size(158, 20);
+            this.comboBoxEdit2.TabIndex = 3;
+            this.comboBoxEdit2.SelectedIndexChanged += new System.EventHandler(this.comboBoxEdit2_SelectedIndexChanged);
+            // 
             // groupControl1
             // 
             this.groupControl1.Controls.Add(this.labelControl27);
@@ -907,536 +1226,6 @@
             this.labelControl27.Size = new System.Drawing.Size(106, 13);
             this.labelControl27.TabIndex = 20;
             this.labelControl27.Text = "Start Nexus maximized";
-            // 
-            // labelControl4
-            // 
-            this.labelControl4.Location = new System.Drawing.Point(26, 203);
-            this.labelControl4.Name = "labelControl4";
-            this.labelControl4.Size = new System.Drawing.Size(209, 13);
-            this.labelControl4.TabIndex = 10;
-            this.labelControl4.Text = "Start launchers when Nexus Launcher starts";
-            // 
-            // labelControl23
-            // 
-            this.labelControl23.Location = new System.Drawing.Point(26, 166);
-            this.labelControl23.Name = "labelControl23";
-            this.labelControl23.Size = new System.Drawing.Size(107, 13);
-            this.labelControl23.TabIndex = 9;
-            this.labelControl23.Text = "Default game launcher";
-            // 
-            // labelControl22
-            // 
-            this.labelControl22.Appearance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.labelControl22.Appearance.Options.UseForeColor = true;
-            this.labelControl22.Location = new System.Drawing.Point(26, 141);
-            this.labelControl22.Name = "labelControl22";
-            this.labelControl22.Size = new System.Drawing.Size(138, 13);
-            this.labelControl22.TabIndex = 7;
-            this.labelControl22.Text = "Hide early access disclaimers";
-            // 
-            // labelControl3
-            // 
-            this.labelControl3.Location = new System.Drawing.Point(26, 116);
-            this.labelControl3.Name = "labelControl3";
-            this.labelControl3.Size = new System.Drawing.Size(192, 13);
-            this.labelControl3.TabIndex = 5;
-            this.labelControl3.Text = "Minimize to system tray instead of closing";
-            // 
-            // labelControl2
-            // 
-            this.labelControl2.Location = new System.Drawing.Point(26, 66);
-            this.labelControl2.Name = "labelControl2";
-            this.labelControl2.Size = new System.Drawing.Size(103, 13);
-            this.labelControl2.TabIndex = 3;
-            this.labelControl2.Text = "Start Nexus minimized";
-            // 
-            // labelControl1
-            // 
-            this.labelControl1.Location = new System.Drawing.Point(26, 41);
-            this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(173, 13);
-            this.labelControl1.TabIndex = 1;
-            this.labelControl1.Text = "Run Nexus when my computer starts";
-            // 
-            // tabNavigationPage2
-            // 
-            this.tabNavigationPage2.Caption = "Advanced Settings";
-            this.tabNavigationPage2.Controls.Add(this.simpleButton11);
-            this.tabNavigationPage2.Controls.Add(this.groupControl10);
-            this.tabNavigationPage2.Controls.Add(this.groupControl8);
-            this.tabNavigationPage2.Controls.Add(this.groupControl7);
-            this.tabNavigationPage2.Controls.Add(this.groupControl6);
-            this.tabNavigationPage2.Name = "tabNavigationPage2";
-            this.tabNavigationPage2.Size = new System.Drawing.Size(858, 663);
-            // 
-            // simpleButton11
-            // 
-            this.simpleButton11.Location = new System.Drawing.Point(576, 588);
-            this.simpleButton11.Name = "simpleButton11";
-            this.simpleButton11.Size = new System.Drawing.Size(270, 23);
-            this.simpleButton11.TabIndex = 1;
-            this.simpleButton11.Text = "Open Nexus Launcher config folder";
-            this.simpleButton11.Click += new System.EventHandler(this.simpleButton11_Click);
-            // 
-            // groupControl10
-            // 
-            this.groupControl10.Controls.Add(this.simpleButton14);
-            this.groupControl10.Controls.Add(this.simpleButton10);
-            this.groupControl10.Location = new System.Drawing.Point(123, 124);
-            this.groupControl10.Name = "groupControl10";
-            this.groupControl10.Size = new System.Drawing.Size(200, 100);
-            this.groupControl10.TabIndex = 2;
-            this.groupControl10.Text = "Open Nexus Launcher Log";
-            // 
-            // simpleButton10
-            // 
-            this.simpleButton10.Location = new System.Drawing.Point(19, 72);
-            this.simpleButton10.Name = "simpleButton10";
-            this.simpleButton10.Size = new System.Drawing.Size(137, 23);
-            this.simpleButton10.TabIndex = 0;
-            this.simpleButton10.Text = "Open Log";
-            this.simpleButton10.Click += new System.EventHandler(this.simpleButton10_Click);
-            // 
-            // groupControl8
-            // 
-            this.groupControl8.Controls.Add(this.simpleButton16);
-            this.groupControl8.Controls.Add(this.simpleButton9);
-            this.groupControl8.Location = new System.Drawing.Point(535, 18);
-            this.groupControl8.Name = "groupControl8";
-            this.groupControl8.Size = new System.Drawing.Size(200, 100);
-            this.groupControl8.TabIndex = 2;
-            this.groupControl8.Text = "Clear Artwork Cache && Resync";
-            // 
-            // simpleButton9
-            // 
-            this.simpleButton9.Location = new System.Drawing.Point(19, 72);
-            this.simpleButton9.Name = "simpleButton9";
-            this.simpleButton9.Size = new System.Drawing.Size(137, 23);
-            this.simpleButton9.TabIndex = 0;
-            this.simpleButton9.Text = "Rebuild Cache";
-            this.simpleButton9.Click += new System.EventHandler(this.simpleButton9_Click);
-            // 
-            // groupControl7
-            // 
-            this.groupControl7.Controls.Add(this.simpleButton15);
-            this.groupControl7.Controls.Add(this.simpleButton8);
-            this.groupControl7.Location = new System.Drawing.Point(329, 18);
-            this.groupControl7.Name = "groupControl7";
-            this.groupControl7.Size = new System.Drawing.Size(200, 100);
-            this.groupControl7.TabIndex = 2;
-            this.groupControl7.Text = "Inspect Nexus Launcher Config";
-            // 
-            // simpleButton8
-            // 
-            this.simpleButton8.Appearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.simpleButton8.Appearance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.simpleButton8.Appearance.Options.UseBorderColor = true;
-            this.simpleButton8.Appearance.Options.UseForeColor = true;
-            this.simpleButton8.Location = new System.Drawing.Point(19, 72);
-            this.simpleButton8.Name = "simpleButton8";
-            this.simpleButton8.Size = new System.Drawing.Size(137, 23);
-            this.simpleButton8.TabIndex = 0;
-            this.simpleButton8.Text = "Open Config File";
-            this.simpleButton8.Click += new System.EventHandler(this.simpleButton8_Click);
-            // 
-            // groupControl6
-            // 
-            this.groupControl6.Controls.Add(this.simpleButton13);
-            this.groupControl6.Controls.Add(this.simpleButton5);
-            this.groupControl6.Location = new System.Drawing.Point(123, 18);
-            this.groupControl6.Name = "groupControl6";
-            this.groupControl6.Size = new System.Drawing.Size(200, 100);
-            this.groupControl6.TabIndex = 1;
-            this.groupControl6.Text = "Uninstall Nexus Launcher";
-            // 
-            // simpleButton5
-            // 
-            this.simpleButton5.Location = new System.Drawing.Point(19, 72);
-            this.simpleButton5.Name = "simpleButton5";
-            this.simpleButton5.Size = new System.Drawing.Size(137, 23);
-            this.simpleButton5.TabIndex = 0;
-            this.simpleButton5.Text = "Uninstall Nexus Launcher";
-            this.simpleButton5.Click += new System.EventHandler(this.simpleButton5_Click);
-            // 
-            // tabNavigationPage4
-            // 
-            this.tabNavigationPage4.Caption = "About Nexus";
-            this.tabNavigationPage4.Controls.Add(this.tabPane2);
-            this.tabNavigationPage4.Name = "tabNavigationPage4";
-            this.tabNavigationPage4.Size = new System.Drawing.Size(858, 663);
-            // 
-            // tabPane2
-            // 
-            this.tabPane2.AllowHtmlDraw = false;
-            this.tabPane2.Controls.Add(this.tabNavigationPage5);
-            this.tabPane2.Controls.Add(this.tabNavigationPage6);
-            this.tabPane2.Controls.Add(this.tabNavigationPage7);
-            this.tabPane2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabPane2.Location = new System.Drawing.Point(0, 0);
-            this.tabPane2.Name = "tabPane2";
-            this.tabPane2.PageProperties.ShowMode = DevExpress.XtraBars.Navigation.ItemShowMode.Text;
-            this.tabPane2.Pages.AddRange(new DevExpress.XtraBars.Navigation.NavigationPageBase[] {
-            this.tabNavigationPage5,
-            this.tabNavigationPage7,
-            this.tabNavigationPage6});
-            this.tabPane2.RegularSize = new System.Drawing.Size(858, 663);
-            this.tabPane2.SelectedPage = this.tabNavigationPage5;
-            this.tabPane2.Size = new System.Drawing.Size(858, 663);
-            this.tabPane2.TabIndex = 1;
-            this.tabPane2.Text = "tabPane2";
-            // 
-            // panelControl1
-            // 
-            this.panelControl1.Controls.Add(this.simpleButton4);
-            this.panelControl1.Controls.Add(this.simpleButton1);
-            this.panelControl1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelControl1.Location = new System.Drawing.Point(0, 656);
-            this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(858, 34);
-            this.panelControl1.TabIndex = 1;
-            // 
-            // simpleButton4
-            // 
-            this.simpleButton4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.simpleButton4.Location = new System.Drawing.Point(714, 6);
-            this.simpleButton4.Name = "simpleButton4";
-            this.simpleButton4.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            this.simpleButton4.Size = new System.Drawing.Size(132, 23);
-            this.simpleButton4.TabIndex = 3;
-            this.simpleButton4.Text = "Close Settings";
-            this.simpleButton4.Click += new System.EventHandler(this.simpleButton4_Click);
-            // 
-            // simpleButton1
-            // 
-            this.simpleButton1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.simpleButton1.Location = new System.Drawing.Point(576, 6);
-            this.simpleButton1.Name = "simpleButton1";
-            this.simpleButton1.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            this.simpleButton1.Size = new System.Drawing.Size(132, 23);
-            this.simpleButton1.TabIndex = 2;
-            this.simpleButton1.Text = "Save Settings";
-            this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
-            // 
-            // toggleSwitch14
-            // 
-            this.toggleSwitch14.Enabled = false;
-            this.toggleSwitch14.Location = new System.Drawing.Point(81, 34);
-            this.toggleSwitch14.Name = "toggleSwitch14";
-            this.toggleSwitch14.Properties.AllowFocused = false;
-            this.toggleSwitch14.Properties.OffText = "Hide";
-            this.toggleSwitch14.Properties.OnText = "Show";
-            this.toggleSwitch14.Size = new System.Drawing.Size(122, 19);
-            this.toggleSwitch14.TabIndex = 3;
-            this.toggleSwitch14.Toggled += new System.EventHandler(this.toggleSwitch14_Toggled);
-            // 
-            // pictureBox11
-            // 
-            this.pictureBox11.Image = global::Nexus_Launcher.Properties.Resources.wargaming;
-            this.pictureBox11.Location = new System.Drawing.Point(5, 5);
-            this.pictureBox11.Name = "pictureBox11";
-            this.pictureBox11.Size = new System.Drawing.Size(70, 70);
-            this.pictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox11.TabIndex = 1;
-            this.pictureBox11.TabStop = false;
-            // 
-            // toggleSwitch13
-            // 
-            this.toggleSwitch13.Enabled = false;
-            this.toggleSwitch13.Location = new System.Drawing.Point(81, 34);
-            this.toggleSwitch13.Name = "toggleSwitch13";
-            this.toggleSwitch13.Properties.AllowFocused = false;
-            this.toggleSwitch13.Properties.OffText = "Hide";
-            this.toggleSwitch13.Properties.OnText = "Show";
-            this.toggleSwitch13.Size = new System.Drawing.Size(122, 19);
-            this.toggleSwitch13.TabIndex = 3;
-            this.toggleSwitch13.Toggled += new System.EventHandler(this.toggleSwitch13_Toggled);
-            // 
-            // pictureBox10
-            // 
-            this.pictureBox10.Image = global::Nexus_Launcher.Properties.Resources.apps_22118_9007199266252480_94f4e265_68d4_4ddc_a67b_b29c8d3021c8;
-            this.pictureBox10.Location = new System.Drawing.Point(5, 5);
-            this.pictureBox10.Name = "pictureBox10";
-            this.pictureBox10.Size = new System.Drawing.Size(70, 70);
-            this.pictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox10.TabIndex = 1;
-            this.pictureBox10.TabStop = false;
-            // 
-            // toggleSwitch10
-            // 
-            this.toggleSwitch10.Enabled = false;
-            this.toggleSwitch10.Location = new System.Drawing.Point(81, 34);
-            this.toggleSwitch10.Name = "toggleSwitch10";
-            this.toggleSwitch10.Properties.AllowFocused = false;
-            this.toggleSwitch10.Properties.OffText = "Hide";
-            this.toggleSwitch10.Properties.OnText = "Show";
-            this.toggleSwitch10.Size = new System.Drawing.Size(122, 19);
-            this.toggleSwitch10.TabIndex = 3;
-            this.toggleSwitch10.Toggled += new System.EventHandler(this.toggleSwitch10_Toggled);
-            // 
-            // pictureBox7
-            // 
-            this.pictureBox7.Image = global::Nexus_Launcher.Properties.Resources.amazon_games_icon;
-            this.pictureBox7.Location = new System.Drawing.Point(5, 5);
-            this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(70, 70);
-            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox7.TabIndex = 1;
-            this.pictureBox7.TabStop = false;
-            // 
-            // toggleSwitch9
-            // 
-            this.toggleSwitch9.Enabled = false;
-            this.toggleSwitch9.Location = new System.Drawing.Point(81, 34);
-            this.toggleSwitch9.Name = "toggleSwitch9";
-            this.toggleSwitch9.Properties.AllowFocused = false;
-            this.toggleSwitch9.Properties.OffText = "Hide";
-            this.toggleSwitch9.Properties.OnText = "Show";
-            this.toggleSwitch9.Size = new System.Drawing.Size(122, 19);
-            this.toggleSwitch9.TabIndex = 3;
-            this.toggleSwitch9.Toggled += new System.EventHandler(this.toggleSwitch9_Toggled);
-            // 
-            // pictureBox6
-            // 
-            this.pictureBox6.Image = global::Nexus_Launcher.Properties.Resources.Paradox_Interactive_logo;
-            this.pictureBox6.Location = new System.Drawing.Point(5, 5);
-            this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(70, 70);
-            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox6.TabIndex = 1;
-            this.pictureBox6.TabStop = false;
-            // 
-            // toggleSwitch12
-            // 
-            this.toggleSwitch12.Enabled = false;
-            this.toggleSwitch12.Location = new System.Drawing.Point(81, 34);
-            this.toggleSwitch12.Name = "toggleSwitch12";
-            this.toggleSwitch12.Properties.AllowFocused = false;
-            this.toggleSwitch12.Properties.OffText = "Hide";
-            this.toggleSwitch12.Properties.OnText = "Show";
-            this.toggleSwitch12.Size = new System.Drawing.Size(122, 19);
-            this.toggleSwitch12.TabIndex = 3;
-            this.toggleSwitch12.Toggled += new System.EventHandler(this.toggleSwitch12_Toggled);
-            // 
-            // pictureBox9
-            // 
-            this.pictureBox9.Image = global::Nexus_Launcher.Properties.Resources.apps_60199_13798539581762600_abe1643f_1704_4a4d_a61b_47ccc25da012;
-            this.pictureBox9.Location = new System.Drawing.Point(5, 5);
-            this.pictureBox9.Name = "pictureBox9";
-            this.pictureBox9.Size = new System.Drawing.Size(70, 70);
-            this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox9.TabIndex = 1;
-            this.pictureBox9.TabStop = false;
-            // 
-            // toggleSwitch7
-            // 
-            this.toggleSwitch7.Location = new System.Drawing.Point(81, 34);
-            this.toggleSwitch7.Name = "toggleSwitch7";
-            this.toggleSwitch7.Properties.AllowFocused = false;
-            this.toggleSwitch7.Properties.OffText = "Hide";
-            this.toggleSwitch7.Properties.OnText = "Show";
-            this.toggleSwitch7.Size = new System.Drawing.Size(122, 19);
-            this.toggleSwitch7.TabIndex = 5;
-            this.toggleSwitch7.Toggled += new System.EventHandler(this.toggleSwitch7_Toggled);
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.Image = global::Nexus_Launcher.Properties.Resources.d8ac3b01ba19729174a8f1e63c9e937c;
-            this.pictureBox4.Location = new System.Drawing.Point(5, 5);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(70, 70);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox4.TabIndex = 2;
-            this.pictureBox4.TabStop = false;
-            // 
-            // toggleSwitch8
-            // 
-            this.toggleSwitch8.Location = new System.Drawing.Point(81, 34);
-            this.toggleSwitch8.Name = "toggleSwitch8";
-            this.toggleSwitch8.Properties.AllowFocused = false;
-            this.toggleSwitch8.Properties.OffText = "Hide";
-            this.toggleSwitch8.Properties.OnText = "Show";
-            this.toggleSwitch8.Size = new System.Drawing.Size(122, 19);
-            this.toggleSwitch8.TabIndex = 6;
-            this.toggleSwitch8.Toggled += new System.EventHandler(this.toggleSwitch8_Toggled);
-            // 
-            // pictureBox5
-            // 
-            this.pictureBox5.Image = global::Nexus_Launcher.Properties.Resources._1024x1024;
-            this.pictureBox5.Location = new System.Drawing.Point(5, 5);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(70, 70);
-            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox5.TabIndex = 1;
-            this.pictureBox5.TabStop = false;
-            // 
-            // toggleSwitch4
-            // 
-            this.toggleSwitch4.Location = new System.Drawing.Point(81, 34);
-            this.toggleSwitch4.Name = "toggleSwitch4";
-            this.toggleSwitch4.Properties.AllowFocused = false;
-            this.toggleSwitch4.Properties.OffText = "Hide";
-            this.toggleSwitch4.Properties.OnText = "Show";
-            this.toggleSwitch4.Size = new System.Drawing.Size(122, 19);
-            this.toggleSwitch4.TabIndex = 2;
-            this.toggleSwitch4.Toggled += new System.EventHandler(this.toggleSwitch4_Toggled);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::Nexus_Launcher.Properties.Resources.Steam_icon_logo_svg;
-            this.pictureBox1.Location = new System.Drawing.Point(5, 5);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(70, 70);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
-            // toggleSwitch5
-            // 
-            this.toggleSwitch5.Location = new System.Drawing.Point(81, 34);
-            this.toggleSwitch5.Name = "toggleSwitch5";
-            this.toggleSwitch5.Properties.AllowFocused = false;
-            this.toggleSwitch5.Properties.OffText = "Hide";
-            this.toggleSwitch5.Properties.OnText = "Show";
-            this.toggleSwitch5.Size = new System.Drawing.Size(122, 19);
-            this.toggleSwitch5.TabIndex = 3;
-            this.toggleSwitch5.Toggled += new System.EventHandler(this.toggleSwitch5_Toggled);
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::Nexus_Launcher.Properties.Resources.epic_games_black_logo_icon_147139;
-            this.pictureBox2.Location = new System.Drawing.Point(5, 5);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(70, 70);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 1;
-            this.pictureBox2.TabStop = false;
-            // 
-            // toggleSwitch6
-            // 
-            this.toggleSwitch6.Location = new System.Drawing.Point(81, 34);
-            this.toggleSwitch6.Name = "toggleSwitch6";
-            this.toggleSwitch6.Properties.AllowFocused = false;
-            this.toggleSwitch6.Properties.OffText = "Hide";
-            this.toggleSwitch6.Properties.OnText = "Show";
-            this.toggleSwitch6.Size = new System.Drawing.Size(122, 19);
-            this.toggleSwitch6.TabIndex = 4;
-            this.toggleSwitch6.Toggled += new System.EventHandler(this.toggleSwitch6_Toggled);
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = global::Nexus_Launcher.Properties.Resources.unnamed;
-            this.pictureBox3.Location = new System.Drawing.Point(5, 5);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(70, 70);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox3.TabIndex = 1;
-            this.pictureBox3.TabStop = false;
-            // 
-            // toggleSwitch11
-            // 
-            this.toggleSwitch11.Location = new System.Drawing.Point(81, 34);
-            this.toggleSwitch11.Name = "toggleSwitch11";
-            this.toggleSwitch11.Properties.AllowFocused = false;
-            this.toggleSwitch11.Properties.OffText = "Hide";
-            this.toggleSwitch11.Properties.OnText = "Show";
-            this.toggleSwitch11.Size = new System.Drawing.Size(122, 19);
-            this.toggleSwitch11.TabIndex = 3;
-            this.toggleSwitch11.Toggled += new System.EventHandler(this.toggleSwitch11_Toggled);
-            // 
-            // pictureBox8
-            // 
-            this.pictureBox8.Image = global::Nexus_Launcher.Properties.Resources._256x256;
-            this.pictureBox8.Location = new System.Drawing.Point(5, 5);
-            this.pictureBox8.Name = "pictureBox8";
-            this.pictureBox8.Size = new System.Drawing.Size(70, 70);
-            this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox8.TabIndex = 1;
-            this.pictureBox8.TabStop = false;
-            // 
-            // toggleSwitch20
-            // 
-            this.toggleSwitch20.Location = new System.Drawing.Point(178, 38);
-            this.toggleSwitch20.Name = "toggleSwitch20";
-            this.toggleSwitch20.Properties.AllowFocused = false;
-            this.toggleSwitch20.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
-            this.toggleSwitch20.Properties.OffText = "Disabled";
-            this.toggleSwitch20.Properties.OnText = "Enabled";
-            this.toggleSwitch20.Size = new System.Drawing.Size(109, 19);
-            this.toggleSwitch20.TabIndex = 11;
-            this.toggleSwitch20.Toggled += new System.EventHandler(this.toggleSwitch20_Toggled);
-            // 
-            // toggleSwitch18
-            // 
-            this.toggleSwitch18.EditValue = true;
-            this.toggleSwitch18.Location = new System.Drawing.Point(202, 143);
-            this.toggleSwitch18.Name = "toggleSwitch18";
-            this.toggleSwitch18.Properties.AllowFocused = false;
-            this.toggleSwitch18.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
-            this.toggleSwitch18.Properties.OffText = "Default";
-            this.toggleSwitch18.Properties.OnText = "Footer";
-            this.toggleSwitch18.Size = new System.Drawing.Size(143, 19);
-            this.toggleSwitch18.TabIndex = 9;
-            this.toggleSwitch18.Toggled += new System.EventHandler(this.toggleSwitch18_Toggled);
-            // 
-            // toggleSwitch17
-            // 
-            this.toggleSwitch17.EditValue = true;
-            this.toggleSwitch17.Location = new System.Drawing.Point(202, 118);
-            this.toggleSwitch17.Name = "toggleSwitch17";
-            this.toggleSwitch17.Properties.AllowFocused = false;
-            this.toggleSwitch17.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
-            this.toggleSwitch17.Properties.OffText = "Standard";
-            this.toggleSwitch17.Properties.OnText = "Hamburger Menu";
-            this.toggleSwitch17.Size = new System.Drawing.Size(143, 19);
-            this.toggleSwitch17.TabIndex = 7;
-            this.toggleSwitch17.Toggled += new System.EventHandler(this.toggleSwitch17_Toggled);
-            // 
-            // toggleSwitch15
-            // 
-            this.toggleSwitch15.Location = new System.Drawing.Point(202, 93);
-            this.toggleSwitch15.Name = "toggleSwitch15";
-            this.toggleSwitch15.Properties.AllowFocused = false;
-            this.toggleSwitch15.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
-            this.toggleSwitch15.Properties.OffText = "Off";
-            this.toggleSwitch15.Properties.OnText = "On";
-            this.toggleSwitch15.Size = new System.Drawing.Size(98, 19);
-            this.toggleSwitch15.TabIndex = 5;
-            this.toggleSwitch15.Toggled += new System.EventHandler(this.toggleSwitch15_Toggled);
-            // 
-            // comboBoxEdit3
-            // 
-            this.comboBoxEdit3.EditValue = "1600 x 900";
-            this.comboBoxEdit3.Enabled = false;
-            this.comboBoxEdit3.Location = new System.Drawing.Point(202, 36);
-            this.comboBoxEdit3.Name = "comboBoxEdit3";
-            this.comboBoxEdit3.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.comboBoxEdit3.Properties.Items.AddRange(new object[] {
-            "1600 x 900"});
-            this.comboBoxEdit3.Size = new System.Drawing.Size(98, 20);
-            this.comboBoxEdit3.TabIndex = 1;
-            // 
-            // comboBoxEdit1
-            // 
-            this.comboBoxEdit1.Location = new System.Drawing.Point(23, 60);
-            this.comboBoxEdit1.Name = "comboBoxEdit1";
-            this.comboBoxEdit1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.comboBoxEdit1.Size = new System.Drawing.Size(158, 20);
-            this.comboBoxEdit1.TabIndex = 2;
-            this.comboBoxEdit1.SelectedIndexChanged += new System.EventHandler(this.comboBoxEdit1_SelectedIndexChanged);
-            // 
-            // comboBoxEdit2
-            // 
-            this.comboBoxEdit2.Location = new System.Drawing.Point(23, 122);
-            this.comboBoxEdit2.Name = "comboBoxEdit2";
-            this.comboBoxEdit2.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.comboBoxEdit2.Size = new System.Drawing.Size(158, 20);
-            this.comboBoxEdit2.TabIndex = 3;
-            this.comboBoxEdit2.SelectedIndexChanged += new System.EventHandler(this.comboBoxEdit2_SelectedIndexChanged);
             // 
             // toggleSwitch21
             // 
@@ -1542,6 +1331,22 @@
             this.toggleSwitch19.TabIndex = 11;
             this.toggleSwitch19.Toggled += new System.EventHandler(this.toggleSwitch19_Toggled);
             // 
+            // labelControl4
+            // 
+            this.labelControl4.Location = new System.Drawing.Point(26, 203);
+            this.labelControl4.Name = "labelControl4";
+            this.labelControl4.Size = new System.Drawing.Size(209, 13);
+            this.labelControl4.TabIndex = 10;
+            this.labelControl4.Text = "Start launchers when Nexus Launcher starts";
+            // 
+            // labelControl23
+            // 
+            this.labelControl23.Location = new System.Drawing.Point(26, 166);
+            this.labelControl23.Name = "labelControl23";
+            this.labelControl23.Size = new System.Drawing.Size(107, 13);
+            this.labelControl23.TabIndex = 9;
+            this.labelControl23.Text = "Default game launcher";
+            // 
             // comboBoxEdit4
             // 
             this.comboBoxEdit4.Location = new System.Drawing.Point(196, 163);
@@ -1561,6 +1366,16 @@
             this.comboBoxEdit4.TabIndex = 8;
             this.comboBoxEdit4.SelectedIndexChanged += new System.EventHandler(this.comboBoxEdit4_SelectedIndexChanged);
             // 
+            // labelControl22
+            // 
+            this.labelControl22.Appearance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.labelControl22.Appearance.Options.UseForeColor = true;
+            this.labelControl22.Location = new System.Drawing.Point(26, 141);
+            this.labelControl22.Name = "labelControl22";
+            this.labelControl22.Size = new System.Drawing.Size(138, 13);
+            this.labelControl22.TabIndex = 7;
+            this.labelControl22.Text = "Hide early access disclaimers";
+            // 
             // toggleSwitch16
             // 
             this.toggleSwitch16.Location = new System.Drawing.Point(266, 138);
@@ -1572,6 +1387,14 @@
             this.toggleSwitch16.Size = new System.Drawing.Size(87, 19);
             this.toggleSwitch16.TabIndex = 6;
             this.toggleSwitch16.Toggled += new System.EventHandler(this.toggleSwitch16_Toggled);
+            // 
+            // labelControl3
+            // 
+            this.labelControl3.Location = new System.Drawing.Point(26, 116);
+            this.labelControl3.Name = "labelControl3";
+            this.labelControl3.Size = new System.Drawing.Size(192, 13);
+            this.labelControl3.TabIndex = 5;
+            this.labelControl3.Text = "Minimize to system tray instead of closing";
             // 
             // toggleSwitch3
             // 
@@ -1585,6 +1408,14 @@
             this.toggleSwitch3.TabIndex = 4;
             this.toggleSwitch3.Toggled += new System.EventHandler(this.toggleSwitch3_Toggled);
             // 
+            // labelControl2
+            // 
+            this.labelControl2.Location = new System.Drawing.Point(26, 66);
+            this.labelControl2.Name = "labelControl2";
+            this.labelControl2.Size = new System.Drawing.Size(103, 13);
+            this.labelControl2.TabIndex = 3;
+            this.labelControl2.Text = "Start Nexus minimized";
+            // 
             // toggleSwitch2
             // 
             this.toggleSwitch2.Location = new System.Drawing.Point(266, 63);
@@ -1597,6 +1428,14 @@
             this.toggleSwitch2.TabIndex = 2;
             this.toggleSwitch2.Toggled += new System.EventHandler(this.toggleSwitch2_Toggled);
             // 
+            // labelControl1
+            // 
+            this.labelControl1.Location = new System.Drawing.Point(26, 41);
+            this.labelControl1.Name = "labelControl1";
+            this.labelControl1.Size = new System.Drawing.Size(173, 13);
+            this.labelControl1.TabIndex = 1;
+            this.labelControl1.Text = "Run Nexus when my computer starts";
+            // 
             // toggleSwitch1
             // 
             this.toggleSwitch1.Location = new System.Drawing.Point(266, 38);
@@ -1608,6 +1447,36 @@
             this.toggleSwitch1.Size = new System.Drawing.Size(87, 19);
             this.toggleSwitch1.TabIndex = 0;
             this.toggleSwitch1.Toggled += new System.EventHandler(this.toggleSwitch1_Toggled);
+            // 
+            // tabNavigationPage2
+            // 
+            this.tabNavigationPage2.Caption = "Advanced Settings";
+            this.tabNavigationPage2.Controls.Add(this.simpleButton11);
+            this.tabNavigationPage2.Controls.Add(this.groupControl10);
+            this.tabNavigationPage2.Controls.Add(this.groupControl8);
+            this.tabNavigationPage2.Controls.Add(this.groupControl7);
+            this.tabNavigationPage2.Controls.Add(this.groupControl6);
+            this.tabNavigationPage2.Name = "tabNavigationPage2";
+            this.tabNavigationPage2.Size = new System.Drawing.Size(858, 663);
+            // 
+            // simpleButton11
+            // 
+            this.simpleButton11.Location = new System.Drawing.Point(576, 588);
+            this.simpleButton11.Name = "simpleButton11";
+            this.simpleButton11.Size = new System.Drawing.Size(270, 23);
+            this.simpleButton11.TabIndex = 1;
+            this.simpleButton11.Text = "Open Nexus Launcher config folder";
+            this.simpleButton11.Click += new System.EventHandler(this.simpleButton11_Click);
+            // 
+            // groupControl10
+            // 
+            this.groupControl10.Controls.Add(this.simpleButton14);
+            this.groupControl10.Controls.Add(this.simpleButton10);
+            this.groupControl10.Location = new System.Drawing.Point(123, 124);
+            this.groupControl10.Name = "groupControl10";
+            this.groupControl10.Size = new System.Drawing.Size(200, 100);
+            this.groupControl10.TabIndex = 2;
+            this.groupControl10.Text = "Open Nexus Launcher Log";
             // 
             // simpleButton14
             // 
@@ -1623,6 +1492,25 @@
             this.simpleButton14.TabIndex = 19;
             this.simpleButton14.Click += new System.EventHandler(this.simpleButton14_Click);
             // 
+            // simpleButton10
+            // 
+            this.simpleButton10.Location = new System.Drawing.Point(19, 72);
+            this.simpleButton10.Name = "simpleButton10";
+            this.simpleButton10.Size = new System.Drawing.Size(137, 23);
+            this.simpleButton10.TabIndex = 0;
+            this.simpleButton10.Text = "Open Log";
+            this.simpleButton10.Click += new System.EventHandler(this.simpleButton10_Click);
+            // 
+            // groupControl8
+            // 
+            this.groupControl8.Controls.Add(this.simpleButton16);
+            this.groupControl8.Controls.Add(this.simpleButton9);
+            this.groupControl8.Location = new System.Drawing.Point(535, 18);
+            this.groupControl8.Name = "groupControl8";
+            this.groupControl8.Size = new System.Drawing.Size(200, 100);
+            this.groupControl8.TabIndex = 2;
+            this.groupControl8.Text = "Clear Artwork Cache && Resync";
+            // 
             // simpleButton16
             // 
             this.simpleButton16.AllowFocus = false;
@@ -1636,6 +1524,25 @@
             this.simpleButton16.Size = new System.Drawing.Size(20, 20);
             this.simpleButton16.TabIndex = 19;
             this.simpleButton16.Click += new System.EventHandler(this.simpleButton16_Click);
+            // 
+            // simpleButton9
+            // 
+            this.simpleButton9.Location = new System.Drawing.Point(19, 72);
+            this.simpleButton9.Name = "simpleButton9";
+            this.simpleButton9.Size = new System.Drawing.Size(137, 23);
+            this.simpleButton9.TabIndex = 0;
+            this.simpleButton9.Text = "Rebuild Cache";
+            this.simpleButton9.Click += new System.EventHandler(this.simpleButton9_Click);
+            // 
+            // groupControl7
+            // 
+            this.groupControl7.Controls.Add(this.simpleButton15);
+            this.groupControl7.Controls.Add(this.simpleButton8);
+            this.groupControl7.Location = new System.Drawing.Point(329, 18);
+            this.groupControl7.Name = "groupControl7";
+            this.groupControl7.Size = new System.Drawing.Size(200, 100);
+            this.groupControl7.TabIndex = 2;
+            this.groupControl7.Text = "Inspect Nexus Launcher Config";
             // 
             // simpleButton15
             // 
@@ -1651,6 +1558,29 @@
             this.simpleButton15.TabIndex = 19;
             this.simpleButton15.Click += new System.EventHandler(this.simpleButton15_Click);
             // 
+            // simpleButton8
+            // 
+            this.simpleButton8.Appearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.simpleButton8.Appearance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.simpleButton8.Appearance.Options.UseBorderColor = true;
+            this.simpleButton8.Appearance.Options.UseForeColor = true;
+            this.simpleButton8.Location = new System.Drawing.Point(19, 72);
+            this.simpleButton8.Name = "simpleButton8";
+            this.simpleButton8.Size = new System.Drawing.Size(137, 23);
+            this.simpleButton8.TabIndex = 0;
+            this.simpleButton8.Text = "Open Config File";
+            this.simpleButton8.Click += new System.EventHandler(this.simpleButton8_Click);
+            // 
+            // groupControl6
+            // 
+            this.groupControl6.Controls.Add(this.simpleButton13);
+            this.groupControl6.Controls.Add(this.simpleButton5);
+            this.groupControl6.Location = new System.Drawing.Point(123, 18);
+            this.groupControl6.Name = "groupControl6";
+            this.groupControl6.Size = new System.Drawing.Size(200, 100);
+            this.groupControl6.TabIndex = 1;
+            this.groupControl6.Text = "Uninstall Nexus Launcher";
+            // 
             // simpleButton13
             // 
             this.simpleButton13.AllowFocus = false;
@@ -1664,6 +1594,42 @@
             this.simpleButton13.Size = new System.Drawing.Size(20, 20);
             this.simpleButton13.TabIndex = 19;
             this.simpleButton13.Click += new System.EventHandler(this.simpleButton13_Click);
+            // 
+            // simpleButton5
+            // 
+            this.simpleButton5.Location = new System.Drawing.Point(19, 72);
+            this.simpleButton5.Name = "simpleButton5";
+            this.simpleButton5.Size = new System.Drawing.Size(137, 23);
+            this.simpleButton5.TabIndex = 0;
+            this.simpleButton5.Text = "Uninstall Nexus Launcher";
+            this.simpleButton5.Click += new System.EventHandler(this.simpleButton5_Click);
+            // 
+            // tabNavigationPage4
+            // 
+            this.tabNavigationPage4.Caption = "About Nexus";
+            this.tabNavigationPage4.Controls.Add(this.tabPane2);
+            this.tabNavigationPage4.Name = "tabNavigationPage4";
+            this.tabNavigationPage4.Size = new System.Drawing.Size(858, 663);
+            // 
+            // tabPane2
+            // 
+            this.tabPane2.AllowHtmlDraw = false;
+            this.tabPane2.Controls.Add(this.tabNavigationPage5);
+            this.tabPane2.Controls.Add(this.tabNavigationPage6);
+            this.tabPane2.Controls.Add(this.tabNavigationPage7);
+            this.tabPane2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabPane2.Location = new System.Drawing.Point(0, 0);
+            this.tabPane2.Name = "tabPane2";
+            this.tabPane2.PageProperties.ShowMode = DevExpress.XtraBars.Navigation.ItemShowMode.Text;
+            this.tabPane2.Pages.AddRange(new DevExpress.XtraBars.Navigation.NavigationPageBase[] {
+            this.tabNavigationPage5,
+            this.tabNavigationPage7,
+            this.tabNavigationPage6});
+            this.tabPane2.RegularSize = new System.Drawing.Size(858, 663);
+            this.tabPane2.SelectedPage = this.tabNavigationPage5;
+            this.tabPane2.Size = new System.Drawing.Size(858, 663);
+            this.tabPane2.TabIndex = 1;
+            this.tabPane2.Text = "tabPane2";
             // 
             // tabNavigationPage5
             // 
@@ -1679,6 +1645,24 @@
             this.tabNavigationPage5.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("tabNavigationPage5.ImageOptions.Image")));
             this.tabNavigationPage5.Name = "tabNavigationPage5";
             this.tabNavigationPage5.Size = new System.Drawing.Size(858, 636);
+            // 
+            // hyperlinkLabelControl2
+            // 
+            this.hyperlinkLabelControl2.Location = new System.Drawing.Point(78, 610);
+            this.hyperlinkLabelControl2.Name = "hyperlinkLabelControl2";
+            this.hyperlinkLabelControl2.Size = new System.Drawing.Size(119, 13);
+            this.hyperlinkLabelControl2.TabIndex = 7;
+            this.hyperlinkLabelControl2.Text = "Download Latest Installer";
+            this.hyperlinkLabelControl2.Click += new System.EventHandler(this.hyperlinkLabelControl2_Click);
+            // 
+            // hyperlinkLabelControl1
+            // 
+            this.hyperlinkLabelControl1.Location = new System.Drawing.Point(12, 610);
+            this.hyperlinkLabelControl1.Name = "hyperlinkLabelControl1";
+            this.hyperlinkLabelControl1.Size = new System.Drawing.Size(60, 13);
+            this.hyperlinkLabelControl1.TabIndex = 6;
+            this.hyperlinkLabelControl1.Text = "Github Repo";
+            this.hyperlinkLabelControl1.Click += new System.EventHandler(this.hyperlinkLabelControl1_Click);
             // 
             // labelControl28
             // 
@@ -2009,6 +1993,40 @@
             this.webView22.TabIndex = 0;
             this.webView22.ZoomFactor = 1D;
             // 
+            // panelControl1
+            // 
+            this.panelControl1.Controls.Add(this.simpleButton4);
+            this.panelControl1.Controls.Add(this.simpleButton1);
+            this.panelControl1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelControl1.Location = new System.Drawing.Point(0, 656);
+            this.panelControl1.Name = "panelControl1";
+            this.panelControl1.Size = new System.Drawing.Size(858, 34);
+            this.panelControl1.TabIndex = 1;
+            // 
+            // simpleButton4
+            // 
+            this.simpleButton4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.simpleButton4.Location = new System.Drawing.Point(714, 6);
+            this.simpleButton4.Name = "simpleButton4";
+            this.simpleButton4.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
+            this.simpleButton4.Size = new System.Drawing.Size(132, 23);
+            this.simpleButton4.TabIndex = 3;
+            this.simpleButton4.Text = "Close Settings";
+            this.simpleButton4.Click += new System.EventHandler(this.simpleButton4_Click);
+            // 
+            // simpleButton1
+            // 
+            this.simpleButton1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.simpleButton1.Location = new System.Drawing.Point(576, 6);
+            this.simpleButton1.Name = "simpleButton1";
+            this.simpleButton1.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
+            this.simpleButton1.Size = new System.Drawing.Size(132, 23);
+            this.simpleButton1.TabIndex = 2;
+            this.simpleButton1.Text = "Save Settings";
+            this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
+            // 
             // stepProgress1
             // 
             this.stepProgress1.BackColor = System.Drawing.Color.Transparent;
@@ -2021,24 +2039,6 @@
             this.stepProgress1.Text = "stepProgress1";
             this.stepProgress1.Value = 0;
             this.stepProgress1.Visible = false;
-            // 
-            // hyperlinkLabelControl1
-            // 
-            this.hyperlinkLabelControl1.Location = new System.Drawing.Point(12, 610);
-            this.hyperlinkLabelControl1.Name = "hyperlinkLabelControl1";
-            this.hyperlinkLabelControl1.Size = new System.Drawing.Size(60, 13);
-            this.hyperlinkLabelControl1.TabIndex = 6;
-            this.hyperlinkLabelControl1.Text = "Github Repo";
-            this.hyperlinkLabelControl1.Click += new System.EventHandler(this.hyperlinkLabelControl1_Click);
-            // 
-            // hyperlinkLabelControl2
-            // 
-            this.hyperlinkLabelControl2.Location = new System.Drawing.Point(78, 610);
-            this.hyperlinkLabelControl2.Name = "hyperlinkLabelControl2";
-            this.hyperlinkLabelControl2.Size = new System.Drawing.Size(119, 13);
-            this.hyperlinkLabelControl2.TabIndex = 7;
-            this.hyperlinkLabelControl2.Text = "Download Latest Installer";
-            this.hyperlinkLabelControl2.Click += new System.EventHandler(this.hyperlinkLabelControl2_Click);
             // 
             // SettingsForm
             // 
@@ -2067,94 +2067,80 @@
             ((System.ComponentModel.ISupportInitialize)(this.panelControl12)).EndInit();
             this.panelControl12.ResumeLayout(false);
             this.panelControl12.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch14.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl10)).EndInit();
             this.panelControl10.ResumeLayout(false);
             this.panelControl10.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch13.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl7)).EndInit();
             this.panelControl7.ResumeLayout(false);
             this.panelControl7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch10.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl8)).EndInit();
             this.panelControl8.ResumeLayout(false);
             this.panelControl8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch9.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl11)).EndInit();
             this.panelControl11.ResumeLayout(false);
             this.panelControl11.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch12.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl3)).EndInit();
             this.groupControl3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.panelControl5)).EndInit();
             this.panelControl5.ResumeLayout(false);
             this.panelControl5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch7.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl9)).EndInit();
             this.panelControl9.ResumeLayout(false);
             this.panelControl9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch8.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl2)).EndInit();
             this.panelControl2.ResumeLayout(false);
             this.panelControl2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch4.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl3)).EndInit();
             this.panelControl3.ResumeLayout(false);
             this.panelControl3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch5.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl4)).EndInit();
             this.panelControl4.ResumeLayout(false);
             this.panelControl4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch6.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl6)).EndInit();
             this.panelControl6.ResumeLayout(false);
             this.panelControl6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch11.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
             this.tabNavigationPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.groupControl9)).EndInit();
             this.groupControl9.ResumeLayout(false);
             this.groupControl9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch20.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl5)).EndInit();
             this.groupControl5.ResumeLayout(false);
             this.groupControl5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).EndInit();
-            this.groupControl2.ResumeLayout(false);
-            this.groupControl2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
-            this.groupControl1.ResumeLayout(false);
-            this.groupControl1.PerformLayout();
-            this.tabNavigationPage2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.groupControl10)).EndInit();
-            this.groupControl10.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.groupControl8)).EndInit();
-            this.groupControl8.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.groupControl7)).EndInit();
-            this.groupControl7.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.groupControl6)).EndInit();
-            this.groupControl6.ResumeLayout(false);
-            this.tabNavigationPage4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.tabPane2)).EndInit();
-            this.tabPane2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
-            this.panelControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch14.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch13.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch10.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch9.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch12.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch7.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch8.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch4.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch5.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch6.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch11.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch20.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch18.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch17.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch15.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxEdit3.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).EndInit();
+            this.groupControl2.ResumeLayout(false);
+            this.groupControl2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxEdit1.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxEdit2.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
+            this.groupControl1.ResumeLayout(false);
+            this.groupControl1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch21.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.checkEdit6.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.checkEdit5.Properties)).EndInit();
@@ -2168,6 +2154,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch3.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch2.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch1.Properties)).EndInit();
+            this.tabNavigationPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl10)).EndInit();
+            this.groupControl10.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl8)).EndInit();
+            this.groupControl8.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl7)).EndInit();
+            this.groupControl7.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl6)).EndInit();
+            this.groupControl6.ResumeLayout(false);
+            this.tabNavigationPage4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.tabPane2)).EndInit();
+            this.tabPane2.ResumeLayout(false);
             this.tabNavigationPage5.ResumeLayout(false);
             this.tabNavigationPage5.PerformLayout();
             this.tabNavigationPage6.ResumeLayout(false);
@@ -2178,6 +2176,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.webView21)).EndInit();
             this.tabNavigationPage7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.webView22)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
+            this.panelControl1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

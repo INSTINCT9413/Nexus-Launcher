@@ -930,6 +930,17 @@ namespace Nexus_Launcher.Services
                         "Open GOG Galaxy and uninstall " +
                         "the game from your installed games.";
 
+                case "xbox":
+
+                    return
+                        "Nexus Launcher could not find " +
+                        "an automatic uninstall method.\n\n" +
+                        "To uninstall this Xbox game:\n\n" +
+                        "1. Open Windows Settings.\n" +
+                        "2. Go to Apps > Installed apps.\n" +
+                        "3. Find the game and select Uninstall.\n\n" +
+                        "You can also uninstall it from the Xbox app.";
+
                 default:
 
                     return

@@ -2,7 +2,9 @@
 using DevExpress.XtraEditors;
 using Microsoft.Web.WebView2.Core;
 using Nexus_Launcher.Helpers;
+using Nexus_Launcher.Models;
 using Nexus_Launcher.Properties;
+using Nexus_Launcher.Services.Library;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,6 +33,7 @@ namespace Nexus_Launcher.Controls
         public int _gameID { get; set; }
         public string _gameURI { get; set; }
         public string _productID { get; set; }
+        public string _appUserModelId { get; set; }
         public Image _header { get; set; }
         public Image _icon { get; set; }
         public Image _logo { get; set; }
@@ -39,17 +42,82 @@ namespace Nexus_Launcher.Controls
         public string _executablePath { get; set; }
         public string _gameStoreLink { get; set; }
         private bool _syncingZoom = false;
+        private bool _syncingFavorite = false;
+        private GameInfo _currentGame;
+
+        /// <summary>
+        /// The game the card is showing. Needed by the favourite star,
+        /// which has to know which game to act on: the other fields on
+        /// this card are loose values and cannot identify one.
+        /// </summary>
+        public GameInfo CurrentGame
+        {
+            get
+            {
+                return _currentGame;
+            }
+            set
+            {
+                _currentGame = value;
+
+                RefreshFavoriteDisplay();
+            }
+        }
+
+        /// <summary>
+        /// Raised after the star is clicked, so the accordion can move
+        /// the game to or from the top of its launcher.
+        /// </summary>
+        public event EventHandler FavoriteChanged;
+
+        /// <summary>
+        /// Points the star at the stored favourite state without
+        /// letting it read back as a user click.
+        /// </summary>
+        public void RefreshFavoriteDisplay()
+        {
+            _syncingFavorite = true;
+
+            try
+            {
+                ratingControl1.Enabled =
+                    _currentGame != null;
+
+                bool favorite =
+                    _currentGame != null &&
+                    LibraryOrganizationService.IsFavorite(
+                        _currentGame);
+
+                ratingControl1.Rating =
+                    favorite
+                        ? 1
+                        : 0;
+
+                ratingControl1.ToolTip =
+                    favorite
+                        ? "Remove from Favourites"
+                        : "Add to Favourites";
+            }
+            finally
+            {
+                _syncingFavorite = false;
+            }
+        }
         public ApplicationCard()
         {
             InitializeComponent();
 
-            
-            
+            // Nothing is selected yet, so the star starts disabled.
+            RefreshFavoriteDisplay();
+
         }
 
         private void dropDownButton1_Click(object sender, EventArgs e)
         {
-            
+            // Launching is done inline here rather than through
+            // GameLauncherService, so report it for play tracking.
+            PlayTrackingService.RecordLaunch(_currentGame);
+
             if (_selectedGroup == "Steam")
             {
                 try
@@ -225,6 +293,15 @@ namespace Nexus_Launcher.Controls
                 catch (Exception ex)
                 {
                     Program.LogCrash(ex);
+                }
+            }
+            else if (_selectedGroup == "Xbox")
+            {
+                if (!Nexus_Launcher.Services.XboxScannerService.LaunchGame(
+                    _appUserModelId))
+                {
+                    MessageBox.Show(
+                        "Failed to launch the application: " + _name);
                 }
             }
             else if (_selectedGroup == "Nexus Launcher")
@@ -507,6 +584,30 @@ namespace Nexus_Launcher.Controls
         private void dropDownButton6_Click(object sender, EventArgs e)
         {
             zoomTrackBarControl1.Value = 100;
+        }
+
+        private void ratingControl1_EditValueChanged(object sender, EventArgs e)
+        {
+            // The star is driven from ItemClick. This fires for our own
+            // writes too, so it deliberately does nothing.
+        }
+
+        private void ratingControl1_ItemClick(object sender, DevExpress.XtraEditors.Repository.ItemEventArgs e)
+        {
+            if (_syncingFavorite || _currentGame == null)
+                return;
+
+            // With a single item the control has no empty state, so
+            // clicking a lit star would leave it lit. Toggle the stored
+            // value and then redraw from it.
+            LibraryOrganizationService.ToggleFavorite(
+                _currentGame);
+
+            RefreshFavoriteDisplay();
+
+            FavoriteChanged?.Invoke(
+                this,
+                EventArgs.Empty);
         }
     }
 }

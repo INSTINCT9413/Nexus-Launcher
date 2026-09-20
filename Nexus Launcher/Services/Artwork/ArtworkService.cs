@@ -3,6 +3,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -93,9 +94,19 @@ namespace Nexus_Launcher.Services.Artwork
 
             if (game.HasArtwork)
             {
-               
+
                 return;
             }
+
+            // Nothing cached, but if the provider already came up empty
+            // recently there is no point asking again. Without this the
+            // same games are looked up on every startup forever, which
+            // is what made Xbox titles look like they re-download.
+            if (!ArtworkCache.ShouldRetryDownload(game))
+            {
+                return;
+            }
+
             // Every registered game counts toward the total.
             Interlocked.Increment(ref totalArtworkJobs);
             //----------------------------------------------------
@@ -256,7 +267,16 @@ namespace Nexus_Launcher.Services.Artwork
                 }
 
                 if (steamGridGame == null)
+                {
+                    // Remember the miss, otherwise this game is queued
+                    // again on the next startup.
+                    ArtworkCache.RecordAttempt(
+                        game,
+                        0,
+                        false);
+
                     return;
+                }
 
                 //----------------------------------------------------
                 // Save SteamGrid ID
@@ -338,6 +358,21 @@ namespace Nexus_Launcher.Services.Artwork
                     System.Diagnostics.Debug.WriteLine(
                         $"{downloadNames[i]} Success: {results[i]}");
                 }
+
+                //----------------------------------------------------
+                // Record the outcome
+                //----------------------------------------------------
+
+                // A match with no usable images counts as a miss, or the
+                // lookup gets repeated on every startup.
+                bool obtained =
+                    results.Length > 0 &&
+                    results.Any(x => x);
+
+                ArtworkCache.RecordAttempt(
+                    game,
+                    steamGridGame.Id,
+                    obtained);
 
                 //----------------------------------------------------
                 // Reload artwork

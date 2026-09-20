@@ -15,6 +15,10 @@ internal static class GameLauncherService
         {
             if (game == null)
                 return;
+
+            Nexus_Launcher.Services.Library.PlayTrackingService
+                .RecordLaunch(game);
+
             System.Diagnostics.Debug.WriteLine(
     $"Launcher = '{game.Launcher}'");
             switch (game.Launcher)
@@ -41,6 +45,10 @@ internal static class GameLauncherService
 
                 case "Ubisoft":
                     LaunchUbisoft(game);
+                    break;
+
+                case "Xbox":
+                    LaunchXbox(game);
                     break;
 
                 case "Nexus Launcher":
@@ -233,6 +241,15 @@ game.LaunchUri))
         catch (Exception ex)
         {
             Program.LogCrash(ex);
+        }
+    }
+    public static void LaunchXbox(GameInfo game)
+    {
+        if (!Nexus_Launcher.Services.XboxScannerService.LaunchGame(
+            game.AppUserModelId))
+        {
+            MessageBox.Show(
+                "Failed to launch " + game.Name + ".");
         }
     }
     public static void LaunchExecutable(GameInfo game)

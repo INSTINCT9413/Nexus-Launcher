@@ -28,34 +28,37 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ApplicationCard));
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
+            this.pictureEdit2 = new DevExpress.XtraEditors.PictureEdit();
             this.dropDownButton1 = new DevExpress.XtraEditors.DropDownButton();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timer1 = new System.Windows.Forms.Timer();
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.panelControl2 = new DevExpress.XtraEditors.PanelControl();
             this.panelControl3 = new DevExpress.XtraEditors.PanelControl();
-            this.webView22 = new Microsoft.Web.WebView2.WinForms.WebView2();
-            this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
             this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
-            this.dropDownButton3 = new DevExpress.XtraEditors.DropDownButton();
-            this.pictureEdit1 = new DevExpress.XtraEditors.PictureEdit();
-            this.dropDownButton2 = new DevExpress.XtraEditors.DropDownButton();
-            this.pictureEdit2 = new DevExpress.XtraEditors.PictureEdit();
             this.dropDownButton6 = new DevExpress.XtraEditors.DropDownButton();
             this.zoomTrackBarControl1 = new DevExpress.XtraEditors.ZoomTrackBarControl();
             this.dropDownButton4 = new DevExpress.XtraEditors.DropDownButton();
             this.dropDownButton5 = new DevExpress.XtraEditors.DropDownButton();
+            this.webView22 = new Microsoft.Web.WebView2.WinForms.WebView2();
+            this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
+            this.ratingControl1 = new DevExpress.XtraEditors.RatingControl();
+            this.dropDownButton3 = new DevExpress.XtraEditors.DropDownButton();
+            this.pictureEdit1 = new DevExpress.XtraEditors.PictureEdit();
+            this.dropDownButton2 = new DevExpress.XtraEditors.DropDownButton();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureEdit2.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.webView21)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl2)).BeginInit();
             this.panelControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl3)).BeginInit();
             this.panelControl3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.zoomTrackBarControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.zoomTrackBarControl1.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.webView22)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1.Panel1)).BeginInit();
@@ -63,10 +66,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1.Panel2)).BeginInit();
             this.splitContainerControl1.Panel2.SuspendLayout();
             this.splitContainerControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ratingControl1.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureEdit1.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureEdit2.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.zoomTrackBarControl1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.zoomTrackBarControl1.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // panelControl1
@@ -78,10 +79,23 @@
             this.panelControl1.Size = new System.Drawing.Size(1095, 202);
             this.panelControl1.TabIndex = 1;
             // 
+            // pictureEdit2
+            // 
+            this.pictureEdit2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureEdit2.Location = new System.Drawing.Point(2, 2);
+            this.pictureEdit2.Name = "pictureEdit2";
+            this.pictureEdit2.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.pictureEdit2.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
+            this.pictureEdit2.Properties.ShowEditMenuItem = DevExpress.Utils.DefaultBoolean.False;
+            this.pictureEdit2.Properties.ShowMenu = false;
+            this.pictureEdit2.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Stretch;
+            this.pictureEdit2.Size = new System.Drawing.Size(1091, 198);
+            this.pictureEdit2.TabIndex = 0;
+            // 
             // dropDownButton1
             // 
             this.dropDownButton1.DropDownArrowStyle = DevExpress.XtraEditors.DropDownArrowStyle.Hide;
-            this.dropDownButton1.Location = new System.Drawing.Point(173, 351);
+            this.dropDownButton1.Location = new System.Drawing.Point(173, 342);
             this.dropDownButton1.Name = "dropDownButton1";
             this.dropDownButton1.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
             this.dropDownButton1.Size = new System.Drawing.Size(200, 44);
@@ -154,47 +168,6 @@
             this.panelControl3.TabIndex = 9;
             this.panelControl3.Visible = false;
             // 
-            // webView22
-            // 
-            this.webView22.AllowExternalDrop = true;
-            this.webView22.CreationProperties = null;
-            this.webView22.DefaultBackgroundColor = System.Drawing.Color.White;
-            this.webView22.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webView22.Location = new System.Drawing.Point(2, 2);
-            this.webView22.Name = "webView22";
-            this.webView22.Size = new System.Drawing.Size(1091, 437);
-            this.webView22.Source = new System.Uri("https://guardbyte.me/downloads/Nexus%20Launcher/loading.html", System.UriKind.Absolute);
-            this.webView22.TabIndex = 6;
-            this.webView22.Visible = false;
-            this.webView22.ZoomFactor = 1D;
-            // 
-            // splitContainerControl1
-            // 
-            this.splitContainerControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerControl1.Horizontal = false;
-            this.splitContainerControl1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainerControl1.Name = "splitContainerControl1";
-            // 
-            // splitContainerControl1.Panel1
-            // 
-            this.splitContainerControl1.Panel1.Controls.Add(this.dropDownButton3);
-            this.splitContainerControl1.Panel1.Controls.Add(this.pictureEdit1);
-            this.splitContainerControl1.Panel1.Controls.Add(this.dropDownButton2);
-            this.splitContainerControl1.Panel1.Controls.Add(this.dropDownButton1);
-            this.splitContainerControl1.Panel1.Controls.Add(this.panelControl1);
-            this.splitContainerControl1.Panel1.Controls.Add(this.labelControl1);
-            this.splitContainerControl1.Panel1.Controls.Add(this.labelControl2);
-            this.splitContainerControl1.Panel1.Text = "Panel1";
-            // 
-            // splitContainerControl1.Panel2
-            // 
-            this.splitContainerControl1.Panel2.Controls.Add(this.panelControl2);
-            this.splitContainerControl1.Panel2.Text = "Panel2";
-            this.splitContainerControl1.ShowSplitGlyph = DevExpress.Utils.DefaultBoolean.False;
-            this.splitContainerControl1.Size = new System.Drawing.Size(1095, 871);
-            this.splitContainerControl1.SplitterPosition = 420;
-            this.splitContainerControl1.TabIndex = 9;
-            // 
             // labelControl3
             // 
             this.labelControl3.Location = new System.Drawing.Point(344, 11);
@@ -202,61 +175,6 @@
             this.labelControl3.Size = new System.Drawing.Size(26, 13);
             this.labelControl3.TabIndex = 13;
             this.labelControl3.Text = "200%";
-            // 
-            // dropDownButton3
-            // 
-            this.dropDownButton3.DropDownArrowStyle = DevExpress.XtraEditors.DropDownArrowStyle.Hide;
-            this.dropDownButton3.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("dropDownButton3.ImageOptions.Image")));
-            this.dropDownButton3.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-            this.dropDownButton3.Location = new System.Drawing.Point(409, 371);
-            this.dropDownButton3.Name = "dropDownButton3";
-            this.dropDownButton3.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            this.dropDownButton3.Size = new System.Drawing.Size(24, 24);
-            this.dropDownButton3.TabIndex = 8;
-            this.dropDownButton3.ToolTip = "Expand the store page";
-            this.dropDownButton3.ToolTipIconType = DevExpress.Utils.ToolTipIconType.Information;
-            this.dropDownButton3.ToolTipTitle = "Expand";
-            this.dropDownButton3.Click += new System.EventHandler(this.dropDownButton3_Click);
-            // 
-            // pictureEdit1
-            // 
-            this.pictureEdit1.Location = new System.Drawing.Point(0, 206);
-            this.pictureEdit1.Name = "pictureEdit1";
-            this.pictureEdit1.Properties.AllowZoom = DevExpress.Utils.DefaultBoolean.True;
-            this.pictureEdit1.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
-            this.pictureEdit1.Properties.ShowEditMenuItem = DevExpress.Utils.DefaultBoolean.False;
-            this.pictureEdit1.Properties.ShowMenu = false;
-            this.pictureEdit1.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Stretch;
-            this.pictureEdit1.Size = new System.Drawing.Size(158, 210);
-            this.pictureEdit1.TabIndex = 0;
-            // 
-            // dropDownButton2
-            // 
-            this.dropDownButton2.DropDownArrowStyle = DevExpress.XtraEditors.DropDownArrowStyle.Hide;
-            this.dropDownButton2.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("dropDownButton2.ImageOptions.Image")));
-            this.dropDownButton2.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-            this.dropDownButton2.Location = new System.Drawing.Point(379, 371);
-            this.dropDownButton2.Name = "dropDownButton2";
-            this.dropDownButton2.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            this.dropDownButton2.Size = new System.Drawing.Size(24, 24);
-            this.dropDownButton2.TabIndex = 7;
-            this.dropDownButton2.ToolTip = "Reload the store page";
-            this.dropDownButton2.ToolTipIconType = DevExpress.Utils.ToolTipIconType.Information;
-            this.dropDownButton2.ToolTipTitle = "Reload";
-            this.dropDownButton2.Click += new System.EventHandler(this.dropDownButton2_Click);
-            // 
-            // pictureEdit2
-            // 
-            this.pictureEdit2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureEdit2.Location = new System.Drawing.Point(2, 2);
-            this.pictureEdit2.Name = "pictureEdit2";
-            this.pictureEdit2.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            this.pictureEdit2.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
-            this.pictureEdit2.Properties.ShowEditMenuItem = DevExpress.Utils.DefaultBoolean.False;
-            this.pictureEdit2.Properties.ShowMenu = false;
-            this.pictureEdit2.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Stretch;
-            this.pictureEdit2.Size = new System.Drawing.Size(1091, 198);
-            this.pictureEdit2.TabIndex = 0;
             // 
             // dropDownButton6
             // 
@@ -319,6 +237,105 @@
             this.dropDownButton5.ToolTipTitle = "Reload";
             this.dropDownButton5.Click += new System.EventHandler(this.dropDownButton5_Click);
             // 
+            // webView22
+            // 
+            this.webView22.AllowExternalDrop = true;
+            this.webView22.CreationProperties = null;
+            this.webView22.DefaultBackgroundColor = System.Drawing.Color.White;
+            this.webView22.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webView22.Location = new System.Drawing.Point(2, 2);
+            this.webView22.Name = "webView22";
+            this.webView22.Size = new System.Drawing.Size(1091, 437);
+            this.webView22.Source = new System.Uri("https://guardbyte.me/downloads/Nexus%20Launcher/loading.html", System.UriKind.Absolute);
+            this.webView22.TabIndex = 6;
+            this.webView22.Visible = false;
+            this.webView22.ZoomFactor = 1D;
+            // 
+            // splitContainerControl1
+            // 
+            this.splitContainerControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerControl1.Horizontal = false;
+            this.splitContainerControl1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerControl1.Name = "splitContainerControl1";
+            // 
+            // splitContainerControl1.Panel1
+            // 
+            this.splitContainerControl1.Panel1.Controls.Add(this.ratingControl1);
+            this.splitContainerControl1.Panel1.Controls.Add(this.dropDownButton3);
+            this.splitContainerControl1.Panel1.Controls.Add(this.pictureEdit1);
+            this.splitContainerControl1.Panel1.Controls.Add(this.dropDownButton2);
+            this.splitContainerControl1.Panel1.Controls.Add(this.dropDownButton1);
+            this.splitContainerControl1.Panel1.Controls.Add(this.panelControl1);
+            this.splitContainerControl1.Panel1.Controls.Add(this.labelControl1);
+            this.splitContainerControl1.Panel1.Controls.Add(this.labelControl2);
+            this.splitContainerControl1.Panel1.Text = "Panel1";
+            // 
+            // splitContainerControl1.Panel2
+            // 
+            this.splitContainerControl1.Panel2.Controls.Add(this.panelControl2);
+            this.splitContainerControl1.Panel2.Text = "Panel2";
+            this.splitContainerControl1.ShowSplitGlyph = DevExpress.Utils.DefaultBoolean.False;
+            this.splitContainerControl1.Size = new System.Drawing.Size(1095, 871);
+            this.splitContainerControl1.SplitterPosition = 420;
+            this.splitContainerControl1.TabIndex = 9;
+            // 
+            // ratingControl1
+            // 
+            this.ratingControl1.Location = new System.Drawing.Point(379, 342);
+            this.ratingControl1.Name = "ratingControl1";
+            this.ratingControl1.Properties.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.ratingControl1.Properties.Appearance.Options.UseFont = true;
+            this.ratingControl1.Properties.AutoHeight = false;
+            this.ratingControl1.Properties.AutoSize = false;
+            this.ratingControl1.Properties.ItemCount = 1;
+            this.ratingControl1.Size = new System.Drawing.Size(24, 44);
+            this.ratingControl1.TabIndex = 9;
+            this.ratingControl1.Text = "ratingControl1";
+            this.ratingControl1.ItemClick += new DevExpress.XtraEditors.Repository.ItemEventHandler(this.ratingControl1_ItemClick);
+            this.ratingControl1.EditValueChanged += new System.EventHandler(this.ratingControl1_EditValueChanged);
+            // 
+            // dropDownButton3
+            // 
+            this.dropDownButton3.DropDownArrowStyle = DevExpress.XtraEditors.DropDownArrowStyle.Hide;
+            this.dropDownButton3.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("dropDownButton3.ImageOptions.Image")));
+            this.dropDownButton3.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            this.dropDownButton3.Location = new System.Drawing.Point(203, 392);
+            this.dropDownButton3.Name = "dropDownButton3";
+            this.dropDownButton3.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
+            this.dropDownButton3.Size = new System.Drawing.Size(24, 24);
+            this.dropDownButton3.TabIndex = 8;
+            this.dropDownButton3.ToolTip = "Expand the store page";
+            this.dropDownButton3.ToolTipIconType = DevExpress.Utils.ToolTipIconType.Information;
+            this.dropDownButton3.ToolTipTitle = "Expand";
+            this.dropDownButton3.Click += new System.EventHandler(this.dropDownButton3_Click);
+            // 
+            // pictureEdit1
+            // 
+            this.pictureEdit1.Location = new System.Drawing.Point(0, 206);
+            this.pictureEdit1.Name = "pictureEdit1";
+            this.pictureEdit1.Properties.AllowZoom = DevExpress.Utils.DefaultBoolean.True;
+            this.pictureEdit1.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
+            this.pictureEdit1.Properties.ShowEditMenuItem = DevExpress.Utils.DefaultBoolean.False;
+            this.pictureEdit1.Properties.ShowMenu = false;
+            this.pictureEdit1.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Stretch;
+            this.pictureEdit1.Size = new System.Drawing.Size(158, 210);
+            this.pictureEdit1.TabIndex = 0;
+            // 
+            // dropDownButton2
+            // 
+            this.dropDownButton2.DropDownArrowStyle = DevExpress.XtraEditors.DropDownArrowStyle.Hide;
+            this.dropDownButton2.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("dropDownButton2.ImageOptions.Image")));
+            this.dropDownButton2.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            this.dropDownButton2.Location = new System.Drawing.Point(173, 392);
+            this.dropDownButton2.Name = "dropDownButton2";
+            this.dropDownButton2.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
+            this.dropDownButton2.Size = new System.Drawing.Size(24, 24);
+            this.dropDownButton2.TabIndex = 7;
+            this.dropDownButton2.ToolTip = "Reload the store page";
+            this.dropDownButton2.ToolTipIconType = DevExpress.Utils.ToolTipIconType.Information;
+            this.dropDownButton2.ToolTipTitle = "Reload";
+            this.dropDownButton2.Click += new System.EventHandler(this.dropDownButton2_Click);
+            // 
             // ApplicationCard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -330,12 +347,15 @@
             this.Load += new System.EventHandler(this.ApplicationCard_Load);
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureEdit2.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.webView21)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl2)).EndInit();
             this.panelControl2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.panelControl3)).EndInit();
             this.panelControl3.ResumeLayout(false);
             this.panelControl3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.zoomTrackBarControl1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.zoomTrackBarControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.webView22)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1.Panel1)).EndInit();
             this.splitContainerControl1.Panel1.ResumeLayout(false);
@@ -344,10 +364,8 @@
             this.splitContainerControl1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).EndInit();
             this.splitContainerControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ratingControl1.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureEdit1.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureEdit2.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.zoomTrackBarControl1.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.zoomTrackBarControl1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -372,5 +390,6 @@
         private DevExpress.XtraEditors.ZoomTrackBarControl zoomTrackBarControl1;
         private DevExpress.XtraEditors.LabelControl labelControl3;
         public DevExpress.XtraEditors.DropDownButton dropDownButton6;
+        private DevExpress.XtraEditors.RatingControl ratingControl1;
     }
 }

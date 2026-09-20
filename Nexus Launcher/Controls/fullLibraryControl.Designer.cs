@@ -72,17 +72,17 @@
             this.panelControl1.MaximumSize = new System.Drawing.Size(0, 44);
             this.panelControl1.MinimumSize = new System.Drawing.Size(641, 0);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(641, 44);
+            this.panelControl1.Size = new System.Drawing.Size(997, 44);
             this.panelControl1.TabIndex = 1;
             // 
             // simpleButton1
             // 
             this.simpleButton1.Dock = System.Windows.Forms.DockStyle.Right;
             this.simpleButton1.ImageOptions.Image = global::Nexus_Launcher.Properties.Resources.icons8_refresh_28;
-            this.simpleButton1.Location = new System.Drawing.Point(960, 2);
+            this.simpleButton1.Location = new System.Drawing.Point(962, 0);
             this.simpleButton1.Name = "simpleButton1";
             this.simpleButton1.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
-            this.simpleButton1.Size = new System.Drawing.Size(35, 40);
+            this.simpleButton1.Size = new System.Drawing.Size(35, 44);
             this.simpleButton1.TabIndex = 1;
             this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
             // 

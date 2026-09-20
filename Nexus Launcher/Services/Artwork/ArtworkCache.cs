@@ -1,4 +1,5 @@
-﻿using Nexus_Launcher.Models;
+﻿using Newtonsoft.Json;
+using Nexus_Launcher.Models;
 using System;
 using System.IO;
 
@@ -147,6 +148,98 @@ namespace Nexus_Launcher.Services.Artwork
 
             game.HasArtwork =
                 ArtworkExists(game);
+        }
+
+        //--------------------------------------------------------------
+        // Attempt history
+        //--------------------------------------------------------------
+
+        /// <summary>
+        /// How long to leave a game alone after SteamGridDB turned up
+        /// nothing for it. Long enough to stop the pointless lookups on
+        /// every startup, short enough that artwork added to the site
+        /// later still gets picked up.
+        /// </summary>
+        private static readonly TimeSpan RetryAfter =
+            TimeSpan.FromDays(14);
+
+        public static ArtworkMetadata ReadMetadata(
+            GameInfo game)
+        {
+            try
+            {
+                string path =
+                    GetMetadataPath(game);
+
+                if (!File.Exists(path))
+                    return null;
+
+                return JsonConvert.DeserializeObject<ArtworkMetadata>(
+                    File.ReadAllText(path));
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Records that a lookup happened, so a miss is remembered
+        /// rather than repeated on the next run.
+        /// </summary>
+        public static void RecordAttempt(
+            GameInfo game,
+            int providerId,
+            bool hasArtwork)
+        {
+            try
+            {
+                ArtworkMetadata metadata =
+                    ReadMetadata(game) ?? new ArtworkMetadata();
+
+                metadata.ProviderId = providerId;
+                metadata.HasArtwork = hasArtwork;
+                metadata.LastAttemptUtc = DateTime.UtcNow;
+
+                metadata.FailedAttempts =
+                    hasArtwork
+                        ? 0
+                        : metadata.FailedAttempts + 1;
+
+                File.WriteAllText(
+                    GetMetadataPath(game),
+                    JsonConvert.SerializeObject(
+                        metadata,
+                        Formatting.Indented));
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+            }
+        }
+
+        /// <summary>
+        /// Whether a game with no cached images is worth looking up
+        /// again. False while a recent miss is still inside the retry
+        /// window.
+        /// </summary>
+        public static bool ShouldRetryDownload(
+            GameInfo game)
+        {
+            ArtworkMetadata metadata =
+                ReadMetadata(game);
+
+            // Never attempted, so this is the first try.
+            if (metadata == null)
+                return true;
+
+            // A previous run saved images that have since been deleted.
+            if (metadata.HasArtwork)
+                return true;
+
+            return DateTime.UtcNow - metadata.LastAttemptUtc >= RetryAfter;
         }
 
         private static string GetGameId(
