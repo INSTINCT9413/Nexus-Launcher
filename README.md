@@ -40,6 +40,7 @@ Nexus Launcher is designed to support games from multiple platforms.
 - [x] Battle.net
 - [x] Epic Games
 - [x] GOG
+- [x] Xbox/Windows Store
 - [ ] Amazon Games (Deprecated)
 - [ ] Paradox Launcher (Deprecated)
 - [ ] Windows Store / Xbox App (Planned)
@@ -59,7 +60,7 @@ Nexus Launcher is designed to support games from multiple platforms.
 - [x] Battle.net
 - [x] Epic Games
 - [x] GOG
-- [ ] Windows Store / Xbox App (Planned)
+- [x] Windows Store / Xbox App
 
 ### Planned Features
 
