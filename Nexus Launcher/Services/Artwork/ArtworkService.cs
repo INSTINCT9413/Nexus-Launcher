@@ -187,6 +187,64 @@ namespace Nexus_Launcher.Services.Artwork
                 }
             }
         }
+        /// <summary>
+        /// Puts a game back to default artwork: drops anything the user
+        /// supplied, throws away the downloaded copy and its attempt
+        /// history, then queues a fresh lookup.
+        ///
+        /// Where the provider has nothing for the game, which is normal
+        /// for user added programs, it simply ends up with no artwork
+        /// and the UI falls back as it always did.
+        /// </summary>
+        public static void ResetArtwork(GameInfo game)
+        {
+            if (game == null)
+                return;
+
+            CustomArtworkService.RemoveAllCustomArtwork(game);
+
+            // Clears metadata.json too, so ShouldRetryDownload lets
+            // this one through even if it missed recently.
+            ArtworkCache.DeleteGameCache(game);
+
+            game.GridImagePath = null;
+            game.HeroImagePath = null;
+            game.LogoPath = null;
+            game.HasArtwork = false;
+
+            // Redraw straight away rather than waiting on the network.
+            CustomArtworkService.NotifyChanged(game);
+
+            // Nexus Launcher entries are user added programs rather
+            // than games. SteamGridDB can only match them on name, so
+            // it returns whichever game is closest, which is usually
+            // wrong. They go back to the built in defaults instead of
+            // being queued for a lookup.
+            //
+            // This is the only path that could ever queue one: nothing
+            // registers Nexus entries for artwork in the first place.
+            if (IsNexusEntry(game))
+                return;
+
+            RegisterGame(game);
+
+            FinishRegistration();
+        }
+
+        /// <summary>
+        /// The launcher name used for user added programs.
+        /// </summary>
+        public const string NexusLauncherName = "Nexus Launcher";
+
+        public static bool IsNexusEntry(GameInfo game)
+        {
+            return game != null &&
+                string.Equals(
+                    game.Launcher,
+                    NexusLauncherName,
+                    StringComparison.OrdinalIgnoreCase);
+        }
+
         public static void RedownloadAllArtwork()
         {
             foreach (GameInfo game in registeredGames)

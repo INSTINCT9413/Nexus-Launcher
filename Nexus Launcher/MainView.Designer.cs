@@ -179,6 +179,8 @@
             this.adornerUIManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(this.components);
             this.badge1 = new DevExpress.Utils.VisualEffects.Badge();
             this.htmlContentPopup1 = new DevExpress.XtraEditors.HtmlContentPopup(this.components);
+            this.barSubItem8 = new DevExpress.XtraBars.BarSubItem();
+            this.barButtonItem16 = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.accordionControl2)).BeginInit();
@@ -867,7 +869,9 @@
             this.barWorkspaceMenuItem1,
             this.barLargeButtonItem2,
             this.barStaticItem2,
-            this.barButtonItem15});
+            this.barButtonItem15,
+            this.barSubItem8,
+            this.barButtonItem16});
             this.fluentDesignFormControl2.Location = new System.Drawing.Point(0, 0);
             this.fluentDesignFormControl2.Name = "fluentDesignFormControl2";
             this.fluentDesignFormControl2.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
@@ -880,7 +884,8 @@
             this.fluentDesignFormControl2.TitleItemLinks.Add(this.barButtonItem8);
             this.fluentDesignFormControl2.TitleItemLinks.Add(this.barStaticItem1);
             this.fluentDesignFormControl2.TitleItemLinks.Add(this.barButtonItem13);
-            this.fluentDesignFormControl2.TitleItemLinks.Add(this.barSubItem4, true);
+            this.fluentDesignFormControl2.TitleItemLinks.Add(this.barButtonItem16, true);
+            this.fluentDesignFormControl2.TitleItemLinks.Add(this.barSubItem4);
             this.fluentDesignFormControl2.TitleItemLinks.Add(this.barSubItem6);
             this.fluentDesignFormControl2.TitleItemLinks.Add(this.barButtonItem14);
             this.fluentDesignFormControl2.TitleItemLinks.Add(this.barButtonItem15);
@@ -1456,6 +1461,19 @@
             this.htmlContentPopup1.HtmlTemplate.Styles = resources.GetString("htmlContentPopup1.HtmlTemplate.Styles");
             this.htmlContentPopup1.HtmlTemplate.Template = resources.GetString("htmlContentPopup1.HtmlTemplate.Template");
             // 
+            // barSubItem8
+            // 
+            this.barSubItem8.Caption = "barSubItem8";
+            this.barSubItem8.Id = 0;
+            this.barSubItem8.Name = "barSubItem8";
+            // 
+            // barButtonItem16
+            // 
+            this.barButtonItem16.Caption = "My Account";
+            this.barButtonItem16.Id = 1;
+            this.barButtonItem16.Name = "barButtonItem16";
+            this.barButtonItem16.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem16_ItemClick);
+            // 
             // MainView
             // 
             this.ClientSize = new System.Drawing.Size(1600, 900);
@@ -1634,6 +1652,8 @@
         private DevExpress.Utils.VisualEffects.Badge badge1;
         private DevExpress.XtraBars.SkinPaletteDropDownButtonItem skinPaletteDropDownButtonItem5;
         private DevExpress.XtraEditors.HtmlContentPopup htmlContentPopup1;
+        private DevExpress.XtraBars.BarSubItem barSubItem8;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem16;
     }
 }
 

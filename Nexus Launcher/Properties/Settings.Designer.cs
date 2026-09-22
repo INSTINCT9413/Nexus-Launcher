@@ -211,6 +211,18 @@ namespace Nexus_Launcher.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CustomThemingEnabled {
+            get {
+                return ((bool)(this["CustomThemingEnabled"]));
+            }
+            set {
+                this["CustomThemingEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool HideEANotice {
             get {
                 return ((bool)(this["HideEANotice"]));

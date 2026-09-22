@@ -67,6 +67,14 @@ namespace Nexus_Launcher
                 // Settings.Default.SettingsUpgraded = true;
                 // Settings.Default.Save();
             }
+
+            // Custom palettes have to be back in their skins before
+            // anything applies the saved theme. Both WaitForm1 and
+            // MainView do that on startup, so it happens here rather
+            // than in either of them.
+            Nexus_Launcher.Services.Themes.CustomThemeService
+                .RegisterAll();
+
             Application.SetUnhandledExceptionMode(
                 UnhandledExceptionMode.CatchException);
 

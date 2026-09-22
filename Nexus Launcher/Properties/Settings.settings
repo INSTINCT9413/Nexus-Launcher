@@ -47,6 +47,9 @@
     <Setting Name="SidePanelRemember" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="CustomThemingEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
     <Setting Name="HideEANotice" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>

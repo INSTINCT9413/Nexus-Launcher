@@ -383,6 +383,26 @@ namespace Nexus_Launcher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap insertimage_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("insertimage_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap nexus_loader_128 {
+            get {
+                object obj = ResourceManager.GetObject("nexus_loader_128", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap NA {
             get {
                 object obj = ResourceManager.GetObject("NA", resourceCulture);

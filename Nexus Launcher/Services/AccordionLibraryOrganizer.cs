@@ -1,4 +1,4 @@
-using DevExpress.LookAndFeel;
+﻿using DevExpress.LookAndFeel;
 using DevExpress.Skins;
 using DevExpress.XtraBars.Navigation;
 using Nexus_Launcher.Models;
@@ -72,6 +72,15 @@ namespace Nexus_Launcher.Services.Library
 
                 if (string.IsNullOrWhiteSpace(game.Launcher))
                     game.Launcher = launcher;
+
+                // Custom artwork is normally applied by
+                // ArtworkCache.LoadCachedArtwork, but Nexus Launcher
+                // entries never register for artwork at all, so that
+                // never runs for them and their custom art would be
+                // lost on restart. Every game from every launcher
+                // passes through here, after Launcher is stamped, so
+                // this is the one place that covers all of them.
+                Artwork.CustomArtworkService.ApplyTo(game);
             }
 
             // Rearrange reuses the elements that are already on screen,
@@ -489,6 +498,28 @@ namespace Nexus_Launcher.Services.Library
             return items
                 .Select(x => (GameInfo)x.Tag)
                 .ToList();
+        }
+
+        /// <summary>
+        /// Every launcher that has been populated, with its games,
+        /// keyed on the display name the user sees in the accordion.
+        /// This is the source of truth for library statistics: it
+        /// includes Nexus entries, which LibraryService does not.
+        /// </summary>
+        public static Dictionary<string, List<GameInfo>> GetAllLaunchers()
+        {
+            Dictionary<string, List<GameInfo>> result =
+                new Dictionary<string, List<GameInfo>>(
+                    StringComparer.OrdinalIgnoreCase);
+
+            foreach (KeyValuePair<AccordionControlElement, string> pair in
+                launcherNames.ToList())
+            {
+                result[pair.Value] =
+                    GetGames(pair.Key);
+            }
+
+            return result;
         }
 
         /// <summary>

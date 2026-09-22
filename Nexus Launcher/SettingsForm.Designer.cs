@@ -53,11 +53,6 @@
             this.toggleSwitch9 = new DevExpress.XtraEditors.ToggleSwitch();
             this.labelControl10 = new DevExpress.XtraEditors.LabelControl();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.panelControl11 = new DevExpress.XtraEditors.PanelControl();
-            this.uiLight4 = new Sunny.UI.UILight();
-            this.toggleSwitch12 = new DevExpress.XtraEditors.ToggleSwitch();
-            this.labelControl13 = new DevExpress.XtraEditors.LabelControl();
-            this.pictureBox9 = new System.Windows.Forms.PictureBox();
             this.groupControl3 = new DevExpress.XtraEditors.GroupControl();
             this.panelControl5 = new DevExpress.XtraEditors.PanelControl();
             this.simpleButton6 = new DevExpress.XtraEditors.SimpleButton();
@@ -80,6 +75,11 @@
             this.toggleSwitch5 = new DevExpress.XtraEditors.ToggleSwitch();
             this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.panelControl11 = new DevExpress.XtraEditors.PanelControl();
+            this.uiLight4 = new Sunny.UI.UILight();
+            this.toggleSwitch12 = new DevExpress.XtraEditors.ToggleSwitch();
+            this.labelControl13 = new DevExpress.XtraEditors.LabelControl();
+            this.pictureBox9 = new System.Windows.Forms.PictureBox();
             this.panelControl4 = new DevExpress.XtraEditors.PanelControl();
             this.uiLight3 = new Sunny.UI.UILight();
             this.toggleSwitch6 = new DevExpress.XtraEditors.ToggleSwitch();
@@ -180,6 +180,9 @@
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
             this.simpleButton4 = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
+            this.checkEdit7 = new DevExpress.XtraEditors.CheckEdit();
+            this.dropDownButton1 = new DevExpress.XtraEditors.DropDownButton();
+            this.labelControl30 = new DevExpress.XtraEditors.LabelControl();
             this.stepProgress1 = new HorizonUI.StepProgress();
             ((System.ComponentModel.ISupportInitialize)(this.tabPane1)).BeginInit();
             this.tabPane1.SuspendLayout();
@@ -202,10 +205,6 @@
             this.panelControl8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch9.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.panelControl11)).BeginInit();
-            this.panelControl11.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch12.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl3)).BeginInit();
             this.groupControl3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl5)).BeginInit();
@@ -224,6 +223,10 @@
             this.panelControl3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch5.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl11)).BeginInit();
+            this.panelControl11.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch12.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl4)).BeginInit();
             this.panelControl4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch6.Properties)).BeginInit();
@@ -283,6 +286,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.webView22)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.checkEdit7.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // tabPane1
@@ -320,7 +324,7 @@
             this.groupControl4.Controls.Add(this.panelControl10);
             this.groupControl4.Controls.Add(this.panelControl7);
             this.groupControl4.Controls.Add(this.panelControl8);
-            this.groupControl4.Location = new System.Drawing.Point(701, 12);
+            this.groupControl4.Location = new System.Drawing.Point(786, 13);
             this.groupControl4.Name = "groupControl4";
             this.groupControl4.Size = new System.Drawing.Size(263, 548);
             this.groupControl4.TabIndex = 8;
@@ -555,63 +559,6 @@
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox6.TabIndex = 1;
             this.pictureBox6.TabStop = false;
-            // 
-            // panelControl11
-            // 
-            this.panelControl11.Controls.Add(this.uiLight4);
-            this.panelControl11.Controls.Add(this.toggleSwitch12);
-            this.panelControl11.Controls.Add(this.labelControl13);
-            this.panelControl11.Controls.Add(this.pictureBox9);
-            this.panelControl11.Location = new System.Drawing.Point(14, 560);
-            this.panelControl11.Name = "panelControl11";
-            this.panelControl11.Size = new System.Drawing.Size(654, 80);
-            this.panelControl11.TabIndex = 6;
-            // 
-            // uiLight4
-            // 
-            this.uiLight4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.uiLight4.Location = new System.Drawing.Point(233, 5);
-            this.uiLight4.MinimumSize = new System.Drawing.Size(1, 1);
-            this.uiLight4.Name = "uiLight4";
-            this.uiLight4.OffColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.uiLight4.OnColor = System.Drawing.Color.Lime;
-            this.uiLight4.Radius = 12;
-            this.uiLight4.Size = new System.Drawing.Size(12, 12);
-            this.uiLight4.State = Sunny.UI.UILightState.Off;
-            this.uiLight4.TabIndex = 12;
-            this.uiLight4.Text = "uiLight4";
-            // 
-            // toggleSwitch12
-            // 
-            this.toggleSwitch12.EditValue = true;
-            this.toggleSwitch12.Location = new System.Drawing.Point(81, 34);
-            this.toggleSwitch12.Name = "toggleSwitch12";
-            this.toggleSwitch12.Properties.AllowFocused = false;
-            this.toggleSwitch12.Properties.OffText = "Hide";
-            this.toggleSwitch12.Properties.OnText = "Show";
-            this.toggleSwitch12.Size = new System.Drawing.Size(122, 19);
-            this.toggleSwitch12.TabIndex = 3;
-            this.toggleSwitch12.Toggled += new System.EventHandler(this.toggleSwitch12_Toggled);
-            // 
-            // labelControl13
-            // 
-            this.labelControl13.Appearance.Font = new System.Drawing.Font("Tahoma", 14F);
-            this.labelControl13.Appearance.Options.UseFont = true;
-            this.labelControl13.Location = new System.Drawing.Point(81, 5);
-            this.labelControl13.Name = "labelControl13";
-            this.labelControl13.Size = new System.Drawing.Size(80, 23);
-            this.labelControl13.TabIndex = 2;
-            this.labelControl13.Text = "Xbox App";
-            // 
-            // pictureBox9
-            // 
-            this.pictureBox9.Image = global::Nexus_Launcher.Properties.Resources.apps_60199_13798539581762600_abe1643f_1704_4a4d_a61b_47ccc25da012;
-            this.pictureBox9.Location = new System.Drawing.Point(5, 5);
-            this.pictureBox9.Name = "pictureBox9";
-            this.pictureBox9.Size = new System.Drawing.Size(70, 70);
-            this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox9.TabIndex = 1;
-            this.pictureBox9.TabStop = false;
             // 
             // groupControl3
             // 
@@ -863,6 +810,62 @@
             this.pictureBox2.TabIndex = 1;
             this.pictureBox2.TabStop = false;
             // 
+            // panelControl11
+            // 
+            this.panelControl11.Controls.Add(this.uiLight4);
+            this.panelControl11.Controls.Add(this.toggleSwitch12);
+            this.panelControl11.Controls.Add(this.labelControl13);
+            this.panelControl11.Controls.Add(this.pictureBox9);
+            this.panelControl11.Location = new System.Drawing.Point(14, 560);
+            this.panelControl11.Name = "panelControl11";
+            this.panelControl11.Size = new System.Drawing.Size(654, 80);
+            this.panelControl11.TabIndex = 6;
+            // 
+            // uiLight4
+            // 
+            this.uiLight4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.uiLight4.Location = new System.Drawing.Point(637, 5);
+            this.uiLight4.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiLight4.Name = "uiLight4";
+            this.uiLight4.OffColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.uiLight4.OnColor = System.Drawing.Color.Lime;
+            this.uiLight4.Radius = 12;
+            this.uiLight4.Size = new System.Drawing.Size(12, 12);
+            this.uiLight4.State = Sunny.UI.UILightState.Off;
+            this.uiLight4.TabIndex = 12;
+            this.uiLight4.Text = "uiLight4";
+            // 
+            // toggleSwitch12
+            // 
+            this.toggleSwitch12.Location = new System.Drawing.Point(81, 34);
+            this.toggleSwitch12.Name = "toggleSwitch12";
+            this.toggleSwitch12.Properties.AllowFocused = false;
+            this.toggleSwitch12.Properties.OffText = "Hide";
+            this.toggleSwitch12.Properties.OnText = "Show";
+            this.toggleSwitch12.Size = new System.Drawing.Size(122, 19);
+            this.toggleSwitch12.TabIndex = 3;
+            this.toggleSwitch12.Toggled += new System.EventHandler(this.toggleSwitch12_Toggled);
+            // 
+            // labelControl13
+            // 
+            this.labelControl13.Appearance.Font = new System.Drawing.Font("Tahoma", 14F);
+            this.labelControl13.Appearance.Options.UseFont = true;
+            this.labelControl13.Location = new System.Drawing.Point(81, 5);
+            this.labelControl13.Name = "labelControl13";
+            this.labelControl13.Size = new System.Drawing.Size(80, 23);
+            this.labelControl13.TabIndex = 2;
+            this.labelControl13.Text = "Xbox App";
+            // 
+            // pictureBox9
+            // 
+            this.pictureBox9.Image = global::Nexus_Launcher.Properties.Resources.apps_60199_13798539581762600_abe1643f_1704_4a4d_a61b_47ccc25da012;
+            this.pictureBox9.Location = new System.Drawing.Point(5, 5);
+            this.pictureBox9.Name = "pictureBox9";
+            this.pictureBox9.Size = new System.Drawing.Size(70, 70);
+            this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox9.TabIndex = 1;
+            this.pictureBox9.TabStop = false;
+            // 
             // panelControl4
             // 
             this.panelControl4.Controls.Add(this.uiLight3);
@@ -991,9 +994,9 @@
             // 
             this.groupControl9.Controls.Add(this.toggleSwitch20);
             this.groupControl9.Controls.Add(this.labelControl26);
-            this.groupControl9.Location = new System.Drawing.Point(467, 176);
+            this.groupControl9.Location = new System.Drawing.Point(467, 264);
             this.groupControl9.Name = "groupControl9";
-            this.groupControl9.Size = new System.Drawing.Size(310, 402);
+            this.groupControl9.Size = new System.Drawing.Size(310, 314);
             this.groupControl9.TabIndex = 3;
             this.groupControl9.Text = "Library Settings";
             // 
@@ -1144,13 +1147,16 @@
             // 
             // groupControl2
             // 
+            this.groupControl2.Controls.Add(this.labelControl30);
+            this.groupControl2.Controls.Add(this.dropDownButton1);
+            this.groupControl2.Controls.Add(this.checkEdit7);
             this.groupControl2.Controls.Add(this.labelControl20);
             this.groupControl2.Controls.Add(this.labelControl19);
             this.groupControl2.Controls.Add(this.comboBoxEdit1);
             this.groupControl2.Controls.Add(this.comboBoxEdit2);
             this.groupControl2.Location = new System.Drawing.Point(467, 13);
             this.groupControl2.Name = "groupControl2";
-            this.groupControl2.Size = new System.Drawing.Size(310, 157);
+            this.groupControl2.Size = new System.Drawing.Size(310, 242);
             this.groupControl2.TabIndex = 1;
             this.groupControl2.Text = "Theme Options";
             // 
@@ -2027,6 +2033,30 @@
             this.simpleButton1.Text = "Save Settings";
             this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
             // 
+            // checkEdit7
+            // 
+            this.checkEdit7.Location = new System.Drawing.Point(23, 180);
+            this.checkEdit7.Name = "checkEdit7";
+            this.checkEdit7.Properties.Caption = "Enable Custom Theming";
+            this.checkEdit7.Size = new System.Drawing.Size(158, 20);
+            this.checkEdit7.TabIndex = 6;
+            // 
+            // dropDownButton1
+            // 
+            this.dropDownButton1.Location = new System.Drawing.Point(23, 206);
+            this.dropDownButton1.Name = "dropDownButton1";
+            this.dropDownButton1.Size = new System.Drawing.Size(135, 23);
+            this.dropDownButton1.TabIndex = 7;
+            this.dropDownButton1.Text = "Custom Themes";
+            // 
+            // labelControl30
+            // 
+            this.labelControl30.Location = new System.Drawing.Point(23, 161);
+            this.labelControl30.Name = "labelControl30";
+            this.labelControl30.Size = new System.Drawing.Size(118, 13);
+            this.labelControl30.TabIndex = 8;
+            this.labelControl30.Text = "Custom Theming Options";
+            // 
             // stepProgress1
             // 
             this.stepProgress1.BackColor = System.Drawing.Color.Transparent;
@@ -2084,11 +2114,6 @@
             this.panelControl8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch9.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.panelControl11)).EndInit();
-            this.panelControl11.ResumeLayout(false);
-            this.panelControl11.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch12.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl3)).EndInit();
             this.groupControl3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.panelControl5)).EndInit();
@@ -2111,6 +2136,11 @@
             this.panelControl3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch5.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl11)).EndInit();
+            this.panelControl11.ResumeLayout(false);
+            this.panelControl11.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch12.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl4)).EndInit();
             this.panelControl4.ResumeLayout(false);
             this.panelControl4.PerformLayout();
@@ -2178,6 +2208,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.webView22)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.checkEdit7.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2334,5 +2365,8 @@
         private DevExpress.XtraEditors.SimpleButton simpleButton13;
         private DevExpress.XtraEditors.HyperlinkLabelControl hyperlinkLabelControl1;
         private DevExpress.XtraEditors.HyperlinkLabelControl hyperlinkLabelControl2;
+        private DevExpress.XtraEditors.LabelControl labelControl30;
+        private DevExpress.XtraEditors.DropDownButton dropDownButton1;
+        private DevExpress.XtraEditors.CheckEdit checkEdit7;
     }
 }

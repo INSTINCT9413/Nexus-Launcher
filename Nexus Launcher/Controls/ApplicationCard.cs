@@ -1,9 +1,11 @@
 ﻿using DevExpress.DXTemplateGallery.Extensions;
+using DevExpress.Utils.Menu;
 using DevExpress.XtraEditors;
 using Microsoft.Web.WebView2.Core;
 using Nexus_Launcher.Helpers;
 using Nexus_Launcher.Models;
 using Nexus_Launcher.Properties;
+using Nexus_Launcher.Services.Artwork;
 using Nexus_Launcher.Services.Library;
 using System;
 using System.Collections.Generic;
@@ -61,6 +63,104 @@ namespace Nexus_Launcher.Controls
                 _currentGame = value;
 
                 RefreshFavoriteDisplay();
+
+                RefreshPlayStatsDisplay();
+
+                UpdateArtworkMenuState();
+            }
+        }
+
+        /// <summary>
+        /// Divider between the stats, which all sit on one line.
+        /// </summary>
+        private const string StatSeparator = "   |   ";
+
+        /// <summary>
+        /// Fills labelControl4 with this game's play history on a
+        /// single line: total time, the length of the last session and
+        /// how many times it has been launched.
+        /// </summary>
+        public void RefreshPlayStatsDisplay()
+        {
+            if (labelControl4 == null)
+                return;
+
+            if (_currentGame == null)
+            {
+                labelControl4.Text = string.Empty;
+
+                return;
+            }
+
+            GamePlayStats stats =
+                PlayTrackingService.GetStats(
+                    _currentGame);
+
+            if (stats == null || stats.LaunchCount == 0)
+            {
+                labelControl4.Text = "Never played";
+
+                return;
+            }
+
+            StringBuilder text =
+                new StringBuilder();
+
+            // Play time is measured by watching the game's process, so
+            // it is flagged when a session could not be measured rather
+            // than quietly reporting a number that is too low.
+            text.Append("Total play time: ");
+
+            if (stats.TotalPlaySeconds > 0)
+            {
+                text.Append(
+                    SidePanelPresenter.FormatDuration(
+                        TimeSpan.FromSeconds(
+                            stats.TotalPlaySeconds)));
+
+                if (stats.UntrackedSessions > 0)
+                    text.Append(" (approx)");
+            }
+            else
+            {
+                text.Append("Not measured");
+            }
+
+            text.Append(StatSeparator);
+
+            text.Append("Last session: ");
+
+            text.Append(
+                stats.LastSessionSeconds > 0
+                    ? SidePanelPresenter.FormatDuration(
+                        TimeSpan.FromSeconds(
+                            stats.LastSessionSeconds))
+                    : "Not measured");
+
+            text.Append(StatSeparator);
+
+            text.Append("Launches: ");
+
+            text.Append(stats.LaunchCount);
+
+            labelControl4.Text =
+                text.ToString();
+        }
+
+        private void PlayTracking_Changed()
+        {
+            // Raised from the session watcher on a worker thread.
+            if (IsDisposed || !IsHandleCreated)
+                return;
+
+            try
+            {
+                BeginInvoke(new Action(
+                    RefreshPlayStatsDisplay));
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
             }
         }
 
@@ -110,6 +210,33 @@ namespace Nexus_Launcher.Controls
             // Nothing is selected yet, so the star starts disabled.
             RefreshFavoriteDisplay();
 
+            // Fill the hero banner without stretching it out of shape
+            // when the window or side panel changes its width.
+            PictureCover.Attach(pictureEdit2);
+
+            // The designer sizes this for the word "DEBUG:". Left to
+            // auto size so the single stats line grows to fit rather
+            // than being clipped or wrapped.
+            labelControl4.AutoSizeMode =
+                LabelAutoSizeMode.Default;
+
+            labelControl4.Appearance.TextOptions.WordWrap =
+                DevExpress.Utils.WordWrap.NoWrap;
+
+            labelControl4.Appearance.Options.UseTextOptions = true;
+
+            RefreshPlayStatsDisplay();
+
+            PlayTrackingService.Changed +=
+                PlayTracking_Changed;
+
+            CustomArtworkService.CustomArtworkChanged +=
+                CustomArtwork_Changed;
+
+            // Everything artwork related lives on this one button.
+            dropDownButton7.Text = "Artwork";
+
+            AttachArtworkMenu(dropDownButton7);
         }
 
         private void dropDownButton1_Click(object sender, EventArgs e)
@@ -586,6 +713,327 @@ namespace Nexus_Launcher.Controls
             zoomTrackBarControl1.Value = 100;
         }
 
+        //--------------------------------------------------------------
+        // Custom artwork
+        //
+        // pictureEdit1 is the grid image, pictureEdit2 the hero banner.
+        // Hook these straight up to buttons. Every one of them is a
+        // no-op when no game is selected, so they are safe to call from
+        // anywhere.
+        //--------------------------------------------------------------
+
+        //--------------------------------------------------------------
+        // Artwork drop down menu
+        //--------------------------------------------------------------
+
+        private DXPopupMenu artworkMenu;
+        private DXMenuItem artworkSetGrid;
+        private DXMenuItem artworkSetHero;
+        private DXMenuItem artworkRemoveGrid;
+        private DXMenuItem artworkRemoveHero;
+        private DXMenuItem artworkReset;
+        private DXMenuItem artworkOpenFolder;
+
+        /// <summary>
+        /// The artwork menu, built on first use.
+        ///
+        /// A DXPopupMenu rather than a bar PopupMenu because this
+        /// control has no BarManager to hang the latter off.
+        /// </summary>
+        public DXPopupMenu ArtworkMenu
+        {
+            get
+            {
+                if (artworkMenu == null)
+                    BuildArtworkMenu();
+
+                return artworkMenu;
+            }
+        }
+
+        /// <summary>
+        /// Hangs the artwork menu off a drop down button. Call this
+        /// once with the button that should own it.
+        /// </summary>
+        public void AttachArtworkMenu(
+            DropDownButton button)
+        {
+            if (button == null)
+                return;
+
+            button.DropDownControl = ArtworkMenu;
+
+            UpdateArtworkMenuState();
+        }
+
+        private void BuildArtworkMenu()
+        {
+            artworkMenu =
+                new DXPopupMenu();
+
+            artworkSetGrid =
+                CreateArtworkMenuItem(
+                    "Set Grid Image...",
+                    "svgimages/icon%20builder/actions_image.svg",
+                    (s, e) => BrowseForCustomGridArtwork());
+
+            artworkSetHero =
+                CreateArtworkMenuItem(
+                    "Set Hero Image...",
+                    "svgimages/icon%20builder/electronics_photo.svg",
+                    (s, e) => BrowseForCustomHeroArtwork());
+
+            artworkRemoveGrid =
+                CreateArtworkMenuItem(
+                    "Remove Grid Image",
+                    "svgimages/icon%20builder/actions_trash.svg",
+                    (s, e) => ClearCustomGridArtwork());
+
+            artworkRemoveGrid.BeginGroup = true;
+
+            artworkRemoveHero =
+                CreateArtworkMenuItem(
+                    "Remove Hero Image",
+                    "svgimages/icon%20builder/actions_trash.svg",
+                    (s, e) => ClearCustomHeroArtwork());
+
+            artworkReset =
+                CreateArtworkMenuItem(
+                    "Reset Artwork",
+                    "svgimages/icon%20builder/actions_reload.svg",
+                    (s, e) => ResetArtwork());
+
+            artworkReset.BeginGroup = true;
+
+            artworkOpenFolder =
+                CreateArtworkMenuItem(
+                    "Open Artwork Folder",
+                    "svgimages/icon%20builder/actions_folderopen.svg",
+                    (s, e) => OpenCustomArtworkFolder());
+
+            artworkOpenFolder.BeginGroup = true;
+
+            artworkMenu.Items.Add(artworkSetGrid);
+            artworkMenu.Items.Add(artworkSetHero);
+            artworkMenu.Items.Add(artworkRemoveGrid);
+            artworkMenu.Items.Add(artworkRemoveHero);
+            artworkMenu.Items.Add(artworkReset);
+            artworkMenu.Items.Add(artworkOpenFolder);
+        }
+
+        private DXMenuItem CreateArtworkMenuItem(
+            string caption,
+            string iconKey,
+            EventHandler handler)
+        {
+            return new DXMenuItem(
+                caption,
+                handler,
+                LibraryGroupIcons.GetSvgImage(iconKey),
+                DXMenuItemPriority.Normal);
+        }
+
+        /// <summary>
+        /// Greys out what cannot be done right now, so Remove is only
+        /// offered when there is custom artwork to remove.
+        /// </summary>
+        public void UpdateArtworkMenuState()
+        {
+            if (artworkMenu == null)
+                return;
+
+            bool hasGame =
+                _currentGame != null;
+
+            artworkSetGrid.Enabled = hasGame;
+            artworkSetHero.Enabled = hasGame;
+            artworkReset.Enabled = hasGame;
+            artworkOpenFolder.Enabled = hasGame;
+
+            artworkRemoveGrid.Enabled =
+                hasGame &&
+                HasCustomArtwork(ArtworkKind.Grid);
+
+            artworkRemoveHero.Enabled =
+                hasGame &&
+                HasCustomArtwork(ArtworkKind.Hero);
+        }
+
+        private void CustomArtwork_Changed(
+            GameInfo game)
+        {
+            if (IsDisposed || !IsHandleCreated)
+                return;
+
+            try
+            {
+                BeginInvoke(new Action(
+                    UpdateArtworkMenuState));
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+            }
+        }
+
+        /// <summary>
+        /// Asks the user for an image and uses it as this game's grid
+        /// artwork. Returns false if they cancelled or the file could
+        /// not be read.
+        /// </summary>
+        public bool BrowseForCustomGridArtwork()
+        {
+            return BrowseForCustomArtwork(
+                ArtworkKind.Grid);
+        }
+
+        /// <summary>
+        /// Asks the user for an image and uses it as this game's hero
+        /// banner.
+        /// </summary>
+        public bool BrowseForCustomHeroArtwork()
+        {
+            return BrowseForCustomArtwork(
+                ArtworkKind.Hero);
+        }
+
+        public bool BrowseForCustomArtwork(
+            ArtworkKind kind)
+        {
+            if (_currentGame == null)
+                return false;
+
+            using (OpenFileDialog dialog = new OpenFileDialog())
+            {
+                dialog.Title =
+                    kind == ArtworkKind.Hero
+                        ? "Choose hero artwork"
+                        : "Choose grid artwork";
+
+                dialog.Filter =
+                    CustomArtworkService.FileDialogFilter;
+
+                if (dialog.ShowDialog(this) != DialogResult.OK)
+                    return false;
+
+                return SetCustomArtwork(
+                    kind,
+                    dialog.FileName);
+            }
+        }
+
+        /// <summary>
+        /// Uses an image already on disk, for drag and drop or a path
+        /// from somewhere else.
+        /// </summary>
+        public bool SetCustomArtwork(
+            ArtworkKind kind,
+            string sourceFile)
+        {
+            if (_currentGame == null)
+                return false;
+
+            string stored =
+                CustomArtworkService.SetCustomArtwork(
+                    _currentGame,
+                    kind,
+                    sourceFile);
+
+            if (stored == null)
+            {
+                XtraMessageBox.Show(
+                    this,
+                    "That image could not be loaded.",
+                    "Custom Artwork",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
+                return false;
+            }
+
+            // The service raises CustomArtworkChanged, which is what
+            // redraws the card and the rest of the UI.
+            return true;
+        }
+
+        /// <summary>
+        /// Drops the custom image so the game goes back to its
+        /// downloaded artwork.
+        /// </summary>
+        public bool ClearCustomArtwork(
+            ArtworkKind kind)
+        {
+            if (_currentGame == null)
+                return false;
+
+            return CustomArtworkService.RemoveCustomArtwork(
+                _currentGame,
+                kind);
+        }
+
+        /// <summary>
+        /// The "Reset artwork" button. Drops custom artwork, throws
+        /// away the downloaded copy and fetches it again where the
+        /// provider supports the game.
+        /// </summary>
+        public void ResetArtwork()
+        {
+            if (_currentGame == null)
+                return;
+
+            ArtworkService.ResetArtwork(_currentGame);
+        }
+
+        public bool ClearCustomGridArtwork()
+        {
+            return ClearCustomArtwork(
+                ArtworkKind.Grid);
+        }
+
+        public bool ClearCustomHeroArtwork()
+        {
+            return ClearCustomArtwork(
+                ArtworkKind.Hero);
+        }
+
+        /// <summary>
+        /// Whether this game is currently using artwork the user
+        /// supplied. Useful for enabling a "Reset artwork" button.
+        /// </summary>
+        public bool HasCustomArtwork(
+            ArtworkKind kind)
+        {
+            return _currentGame != null &&
+                CustomArtworkService.HasCustom(
+                    _currentGame,
+                    kind);
+        }
+
+        public bool HasAnyCustomArtwork()
+        {
+            return _currentGame != null &&
+                CustomArtworkService.HasAnyCustom(
+                    _currentGame);
+        }
+
+        /// <summary>
+        /// Opens the folder holding this game's custom artwork, so the
+        /// user can drop files in by hand.
+        /// </summary>
+        public void OpenCustomArtworkFolder()
+        {
+            if (_currentGame == null)
+                return;
+
+            string folder =
+                CustomArtworkService.GetGameFolder(
+                    _currentGame,
+                    true);
+
+            if (Directory.Exists(folder))
+                Process.Start("explorer.exe", folder);
+        }
+
         private void ratingControl1_EditValueChanged(object sender, EventArgs e)
         {
             // The star is driven from ItemClick. This fires for our own
@@ -608,6 +1056,24 @@ namespace Nexus_Launcher.Controls
             FavoriteChanged?.Invoke(
                 this,
                 EventArgs.Empty);
+        }
+
+        private void simpleButton1_Click(object sender, EventArgs e)
+        {
+            BrowseForCustomGridArtwork();
+        }
+
+        private void simpleButton2_Click(object sender, EventArgs e)
+        {
+            BrowseForCustomHeroArtwork();
+        }
+
+        private void dropDownButton7_Click(object sender, EventArgs e)
+        {
+            // Split button style, so the body raises Click while only
+            // the arrow opens the menu. There is no separate default
+            // action here, so the body opens it too.
+            dropDownButton7.ShowDropDown();
         }
     }
 }

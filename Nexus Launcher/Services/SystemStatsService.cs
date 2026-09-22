@@ -172,6 +172,57 @@ namespace Nexus_Launcher.Services
             }
         }
 
+        public class MemoryDetail
+        {
+            public long TotalBytes { get; set; }
+
+            public long AvailableBytes { get; set; }
+
+            /// <summary>
+            /// Memory promised to programs, including what has been
+            /// paged out. Can exceed physical memory.
+            /// </summary>
+            public long CommittedBytes { get; set; }
+
+            /// <summary>
+            /// Physical memory plus the page file.
+            /// </summary>
+            public long CommitLimitBytes { get; set; }
+        }
+
+        /// <summary>
+        /// The fuller memory picture for the memory detail view.
+        /// </summary>
+        public static MemoryDetail ReadMemoryDetail()
+        {
+            MemoryDetail detail =
+                new MemoryDetail();
+
+            try
+            {
+                MEMORYSTATUSEX status =
+                    new MEMORYSTATUSEX();
+
+                if (!GlobalMemoryStatusEx(status))
+                    return detail;
+
+                detail.TotalBytes = (long)status.ullTotalPhys;
+                detail.AvailableBytes = (long)status.ullAvailPhys;
+
+                // Despite the names, these two are the commit limit and
+                // the commit still available, not the page file alone.
+                detail.CommitLimitBytes = (long)status.ullTotalPageFile;
+                detail.CommittedBytes =
+                    (long)(status.ullTotalPageFile - status.ullAvailPageFile);
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+            }
+
+            return detail;
+        }
+
         private static void ReadDrive(
             Snapshot snapshot)
         {

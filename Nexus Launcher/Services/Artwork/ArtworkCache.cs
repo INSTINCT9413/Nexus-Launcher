@@ -148,6 +148,12 @@ namespace Nexus_Launcher.Services.Artwork
 
             game.HasArtwork =
                 ArtworkExists(game);
+
+            // Anything the user supplied themselves wins over the
+            // downloaded art. Done here because every screen reads the
+            // paths through this method, so none of them need their own
+            // special case.
+            CustomArtworkService.ApplyTo(game);
         }
 
         //--------------------------------------------------------------
@@ -330,6 +336,34 @@ namespace Nexus_Launcher.Services.Artwork
 
             return value;
         }
+        /// <summary>
+        /// Wipes one game's downloaded artwork and its attempt history,
+        /// so the next registration fetches it again from scratch.
+        /// Does not touch custom artwork, which lives elsewhere.
+        /// </summary>
+        public static bool DeleteGameCache(
+            GameInfo game)
+        {
+            try
+            {
+                string folder =
+                    GetGameFolder(game);
+
+                if (!Directory.Exists(folder))
+                    return false;
+
+                DeleteDirectory(folder);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+
+                return false;
+            }
+        }
+
         public static bool ClearCache()
         {
             try

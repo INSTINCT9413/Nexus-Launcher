@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Nexus_Launcher.Models;
 using System;
 using System.Collections.Generic;
@@ -221,6 +221,25 @@ namespace Nexus_Launcher.Services.Library
                     .OrderBy(x => x.SortOrder)
                     .ThenBy(x => x.Name)
                     .ToList();
+            }
+        }
+
+        public static int GetFavoriteCount()
+        {
+            lock (sync)
+            {
+                return Data.Favorites.Count;
+            }
+        }
+
+        /// <summary>
+        /// Every user group across every launcher.
+        /// </summary>
+        public static List<LibraryGroup> GetAllGroups()
+        {
+            lock (sync)
+            {
+                return Data.Groups.ToList();
             }
         }
 

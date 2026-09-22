@@ -1,5 +1,7 @@
 ﻿using DevExpress.Printing.ExportHelpers;
+using DevExpress.LookAndFeel;
 using DevExpress.Skins;
+using DevExpress.Utils.Menu;
 using DevExpress.Utils.Svg;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
@@ -7,11 +9,13 @@ using DevExpress.XtraPrinting;
 using DevExpress.XtraSplashScreen;
 using Microsoft.Win32;
 using Nexus_Launcher.Controls;
+using Nexus_Launcher.Forms;
 using Nexus_Launcher.Helpers;
 using Nexus_Launcher.Models;
 using Nexus_Launcher.Properties;
 using Nexus_Launcher.Services;
 using Nexus_Launcher.Services.Artwork;
+using Nexus_Launcher.Services.Themes;
 using Nexus_Launcher.Services.Update;
 using System;
 using System.Collections.Generic;
@@ -68,6 +72,10 @@ namespace Nexus_Launcher
             PopulateSkins();
             // Initial palette load
             UpdatePaletteList();
+
+            BindCustomThemingToggle(checkEdit7);
+            AttachCustomThemeMenu(dropDownButton1);
+
             _mainview = mainView;
         }
 
@@ -87,6 +95,10 @@ namespace Nexus_Launcher
             PopulateSkins();
             // Initial palette load
             UpdatePaletteList();
+
+            BindCustomThemingToggle(checkEdit7);
+            AttachCustomThemeMenu(dropDownButton1);
+
             //_mainview = mainView;
         }
 
@@ -149,7 +161,7 @@ namespace Nexus_Launcher
                 toggleSwitch20.IsOn = Settings.Default.enableFullLibrary;
                 toggleSwitch21.IsOn = Settings.Default.StartMaximized;
                 labelControl29.Text = "UI Font (" + Settings.Default.UIFont + ")";
-                GetdllInfo();
+                //GetdllInfo();
             }
             catch (Exception)
             {
@@ -179,6 +191,386 @@ namespace Nexus_Launcher
             }
 
             comboBoxEdit1.EditValue = DevExpress.LookAndFeel.UserLookAndFeel.Default.SkinName;
+
+            // Grey out skins that cannot take a custom palette while
+            // custom theming is on. Drawn rather than removed so the
+            // user can see they exist and why they are unavailable.
+            comboBoxEdit1.Properties.DropDownCustomDrawItem -=
+                SkinList_DropDownCustomDrawItem;
+
+            comboBoxEdit1.Properties.DropDownCustomDrawItem +=
+                SkinList_DropDownCustomDrawItem;
+        }
+
+        private void SkinList_DropDownCustomDrawItem(
+            object sender,
+            ListBoxDrawItemEventArgs e)
+        {
+            ImageComboBoxItem item =
+                comboBoxEdit1.Properties.Items[e.Index] as ImageComboBoxItem;
+
+            if (item == null)
+                return;
+
+            bool unavailable =
+                Settings.Default.CustomThemingEnabled &&
+                !CustomThemeService.IsPaletteCapable(
+                    item.Value as string);
+
+            // The appearance object is reused between draws, so the
+            // supported case has to clear the grey rather than just
+            // returning. Returning early is what left items stuck grey
+            // after custom theming was switched back off.
+            if (unavailable)
+            {
+                e.Appearance.ForeColor =
+                    System.Drawing.SystemColors.GrayText;
+
+                e.Appearance.Options.UseForeColor = true;
+            }
+            else
+            {
+                e.Appearance.Options.UseForeColor = false;
+            }
+        }
+
+        /// <summary>
+        /// Explains why a bitmap skin cannot be used while custom
+        /// theming is on, and offers the two ways out.
+        /// Returns true when the skin change should be allowed.
+        /// </summary>
+        private bool ConfirmUnsupportedSkin(
+            string skinName)
+        {
+            if (!Settings.Default.CustomThemingEnabled ||
+                CustomThemeService.IsPaletteCapable(skinName))
+            {
+                return true;
+            }
+
+            string message =
+                "\"" + skinName + "\" cannot be used with custom themes." +
+                Environment.NewLine + Environment.NewLine +
+                "Custom themes work by recolouring a theme's palette. " +
+                "This one is drawn from fixed images instead of colours, " +
+                "so there is nothing for your colours to change." +
+                Environment.NewLine + Environment.NewLine +
+                "Themes that support custom colours:" +
+                Environment.NewLine +
+                CustomThemeService.DescribeCapableSkins() +
+                Environment.NewLine + Environment.NewLine +
+                "Turn off custom theming to use this theme anyway?";
+
+            DialogResult result =
+                XtraMessageBox.Show(
+                    this,
+                    message,
+                    "Theme Not Supported",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Information);
+
+            if (result != DialogResult.Yes)
+            {
+                // Keep the old skin, they will pick another.
+                return false;
+            }
+
+            // Untick the box rather than just writing the setting.
+            // Its CheckedChanged handler is what saves the setting,
+            // clears the greying, updates the theme menu and puts the
+            // header Themes menu back, so going straight to Settings
+            // left the checkbox still ticked and everything else stale.
+            if (customThemingToggle != null)
+            {
+                customThemingToggle.Checked = false;
+            }
+            else
+            {
+                Settings.Default.CustomThemingEnabled = false;
+                Settings.Default.Save();
+            }
+
+            return true;
+        }
+
+        //--------------------------------------------------------------
+        // Custom themes
+        //--------------------------------------------------------------
+
+        private DXPopupMenu customThemeMenu;
+        private DXMenuItem customThemeNew;
+        private DXMenuItem customThemeEdit;
+        private DXMenuItem customThemeDelete;
+        private CheckEdit customThemingToggle;
+
+        /// <summary>
+        /// Hangs the new/edit/delete menu off a drop down button.
+        /// </summary>
+        public void AttachCustomThemeMenu(
+            DropDownButton button)
+        {
+            if (button == null)
+                return;
+
+            if (customThemeMenu == null)
+                BuildCustomThemeMenu();
+
+            button.DropDownControl = customThemeMenu;
+
+            UpdateCustomThemeMenuState();
+        }
+
+        /// <summary>
+        /// Binds the on/off switch for custom theming.
+        /// </summary>
+        public void BindCustomThemingToggle(
+            CheckEdit toggle)
+        {
+            if (toggle == null)
+                return;
+
+            customThemingToggle = toggle;
+
+            customThemingToggle.Checked =
+                Settings.Default.CustomThemingEnabled;
+
+            customThemingToggle.CheckedChanged -=
+                CustomThemingToggle_CheckedChanged;
+
+            customThemingToggle.CheckedChanged +=
+                CustomThemingToggle_CheckedChanged;
+
+            UpdateCustomThemeMenuState();
+        }
+
+        private void BuildCustomThemeMenu()
+        {
+            customThemeMenu =
+                new DXPopupMenu();
+
+            customThemeNew =
+                CreateThemeMenuItem(
+                    "New Theme...",
+                    "svgimages/icon%20builder/actions_add.svg",
+                    (s, e) => NewCustomTheme());
+
+            customThemeEdit =
+                CreateThemeMenuItem(
+                    "Edit Current Theme...",
+                    "svgimages/icon%20builder/actions_edit.svg",
+                    (s, e) => EditCustomTheme());
+
+            customThemeDelete =
+                CreateThemeMenuItem(
+                    "Delete Current Theme",
+                    "svgimages/icon%20builder/actions_trash.svg",
+                    (s, e) => DeleteCustomTheme());
+
+            customThemeDelete.BeginGroup = true;
+
+            customThemeMenu.Items.Add(customThemeNew);
+            customThemeMenu.Items.Add(customThemeEdit);
+            customThemeMenu.Items.Add(customThemeDelete);
+        }
+
+        private DXMenuItem CreateThemeMenuItem(
+            string caption,
+            string iconKey,
+            EventHandler handler)
+        {
+            return new DXMenuItem(
+                caption,
+                handler,
+                Nexus_Launcher.Services.Library.LibraryGroupIcons
+                    .GetSvgImage(iconKey),
+                DXMenuItemPriority.Normal);
+        }
+
+        /// <summary>
+        /// Everything needs custom theming switched on, and edit and
+        /// delete additionally need one of the user's own themes to be
+        /// the active palette.
+        /// </summary>
+        private void UpdateCustomThemeMenuState()
+        {
+            if (customThemeMenu == null)
+                return;
+
+            bool enabled =
+                Settings.Default.CustomThemingEnabled;
+
+            bool capableSkin =
+                CustomThemeService.IsPaletteCapable(
+                    UserLookAndFeel.Default.SkinName);
+
+            customThemeNew.Enabled =
+                enabled && capableSkin;
+
+            bool onCustomTheme =
+                enabled &&
+                CustomThemeService.Find(
+                    UserLookAndFeel.Default.ActiveSvgPaletteName) != null;
+
+            customThemeEdit.Enabled = onCustomTheme;
+            customThemeDelete.Enabled = onCustomTheme;
+        }
+
+        private void CustomThemingToggle_CheckedChanged(
+            object sender,
+            EventArgs e)
+        {
+            bool enabled =
+                customThemingToggle.Checked;
+
+            Settings.Default.CustomThemingEnabled = enabled;
+            Settings.Default.Save();
+
+            // Turning it on while sitting on a skin that cannot take a
+            // palette would leave the user stuck, so say so straight
+            // away rather than waiting for them to try to create one.
+            if (enabled &&
+                !CustomThemeService.IsPaletteCapable(
+                    UserLookAndFeel.Default.SkinName))
+            {
+                XtraMessageBox.Show(
+                    this,
+                    "Custom theming is on, but the current theme \"" +
+                    UserLookAndFeel.Default.SkinName +
+                    "\" cannot be recoloured." +
+                    Environment.NewLine + Environment.NewLine +
+                    "Pick one of these to start building a theme:" +
+                    Environment.NewLine +
+                    CustomThemeService.DescribeCapableSkins(),
+                    "Choose a Supported Theme",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
+
+            // Repaint the skin list so the greying updates.
+            comboBoxEdit1.Refresh();
+
+            UpdateCustomThemeMenuState();
+
+            // The header Themes menu would override a custom theme, so
+            // it is hidden while custom theming is on.
+            if (_mainview != null)
+                _mainview.ApplyCustomThemingVisibility();
+        }
+
+        private void NewCustomTheme()
+        {
+            string skinName =
+                UserLookAndFeel.Default.SkinName;
+
+            if (!CustomThemeService.IsPaletteCapable(skinName))
+                return;
+
+            using (PaletteEditorDialog editor = new PaletteEditorDialog())
+            {
+                if (editor.ShowDialog(
+                    PaletteEditorMode.Create,
+                    UserLookAndFeel.Default) != DialogResult.OK)
+                {
+                    return;
+                }
+
+                ApplyEditedTheme(
+                    editor.PaletteName,
+                    skinName,
+                    editor.Palette);
+            }
+        }
+
+        private void EditCustomTheme()
+        {
+            string skinName =
+                UserLookAndFeel.Default.SkinName;
+
+            CustomTheme current =
+                CustomThemeService.Find(
+                    UserLookAndFeel.Default.ActiveSvgPaletteName);
+
+            if (current == null)
+                return;
+
+            using (PaletteEditorDialog editor = new PaletteEditorDialog())
+            {
+                if (editor.ShowDialog(
+                    PaletteEditorMode.Update,
+                    UserLookAndFeel.Default) != DialogResult.OK)
+                {
+                    return;
+                }
+
+                ApplyEditedTheme(
+                    editor.PaletteName,
+                    skinName,
+                    editor.Palette);
+            }
+        }
+
+        private void ApplyEditedTheme(
+            string paletteName,
+            string skinName,
+            SvgPalette palette)
+        {
+            if (string.IsNullOrWhiteSpace(paletteName) || palette == null)
+                return;
+
+            CustomThemeService.SaveTheme(
+                paletteName,
+                skinName,
+                palette);
+
+            UserLookAndFeel.Default.SetSkinStyle(
+                skinName,
+                paletteName);
+
+            ThemeSettingsManager.Save(
+                skinName,
+                paletteName);
+
+            UpdatePaletteList();
+
+            UpdateCustomThemeMenuState();
+        }
+
+        private void DeleteCustomTheme()
+        {
+            CustomTheme current =
+                CustomThemeService.Find(
+                    UserLookAndFeel.Default.ActiveSvgPaletteName);
+
+            if (current == null)
+                return;
+
+            if (XtraMessageBox.Show(
+                this,
+                "Delete the theme \"" + current.Name + "\"?",
+                "Delete Theme",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                return;
+            }
+
+            string skinName =
+                current.SkinName;
+
+            CustomThemeService.DeleteTheme(
+                current.Name);
+
+            // Drop back to the skin's own default palette, otherwise
+            // the UI keeps rendering a palette that no longer exists.
+            UserLookAndFeel.Default.SetSkinStyle(skinName);
+
+            ThemeSettingsManager.Save(
+                skinName,
+                UserLookAndFeel.Default.ActiveSvgPaletteName);
+
+            UpdatePaletteList();
+
+            UpdateCustomThemeMenuState();
         }
         private void UpdatePaletteList()
         {
@@ -539,16 +931,47 @@ namespace Nexus_Launcher
 
                 // FIX CS0200: Use SetSkinStyle to change the active palette safely
                 DevExpress.LookAndFeel.UserLookAndFeel.Default.SetSkinStyle(currentSkin, selectedPalette);
+
+                // Edit and Delete only apply to the user's own themes.
+                UpdateCustomThemeMenuState();
             }
         }
 
+        private bool revertingSkin;
+
         private void comboBoxEdit1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Set while putting the old value back, so the revert does
+            // not re-enter this handler and prompt a second time.
+            if (revertingSkin)
+                return;
+
             string selectedSkin = comboBoxEdit1.Text;
+
+            if (!ConfirmUnsupportedSkin(selectedSkin))
+            {
+                revertingSkin = true;
+
+                try
+                {
+                    comboBoxEdit1.EditValue =
+                        DevExpress.LookAndFeel.UserLookAndFeel.Default.SkinName;
+                }
+                finally
+                {
+                    revertingSkin = false;
+                }
+
+                return;
+            }
+
             DevExpress.LookAndFeel.UserLookAndFeel.Default.SkinName = selectedSkin;
 
             // Update palettes whenever the skin shifts
             UpdatePaletteList();
+
+            // New Theme depends on the new skin being recolourable.
+            UpdateCustomThemeMenuState();
         }
 
         private void simpleButton4_Click(object sender, EventArgs e)
@@ -1006,10 +1429,18 @@ namespace Nexus_Launcher
                 return;
             }
 
+            // A download the user postponed earlier is offered straight to
+            // install rather than downloaded again.
+            string pending =
+                UpdateDownloader.GetPendingPackage(update);
+
             DialogResult result =
                 XtraMessageBox.Show(
-                    "Build " + update.build +
-                    " is available.\n\nDownload now?",
+                    pending != null
+                        ? "Build " + update.build +
+                            " is downloaded and ready to install.\n\nContinue?"
+                        : "Build " + update.build +
+                            " is available.\n\nDownload now?",
                     "Update Available",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Information);
@@ -1017,11 +1448,31 @@ namespace Nexus_Launcher
             if (result != DialogResult.Yes)
                 return;
 
-            string package =
-                await UpdateDownloader.DownloadAsync(update);
+            // Shows download progress, then asks whether to install now
+            // or later. Downloading used to happen with no feedback and
+            // then launch the installer immediately.
+            string package;
 
-            UpdateService.LaunchUpdater(package);
-            Environment.Exit(0);
+            using (UpdateDownloadForm download = new UpdateDownloadForm(update, pending))
+            {
+                download.ShowDialog(this);
+
+                if (!download.InstallNow)
+                    return;
+
+                package = download.PackagePath;
+            }
+
+            if (UpdateService.LaunchUpdater(package))
+            {
+                UpdateDownloader.ClearPending();
+                Environment.Exit(0);
+            }
+
+            // The updater did not start, for example the administrator
+            // prompt was declined. Keep the package so the next check can
+            // offer it again without downloading it a second time.
+            UpdateDownloader.SavePending(update, package);
         }
 
         public void simpleButton9_Click(object sender, EventArgs e)

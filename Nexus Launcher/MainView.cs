@@ -17,7 +17,10 @@ using Nexus_Launcher.Models;
 using Nexus_Launcher.Properties;
 using Nexus_Launcher.Services;
 using Nexus_Launcher.Services.Artwork;
+using Nexus_Launcher.Controls.Profile;
+using Nexus_Launcher.Services.Achievements;
 using Nexus_Launcher.Services.Library;
+using Nexus_Launcher.Services.Themes;
 using Ookii.Dialogs.WinForms;
 using QlmControls.v10;
 using Sunny.UI;
@@ -1354,6 +1357,8 @@ namespace Nexus_Launcher
                 await LauncherStartupService.StartConfiguredLaunchersAsync();
             BuildGameContextMenu();
             InitializeSidePanel();
+            ApplyCustomThemingVisibility();
+            InitializeAchievements();
         }
         public void FocusGOGSettings()
         {
@@ -2933,34 +2938,21 @@ namespace Nexus_Launcher
                 applicationCard.splitContainerControl1.SplitterPosition = 420;
                 applicationCard.dropDownButton4.PerformClick();
 
-                if (File.Exists(game.LogoPath))
-                {
-                    applicationCard._icon = Image.FromFile(game.LogoPath);
-                }
-                else
-                {
-                    applicationCard._icon = Resources.NAicon;
-                }
-                if (File.Exists(game.HeaderImagePath))
-                {
-                    applicationCard._header = Image.FromFile(game.HeaderImagePath);
-                }
-                else
-                {
-                    applicationCard._header = Resources.NAHE;
-                }
-                if (File.Exists(game.LibraryImagePath))
-                {
-                    applicationCard._library = Image.FromFile(game.LibraryImagePath);
-                }
-                else if(File.Exists(game.HeaderImagePath))
-                {
-                    applicationCard._library = Image.FromFile(game.HeaderImagePath);
-                }
-                else
-                {
-                   applicationCard._library = Resources.NA;
-                }
+                // All loaded unlocked: Image.FromFile keeps a handle on
+                // the file, which left cached artwork locked and made
+                // ClearCache silently skip it.
+                applicationCard._icon =
+                    CustomArtworkService.LoadUnlocked(game.LogoPath)
+                        ?? Resources.NAicon;
+
+                applicationCard._header =
+                    CustomArtworkService.LoadUnlocked(game.HeaderImagePath)
+                        ?? Resources.NAHE;
+
+                applicationCard._library =
+                    CustomArtworkService.LoadUnlocked(game.LibraryImagePath)
+                        ?? CustomArtworkService.LoadUnlocked(game.HeaderImagePath)
+                        ?? Resources.NA;
 
                 RefreshGameArtwork(game);
 
@@ -3275,6 +3267,33 @@ namespace Nexus_Launcher
 
         private void barButtonItem4_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            ShowUserAccount();
+        }
+
+        /// <summary>
+        /// Opens the profile page: account, stats, rig and achievements.
+        /// </summary>
+        public void ShowUserAccount()
+        {
+            bool alreadyShowing =
+                userAccount.Visible;
+
+            userAccount.Show();
+            userAccount.BringToFront();
+            userAccount.Visible = true;
+
+            // Becoming visible refreshes it already. Only force it when
+            // it was on screen and the button was pressed again.
+            if (alreadyShowing)
+                userAccount.RefreshProfile();
+        }
+
+        /// <summary>
+        /// The Nexus sign in popup. Not reachable from the header for
+        /// now; kept for when online accounts are built.
+        /// </summary>
+        private void ShowNexusLoginPopup()
+        {
             int width = 500;
             int height = 800;
             ImageCollection loginImages = new ImageCollection
@@ -3425,45 +3444,116 @@ namespace Nexus_Launcher
                 return;
             }
 
-            RefreshGameArtwork(game);
-        }
-        private void RefreshGameArtwork(GameInfo game)
-        {
-            if (File.Exists(game.GridImagePath))
+            // This fires for every game whose download finishes, not
+            // just the one on screen. Without this check a background
+            // download repaints the card with another game's artwork.
+            if (!ReferenceEquals(
+                applicationCard.CurrentGame,
+                game))
             {
-                applicationCard.pictureEdit1.Image = null;
-                applicationCard.pictureEdit1.Image =
-                    Image.FromFile(game.GridImagePath);
-            }
-            else
-            {
-                applicationCard.pictureEdit1.Image = Properties.Resources.NA;
+                return;
             }
 
-            if (File.Exists(game.HeroImagePath))
+            RefreshGameArtwork(game);
+        }
+        /// <summary>
+        /// The user added or removed their own artwork for a game.
+        /// </summary>
+        private void CustomArtwork_Changed(GameInfo game)
+        {
+            if (game == null || IsDisposed || !IsHandleCreated)
+                return;
+
+            if (InvokeRequired)
             {
-                applicationCard.pictureEdit2.Image = null;
-                applicationCard.pictureEdit2.Image =
-                    Image.FromFile(game.HeroImagePath);
+                BeginInvoke(new Action<GameInfo>(
+                    CustomArtwork_Changed), game);
+
+                return;
             }
-            else
+
+            // Only redraw the card when it is the game on screen.
+            if (ReferenceEquals(
+                applicationCard.CurrentGame,
+                game))
             {
-                applicationCard.pictureEdit2.Image = GetRandomNexusHeader();
+                RefreshGameArtwork(game);
             }
-            if (accordionControl2.ActiveGroup == groupNexus)
+
+            // The full library tiles read GridImagePath too.
+            fullLibrary.PopulateLibrary();
+        }
+
+        private void RefreshGameArtwork(GameInfo game)
+        {
+            // Loaded through the unlocking helper rather than
+            // Image.FromFile: that holds the file open for as long as
+            // the Image lives, which would stop the user replacing or
+            // removing their own custom artwork while it is on screen.
+            if (game == null)
+                return;
+
+            Image grid =
+                CustomArtworkService.LoadUnlocked(
+                    game.GridImagePath);
+
+            Image hero =
+                CustomArtworkService.LoadUnlocked(
+                    game.HeroImagePath);
+
+            // Nexus entries are user added programs that normally have
+            // no artwork, so they fall back to the exe icon and a stock
+            // header. That fallback used to run unconditionally and
+            // overwrote the images assigned just above it, which threw
+            // away custom artwork the instant it was applied. It is a
+            // fallback now, not an override.
+            // Checked both ways on purpose: the active group covers the
+            // normal case, the launcher name keeps the fallback correct
+            // when a Nexus entry is shown while another group is
+            // active, which is what reset relies on.
+            bool isNexusEntry =
+                accordionControl2.ActiveGroup == groupNexus ||
+                ArtworkService.IsNexusEntry(game);
+
+            if (grid != null)
             {
-                applicationCard.pictureEdit2.Image = GetRandomNexusHeader();
-                applicationCard.pictureEdit1.Image = IconHelper.ExtractExeIcon(game.ExecutablePath);
-                applicationCard.pictureEdit1.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Squeeze;
+                applicationCard.pictureEdit1.Image = grid;
+
+                applicationCard.pictureEdit1.Properties.SizeMode =
+                    DevExpress.XtraEditors.Controls.PictureSizeMode.Stretch;
+
+                applicationCard.pictureEdit1.Properties.ZoomPercent = 100;
+            }
+            else if (isNexusEntry)
+            {
+                applicationCard.pictureEdit1.Image =
+                    IconHelper.ExtractExeIcon(game.ExecutablePath);
+
+                applicationCard.pictureEdit1.Properties.SizeMode =
+                    DevExpress.XtraEditors.Controls.PictureSizeMode.Squeeze;
+
                 applicationCard.pictureEdit1.Properties.ZoomPercent = -65;
-                applicationCard.Refresh();
             }
             else
             {
-                applicationCard.pictureEdit1.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Stretch;
-                applicationCard.pictureEdit2.Properties.ZoomPercent = 100;
-                applicationCard.Refresh();
+                // Drawn at the box's own proportions, so Stretch only
+                // scales it and never distorts it.
+                applicationCard.pictureEdit1.Image =
+                    ArtworkPlaceholder.Create(
+                        game.Name,
+                        applicationCard.pictureEdit1.Size);
+
+                applicationCard.pictureEdit1.Properties.SizeMode =
+                    DevExpress.XtraEditors.Controls.PictureSizeMode.Stretch;
             }
+
+            // The hero is kept in cover mode by PictureCover, which works
+            // out the zoom as soon as the image changes. Setting a zoom
+            // here, as this used to, would override that fit.
+            applicationCard.pictureEdit2.Image =
+                hero ?? GetRandomNexusHeader();
+
+            applicationCard.Refresh();
 
             //if (File.Exists(game.LogoPath))
             //{
@@ -3667,11 +3757,152 @@ namespace Nexus_Launcher
             {
                 accordionControl2.EndUpdate();
             }
+
+            // The no-artwork placeholder is drawn light or dark to suit
+            // the theme, so redraw the card rather than leave the old
+            // theme's version showing.
+            if (applicationCard.CurrentGame != null)
+                RefreshGameArtwork(applicationCard.CurrentGame);
         }
 
         //--------------------------------------------------------------
         // Side panel trackers
         //--------------------------------------------------------------
+
+        //--------------------------------------------------------------
+        // Achievements
+        //--------------------------------------------------------------
+
+        private System.Windows.Forms.Timer achievementTimer;
+        private DevExpress.XtraBars.Alerter.AlertControl achievementAlerts;
+
+        /// <summary>
+        /// More unlocks than this at once are summed up in one toast
+        /// rather than stacking a pile of them. It mostly matters on the
+        /// first run, when everything already earned unlocks together.
+        /// </summary>
+        private const int MaxIndividualToasts = 3;
+
+        private void InitializeAchievements()
+        {
+            AchievementService.Initialize();
+
+            achievementAlerts =
+                new DevExpress.XtraBars.Alerter.AlertControl();
+
+            achievementAlerts.AutoFormDelay = 6000;
+
+            // Changes tend to arrive in bursts, a scan or a rearrange
+            // saving several times, so checks wait for things to settle.
+            achievementTimer =
+                new System.Windows.Forms.Timer();
+
+            achievementTimer.Interval = 1500;
+
+            achievementTimer.Tick += (s, e) =>
+            {
+                achievementTimer.Stop();
+                CheckAchievements();
+            };
+
+            PlayTrackingService.Changed += ScheduleAchievementCheck;
+            LibraryOrganizationService.Changed += ScheduleAchievementCheck;
+            CustomThemeService.Changed += ScheduleAchievementCheck;
+            CustomArtworkService.CustomArtworkChanged += game => ScheduleAchievementCheck();
+
+            // Catch up on anything already earned from existing data.
+            ScheduleAchievementCheck();
+        }
+
+        /// <summary>
+        /// Queues a check. Several callers fire from worker threads, so
+        /// this hops onto the UI thread first: the stats read the
+        /// accordion.
+        /// </summary>
+        private void ScheduleAchievementCheck()
+        {
+            if (IsDisposed || !IsHandleCreated || achievementTimer == null)
+                return;
+
+            if (InvokeRequired)
+            {
+                try
+                {
+                    BeginInvoke(new Action(ScheduleAchievementCheck));
+                }
+                catch (Exception ex)
+                {
+                    Program.LogCrash(ex);
+                }
+
+                return;
+            }
+
+            // Restarting the timer is the debounce.
+            achievementTimer.Stop();
+            achievementTimer.Start();
+        }
+
+        private void CheckAchievements()
+        {
+            try
+            {
+                LibraryStats stats =
+                    LibraryStatsService.Build();
+
+                ShowUnlocks(
+                    AchievementService.Evaluate(stats));
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+            }
+        }
+
+        private void ShowUnlocks(
+            List<UnlockEvent> unlocked)
+        {
+            if (unlocked == null || unlocked.Count == 0)
+                return;
+
+            if (unlocked.Count > MaxIndividualToasts)
+            {
+                achievementAlerts.Show(
+                    this,
+                    "Achievements unlocked",
+                    "You earned " + unlocked.Count +
+                    " achievements and badges (+" +
+                    unlocked.Sum(x => x.Points) +
+                    " XP). Open your profile to see them.",
+                    ProfileStyle.Svg("svgimages/icon%20builder/actions_rating.svg"));
+
+                return;
+            }
+
+            foreach (UnlockEvent unlock in unlocked)
+            {
+                achievementAlerts.Show(
+                    this,
+                    (unlock.IsBadge ? "Badge earned: " : "Achievement unlocked: ") +
+                        unlock.Title,
+                    unlock.Description + "   +" + unlock.Points + " XP",
+                    ProfileStyle.Svg(unlock.IconKey));
+            }
+        }
+
+        /// <summary>
+        /// Hides the header Themes menu while custom theming is on.
+        /// The two would fight each other: that menu sets a skin and
+        /// palette directly, which would drop whichever custom theme
+        /// the user has built.
+        /// </summary>
+        public void ApplyCustomThemingVisibility()
+        {
+            barSubItem6.Visibility =
+                Settings.Default.CustomThemingEnabled
+                    ? DevExpress.XtraBars.BarItemVisibility.Never
+                    : DevExpress.XtraBars.BarItemVisibility.Always;
+        }
 
         /// <summary>
         /// Takes the three side panel boxes off their placeholder
@@ -3695,6 +3926,9 @@ namespace Nexus_Launcher
 
             PlayTrackingService.Changed +=
                 PlayTracking_Changed;
+
+            CustomArtworkService.CustomArtworkChanged +=
+                CustomArtwork_Changed;
 
             sidePanelTimer =
                 new System.Windows.Forms.Timer();
@@ -4619,6 +4853,11 @@ namespace Nexus_Launcher
         private void accordionControl2_MouseHover(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.Hand;
+        }
+
+        private void barButtonItem16_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ShowUserAccount();
         }
     }    
 }

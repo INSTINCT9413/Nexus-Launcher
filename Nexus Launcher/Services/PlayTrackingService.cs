@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Nexus_Launcher.Models;
 using System;
 using System.Collections.Generic;
@@ -60,6 +60,13 @@ namespace Nexus_Launcher.Services.Library
             new HashSet<string>();
 
         public static event Action Changed;
+
+        /// <summary>
+        /// Raised the moment a launch is recorded, with the local time
+        /// it happened. Changed does not say what changed, and some
+        /// achievements care about when a game was started.
+        /// </summary>
+        public static event Action<GameInfo, DateTime> GameLaunched;
 
         //--------------------------------------------------------------
         // Storage
@@ -175,6 +182,33 @@ namespace Nexus_Launcher.Services.Library
         }
 
         /// <summary>
+        /// A copy of every tracked game, for library wide totals.
+        /// </summary>
+        public static List<GamePlayStats> GetAllStats()
+        {
+            lock (sync)
+            {
+                return Stats.Values.ToList();
+            }
+        }
+
+        /// <summary>
+        /// Most played first, by measured play time.
+        /// </summary>
+        public static List<GamePlayStats> GetMostPlayed(
+            int count)
+        {
+            lock (sync)
+            {
+                return Stats.Values
+                    .Where(x => x.TotalPlaySeconds > 0)
+                    .OrderByDescending(x => x.TotalPlaySeconds)
+                    .Take(count)
+                    .ToList();
+            }
+        }
+
+        /// <summary>
         /// Most recently played first.
         /// </summary>
         public static List<GamePlayStats> GetRecentlyPlayed(
@@ -217,6 +251,10 @@ namespace Nexus_Launcher.Services.Library
             }
 
             Save();
+
+            GameLaunched?.Invoke(
+                game,
+                DateTime.Now);
 
             StartWatching(
                 game,
@@ -317,8 +355,18 @@ namespace Nexus_Launcher.Services.Library
                         key,
                         out entry))
                     {
-                        entry.TotalPlaySeconds +=
+                        entry.LastSessionSeconds =
                             (long)elapsed.TotalSeconds;
+
+                        entry.TotalPlaySeconds +=
+                            entry.LastSessionSeconds;
+
+                        if (entry.LastSessionSeconds >
+                            entry.LongestSessionSeconds)
+                        {
+                            entry.LongestSessionSeconds =
+                                entry.LastSessionSeconds;
+                        }
                     }
                 }
 

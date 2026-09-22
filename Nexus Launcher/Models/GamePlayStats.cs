@@ -27,6 +27,17 @@ namespace Nexus_Launcher.Models
         public long TotalPlaySeconds { get; set; }
 
         /// <summary>
+        /// Length of the most recent measured session.
+        /// </summary>
+        public long LastSessionSeconds { get; set; }
+
+        /// <summary>
+        /// The single longest measured session, for the Marathon
+        /// achievement.
+        /// </summary>
+        public long LongestSessionSeconds { get; set; }
+
+        /// <summary>
         /// How many times Launch was pressed. Always exact, unlike
         /// TotalPlaySeconds.
         /// </summary>

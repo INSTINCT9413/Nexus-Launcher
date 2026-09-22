@@ -31,8 +31,17 @@ namespace Nexus_Launcher.Controls
                 DriveLetter = drive.Name.Replace("\\", ""); // e.g., "C:"
 
                 InitPerformanceCounters();
+
+                // Subscribed once here. It used to be added inside
+                // UpdateStorageSpace, which stacked another handler on
+                // every refresh.
+                progressBarControl1.Properties.CustomDisplayText +=
+                    (s, e) => { e.DisplayText = _usageText; };
+
                 UpdateStorageSpace();
             }
+
+            private string _usageText = string.Empty;
 
             private void InitPerformanceCounters()
             {
@@ -70,29 +79,26 @@ namespace Nexus_Launcher.Controls
             // 2. FIX: Use the formatted string variables here! 
             // We also set ShowText to true so DevExpress actually renders it.
             //progressBarControl1.Properties.ShowText = true;
-            progressBarControl1.Properties.CustomDisplayText += (s, e) => {
-                e.DisplayText = $"{usedFormatted} used out of {totalFormatted}";
-            };
+            _usageText = $"{usedFormatted} used out of {totalFormatted}";
 
             // Progress bar percentage calculation
             double percentUsed = ((double)usedSpace / totalSize) * 100;
             progressBarControl1.Position = (int)Math.Min(100, Math.Max(0, percentUsed));
-            if(percentUsed <= 95)
-            {
-                progressBarControl1.Properties.Appearance.BorderColor = Color.Red;
-            }
-            if(percentUsed <= 85)
-            {
-                progressBarControl1.Properties.Appearance.BorderColor = Color.OrangeRed;
-            }
-            if(percentUsed <= 50)
-            {
-                progressBarControl1.Properties.Appearance.BorderColor = Color.Blue;
-            }
-            if (percentUsed <= 35)
-            {
-                progressBarControl1.Properties.Appearance.BorderColor = Color.Green;
-            }
+            // Highest band first. The old chain only coloured drives at
+            // or under 95%, so a nearly full drive, the one that most
+            // needs flagging, got no colour at all.
+            Color border;
+
+            if (percentUsed > 85)
+                border = Color.Red;
+            else if (percentUsed > 50)
+                border = Color.OrangeRed;
+            else if (percentUsed > 35)
+                border = Color.Blue;
+            else
+                border = Color.Green;
+
+            progressBarControl1.Properties.Appearance.BorderColor = border;
         }
         /// <summary>
         /// Converts raw bytes into the most accurate, readable string unit up to Petabytes.

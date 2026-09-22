@@ -1,4 +1,4 @@
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\SQLitePCLRaw.lib.e_sqlite3.3.53.3\build\net471\SQLitePCLRaw.lib.e_sqlite3.props" Condition="Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.3.53.3\build\net471\SQLitePCLRaw.lib.e_sqlite3.props')" />
   <Import Project="..\packages\SQLite.3.53.4\build\net471\SQLite.props" Condition="Exists('..\packages\SQLite.3.53.4\build\net471\SQLite.props')" />
   <Import Project="..\packages\SourceGear.sqlite3.3.53.4\build\net471\SourceGear.sqlite3.props" Condition="Exists('..\packages\SourceGear.sqlite3.3.53.4\build\net471\SourceGear.sqlite3.props')" />
@@ -817,9 +817,46 @@
     <Compile Include="Forms\GroupEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\UpdateDownloadForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Services\AccordionLibraryOrganizer.cs" />
     <Compile Include="Services\LibraryGroupIcons.cs" />
     <Compile Include="Services\LibraryOrganizationService.cs" />
+    <Compile Include="Services\CustomArtworkService.cs" />
+    <Compile Include="Controls\Profile\AchievementsPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Profile\AchievementWidgets.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Profile\LibraryStatsPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Profile\ProfileHeaderPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Profile\RigPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Profile\RigSummaryPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Profile\RigWidgets.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Profile\HardwareDetailViews.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Helpers\ArtworkPlaceholder.cs" />
+    <Compile Include="Helpers\PictureCover.cs" />
+    <Compile Include="Controls\Profile\ProfileStyle.cs" />
+    <Compile Include="Controls\Profile\ProfileWidgets.cs" />
+    <Compile Include="Services\AchievementService.cs" />
+    <Compile Include="Services\HardwareInfoService.cs" />
+    <Compile Include="Services\LibraryStatsService.cs" />
+    <Compile Include="Services\NetworkMonitor.cs" />
+    <Compile Include="Services\CustomThemeService.cs" />
     <Compile Include="Services\LibrarySelectionService.cs" />
     <Compile Include="Services\PlayTrackingService.cs" />
     <Compile Include="Services\SidePanelPresenter.cs" />
@@ -945,12 +982,12 @@
   <ItemGroup>
     <Folder Include="Assets\" />
     <Folder Include="Data\" />
-    <Folder Include="Forms\" />
     <Folder Include="Providers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="dfveffb-9b262552-e352-4348-aefc-8e699002c946.ico" />
     <Content Include="License-LGPL.txt" />
+    <None Include="Resources\insertimage_16x16.png" />
     <None Include="Resources\zoom100_16x16.png" />
     <None Include="Resources\fill_16x16.png" />
     <None Include="Resources\down_32x32.png" />
@@ -975,6 +1012,7 @@
     <None Include="Resources\NAicon.png" />
     <None Include="Resources\NAHE.png" />
     <None Include="Resources\NA.png" />
+    <None Include="Resources\nexus_loader_128.gif" />
     <None Include="Resources\run25px.png" />
     <None Include="Resources\Gemini_Generated_Image_z7uygz7uygz7uygz.png" />
     <None Include="Resources\ChatGPT Image Nov 23, 2025, 06_51_43 PM.png" />

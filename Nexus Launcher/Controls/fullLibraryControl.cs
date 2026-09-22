@@ -70,14 +70,12 @@ namespace Nexus_Launcher.Controls
         {
             GameInfo game =
         e.Item.Tag as GameInfo;
-            if (File.Exists(game.HeroImagePath))
-            {
-                libraryDetailControl1.BackgroundImage = Image.FromFile(game.HeroImagePath);
-            }
-            else
-            {
-                libraryDetailControl1.BackgroundImage = GetRandomNexusHeader();
-            }
+            // Unlocked load, otherwise the hero file stays open and the
+            // user cannot replace their own custom artwork.
+            libraryDetailControl1.BackgroundImage =
+                Services.Artwork.CustomArtworkService.LoadUnlocked(
+                    game.HeroImagePath)
+                    ?? GetRandomNexusHeader();
             LibrarySelectionService.Select(game);
             splitContainerControl1.PanelVisibility = DevExpress.XtraEditors.SplitPanelVisibility.Both;
         }

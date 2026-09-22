@@ -28,12 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ApplicationCard));
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
             this.pictureEdit2 = new DevExpress.XtraEditors.PictureEdit();
             this.dropDownButton1 = new DevExpress.XtraEditors.DropDownButton();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
-            this.timer1 = new System.Windows.Forms.Timer();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.panelControl2 = new DevExpress.XtraEditors.PanelControl();
@@ -45,6 +46,8 @@
             this.dropDownButton5 = new DevExpress.XtraEditors.DropDownButton();
             this.webView22 = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
+            this.dropDownButton7 = new DevExpress.XtraEditors.DropDownButton();
+            this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
             this.ratingControl1 = new DevExpress.XtraEditors.RatingControl();
             this.dropDownButton3 = new DevExpress.XtraEditors.DropDownButton();
             this.pictureEdit1 = new DevExpress.XtraEditors.PictureEdit();
@@ -122,7 +125,7 @@
             // 
             this.labelControl2.Appearance.Font = new System.Drawing.Font("Tahoma", 12F);
             this.labelControl2.Appearance.Options.UseFont = true;
-            this.labelControl2.Location = new System.Drawing.Point(173, 285);
+            this.labelControl2.Location = new System.Drawing.Point(173, 317);
             this.labelControl2.Name = "labelControl2";
             this.labelControl2.Size = new System.Drawing.Size(57, 19);
             this.labelControl2.TabIndex = 4;
@@ -260,6 +263,8 @@
             // 
             // splitContainerControl1.Panel1
             // 
+            this.splitContainerControl1.Panel1.Controls.Add(this.dropDownButton7);
+            this.splitContainerControl1.Panel1.Controls.Add(this.labelControl4);
             this.splitContainerControl1.Panel1.Controls.Add(this.ratingControl1);
             this.splitContainerControl1.Panel1.Controls.Add(this.dropDownButton3);
             this.splitContainerControl1.Panel1.Controls.Add(this.pictureEdit1);
@@ -278,6 +283,26 @@
             this.splitContainerControl1.Size = new System.Drawing.Size(1095, 871);
             this.splitContainerControl1.SplitterPosition = 420;
             this.splitContainerControl1.TabIndex = 9;
+            // 
+            // dropDownButton7
+            // 
+            this.dropDownButton7.DropDownArrowStyle = DevExpress.XtraEditors.DropDownArrowStyle.SplitButton;
+            this.dropDownButton7.Location = new System.Drawing.Point(271, 392);
+            this.dropDownButton7.Name = "dropDownButton7";
+            this.dropDownButton7.Size = new System.Drawing.Size(102, 24);
+            this.dropDownButton7.TabIndex = 13;
+            this.dropDownButton7.Text = "dropDownButton7";
+            this.dropDownButton7.Click += new System.EventHandler(this.dropDownButton7_Click);
+            // 
+            // labelControl4
+            // 
+            this.labelControl4.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
+            this.labelControl4.Appearance.Options.UseFont = true;
+            this.labelControl4.Location = new System.Drawing.Point(173, 269);
+            this.labelControl4.Name = "labelControl4";
+            this.labelControl4.Size = new System.Drawing.Size(43, 16);
+            this.labelControl4.TabIndex = 10;
+            this.labelControl4.Text = "DEBUG:";
             // 
             // ratingControl1
             // 
@@ -391,5 +416,7 @@
         private DevExpress.XtraEditors.LabelControl labelControl3;
         public DevExpress.XtraEditors.DropDownButton dropDownButton6;
         private DevExpress.XtraEditors.RatingControl ratingControl1;
+        private DevExpress.XtraEditors.LabelControl labelControl4;
+        private DevExpress.XtraEditors.DropDownButton dropDownButton7;
     }
 }
