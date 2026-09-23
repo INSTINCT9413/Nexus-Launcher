@@ -14,15 +14,31 @@ The goal of Nexus Launcher is to make it easier to discover, organize, and launc
 
 ## ✨ Features
 
-- 🎮 Unified game library
+### Library
+
+- 🎮 Unified game library across every supported platform
 - 🔍 Automatic game detection
-- 🖼️ Game artwork and metadata
+- 🖼️ Game artwork and metadata, or your own artwork if you prefer
 - 🚀 Launch games directly from Nexus Launcher
-- 📚 Organize games by launcher
-- ⚙️ Configurable launcher settings
-- 🔄 Automatic updates
+- 📚 Organize games into your own groups, inside each launcher
+- ⭐ Favorite games so they sit at the top of the list
+- 🗂️ Full Library view with a poster grid, search, filters and sorting
 - 🧹 Cache and library management
-- 🎨 Customizable interface
+
+### Tracking
+
+- ⏱️ Play time tracking — total, last session and launch counts
+- 📊 Library statistics and recently played
+- 🏆 Achievements and badges earned for how you use Nexus
+- 🖥️ My Rig — live CPU, memory, storage and network details
+
+### Setup and appearance
+
+- 🧙 First-run setup wizard, re-runnable at any time
+- 🎨 Customizable interface with built-in themes
+- 🖌️ Custom themes — build your own colour palette
+- ⚙️ Configurable launcher settings
+- 🔄 Automatic updates with download progress
 - 📦 Much more to come!
 
 ---
@@ -31,19 +47,18 @@ The goal of Nexus Launcher is to make it easier to discover, organize, and launc
 
 Nexus Launcher is designed to support games from multiple platforms.
 
-### Currently Supported
-
-- [x] Nexus Launcher (Natively)
-- [x] Steam
-- [x] Ubisoft Connect
-- [x] EA
-- [x] Battle.net
-- [x] Epic Games
-- [x] GOG
-- [x] Xbox/Windows Store
-- [ ] Amazon Games (Deprecated)
-- [ ] Paradox Launcher (Deprecated)
-- [ ] Windows Store / Xbox App (Planned)
+| Platform | Status |
+|---|---|
+| Nexus Launcher (native) | ✅ Supported |
+| Steam | ✅ Supported |
+| Epic Games | ✅ Supported |
+| Battle.net | ✅ Supported |
+| GOG | ✅ Supported |
+| EA App | ✅ Supported |
+| Ubisoft Connect | ✅ Supported |
+| Xbox / Windows Store | ✅ Supported |
+| Amazon Games | ❌ Not planned |
+| Paradox Launcher | ❌ Not planned |
 
 > **Note:** Support status can change as development continues.
 
@@ -51,30 +66,24 @@ Nexus Launcher is designed to support games from multiple platforms.
 
 ## 🗺️ Roadmap
 
-### Launcher Support
+### Done
 
-- [x] Nexus Launcher (Natively)
-- [x] Steam
-- [x] Ubisoft Connect
-- [x] EA
-- [x] Battle.net
-- [x] Epic Games
-- [x] GOG
-- [x] Windows Store / Xbox App
+- [x] Game favorites
+- [x] Game categories and groups
+- [x] Search and filtering
+- [x] Game statistics and play time tracking
+- [x] Custom themes
+- [x] Custom game artwork
+- [x] Achievements and badges
 
-### Planned Features
+### Planned
 
-- [ ] Add launcher
+- [ ] Add more launchers
 - [ ] Improve game detection
 - [ ] Improve artwork detection
 - [ ] Cloud synchronization
-- [ ] Game favorites
-- [ ] Game categories
-- [ ] Search and filtering improvements
-- [ ] Game statistics
-- [ ] Custom themes
-- [ ] [Add planned feature]
-- [ ] [Add planned feature]
+- [ ] Per-game launch options
+- [ ] Controller navigation
 
 ---
 
@@ -89,7 +98,7 @@ Nexus Launcher is designed to support games from multiple platforms.
 | Processor | Intel Core i3 / AMD Ryzen 3 or equivalent |
 | Memory | 4 GB RAM |
 | Storage | 500 MB available space |
-| .NET | .Net 4.8 |
+| .NET | .NET Framework 4.8 |
 
 ### Recommended
 
@@ -100,7 +109,7 @@ Nexus Launcher is designed to support games from multiple platforms.
 | Processor | Intel Core i5 / AMD Ryzen 5 or better |
 | Memory | 8 GB RAM or more |
 | Storage | 1 GB available space |
-| .NET | .Net 4.8 |
+| .NET | .NET Framework 4.8 |
 
 ---
 
@@ -134,7 +143,10 @@ Nexus Launcher Program
 │   ├── Game/Program
 │   └── Game/Program
 ├── Steam
-│   ├── Game
+│   ├── Favorite Game
+│   ├── Co-op              <- a group you made
+│   │   ├── Game
+│   │   └── Game
 │   ├── Game
 │   └── Game
 │
@@ -151,9 +163,20 @@ Nexus Launcher Program
 ├── Epic Games
 │   └── Game
 │
-└── GOG
+├── GOG
+│   └── Game
+│
+└── Xbox
     └── Game
 ```
+
+Favorites rise to the top of their launcher, and you can create your own named groups
+inside any launcher. The Full Library view shows everything together as a poster grid
+that can be searched, filtered by launcher, group or favorites, and sorted by name,
+recently played or most played.
+
+---
+
 ## 📸 Gallery
 
 ### Game Library
