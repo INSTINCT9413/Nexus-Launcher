@@ -823,6 +823,10 @@
     <Compile Include="Services\AccordionLibraryOrganizer.cs" />
     <Compile Include="Services\LibraryGroupIcons.cs" />
     <Compile Include="Services\LibraryOrganizationService.cs" />
+    <Compile Include="Controls\SetupSettingsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Services\UserProfileService.cs" />
     <Compile Include="Services\CustomArtworkService.cs" />
     <Compile Include="Controls\Profile\AchievementsPanel.cs">
       <SubType>Component</SubType>
@@ -851,6 +855,14 @@
     <Compile Include="Helpers\ArtworkPlaceholder.cs" />
     <Compile Include="Helpers\PictureCover.cs" />
     <Compile Include="Controls\Profile\ProfileStyle.cs" />
+    <Compile Include="Controls\Notifications\AchievementToastForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Services\AchievementToastService.cs" />
+    <Compile Include="Controls\Profile\AchievementFilterBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\AchievementFilter.cs" />
     <Compile Include="Controls\Profile\ProfileWidgets.cs" />
     <Compile Include="Services\AchievementService.cs" />
     <Compile Include="Services\HardwareInfoService.cs" />
@@ -863,6 +875,17 @@
     <Compile Include="Services\SystemStatsService.cs" />
     <Compile Include="Services\LibraryService.cs" />
     <Compile Include="Services\LibraryTileLoader.cs" />
+    <Compile Include="Services\Library\LibraryQuery.cs" />
+    <Compile Include="Services\Library\LibraryThumbnailCache.cs" />
+    <Compile Include="Controls\Library\LibraryGridView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Library\LibraryFilterBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Library\LibraryGameDetailView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Services\NexusLinksService.cs" />
     <Compile Include="Services\ShortcutImporter.cs" />
     <Compile Include="Services\SteamScannerService.cs" />

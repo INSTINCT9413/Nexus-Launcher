@@ -1630,6 +1630,48 @@ namespace Nexus_Launcher
     MessageBoxIcon.Information);
         }
 
+        /// <summary>
+        /// Runs the first run wizard again from Advanced Settings.
+        ///
+        /// The wizard restarts Nexus itself when it finishes, the same as
+        /// on a first run. Closing it without finishing changes nothing.
+        /// </summary>
+        private void simpleButtonRunSetup_Click(object sender, EventArgs e)
+        {
+            DialogResult result =
+                XtraMessageBox.Show(
+                    this,
+                    "Run the setup wizard again?" + Environment.NewLine + Environment.NewLine +
+                    "Nexus Launcher will restart once you finish the wizard. " +
+                    "Closing it before the end leaves your settings as they are.",
+                    "Setup Wizard",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+            if (result != DialogResult.Yes)
+                return;
+
+            using (FirstTimeSetupForm wizard = new FirstTimeSetupForm())
+            {
+                wizard.ShowDialog(this);
+            }
+        }
+
+        private void simpleButtonSetupInfo_Click(object sender, EventArgs e)
+        {
+            XtraMessageBox.Show(
+                "The setup wizard is the short series of steps shown the first time Nexus Launcher runs." + Environment.NewLine + Environment.NewLine +
+
+                "It detects your installed game launchers, lets you point Nexus at any it could not find, and sets up how Nexus starts, which launcher it opens on, and the name it greets you by." + Environment.NewLine + Environment.NewLine +
+
+                "Running it again is useful after installing a new launcher, moving one to a different drive, or if you want to change those choices in one place." + Environment.NewLine + Environment.NewLine +
+
+                "Your library, artwork, achievements and themes are not affected. Nexus Launcher restarts when the wizard finishes.",
+                "About the Setup Wizard",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+        }
+
         private void simpleButton14_Click(object sender, EventArgs e)
         {
             XtraMessageBox.Show(

@@ -17,6 +17,7 @@ namespace Nexus_Launcher
     public partial class FirstTimeSetupForm : DevExpress.XtraEditors.XtraForm
     {
         Scanner scanner = new Scanner();
+        private Controls.SetupSettingsControl setupSettings;
         string steamPath;
         string epicPath;
         string eaPath;
@@ -34,7 +35,7 @@ namespace Nexus_Launcher
             DevExpress.XtraEditors.WindowsFormsSettings.FocusRectStyle = DevExpress.Utils.Paint.DXDashStyle.None;
             labelControl1.Text = welcomeWizardPage1.IntroductionText.ToString();
             FindLaunchers();
-            AddSettingsForm();
+            AddSetupSettings();
         }
         private void FindLaunchers()
         {
@@ -134,20 +135,18 @@ namespace Nexus_Launcher
                 //throw;
             }
         }
-        private void AddSettingsForm()
+        /// <summary>
+        /// The settings step. This used to embed the whole SettingsForm
+        /// and hide most of its pages and buttons; it now uses a control
+        /// built for the wizard, which also asks for the user's name.
+        /// Nothing is written until the wizard finishes.
+        /// </summary>
+        private void AddSetupSettings()
         {
-            SettingsForm settingsForm = new SettingsForm();
-            settingsForm.TopLevel = false;
-            settingsForm.FormBorderStyle = FormBorderStyle.None;
-            settingsForm.Dock = DockStyle.Fill;
-            wizardPage2.Controls.Add(settingsForm);
-            settingsForm.Show();
-            settingsForm.tabNavigationPage2.PageVisible = false;
-            settingsForm.tabNavigationPage3.PageVisible = false;
-            settingsForm.tabNavigationPage4.PageVisible = false;
-            settingsForm.tabNavigationPage5.PageVisible = false;
-            settingsForm.simpleButton4.Visible = false;
-            settingsForm.groupControl2.Enabled = false;
+            setupSettings = new Controls.SetupSettingsControl();
+            setupSettings.Dock = DockStyle.Fill;
+
+            wizardPage2.Controls.Add(setupSettings);
         }
         private void simpleButton2_Click(object sender, EventArgs e)
         {
@@ -241,6 +240,11 @@ namespace Nexus_Launcher
 
         private void simpleButton7_Click(object sender, EventArgs e)
         {
+            // Everything chosen in the settings step is written here, so
+            // leaving the wizard early changes nothing.
+            if (setupSettings != null)
+                setupSettings.Save();
+
             Settings.Default.Setup = true;
             Settings.Default.Save();
             //Program._mutex.Dispose();

@@ -21,6 +21,21 @@ namespace Nexus_Launcher.Services.Library
         /// </summary>
         public Dictionary<string, int> GamesPerLauncher { get; set; }
 
+        /// <summary>
+        /// Measured play time per launcher, keyed the same way.
+        /// </summary>
+        public Dictionary<string, long> PlaySecondsPerLauncher { get; set; }
+
+        /// <summary>
+        /// Launch count per launcher, keyed the same way.
+        /// </summary>
+        public Dictionary<string, int> LaunchesPerLauncher { get; set; }
+
+        /// <summary>
+        /// Distinct games played per launcher, keyed the same way.
+        /// </summary>
+        public Dictionary<string, int> GamesPlayedPerLauncher { get; set; }
+
         public int LaunchersWithGames { get; set; }
 
         public int SteamGames { get; set; }
@@ -66,8 +81,72 @@ namespace Nexus_Launcher.Services.Library
                 new Dictionary<string, int>(
                     StringComparer.OrdinalIgnoreCase);
 
+            PlaySecondsPerLauncher =
+                new Dictionary<string, long>(
+                    StringComparer.OrdinalIgnoreCase);
+
+            LaunchesPerLauncher =
+                new Dictionary<string, int>(
+                    StringComparer.OrdinalIgnoreCase);
+
+            GamesPlayedPerLauncher =
+                new Dictionary<string, int>(
+                    StringComparer.OrdinalIgnoreCase);
+
             MostPlayed = new List<GamePlayStats>();
             RecentlyPlayed = new List<GamePlayStats>();
+        }
+
+        //--------------------------------------------------------------
+        // Per launcher lookups
+        //
+        // A launcher with nothing in it reads as zero rather than
+        // throwing, so an achievement for a launcher the user has not
+        // installed simply sits at no progress.
+        //--------------------------------------------------------------
+
+        public int GamesIn(
+            string launcher)
+        {
+            int value;
+
+            return launcher != null &&
+                GamesPerLauncher.TryGetValue(launcher, out value)
+                ? value
+                : 0;
+        }
+
+        public long PlaySecondsIn(
+            string launcher)
+        {
+            long value;
+
+            return launcher != null &&
+                PlaySecondsPerLauncher.TryGetValue(launcher, out value)
+                ? value
+                : 0;
+        }
+
+        public int LaunchesIn(
+            string launcher)
+        {
+            int value;
+
+            return launcher != null &&
+                LaunchesPerLauncher.TryGetValue(launcher, out value)
+                ? value
+                : 0;
+        }
+
+        public int GamesPlayedIn(
+            string launcher)
+        {
+            int value;
+
+            return launcher != null &&
+                GamesPlayedPerLauncher.TryGetValue(launcher, out value)
+                ? value
+                : 0;
         }
     }
 
@@ -76,6 +155,40 @@ namespace Nexus_Launcher.Services.Library
         public const string SteamLauncher = "Steam";
 
         public const string NexusLauncher = "Nexus Launcher";
+
+        public const string EpicLauncher = "Epic Games";
+
+        public const string BattleNetLauncher = "Battle.net";
+
+        public const string GogLauncher = "GOG";
+
+        public const string EaLauncher = "EA App";
+
+        public const string UbisoftLauncher = "Ubisoft Connect";
+
+        public const string XboxLauncher = "Xbox";
+
+        /// <summary>
+        /// The game launchers Nexus scans, spelled exactly as MainView
+        /// names them when it arranges the accordion. Everything that
+        /// counts games per launcher keys off this list, so a launcher
+        /// renamed in one place cannot quietly stop matching in
+        /// another.
+        ///
+        /// Nexus Launcher itself is deliberately not here: its entries
+        /// are programs the user added, counted as NexusEntries.
+        /// </summary>
+        public static readonly IReadOnlyList<string> GameLaunchers =
+            new List<string>
+            {
+                SteamLauncher,
+                EpicLauncher,
+                BattleNetLauncher,
+                GogLauncher,
+                EaLauncher,
+                UbisoftLauncher,
+                XboxLauncher
+            };
 
         /// <summary>
         /// Builds a fresh snapshot. Reads the accordion, so call it on
@@ -136,6 +249,23 @@ namespace Nexus_Launcher.Services.Library
                         .Where(x => !string.IsNullOrWhiteSpace(x))
                         .Distinct(StringComparer.OrdinalIgnoreCase)
                         .Count();
+
+                foreach (IGrouping<string, GamePlayStats> group in
+                    played
+                        .Where(x => !string.IsNullOrWhiteSpace(x.Launcher))
+                        .GroupBy(
+                            x => x.Launcher,
+                            StringComparer.OrdinalIgnoreCase))
+                {
+                    stats.PlaySecondsPerLauncher[group.Key] =
+                        group.Sum(x => x.TotalPlaySeconds);
+
+                    stats.LaunchesPerLauncher[group.Key] =
+                        group.Sum(x => x.LaunchCount);
+
+                    stats.GamesPlayedPerLauncher[group.Key] =
+                        group.Count();
+                }
 
                 stats.Favorites =
                     LibraryOrganizationService.GetFavoriteCount();

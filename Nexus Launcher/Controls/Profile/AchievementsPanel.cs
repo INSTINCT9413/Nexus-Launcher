@@ -1,4 +1,4 @@
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 using Nexus_Launcher.Services.Achievements;
 using Nexus_Launcher.Services.Library;
 using System.Collections.Generic;
@@ -23,6 +23,20 @@ namespace Nexus_Launcher.Controls.Profile
 
         private readonly CardGrid badgeGrid;
         private readonly CardGrid achievementGrid;
+
+        private readonly AchievementFilterBar filterBar;
+
+        private readonly SectionTitle badgeTitle;
+        private readonly SectionTitle achievementTitle;
+
+        private AchievementViewFilter filter =
+            new AchievementViewFilter();
+
+        /// <summary>
+        /// Kept so a filter change can rebind without the caller
+        /// having to hand the statistics over again.
+        /// </summary>
+        private LibraryStats lastStats;
 
         private readonly List<BadgeCard> badgeCards =
             new List<BadgeCard>();
@@ -56,8 +70,15 @@ namespace Nexus_Launcher.Controls.Profile
             summary.Controls.Add(levelMeter);
             summary.Controls.Add(detailLabel);
 
+            filterBar = new AchievementFilterBar();
+            filterBar.ReloadLaunchers();
+            filterBar.FilterChanged += Filter_Changed;
+
             badgeGrid = new CardGrid();
             achievementGrid = new CardGrid();
+
+            badgeTitle = new SectionTitle("Badges", Icon + "actions_rating.svg");
+            achievementTitle = new SectionTitle("Achievements", Icon + "actions_checkcircled.svg");
 
             // The definitions are fixed, so the cards are built once and
             // just rebound on every refresh.
@@ -76,10 +97,21 @@ namespace Nexus_Launcher.Controls.Profile
             }
 
             Controls.Add(summary);
-            Controls.Add(new SectionTitle("Badges", Icon + "actions_rating.svg"));
+            Controls.Add(filterBar);
+            Controls.Add(badgeTitle);
             Controls.Add(badgeGrid);
-            Controls.Add(new SectionTitle("Achievements", Icon + "actions_checkcircled.svg"));
+            Controls.Add(achievementTitle);
             Controls.Add(achievementGrid);
+        }
+
+        private void Filter_Changed(
+            AchievementViewFilter value)
+        {
+            filter = value ?? new AchievementViewFilter();
+
+            // Rebinding from the snapshot already in hand: a filter is
+            // a view of the same progress, not a reason to rebuild it.
+            Bind(lastStats);
         }
 
         public void Bind(
@@ -88,39 +120,89 @@ namespace Nexus_Launcher.Controls.Profile
             if (stats == null)
                 return;
 
+            lastStats = stats;
+
             SuspendLayout();
 
             try
             {
                 BindSummary(stats);
 
-                List<BadgeProgress> badges =
-                    AchievementService.GetBadgeProgress(stats);
+                // The filter decides what is shown and in what order;
+                // the cards themselves are a fixed pool, so the i-th
+                // surviving item is bound to the i-th card and the
+                // leftovers are hidden. No card is ever created or
+                // destroyed by filtering.
+                AchievementFilterResult view =
+                    AchievementFilterService.Apply(
+                        AchievementService.GetAchievementProgress(stats),
+                        AchievementService.GetBadgeProgress(stats),
+                        filter,
+                        stats);
 
-                for (int i = 0; i < badgeCards.Count && i < badges.Count; i++)
-                {
-                    badgeCards[i].Bind(badges[i]);
-                }
+                BindCards(view);
 
-                // Earned first, then the ones closest to done, so the
-                // list leads with progress rather than a wall of locks.
-                List<AchievementProgress> achievements =
-                    AchievementService.GetAchievementProgress(stats)
-                        .OrderByDescending(x => x.Unlocked)
-                        .ThenByDescending(x => x.Fraction)
-                        .ToList();
+                filterBar.SetSummary(
+                    view.Achievements.Count,
+                    view.TotalAchievements,
+                    view.Badges.Count,
+                    view.TotalBadges,
+                    view.StashedForEmptyLaunchers,
+                    view.EmptyLaunchers);
 
-                for (int i = 0; i < achievementCards.Count && i < achievements.Count; i++)
-                {
-                    achievementCards[i].Bind(achievements[i]);
-                }
+                // An empty section header over an empty grid reads as a
+                // rendering fault, so both go away together.
+                badgeTitle.Visible = view.Badges.Count > 0;
+                badgeGrid.Visible = view.Badges.Count > 0;
+
+                achievementTitle.Visible = view.Achievements.Count > 0;
+                achievementGrid.Visible = view.Achievements.Count > 0;
             }
             finally
             {
                 ResumeLayout(true);
             }
 
+            // Hiding a card changes its grid's preferred height, but
+            // that does not mark the stack around it dirty, so the
+            // stack would keep positioning sections using the heights
+            // from before the filter ran. The grids are re-measured
+            // first, then the stack is laid out over the new sizes.
+            badgeGrid.PerformLayout();
+
+            achievementGrid.PerformLayout();
+
+            PerformLayout();
+
             ProfileTheme.Apply(this);
+        }
+
+        /// <summary>
+        /// Points the card pools at the filtered lists and hides the
+        /// rest.
+        /// </summary>
+        private void BindCards(
+            AchievementFilterResult view)
+        {
+            for (int i = 0; i < badgeCards.Count; i++)
+            {
+                bool used = i < view.Badges.Count;
+
+                if (used)
+                    badgeCards[i].Bind(view.Badges[i]);
+
+                badgeCards[i].Visible = used;
+            }
+
+            for (int i = 0; i < achievementCards.Count; i++)
+            {
+                bool used = i < view.Achievements.Count;
+
+                if (used)
+                    achievementCards[i].Bind(view.Achievements[i]);
+
+                achievementCards[i].Visible = used;
+            }
         }
 
         private void BindSummary(

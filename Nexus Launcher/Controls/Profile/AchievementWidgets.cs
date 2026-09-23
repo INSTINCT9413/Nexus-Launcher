@@ -1,4 +1,4 @@
-using DevExpress.Utils;
+﻿using DevExpress.Utils;
 using DevExpress.Utils.Svg;
 using DevExpress.XtraEditors;
 using Nexus_Launcher.Services.Achievements;
@@ -183,7 +183,11 @@ namespace Nexus_Launcher.Controls.Profile
             }
         }
 
-        private static Image GetGlyph(
+        /// <summary>
+        /// Shared with the unlock popup, which wants the same glyphs at
+        /// its own size and benefits from the same cache.
+        /// </summary>
+        internal static Image GetGlyph(
             string key,
             int pixelSize)
         {

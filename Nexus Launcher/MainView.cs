@@ -57,7 +57,18 @@ namespace Nexus_Launcher
         public WaitForm1 waitForm1;
         private NexusLinksService _nexusLinksService;
 
-        public static string fullUserName = UserPrincipal.Current.DisplayName;
+        /// <summary>
+        /// The name shown for the user. A property rather than a field
+        /// so it follows the choice made in setup or settings: it used
+        /// to be read once from Windows at startup and never change.
+        /// </summary>
+        public static string fullUserName
+        {
+            get
+            {
+                return UserProfileService.DisplayName;
+            }
+        }
         public virtual string Title { get; set; } = "Nexus Launcher";
         public virtual string VersionTitle { get; set; } = "Version: " + Version;
         public static string Version = Application.ProductVersion;
@@ -1119,6 +1130,9 @@ namespace Nexus_Launcher
             //aloneTextBox1.Text = NexusPath;
             
             barButtonItem4.Caption = fullUserName;
+
+            // Renaming yourself updates the header straight away.
+            UserProfileService.Changed += UserProfile_Changed;
             this.taskDialogButton1.Enabled = false;
             applicationCard.Dock = DockStyle.Fill;
             launcherCard.Dock = DockStyle.Fill;
@@ -3105,6 +3119,10 @@ namespace Nexus_Launcher
         {
             // Save theme on every close event
             SaveCurrentTheme();
+
+            // Unlock popups are top-most windows of their own, so an
+            // unfinished one would be left floating over the desktop.
+            AchievementToastService.Clear();
             // if appExit is false then continue with flow
             if (appExit == false) {
                 // if setting to minimize on close is true
@@ -3774,23 +3792,14 @@ namespace Nexus_Launcher
         //--------------------------------------------------------------
 
         private System.Windows.Forms.Timer achievementTimer;
-        private DevExpress.XtraBars.Alerter.AlertControl achievementAlerts;
-
-        /// <summary>
-        /// More unlocks than this at once are summed up in one toast
-        /// rather than stacking a pile of them. It mostly matters on the
-        /// first run, when everything already earned unlocks together.
-        /// </summary>
-        private const int MaxIndividualToasts = 3;
 
         private void InitializeAchievements()
         {
             AchievementService.Initialize();
 
-            achievementAlerts =
-                new DevExpress.XtraBars.Alerter.AlertControl();
-
-            achievementAlerts.AutoFormDelay = 6000;
+            // Unlocks announce themselves one at a time in the bottom
+            // right rather than through a stack of alert windows.
+            AchievementToastService.Initialize(this);
 
             // Changes tend to arrive in bursts, a scan or a rearrange
             // saving several times, so checks wait for things to settle.
@@ -3862,32 +3871,26 @@ namespace Nexus_Launcher
         private void ShowUnlocks(
             List<UnlockEvent> unlocked)
         {
-            if (unlocked == null || unlocked.Count == 0)
+            AchievementToastService.Show(unlocked);
+        }
+
+        /// <summary>
+        /// The display name changed, so redraw anything showing it.
+        /// </summary>
+        private void UserProfile_Changed()
+        {
+            if (IsDisposed || !IsHandleCreated)
                 return;
 
-            if (unlocked.Count > MaxIndividualToasts)
+            if (InvokeRequired)
             {
-                achievementAlerts.Show(
-                    this,
-                    "Achievements unlocked",
-                    "You earned " + unlocked.Count +
-                    " achievements and badges (+" +
-                    unlocked.Sum(x => x.Points) +
-                    " XP). Open your profile to see them.",
-                    ProfileStyle.Svg("svgimages/icon%20builder/actions_rating.svg"));
-
+                BeginInvoke(new Action(UserProfile_Changed));
                 return;
             }
 
-            foreach (UnlockEvent unlock in unlocked)
-            {
-                achievementAlerts.Show(
-                    this,
-                    (unlock.IsBadge ? "Badge earned: " : "Achievement unlocked: ") +
-                        unlock.Title,
-                    unlock.Description + "   +" + unlock.Points + " XP",
-                    ProfileStyle.Svg(unlock.IconKey));
-            }
+            barButtonItem4.Caption = fullUserName;
+
+            userAccount.RefreshUserName();
         }
 
         /// <summary>

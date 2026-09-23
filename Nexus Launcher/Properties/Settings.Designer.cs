@@ -210,6 +210,30 @@ namespace Nexus_Launcher.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string UserDisplayName {
+            get {
+                return ((string)(this["UserDisplayName"]));
+            }
+            set {
+                this["UserDisplayName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UseWindowsUserName {
+            get {
+                return ((bool)(this["UseWindowsUserName"]));
+            }
+            set {
+                this["UseWindowsUserName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool CustomThemingEnabled {
             get {

@@ -1,4 +1,4 @@
-using DevExpress.LookAndFeel;
+﻿using DevExpress.LookAndFeel;
 using DevExpress.XtraEditors;
 using DevExpress.XtraTab;
 using Nexus_Launcher.Controls.Profile;
@@ -177,6 +177,7 @@ namespace Nexus_Launcher.Services
                 xtraTabControl1.SelectedPageChanged += (s, e) => RefreshProfile();
 
                 AchievementService.Changed += Data_Changed;
+                UserProfileService.Changed += UserProfile_Changed;
                 PlayTrackingService.Changed += Data_Changed;
                 LibraryOrganizationService.Changed += Data_Changed;
                 UserLookAndFeel.Default.StyleChanged += LookAndFeel_StyleChanged;
@@ -271,6 +272,35 @@ namespace Nexus_Launcher.Services
             }
         }
 
+        /// <summary>
+        /// Shows the current display name on the profile header.
+        /// </summary>
+        public void RefreshUserName()
+        {
+            if (!built || IsDisposed)
+                return;
+
+            // Null picture keeps the avatar that is already loaded.
+            header.SetUser(
+                UserProfileService.DisplayName,
+                null);
+        }
+
+        private void UserProfile_Changed()
+        {
+            if (IsDisposed || !IsHandleCreated)
+                return;
+
+            try
+            {
+                BeginInvoke(new Action(RefreshUserName));
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+            }
+        }
+
         private void LookAndFeel_StyleChanged(
             object sender,
             EventArgs e)
@@ -297,6 +327,7 @@ namespace Nexus_Launcher.Services
             EventArgs e)
         {
             AchievementService.Changed -= Data_Changed;
+            UserProfileService.Changed -= UserProfile_Changed;
             PlayTrackingService.Changed -= Data_Changed;
             LibraryOrganizationService.Changed -= Data_Changed;
             UserLookAndFeel.Default.StyleChanged -= LookAndFeel_StyleChanged;

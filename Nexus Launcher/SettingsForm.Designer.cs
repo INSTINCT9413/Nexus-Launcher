@@ -135,6 +135,9 @@
             this.tabNavigationPage2 = new DevExpress.XtraBars.Navigation.TabNavigationPage();
             this.simpleButton11 = new DevExpress.XtraEditors.SimpleButton();
             this.groupControl10 = new DevExpress.XtraEditors.GroupControl();
+            this.groupControlSetup = new DevExpress.XtraEditors.GroupControl();
+            this.simpleButtonRunSetup = new DevExpress.XtraEditors.SimpleButton();
+            this.simpleButtonSetupInfo = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton14 = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton10 = new DevExpress.XtraEditors.SimpleButton();
             this.groupControl8 = new DevExpress.XtraEditors.GroupControl();
@@ -267,6 +270,8 @@
             this.tabNavigationPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl10)).BeginInit();
             this.groupControl10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControlSetup)).BeginInit();
+            this.groupControlSetup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl8)).BeginInit();
             this.groupControl8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl7)).BeginInit();
@@ -1458,6 +1463,7 @@
             // 
             this.tabNavigationPage2.Caption = "Advanced Settings";
             this.tabNavigationPage2.Controls.Add(this.simpleButton11);
+            this.tabNavigationPage2.Controls.Add(this.groupControlSetup);
             this.tabNavigationPage2.Controls.Add(this.groupControl10);
             this.tabNavigationPage2.Controls.Add(this.groupControl8);
             this.tabNavigationPage2.Controls.Add(this.groupControl7);
@@ -1473,6 +1479,39 @@
             this.simpleButton11.TabIndex = 1;
             this.simpleButton11.Text = "Open Nexus Launcher config folder";
             this.simpleButton11.Click += new System.EventHandler(this.simpleButton11_Click);
+            // 
+            // groupControlSetup
+            // 
+            this.groupControlSetup.Controls.Add(this.simpleButtonSetupInfo);
+            this.groupControlSetup.Controls.Add(this.simpleButtonRunSetup);
+            this.groupControlSetup.Location = new System.Drawing.Point(329, 124);
+            this.groupControlSetup.Name = "groupControlSetup";
+            this.groupControlSetup.Size = new System.Drawing.Size(200, 100);
+            this.groupControlSetup.TabIndex = 3;
+            this.groupControlSetup.Text = "Run Setup Wizard Again";
+            // 
+            // simpleButtonRunSetup
+            // 
+            this.simpleButtonRunSetup.Location = new System.Drawing.Point(19, 72);
+            this.simpleButtonRunSetup.Name = "simpleButtonRunSetup";
+            this.simpleButtonRunSetup.Size = new System.Drawing.Size(137, 23);
+            this.simpleButtonRunSetup.TabIndex = 0;
+            this.simpleButtonRunSetup.Text = "Run Wizard";
+            this.simpleButtonRunSetup.Click += new System.EventHandler(this.simpleButtonRunSetup_Click);
+            // 
+            // simpleButtonSetupInfo
+            // 
+            this.simpleButtonSetupInfo.AllowFocus = false;
+            this.simpleButtonSetupInfo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.simpleButtonSetupInfo.ImageOptions.Image = global::Nexus_Launcher.Properties.Resources.icons8_info_94;
+            this.simpleButtonSetupInfo.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            this.simpleButtonSetupInfo.Location = new System.Drawing.Point(162, 74);
+            this.simpleButtonSetupInfo.Name = "simpleButtonSetupInfo";
+            this.simpleButtonSetupInfo.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
+            this.simpleButtonSetupInfo.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
+            this.simpleButtonSetupInfo.Size = new System.Drawing.Size(20, 20);
+            this.simpleButtonSetupInfo.TabIndex = 19;
+            this.simpleButtonSetupInfo.Click += new System.EventHandler(this.simpleButtonSetupInfo_Click);
             // 
             // groupControl10
             // 
@@ -2187,6 +2226,8 @@
             this.tabNavigationPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.groupControl10)).EndInit();
             this.groupControl10.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.groupControlSetup)).EndInit();
+            this.groupControlSetup.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.groupControl8)).EndInit();
             this.groupControl8.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.groupControl7)).EndInit();
@@ -2354,6 +2395,9 @@
         private Microsoft.Web.WebView2.WinForms.WebView2 webView22;
         private Microsoft.Web.WebView2.WinForms.WebView2 webView23;
         private DevExpress.XtraEditors.GroupControl groupControl10;
+        private DevExpress.XtraEditors.GroupControl groupControlSetup;
+        private DevExpress.XtraEditors.SimpleButton simpleButtonRunSetup;
+        private DevExpress.XtraEditors.SimpleButton simpleButtonSetupInfo;
         private DevExpress.XtraEditors.SimpleButton simpleButton10;
         private DevExpress.XtraEditors.SimpleButton simpleButton11;
         private DevExpress.XtraEditors.LabelControl labelControl28;
