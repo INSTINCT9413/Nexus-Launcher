@@ -1,5 +1,6 @@
 ﻿using Nexus_Launcher.Models;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Nexus_Launcher.Services
@@ -33,6 +34,9 @@ namespace Nexus_Launcher.Services
                 if (game == null)
                     continue;
 
+                if (!game.IsInstalled)
+                    game.IsInstalled = LooksInstalled(game);
+
                 if (!games.Any(x =>
                     x.Name == game.Name &&
                     x.Launcher == game.Launcher))
@@ -40,6 +44,41 @@ namespace Nexus_Launcher.Services
                     games.Add(game);
                 }
             }
+        }
+
+        /// <summary>
+        /// A scanner only reports a game because it found it on the
+        /// machine, so a recorded path that still exists means the game
+        /// is installed however the scanner chose to describe it.
+        ///
+        /// This only ever turns the flag on, and only against a path
+        /// that is really there, so a scanner that deliberately reports
+        /// an uninstalled game keeps saying so.
+        /// </summary>
+        private static bool LooksInstalled(
+            GameInfo game)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(game.InstallPath) &&
+                    Directory.Exists(game.InstallPath))
+                {
+                    return true;
+                }
+
+                if (!string.IsNullOrWhiteSpace(game.ExecutablePath) &&
+                    File.Exists(game.ExecutablePath))
+                {
+                    return true;
+                }
+            }
+            catch (System.Exception)
+            {
+                // A malformed path is not worth a crash; the game just
+                // keeps whatever the scanner said.
+            }
+
+            return false;
         }
 
         public static List<GameInfo> GetGames()

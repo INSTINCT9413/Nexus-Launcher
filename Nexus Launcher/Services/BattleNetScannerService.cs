@@ -94,6 +94,11 @@ namespace Nexus_Launcher.Services
                                     game.ExecutablePath);
                         }
                     game.Launcher = "Battle.net";
+
+                        // This loop walks the client's own installed
+                        // list, so every entry in it is installed.
+                        game.IsInstalled = true;
+
                         game.LaunchUri =
                             gameData.launch_uri;
 

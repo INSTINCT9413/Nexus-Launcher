@@ -191,6 +191,45 @@ namespace Nexus_Launcher.Services.Library
             };
 
         /// <summary>
+        /// The name a launcher is known by everywhere else, given
+        /// whatever a scanner happened to write into GameInfo.Launcher.
+        ///
+        /// Two scanners disagree with the rest of the app, so anything
+        /// that groups by launcher has to come through here first.
+        /// </summary>
+        public static string Canonical(
+            string launcher)
+        {
+            if (string.IsNullOrWhiteSpace(launcher))
+                return launcher;
+
+            switch (launcher.Trim())
+            {
+                case "EA":
+                    return EaLauncher;
+
+                case "Ubisoft":
+                    return UbisoftLauncher;
+
+                case "Battlenet":
+                case "BattleNet":
+                    return BattleNetLauncher;
+
+                case "Epic":
+                    return EpicLauncher;
+
+                case "GOG Galaxy":
+                    return GogLauncher;
+
+                case "Windows Store":
+                    return XboxLauncher;
+
+                default:
+                    return launcher;
+            }
+        }
+
+        /// <summary>
         /// Builds a fresh snapshot. Reads the accordion, so call it on
         /// the UI thread.
         /// </summary>
@@ -207,7 +246,14 @@ namespace Nexus_Launcher.Services.Library
                     int count =
                         launcher.Value.Count;
 
-                    stats.GamesPerLauncher[launcher.Key] = count;
+                    string name =
+                        Canonical(launcher.Key);
+
+                    int existing;
+
+                    stats.GamesPerLauncher.TryGetValue(name, out existing);
+
+                    stats.GamesPerLauncher[name] = existing + count;
                     stats.TotalGames += count;
                 }
 
@@ -245,7 +291,7 @@ namespace Nexus_Launcher.Services.Library
 
                 stats.LaunchersPlayed =
                     played
-                        .Select(x => x.Launcher)
+                        .Select(x => Canonical(x.Launcher))
                         .Where(x => !string.IsNullOrWhiteSpace(x))
                         .Distinct(StringComparer.OrdinalIgnoreCase)
                         .Count();
@@ -254,7 +300,7 @@ namespace Nexus_Launcher.Services.Library
                     played
                         .Where(x => !string.IsNullOrWhiteSpace(x.Launcher))
                         .GroupBy(
-                            x => x.Launcher,
+                            x => Canonical(x.Launcher),
                             StringComparer.OrdinalIgnoreCase))
                 {
                     stats.PlaySecondsPerLauncher[group.Key] =

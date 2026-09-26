@@ -1,0 +1,47 @@
+{
+  "formatVersion": 1,
+  "generator": "Nexus Launcher",
+  "themes": [
+    {
+      "name": "Forest Dusk",
+      "skin": "The Bezier",
+      "author": "Nexus Launcher",
+      "description": "Deep pine greys under a moss green accent.",
+      "colors": {
+        "Paint": "#1C231D",
+        "Paint High": "#2C322D",
+        "Paint Shadow": "#141915",
+        "Paint Deep Shadow": "#0F1310",
+        "Brush": "#E2E8DF",
+        "Brush (addl)": "#E2E8DF",
+        "Brush Light": "#8F958E",
+        "Brush High": "#ECF0EA",
+        "Brush Major": "#5F665F",
+        "Brush Minor": "#404640",
+        "Accent Paint": "#6BA84F",
+        "Accent Paint Light": "#304C24",
+        "Accent Brush": "#121212",
+        "Accent Brush Light": "#9FC68D",
+        "Key Paint": "#161C17",
+        "Key Brush": "#FFFFFF",
+        "Key Brush Light": "#9DA09E",
+        "Black": "#A7ADA5",
+        "Gray": "#757C74",
+        "White": "#FFFFFF",
+        "Red": "#E5484D",
+        "Green": "#7CBF5C",
+        "Blue": "#3E8FD9",
+        "Yellow": "#F0A72B",
+        "Purple": "#A45CE8",
+        "altRed": "#E5484D",
+        "altGreen": "#7CBF5C",
+        "altBlue": "#3E8FD9",
+        "altYellow": "#F0A72B",
+        "altPurple": "#A45CE8",
+        "altBlack": "#A7ADA5",
+        "altGray": "#757C74",
+        "altWhite": "#FFFFFF"
+      }
+    }
+  ]
+}

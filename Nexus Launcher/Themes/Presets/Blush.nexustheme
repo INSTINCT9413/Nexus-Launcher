@@ -1,0 +1,52 @@
+{
+  "formatVersion": 1,
+  "generator": "Nexus Launcher",
+  "themes": [
+    {
+      "name": "Blush",
+      "skin": "WXI",
+      "author": "Nexus Launcher",
+      "description": "Soft warm light with a quiet plum accent.",
+      "colors": {
+        "Background 200": "#FCFAFB",
+        "Background 100": "#FAF7F8",
+        "Background 0": "#F8F3F4",
+        "Background -100": "#EFEAEB",
+        "Background -200": "#E9E4E5",
+        "Edit Background 0": "#FCFAFB",
+        "Edit Background -50": "#F8F3F4",
+        "Edit Background -100": "#F1E7EC",
+        "Edit Background -200": "#E9DAE1",
+        "Edit Background -300": "#E2DDDE",
+        "Line 100": "#959292",
+        "Line 50": "#C9C5C6",
+        "Line 25": "#DFDBDC",
+        "Foreground 100": "#2C2528",
+        "Foreground 50": "#7E777A",
+        "Foreground 25": "#AAA5A6",
+        "Edit Foreground 100": "#2C2528",
+        "Edit Foreground 50": "#716B6D",
+        "Edit Foreground 25": "#A6A1A2",
+        "Primary Background 100": "#E2CFD7",
+        "Primary Background 0": "#8A3D63",
+        "Primary Background -100": "#773455",
+        "Primary Background -200": "#662D49",
+        "Primary Foreground 100": "#FFFFFF",
+        "Primary Foreground 25": "#CAA8B9",
+        "Secondary Background 0": "#A8536F",
+        "Secondary Background -100": "#90475F",
+        "Secondary Background -200": "#7C3D52",
+        "Secondary Foreground 100": "#FFFFFF",
+        "Secondary Foreground 25": "#D8B2BE",
+        "Black": "#595255",
+        "Gray": "#928C8E",
+        "White": "#FFFFFF",
+        "Red": "#B3304A",
+        "Green": "#12805C",
+        "Blue": "#1668C7",
+        "Yellow": "#B7791F",
+        "Purple": "#7A3A72"
+      }
+    }
+  ]
+}

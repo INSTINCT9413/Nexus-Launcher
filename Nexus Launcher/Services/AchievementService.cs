@@ -836,6 +836,32 @@ Badge("weekend_gamer", "Weekend Gamer", "Launch games on the weekend.", "launche
         // Storage
         //--------------------------------------------------------------
 
+        /// <summary>
+        /// How many achievements and badges have unlocked since a
+        /// moment, for the badge on the profile button.
+        /// </summary>
+        public static int UnlockedSince(
+            DateTime? since)
+        {
+            try
+            {
+                if (!since.HasValue)
+                    return 0;
+
+                lock (sync)
+                {
+                    return State.UnlockedAchievements
+                        .Count(x => x.Value > since.Value);
+                }
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+
+                return 0;
+            }
+        }
+
         private static AchievementState State
         {
             get

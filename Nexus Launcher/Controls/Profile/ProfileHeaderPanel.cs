@@ -1,4 +1,4 @@
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using Nexus_Launcher.Services.Achievements;
 using Nexus_Launcher.Services.Library;
@@ -27,6 +27,13 @@ namespace Nexus_Launcher.Controls.Profile
         private readonly LabelControl showcaseLabel;
         private readonly List<BadgeMedal> showcase = new List<BadgeMedal>();
         private readonly Panel facts;
+
+        private readonly SimpleButton accountButton = new SimpleButton();
+
+        /// <summary>
+        /// The Nexus Account button was pressed.
+        /// </summary>
+        public event Action AccountRequested;
         private readonly ToolTip tips = new ToolTip();
 
         public ProfileHeaderPanel()
@@ -59,6 +66,14 @@ namespace Nexus_Launcher.Controls.Profile
             showcaseLabel = Label(162, 122, 8.5F, FontStyle.Regular);
             showcaseLabel.Text = "Top badges";
 
+            accountButton.Click += (s, e) =>
+            {
+                Action handler = AccountRequested;
+
+                if (handler != null)
+                    handler();
+            };
+
             for (int i = 0; i < ShowcaseCount; i++)
             {
                 BadgeMedal medal =
@@ -76,7 +91,17 @@ namespace Nexus_Launcher.Controls.Profile
             facts.Dock = DockStyle.Right;
             facts.Width = 270;
             facts.BackColor = Color.Transparent;
-            facts.Padding = new Padding(0, 20, 0, 0);
+            facts.Padding = new Padding(0, 8, 0, 6);
+
+            // Sits at the foot of the facts column rather than floating
+            // over it. Added first and sent to the back so docking gives
+            // it the bottom edge before the rows fill from the top.
+            accountButton.Dock = DockStyle.Bottom;
+            accountButton.Height = 28;
+
+            facts.Controls.Add(accountButton);
+
+            accountButton.SendToBack();
 
             Controls.Add(avatar);
             Controls.Add(nameLabel);
@@ -230,6 +255,11 @@ namespace Nexus_Launcher.Controls.Profile
 
             foreach (Control old in facts.Controls.Cast<Control>().ToList())
             {
+                // The account button is not one of the rows and is
+                // reused, so it is left alone rather than disposed.
+                if (ReferenceEquals(old, accountButton))
+                    continue;
+
                 facts.Controls.Remove(old);
                 old.Dispose();
             }
@@ -240,6 +270,17 @@ namespace Nexus_Launcher.Controls.Profile
             }
 
             facts.ResumeLayout();
+        }
+
+        /// <summary>
+        /// Keeps the button saying what pressing it will do.
+        /// </summary>
+        public void RefreshAccountButton()
+        {
+            accountButton.Text =
+                Nexus_Launcher.Services.Account.NexusAccountService.IsSignedIn
+                    ? "Nexus Account"
+                    : "Sign in to Nexus";
         }
 
         public void ApplyTheme()

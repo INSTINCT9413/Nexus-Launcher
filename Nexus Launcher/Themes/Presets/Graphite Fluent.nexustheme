@@ -1,0 +1,52 @@
+{
+  "formatVersion": 1,
+  "generator": "Nexus Launcher",
+  "themes": [
+    {
+      "name": "Graphite Fluent",
+      "skin": "WXI",
+      "author": "Nexus Launcher",
+      "description": "The neutral Windows grey, with a clean cobalt accent.",
+      "colors": {
+        "Background 200": "#363636",
+        "Background 100": "#2C2C2C",
+        "Background 0": "#202020",
+        "Background -100": "#1A1A1A",
+        "Background -200": "#161616",
+        "Edit Background 0": "#2C2C2C",
+        "Edit Background -50": "#202020",
+        "Edit Background -100": "#223141",
+        "Edit Background -200": "#233B54",
+        "Edit Background -300": "#191919",
+        "Line 100": "#636363",
+        "Line 50": "#464646",
+        "Line 25": "#363636",
+        "Foreground 100": "#F2F2F2",
+        "Foreground 50": "#9A9A9A",
+        "Foreground 25": "#6C6C6C",
+        "Edit Foreground 100": "#F2F2F2",
+        "Edit Foreground 50": "#A6A6A6",
+        "Edit Foreground 25": "#707070",
+        "Primary Background 100": "#233951",
+        "Primary Background 0": "#2A73C4",
+        "Primary Background -100": "#2463A9",
+        "Primary Background -200": "#1F5591",
+        "Primary Foreground 100": "#FFFFFF",
+        "Primary Foreground 25": "#9FC0E4",
+        "Secondary Background 0": "#31688F",
+        "Secondary Background -100": "#2A597B",
+        "Secondary Background -200": "#244D6A",
+        "Secondary Foreground 100": "#FFFFFF",
+        "Secondary Foreground 25": "#A2BBCD",
+        "Black": "#BBBBBB",
+        "Gray": "#858585",
+        "White": "#FFFFFF",
+        "Red": "#E5484D",
+        "Green": "#3DB77E",
+        "Blue": "#4A9EE8",
+        "Yellow": "#F0A72B",
+        "Purple": "#A45CE8"
+      }
+    }
+  ]
+}

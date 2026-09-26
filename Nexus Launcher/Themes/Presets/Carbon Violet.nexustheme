@@ -1,0 +1,47 @@
+{
+  "formatVersion": 1,
+  "generator": "Nexus Launcher",
+  "themes": [
+    {
+      "name": "Carbon Violet",
+      "skin": "The Bezier",
+      "author": "Nexus Launcher",
+      "description": "Flat carbon black lit by a single violet highlight.",
+      "colors": {
+        "Paint": "#18171C",
+        "Paint High": "#28272C",
+        "Paint Shadow": "#111114",
+        "Paint Deep Shadow": "#0D0D0F",
+        "Brush": "#E6E3EC",
+        "Brush (addl)": "#E6E3EC",
+        "Brush Light": "#8F8D95",
+        "Brush High": "#EFEDF3",
+        "Brush Major": "#5E5C63",
+        "Brush Minor": "#3D3C41",
+        "Accent Paint": "#7C4DEE",
+        "Accent Paint Light": "#38236B",
+        "Accent Brush": "#FFFFFF",
+        "Accent Brush Light": "#AA8BF4",
+        "Key Paint": "#121116",
+        "Key Brush": "#FFFFFF",
+        "Key Brush Light": "#9B9B9D",
+        "Black": "#A8A6AE",
+        "Gray": "#75737A",
+        "White": "#FFFFFF",
+        "Red": "#E5484D",
+        "Green": "#46A758",
+        "Blue": "#3E8FD9",
+        "Yellow": "#F0A72B",
+        "Purple": "#A78BFA",
+        "altRed": "#E5484D",
+        "altGreen": "#46A758",
+        "altBlue": "#3E8FD9",
+        "altYellow": "#F0A72B",
+        "altPurple": "#A78BFA",
+        "altBlack": "#A8A6AE",
+        "altGray": "#75737A",
+        "altWhite": "#FFFFFF"
+      }
+    }
+  ]
+}

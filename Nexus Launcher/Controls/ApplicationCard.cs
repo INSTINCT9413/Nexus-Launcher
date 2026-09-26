@@ -207,6 +207,17 @@ namespace Nexus_Launcher.Controls
         {
             InitializeComponent();
 
+            // Every browser on this control uses the one shared
+            // profile, so a sign in anywhere in Nexus counts
+            // everywhere. Done here because the designer can set
+            // Source, which starts a browser on its own.
+            WebViewEnvironment.PrepareAll(this);
+
+            // Set here rather than in the designer, so the shared
+            // profile above is in place before the browser starts.
+            webView22.Source =
+                new System.Uri("https://guardbyte.me/downloads/Nexus%20Launcher/loading.html");
+
             // Nothing is selected yet, so the star starts disabled.
             RefreshFavoriteDisplay();
 
@@ -489,21 +500,9 @@ namespace Nexus_Launcher.Controls
             if (webView21.CoreWebView2 != null)
                 return;
 
-            string profilePath =
-                Path.Combine(
-                    Application.StartupPath,
-                    "BrowserProfile");
-
-            Directory.CreateDirectory(
-                profilePath);
-
-            CoreWebView2Environment env =
-                await CoreWebView2Environment.CreateAsync(
-                    null,
-                    profilePath);
-
-             
-            await webView21.EnsureCoreWebView2Async();
+            // The shared environment, so a sign in here is the same
+            // sign in as the store page and the account window.
+            await WebViewEnvironment.AttachAsync(webView21);
             webView21.CoreWebView2.Settings.AreDefaultContextMenusEnabled =
                 true;
 

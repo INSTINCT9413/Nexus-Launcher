@@ -1,4 +1,4 @@
-using Nexus_Launcher.Controls.Notifications;
+﻿using Nexus_Launcher.Controls.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -150,6 +150,11 @@ namespace Nexus_Launcher.Services.Achievements
             {
                 AchievementToastForm toast =
                     new AchievementToastForm(next, DisplaySeconds);
+
+                // One sound for a run of unlocks, not one each: the
+                // service itself decides, so the queue does not have to
+                // know how long a burst is.
+                AchievementSoundService.PlayUnlock();
 
                 current = toast;
 

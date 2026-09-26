@@ -319,6 +319,10 @@ namespace Nexus_Launcher.Services
 
             game.ExecutablePath =
                 exe;
+
+            // The folder was checked above, so reaching here means the
+            // game is on disk.
+            game.IsInstalled = true;
             ApplyArtwork(game);
             
 

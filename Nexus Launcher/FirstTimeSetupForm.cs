@@ -249,8 +249,7 @@ namespace Nexus_Launcher
             Settings.Default.Save();
             //Program._mutex.Dispose();
 
-            Application.Restart();
-            Environment.Exit(0);
+            Program.RestartCleanly();
         }
 
         private void wizardControl1_FinishClick(object sender, CancelEventArgs e)

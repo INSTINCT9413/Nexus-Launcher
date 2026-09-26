@@ -138,6 +138,7 @@
             // 
             this.stepProgress3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.stepProgress3.BackColor = System.Drawing.Color.Transparent;
+            this.stepProgress3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
             this.stepProgress3.ImageTintColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(252)))), ((int)(((byte)(0)))));
             this.stepProgress3.Location = new System.Drawing.Point(462, 360);
             this.stepProgress3.Name = "stepProgress3";

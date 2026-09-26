@@ -1,0 +1,47 @@
+{
+  "formatVersion": 1,
+  "generator": "Nexus Launcher",
+  "themes": [
+    {
+      "name": "Sandstone",
+      "skin": "The Bezier",
+      "author": "Nexus Launcher",
+      "description": "Warm beige and clay, with a terracotta accent.",
+      "colors": {
+        "Paint": "#F2EBE1",
+        "Paint High": "#F9F6F2",
+        "Paint Shadow": "#DFD8CF",
+        "Paint Deep Shadow": "#CBC5BD",
+        "Brush": "#3A322A",
+        "Brush (addl)": "#3A322A",
+        "Brush Light": "#847C73",
+        "Brush High": "#29231D",
+        "Brush Major": "#ACA59B",
+        "Brush Minor": "#CDC6BC",
+        "Accent Paint": "#A85630",
+        "Accent Paint Light": "#ECDAD1",
+        "Accent Brush": "#FFFFFF",
+        "Accent Brush Light": "#CFA28D",
+        "Key Paint": "#8C4A2F",
+        "Key Brush": "#FFFFFF",
+        "Key Brush Light": "#CFB3A8",
+        "Black": "#686058",
+        "Gray": "#9F988F",
+        "White": "#FFFFFF",
+        "Red": "#B3402F",
+        "Green": "#2F8F45",
+        "Blue": "#2F6FBF",
+        "Yellow": "#C07818",
+        "Purple": "#8340CC",
+        "altRed": "#B3402F",
+        "altGreen": "#2F8F45",
+        "altBlue": "#2F6FBF",
+        "altYellow": "#C07818",
+        "altPurple": "#8340CC",
+        "altBlack": "#686058",
+        "altGray": "#9F988F",
+        "altWhite": "#FFFFFF"
+      }
+    }
+  ]
+}

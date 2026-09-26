@@ -55,8 +55,8 @@
             this.xtraTabControl1.Size = new System.Drawing.Size(697, 451);
             this.xtraTabControl1.TabIndex = 1;
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
-            this.xtraTabPage2,
-            this.xtraTabPage1});
+            this.xtraTabPage1,
+            this.xtraTabPage2});
             // 
             // xtraTabPage1
             // 

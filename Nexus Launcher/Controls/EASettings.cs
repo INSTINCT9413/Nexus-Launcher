@@ -238,6 +238,20 @@ namespace Nexus_Launcher.Controls
                     height);
         }
 
+
+        /// <summary>
+        /// The General Settings tab, so the launcher card can add the
+        /// settings every client shares without this control having to
+        /// know about them.
+        /// </summary>
+        public DevExpress.XtraTab.XtraTabPage GeneralSettingsPage
+        {
+            get
+            {
+                return xtraTabPage1;
+            }
+        }
+
         private void EASettings_Load(object sender, EventArgs e)
         {
             FontManager.ApplyFont(

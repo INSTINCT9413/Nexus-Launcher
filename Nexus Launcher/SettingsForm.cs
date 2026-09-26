@@ -59,6 +59,20 @@ namespace Nexus_Launcher
         public SettingsForm(MainView mainView)
         {
             InitializeComponent();
+
+            // Every browser on this control uses the one shared
+            // profile, so a sign in anywhere in Nexus counts
+            // everywhere. Done here because the designer can set
+            // Source, which starts a browser on its own.
+            WebViewEnvironment.PrepareAll(this);
+
+            // Set here rather than in the designer, so the shared
+            // profile above is in place before they start.
+            webView22.Source =
+                new System.Uri("https://guardbyte.me/downloads/Nexus%20Launcher/eula.html");
+
+            webView23.Source =
+                new System.Uri("https://guardbyte.me/downloads/Nexus%20Launcher/madewith.html");
             this.Shown += SettingsForm_Shown;
             // Setup ImageLists for the dropdowns
             // FIX: Set ImageSize on the ImageLists, not the ComboBox controls
@@ -82,6 +96,12 @@ namespace Nexus_Launcher
         public SettingsForm()
         {
             InitializeComponent();
+
+            // Every browser on this control uses the one shared
+            // profile, so a sign in anywhere in Nexus counts
+            // everywhere. Done here because the designer can set
+            // Source, which starts a browser on its own.
+            WebViewEnvironment.PrepareAll(this);
             this.Shown += SettingsForm_Shown;
             // Setup ImageLists for the dropdowns
             // FIX: Set ImageSize on the ImageLists, not the ComboBox controls
@@ -159,6 +179,12 @@ namespace Nexus_Launcher
                 toggleSwitch17.IsOn = Settings.Default.ViewType;
                 toggleSwitch18.IsOn = Settings.Default.RootDisplayMode;
                 toggleSwitch20.IsOn = Settings.Default.enableFullLibrary;
+
+                BuildAnimationSetting();
+
+                BuildUnlockSoundSetting();
+
+                BuildGuidesSetting();
                 toggleSwitch21.IsOn = Settings.Default.StartMaximized;
                 labelControl29.Text = "UI Font (" + Settings.Default.UIFont + ")";
                 //GetdllInfo();
@@ -301,6 +327,10 @@ namespace Nexus_Launcher
         private DXMenuItem customThemeNew;
         private DXMenuItem customThemeEdit;
         private DXMenuItem customThemeDelete;
+        private DXMenuItem customThemeImport;
+        private DXMenuItem customThemeExport;
+        private DXMenuItem customThemeExportAll;
+        private DXMenuCheckItem customThemeAssociate;
         private CheckEdit customThemingToggle;
 
         /// <summary>
@@ -366,10 +396,43 @@ namespace Nexus_Launcher
                     "svgimages/icon%20builder/actions_trash.svg",
                     (s, e) => DeleteCustomTheme());
 
+            customThemeImport =
+                CreateThemeMenuItem(
+                    "Import Theme...",
+                    "svgimages/icon%20builder/actions_folderopen.svg",
+                    (s, e) => ImportCustomTheme());
+
+            customThemeImport.BeginGroup = true;
+
+            customThemeExport =
+                CreateThemeMenuItem(
+                    "Export Current Theme...",
+                    "svgimages/icon%20builder/actions_arrow1up.svg",
+                    (s, e) => ExportCustomTheme());
+
+            customThemeExportAll =
+                CreateThemeMenuItem(
+                    "Export All Themes...",
+                    "svgimages/icon%20builder/actions_arrow1up.svg",
+                    (s, e) => ExportAllCustomThemes());
+
+            customThemeAssociate =
+                new DXMenuCheckItem(
+                    "Open .nexustheme Files With Nexus",
+                    Settings.Default.AssociateThemeFiles,
+                    null,
+                    (s, e) => ToggleThemeAssociation());
+
+            customThemeAssociate.BeginGroup = true;
+
             customThemeDelete.BeginGroup = true;
 
             customThemeMenu.Items.Add(customThemeNew);
             customThemeMenu.Items.Add(customThemeEdit);
+            customThemeMenu.Items.Add(customThemeImport);
+            customThemeMenu.Items.Add(customThemeExport);
+            customThemeMenu.Items.Add(customThemeExportAll);
+            customThemeMenu.Items.Add(customThemeAssociate);
             customThemeMenu.Items.Add(customThemeDelete);
         }
 
@@ -413,6 +476,208 @@ namespace Nexus_Launcher
 
             customThemeEdit.Enabled = onCustomTheme;
             customThemeDelete.Enabled = onCustomTheme;
+
+            // Importing does not depend on the skin in front of the
+            // user: a theme file carries its own, and one built for
+            // another skin is still worth keeping until they switch.
+            customThemeImport.Enabled = enabled;
+
+            customThemeExport.Enabled = onCustomTheme;
+
+            customThemeExportAll.Enabled =
+                enabled && CustomThemeService.Themes.Count > 0;
+
+            // The association is about opening files, not about having
+            // custom theming switched on, so it stays available.
+            customThemeAssociate.Checked =
+                Settings.Default.AssociateThemeFiles;
+        }
+
+        /// <summary>
+        /// Registers or removes the .nexustheme association, under
+        /// HKEY_CURRENT_USER so it never needs administrator rights.
+        /// </summary>
+        private void ToggleThemeAssociation()
+        {
+            bool wanted =
+                !Settings.Default.AssociateThemeFiles;
+
+            string error;
+
+            bool ok =
+                wanted
+                    ? ThemeFileAssociation.Register(out error)
+                    : ThemeFileAssociation.Unregister(out error);
+
+            if (!ok)
+            {
+                XtraMessageBox.Show(
+                    this,
+                    "The file association could not be changed." +
+                        Environment.NewLine + Environment.NewLine +
+                        error,
+                    "Theme Files",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
+                customThemeAssociate.Checked =
+                    Settings.Default.AssociateThemeFiles;
+
+                return;
+            }
+
+            Settings.Default.AssociateThemeFiles = wanted;
+            Settings.Default.Save();
+
+            customThemeAssociate.Checked = wanted;
+
+            if (!wanted)
+                return;
+
+            // Windows keeps its own record of what the user last chose
+            // in the Open With dialog, and a program is not allowed to
+            // write it. If one is set, registering correctly still will
+            // not change what a double click does.
+            string owner;
+
+            if (ThemeFileAssociation.IsOverriddenByWindows(out owner))
+            {
+                XtraMessageBox.Show(
+                    this,
+                    "Nexus is registered for .nexustheme files, but " +
+                        "Windows is set to open them with something " +
+                        "else (" + owner + ")." +
+                        Environment.NewLine + Environment.NewLine +
+                        "To change it, right click a .nexustheme file, " +
+                        "choose Open with, then Choose another app, " +
+                        "and pick Nexus Launcher with \"Always use " +
+                        "this app\" ticked.",
+                    "Theme Files",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+
+                return;
+            }
+
+            XtraMessageBox.Show(
+                this,
+                "Double clicking a .nexustheme file will now open it " +
+                    "in Nexus Launcher.",
+                "Theme Files",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+        }
+
+        //--------------------------------------------------------------
+        // Sharing themes
+        //--------------------------------------------------------------
+
+        private void ImportCustomTheme()
+        {
+            using (XtraOpenFileDialog dialog = new XtraOpenFileDialog())
+            {
+                dialog.Title = "Import Theme";
+                dialog.Filter = ThemePackage.Filter;
+                dialog.Multiselect = true;
+
+                if (dialog.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                ThemeImportUI.ImportFiles(this, dialog.FileNames);
+            }
+
+            UpdatePaletteList();
+
+            UpdateCustomThemeMenuState();
+        }
+
+        private void ExportCustomTheme()
+        {
+            CustomTheme current =
+                CustomThemeService.Find(
+                    UserLookAndFeel.Default.ActiveSvgPaletteName);
+
+            if (current == null)
+                return;
+
+            ExportThemes(
+                new List<CustomTheme> { current },
+                current.Name);
+        }
+
+        private void ExportAllCustomThemes()
+        {
+            if (CustomThemeService.Themes.Count == 0)
+                return;
+
+            ExportThemes(
+                CustomThemeService.Themes,
+                "My Nexus Themes");
+        }
+
+        private void ExportThemes(
+            List<CustomTheme> themes,
+            string suggestedName)
+        {
+            using (XtraSaveFileDialog dialog = new XtraSaveFileDialog())
+            {
+                dialog.Title = "Export Theme";
+                dialog.Filter = ThemePackage.Filter;
+                dialog.DefaultExt = ThemePackage.Extension.TrimStart('.');
+
+                dialog.FileName =
+                    SafeFileName(suggestedName) +
+                    ThemePackage.Extension;
+
+                if (dialog.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                string error;
+
+                if (!ThemePackage.Export(
+                        themes,
+                        dialog.FileName,
+                        out error))
+                {
+                    XtraMessageBox.Show(
+                        this,
+                        error,
+                        "Export Theme",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
+                    return;
+                }
+
+                XtraMessageBox.Show(
+                    this,
+                    (themes.Count == 1
+                        ? "Theme saved to"
+                        : themes.Count + " themes saved to") +
+                        Environment.NewLine + Environment.NewLine +
+                        dialog.FileName,
+                    "Export Theme",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
+        }
+
+        /// <summary>
+        /// A theme name is free text, and some of it cannot go in a
+        /// file name.
+        /// </summary>
+        private static string SafeFileName(
+            string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                return "Nexus Theme";
+
+            foreach (char bad in Path.GetInvalidFileNameChars())
+            {
+                name = name.Replace(bad, ' ');
+            }
+
+            return name.Trim();
         }
 
         private void CustomThemingToggle_CheckedChanged(
@@ -899,8 +1164,7 @@ namespace Nexus_Launcher
             {
                 Program._mutex.Dispose();
 
-                Application.Restart();
-                Environment.Exit(0);
+                Program.RestartCleanly();
             }
         }
 
@@ -1466,7 +1730,10 @@ namespace Nexus_Launcher
             if (UpdateService.LaunchUpdater(package))
             {
                 UpdateDownloader.ClearPending();
-                Environment.Exit(0);
+
+                // The updater replaces files under the install
+                // folder, so Nexus has to be gone first.
+                Program.ShutdownCleanly();
             }
 
             // The updater did not start, for example the administrator
@@ -1513,7 +1780,359 @@ namespace Nexus_Launcher
 
             process.Start();
 
-            Environment.Exit(0);
+            Program.ShutdownCleanly();
+        }
+
+        //--------------------------------------------------------------
+        // Animated artwork
+        //--------------------------------------------------------------
+
+        private ToggleSwitch animateHeroToggle;
+
+        /// <summary>
+        /// Adds the animated artwork row to Library Settings.
+        ///
+        /// Lined up with the row above it by reading that row's
+        /// position, so the two stay together if the group is ever
+        /// rearranged in the designer.
+        /// </summary>
+        private void BuildAnimationSetting()
+        {
+            if (animateHeroToggle != null)
+                return;
+
+            int gap =
+                (toggleSwitch20.Top - labelControl26.Top) == 0 ? 34 : 34;
+
+            LabelControl caption =
+                new LabelControl();
+
+            caption.BorderStyle =
+                DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+
+            caption.Text = "Animate GIF artwork";
+
+            caption.ToolTip =
+                "Plays animated gifs in the banner at the top of a " +
+                "game's page. Posters in the grid always show their " +
+                "first frame.";
+
+            caption.SetBounds(
+                labelControl26.Left,
+                labelControl26.Top + gap,
+                labelControl26.Width + 40,
+                labelControl26.Height);
+
+            groupControl9.Controls.Add(caption);
+
+            animateHeroToggle = new ToggleSwitch();
+
+            animateHeroToggle.Properties.AllowFocused = false;
+
+            animateHeroToggle.Properties.OffText = "Disabled";
+
+            animateHeroToggle.Properties.OnText = "Enabled";
+
+            animateHeroToggle.SetBounds(
+                toggleSwitch20.Left,
+                toggleSwitch20.Top + gap,
+                toggleSwitch20.Width,
+                toggleSwitch20.Height);
+
+            animateHeroToggle.IsOn =
+                Settings.Default.AnimateHeroArtwork;
+
+            animateHeroToggle.Toggled += AnimateHeroToggle_Toggled;
+
+            groupControl9.Controls.Add(animateHeroToggle);
+        }
+
+        private void AnimateHeroToggle_Toggled(
+            object sender,
+            EventArgs e)
+        {
+            Settings.Default.AnimateHeroArtwork =
+                animateHeroToggle.IsOn;
+
+            Settings.Default.Save();
+
+            // The page that is open decides for itself whether to play,
+            // but it has no reason to look again until something tells
+            // it to.
+            if (_mainview != null)
+                _mainview.RefreshArtworkAnimation();
+        }
+
+        //--------------------------------------------------------------
+        // Guides and tips
+        //--------------------------------------------------------------
+
+        private GroupControl guidesGroup;
+
+        private SimpleButton guidesReplay;
+
+        private LabelControl guidesState;
+
+        /// <summary>
+        /// The Advanced Settings entry for bringing the guide markers
+        /// back.
+        ///
+        /// Built in code and placed in the free slot of that page's
+        /// grid, rather than in the designer: the designer file here
+        /// has been regenerated over hand edits before.
+        /// </summary>
+        private void BuildGuidesSetting()
+        {
+            if (guidesGroup != null)
+                return;
+
+            guidesGroup = new GroupControl();
+
+            guidesGroup.Text = "Guides and Tips";
+
+            // The Advanced page lays its groups out on a 200 by 100
+            // grid; this is the free slot on the second row.
+            guidesGroup.SetBounds(
+                groupControlSetup.Left + groupControlSetup.Width + 6,
+                groupControlSetup.Top,
+                groupControlSetup.Width,
+                groupControlSetup.Height);
+
+            tabNavigationPage2.Controls.Add(guidesGroup);
+
+            guidesState = new LabelControl();
+
+            guidesState.AutoSizeMode = LabelAutoSizeMode.None;
+
+            guidesState.Appearance.TextOptions.WordWrap =
+                DevExpress.Utils.WordWrap.Wrap;
+
+            guidesState.Appearance.Options.UseTextOptions = true;
+
+            guidesState.SetBounds(19, 26, 162, 40);
+
+            guidesGroup.Controls.Add(guidesState);
+
+            guidesReplay = new SimpleButton();
+
+            guidesReplay.Text = "Review Guides";
+
+            guidesReplay.SetBounds(19, 72, 137, 23);
+
+            guidesReplay.Click += GuidesReplay_Click;
+
+            guidesGroup.Controls.Add(guidesReplay);
+
+            UpdateGuidesState();
+        }
+
+        private void UpdateGuidesState()
+        {
+            if (guidesState == null)
+                return;
+
+            int seen =
+                TutorialService.SeenCount;
+
+            int total =
+                TutorialService.AllKeys.Length;
+
+            guidesState.Text =
+                seen == 0
+                    ? "No guides have been dismissed yet."
+                    : seen + " of " + total + " guides dismissed.";
+
+            guidesReplay.Enabled = seen > 0;
+        }
+
+        /// <summary>
+        /// Puts every guide back, so the markers appear again on the
+        /// pages they belong to.
+        /// </summary>
+        private void GuidesReplay_Click(
+            object sender,
+            EventArgs e)
+        {
+            if (XtraMessageBox.Show(
+                    this,
+                    "Show the guides again?" +
+                        Environment.NewLine + Environment.NewLine +
+                        "The markers will reappear on each page the " +
+                        "next time you open it, and stay until you " +
+                        "dismiss them.",
+                    "Guides and Tips",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                return;
+            }
+
+            TutorialService.ResetAll();
+
+            UpdateGuidesState();
+
+            XtraMessageBox.Show(
+                this,
+                "The guides will show again.",
+                "Guides and Tips",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+        }
+
+        //--------------------------------------------------------------
+        // Unlock sound
+        //--------------------------------------------------------------
+
+        private ComboBoxEdit unlockSoundCombo;
+
+        private SimpleButton unlockSoundPreview;
+
+        /// <summary>
+        /// Adds the unlock sound row to Library Settings: which sound
+        /// plays when an achievement or badge unlocks, and a way to
+        /// hear it without having to earn one.
+        /// </summary>
+        private void BuildUnlockSoundSetting()
+        {
+            if (unlockSoundCombo != null)
+                return;
+
+            int top =
+                animateHeroToggle.Bottom + 16;
+
+            LabelControl caption =
+                new LabelControl();
+
+            caption.BorderStyle =
+                DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+
+            caption.Text = "Unlock sound";
+
+            caption.SetBounds(
+                labelControl26.Left,
+                top + 4,
+                90,
+                labelControl26.Height);
+
+            groupControl9.Controls.Add(caption);
+
+            unlockSoundCombo = new ComboBoxEdit();
+
+            unlockSoundCombo.Properties.TextEditStyle =
+                DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+
+            unlockSoundCombo.Properties.Items.AddRange(
+                AchievementSoundService.All);
+
+            // The row ends where the toggles above it end, so the
+            // right hand edge of the group stays straight.
+            int right =
+                toggleSwitch20.Right;
+
+            const int previewWidth = 54;
+
+            const int previewGap = 6;
+
+            int comboLeft =
+                labelControl26.Left + 96;
+
+            unlockSoundCombo.SetBounds(
+                comboLeft,
+                top,
+                Math.Max(
+                    90,
+                    right - previewWidth - previewGap - comboLeft),
+                22);
+
+            unlockSoundCombo.SelectedItem =
+                AchievementSoundService.Current;
+
+            unlockSoundCombo.SelectedIndexChanged +=
+                UnlockSound_Changed;
+
+            groupControl9.Controls.Add(unlockSoundCombo);
+
+            unlockSoundPreview = new SimpleButton();
+
+            unlockSoundPreview.Text = "Play";
+
+            unlockSoundPreview.SetBounds(
+                unlockSoundCombo.Right + previewGap,
+                top - 1,
+                previewWidth,
+                24);
+
+            unlockSoundPreview.Click += (s, e) =>
+                AchievementSoundService.Preview(SelectedUnlockSound());
+
+            groupControl9.Controls.Add(unlockSoundPreview);
+
+            LabelControl hint =
+                new LabelControl();
+
+            hint.BorderStyle =
+                DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+
+            hint.AutoSizeMode = LabelAutoSizeMode.None;
+
+            hint.Appearance.TextOptions.WordWrap =
+                DevExpress.Utils.WordWrap.Wrap;
+
+            hint.Appearance.Options.UseTextOptions = true;
+
+            hint.Appearance.ForeColor =
+                Nexus_Launcher.Controls.Profile.ProfileStyle
+                    .MutedTextColor;
+
+            hint.Appearance.Options.UseForeColor = true;
+
+            hint.SetBounds(
+                labelControl26.Left,
+                unlockSoundCombo.Bottom + 6,
+                right - labelControl26.Left,
+                34);
+
+            groupControl9.Controls.Add(hint);
+
+            unlockSoundHint = hint;
+
+            UpdateUnlockSoundHint();
+        }
+
+        private LabelControl unlockSoundHint;
+
+        private UnlockSound SelectedUnlockSound()
+        {
+            return unlockSoundCombo.SelectedItem as UnlockSound
+                ?? AchievementSoundService.Current;
+        }
+
+        private void UnlockSound_Changed(
+            object sender,
+            EventArgs e)
+        {
+            UnlockSound chosen =
+                SelectedUnlockSound();
+
+            AchievementSoundService.Choose(chosen);
+
+            UpdateUnlockSoundHint();
+
+            // Played on picking it, because choosing a sound you cannot
+            // hear is a guess.
+            AchievementSoundService.Preview(chosen);
+        }
+
+        private void UpdateUnlockSoundHint()
+        {
+            if (unlockSoundHint == null)
+                return;
+
+            UnlockSound chosen =
+                SelectedUnlockSound();
+
+            unlockSoundHint.Text =
+                chosen == null ? string.Empty : chosen.Description;
         }
 
         private void toggleSwitch20_Toggled(object sender, EventArgs e)

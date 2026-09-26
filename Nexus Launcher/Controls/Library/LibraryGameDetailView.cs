@@ -3,6 +3,7 @@ using DevExpress.XtraEditors;
 using Nexus_Launcher.Controls.Profile;
 using Nexus_Launcher.Helpers;
 using Nexus_Launcher.Models;
+using Nexus_Launcher.Properties;
 using Nexus_Launcher.Services;
 using Nexus_Launcher.Services.Artwork;
 using Nexus_Launcher.Services.Library;
@@ -36,9 +37,8 @@ namespace Nexus_Launcher.Controls.Library
         private const int PosterWidth = 176;
 
         /// <summary>
-        /// Clear of the back button, which sits above the artwork
-        /// rather than floating on it: a game with no hero art has
-        /// nothing there for a floating button to read against.
+        /// Leaves a band of artwork showing above the poster, which
+        /// lines the poster up with the back button in the header.
         /// </summary>
         private const int PosterTop = 56;
 
@@ -46,11 +46,39 @@ namespace Nexus_Launcher.Controls.Library
 
         private GameInfo game;
 
-        private Image hero;
+        /// <summary>
+        /// The hero band's artwork. Held as an AnimatedImage rather
+        /// than a plain one because a hero may be an animated gif, and
+        /// the usual loader would flatten it to its first frame before
+        /// this control ever saw it.
+        /// </summary>
+        private AnimatedImage hero;
+
+        /// <summary>
+        /// Set while the hero is playing, so painting knows to move it
+        /// on and so it can be stopped again exactly once.
+        /// </summary>
+        private bool heroPlaying;
+
+        /// <summary>
+        /// The form this control is sitting on, tracked so animation
+        /// stops while Nexus is in the background.
+        /// </summary>
+        private Form watchedForm;
+
+        /// <summary>
+        /// Whether the owning form is the one being used, from its own
+        /// activation events.
+        ///
+        /// Not Form.ActiveForm: that is null whenever the active window
+        /// is not a managed form, which includes every DevExpress popup
+        /// and dropdown, so the hero would freeze while a menu was
+        /// open. Starts true, because assuming the window is in use is
+        /// the harmless way to be wrong.
+        /// </summary>
+        private bool formActive = true;
 
         private Image poster;
-
-        private readonly SimpleButton backButton = new SimpleButton();
 
         private readonly SimpleButton playButton = new SimpleButton();
 
@@ -86,11 +114,6 @@ namespace Nexus_Launcher.Controls.Library
                 return PosterTop + PosterHeight;
             }
         }
-
-        /// <summary>
-        /// The user asked to go back to the grid.
-        /// </summary>
-        public event Action BackRequested;
 
         /// <summary>
         /// The favourite state changed here, so the grid behind can
@@ -131,6 +154,8 @@ namespace Nexus_Launcher.Controls.Library
                 CustomArtworkService.CustomArtworkChanged -=
                     Artwork_Changed;
 
+                WatchForm(null);
+
                 DisposeImages();
             };
         }
@@ -145,28 +170,6 @@ namespace Nexus_Launcher.Controls.Library
 
             try
             {
-                backButton.Text = "  Back to library";
-
-                backButton.PaintStyle =
-                    DevExpress.XtraEditors.Controls.PaintStyles.Light;
-
-                backButton.ImageOptions.SvgImage =
-                    ProfileStyle.Svg(
-                        "svgimages/icon%20builder/actions_arrow2left.svg");
-
-                backButton.ImageOptions.SvgImageSize =
-                    new Size(16, 16);
-
-                backButton.Click += (s, e) =>
-                {
-                    Action handler = BackRequested;
-
-                    if (handler != null)
-                        handler();
-                };
-
-                Controls.Add(backButton);
-
                 playButton.Text = "Play";
 
                 playButton.ImageOptions.SvgImage =
@@ -264,7 +267,7 @@ namespace Nexus_Launcher.Controls.Library
                 // Loaded unlocked so the user can replace their own
                 // custom artwork while this page is showing it.
                 hero =
-                    CustomArtworkService.LoadUnlocked(
+                    AnimatedImage.Load(
                         game.HeroImagePath);
 
                 poster =
@@ -302,7 +305,167 @@ namespace Nexus_Launcher.Controls.Library
 
             Relayout();
 
+            UpdateHeroAnimation();
+
             Invalidate();
+        }
+
+        //--------------------------------------------------------------
+        // Animated heroes
+        //--------------------------------------------------------------
+
+        /// <summary>
+        /// Starts or stops the hero, from everything that should have a
+        /// say: whether there is anything to play, whether the setting
+        /// allows it, whether this page is on screen at all, and
+        /// whether Nexus is the window being used.
+        ///
+        /// Repainting a band of artwork many times a second is not free
+        /// and it is not welcome in the corner of someone's eye while
+        /// they are working in another program.
+        /// </summary>
+        /// <summary>
+        /// Re-reads the animation setting. Called when it is changed in
+        /// Settings while a game page is open.
+        /// </summary>
+        public void RefreshAnimation()
+        {
+            UpdateHeroAnimation();
+
+            Invalidate();
+        }
+
+        private void UpdateHeroAnimation()
+        {
+            bool shouldPlay =
+                hero != null &&
+                hero.IsAnimated &&
+                Settings.Default.AnimateHeroArtwork &&
+                Visible &&
+                !IsDisposed &&
+                FormIsActive();
+
+            if (shouldPlay == heroPlaying)
+                return;
+
+            if (shouldPlay)
+            {
+                hero.Start(Hero_FrameChanged);
+
+                heroPlaying = true;
+            }
+            else
+            {
+                if (hero != null)
+                    hero.Stop();
+
+                heroPlaying = false;
+            }
+        }
+
+        private bool FormIsActive()
+        {
+            return watchedForm == null || formActive;
+        }
+
+        /// <summary>
+        /// GDI+ raises this on its own animation thread, so the repaint
+        /// is posted rather than done here.
+        /// </summary>
+        private void Hero_FrameChanged(
+            object sender,
+            EventArgs e)
+        {
+            if (IsDisposed || !IsHandleCreated)
+                return;
+
+            try
+            {
+                BeginInvoke(new Action(InvalidateHero));
+            }
+            catch (Exception)
+            {
+                // The handle can go between the checks above and here.
+            }
+        }
+
+        /// <summary>
+        /// Only the hero band is repainted. Invalidating the whole page
+        /// would redraw the poster, the title and every button below it
+        /// on every frame.
+        /// </summary>
+        private void InvalidateHero()
+        {
+            if (IsDisposed)
+                return;
+
+            Invalidate(
+                new Rectangle(
+                    0,
+                    AutoScrollPosition.Y,
+                    ClientSize.Width,
+                    HeroHeight));
+        }
+
+        protected override void OnVisibleChanged(
+            EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+
+            UpdateHeroAnimation();
+        }
+
+        protected override void OnParentChanged(
+            EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            WatchForm(FindForm());
+        }
+
+        /// <summary>
+        /// Follows the owning form's activation, so a hero stops
+        /// playing when Nexus is not the window in front.
+        /// </summary>
+        private void WatchForm(
+            Form form)
+        {
+            if (ReferenceEquals(form, watchedForm))
+                return;
+
+            if (watchedForm != null)
+            {
+                watchedForm.Activated -= Form_Activated;
+                watchedForm.Deactivate -= Form_Deactivated;
+            }
+
+            watchedForm = form;
+
+            if (watchedForm != null)
+            {
+                watchedForm.Activated += Form_Activated;
+                watchedForm.Deactivate += Form_Deactivated;
+            }
+
+            UpdateHeroAnimation();
+        }
+
+        private void Form_Activated(
+            object sender,
+            EventArgs e)
+        {
+            formActive = true;
+
+            UpdateHeroAnimation();
+        }
+
+        private void Form_Deactivated(
+            object sender,
+            EventArgs e)
+        {
+            formActive = false;
+
+            UpdateHeroAnimation();
         }
 
         private void DisposeImages()
@@ -312,6 +475,8 @@ namespace Nexus_Launcher.Controls.Library
                 hero.Dispose();
 
                 hero = null;
+
+                heroPlaying = false;
             }
 
             if (poster != null)
@@ -693,8 +858,6 @@ namespace Nexus_Launcher.Controls.Library
         {
             int width = ClientSize.Width;
 
-            backButton.SetBounds(20, 18, 150, 28);
-
             // The poster hangs off the bottom of the hero, with the
             // title and buttons in the column to its right.
             int posterX = Pad;
@@ -804,19 +967,27 @@ namespace Nexus_Launcher.Controls.Library
             Rectangle bounds =
                 new Rectangle(0, 0, ClientSize.Width, HeroHeight);
 
-            if (hero != null)
+            Image art =
+                hero == null ? null : hero.Image;
+
+            if (art != null)
             {
+                // Moves a playing gif on to whichever frame is due.
+                // Doing it here rather than on the timer keeps it to
+                // the moments the frame is actually drawn.
+                hero.Advance();
+
                 // Cover rather than stretch: crop the overflow instead
                 // of distorting the art.
                 double scale = Math.Max(
-                    (double)bounds.Width / hero.Width,
-                    (double)bounds.Height / hero.Height);
+                    (double)bounds.Width / art.Width,
+                    (double)bounds.Height / art.Height);
 
                 int drawWidth =
-                    (int)Math.Ceiling(hero.Width * scale);
+                    (int)Math.Ceiling(art.Width * scale);
 
                 int drawHeight =
-                    (int)Math.Ceiling(hero.Height * scale);
+                    (int)Math.Ceiling(art.Height * scale);
 
                 Region clip = g.Clip;
 
@@ -826,7 +997,7 @@ namespace Nexus_Launcher.Controls.Library
                     InterpolationMode.HighQualityBicubic;
 
                 g.DrawImage(
-                    hero,
+                    art,
                     new Rectangle(
                         (bounds.Width - drawWidth) / 2,
                         (bounds.Height - drawHeight) / 2,
@@ -845,6 +1016,29 @@ namespace Nexus_Launcher.Controls.Library
                         LinearGradientMode.Vertical))
                 {
                     g.FillRectangle(brush, bounds);
+                }
+            }
+
+            if (art != null)
+            {
+                // A wash across the top of the artwork, so it settles
+                // under the header bar instead of butting straight
+                // against it.
+                Rectangle top =
+                    new Rectangle(0, 0, bounds.Width, 96);
+
+                using (LinearGradientBrush brush =
+                    new LinearGradientBrush(
+                        new Rectangle(
+                            top.X,
+                            top.Y - 1,
+                            top.Width,
+                            top.Height + 1),
+                        Color.FromArgb(140, 0, 0, 0),
+                        Color.FromArgb(0, 0, 0, 0),
+                        LinearGradientMode.Vertical))
+                {
+                    g.FillRectangle(brush, top);
                 }
             }
 

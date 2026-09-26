@@ -1,0 +1,47 @@
+{
+  "formatVersion": 1,
+  "generator": "Nexus Launcher",
+  "themes": [
+    {
+      "name": "Arctic Mint",
+      "skin": "The Bezier",
+      "author": "Nexus Launcher",
+      "description": "Cool near-white with a crisp teal accent.",
+      "colors": {
+        "Paint": "#F3F7F7",
+        "Paint High": "#FAFBFB",
+        "Paint Shadow": "#E0E3E3",
+        "Paint Deep Shadow": "#CCCFCF",
+        "Brush": "#25302F",
+        "Brush (addl)": "#25302F",
+        "Brush Light": "#77807F",
+        "Brush High": "#1A2221",
+        "Brush Major": "#A5ABAB",
+        "Brush Minor": "#CACFCF",
+        "Accent Paint": "#0C7C70",
+        "Accent Paint Light": "#CAE2E0",
+        "Accent Brush": "#FFFFFF",
+        "Accent Brush Light": "#79B7B0",
+        "Key Paint": "#0B6F65",
+        "Key Brush": "#FFFFFF",
+        "Key Brush Light": "#99C3BE",
+        "Black": "#586261",
+        "Gray": "#969D9D",
+        "White": "#FFFFFF",
+        "Red": "#CE2C31",
+        "Green": "#0E8A7D",
+        "Blue": "#2A7FA8",
+        "Yellow": "#C77E10",
+        "Purple": "#8340CC",
+        "altRed": "#CE2C31",
+        "altGreen": "#0E8A7D",
+        "altBlue": "#2A7FA8",
+        "altYellow": "#C77E10",
+        "altPurple": "#8340CC",
+        "altBlack": "#586261",
+        "altGray": "#969D9D",
+        "altWhite": "#FFFFFF"
+      }
+    }
+  ]
+}

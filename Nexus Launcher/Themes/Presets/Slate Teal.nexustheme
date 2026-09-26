@@ -1,0 +1,52 @@
+{
+  "formatVersion": 1,
+  "generator": "Nexus Launcher",
+  "themes": [
+    {
+      "name": "Slate Teal",
+      "skin": "WXI",
+      "author": "Nexus Launcher",
+      "description": "Cool slate greys cut with a deep teal accent.",
+      "colors": {
+        "Background 200": "#343B3E",
+        "Background 100": "#2A3134",
+        "Background 0": "#1E2528",
+        "Background -100": "#191E21",
+        "Background -200": "#151A1C",
+        "Edit Background 0": "#2A3134",
+        "Edit Background -50": "#1E2528",
+        "Edit Background -100": "#1D3739",
+        "Edit Background -200": "#1D4144",
+        "Edit Background -300": "#171D1F",
+        "Line 100": "#626668",
+        "Line 50": "#444A4D",
+        "Line 25": "#343B3E",
+        "Foreground 100": "#E6EDEF",
+        "Foreground 50": "#92999B",
+        "Foreground 25": "#666D70",
+        "Edit Foreground 100": "#E6EDEF",
+        "Edit Foreground 50": "#9EA5A7",
+        "Edit Foreground 25": "#6A7174",
+        "Primary Background 100": "#1D4042",
+        "Primary Background 0": "#1B7E7E",
+        "Primary Background -100": "#176C6C",
+        "Primary Background -200": "#145D5D",
+        "Primary Foreground 100": "#FFFFFF",
+        "Primary Foreground 25": "#98C5C5",
+        "Secondary Background 0": "#2A6E78",
+        "Secondary Background -100": "#245F67",
+        "Secondary Background -200": "#1F5159",
+        "Secondary Foreground 100": "#FFFFFF",
+        "Secondary Foreground 25": "#9FBEC2",
+        "Black": "#B2B9BB",
+        "Gray": "#7E8588",
+        "White": "#FFFFFF",
+        "Red": "#E5484D",
+        "Green": "#2FA99A",
+        "Blue": "#4A9EE8",
+        "Yellow": "#F0A72B",
+        "Purple": "#A45CE8"
+      }
+    }
+  ]
+}

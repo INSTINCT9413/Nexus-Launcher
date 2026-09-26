@@ -1815,7 +1815,6 @@
             this.webView23.Location = new System.Drawing.Point(0, 23);
             this.webView23.Name = "webView23";
             this.webView23.Size = new System.Drawing.Size(858, 579);
-            this.webView23.Source = new System.Uri("https://guardbyte.me/downloads/Nexus%20Launcher/madewith.html", System.UriKind.Absolute);
             this.webView23.TabIndex = 16;
             this.webView23.ZoomFactor = 1D;
             // 
@@ -2034,7 +2033,6 @@
             this.webView22.Location = new System.Drawing.Point(0, 23);
             this.webView22.Name = "webView22";
             this.webView22.Size = new System.Drawing.Size(858, 579);
-            this.webView22.Source = new System.Uri("https://guardbyte.me/downloads/Nexus%20Launcher/eula.html", System.UriKind.Absolute);
             this.webView22.TabIndex = 0;
             this.webView22.ZoomFactor = 1D;
             // 

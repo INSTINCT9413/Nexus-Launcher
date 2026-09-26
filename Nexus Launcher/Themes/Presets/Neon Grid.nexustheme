@@ -1,0 +1,47 @@
+{
+  "formatVersion": 1,
+  "generator": "Nexus Launcher",
+  "themes": [
+    {
+      "name": "Neon Grid",
+      "skin": "The Bezier",
+      "author": "Nexus Launcher",
+      "description": "High contrast synthwave: black glass, electric cyan, hot magenta.",
+      "colors": {
+        "Paint": "#0E0F1A",
+        "Paint High": "#1F202A",
+        "Paint Shadow": "#0A0B13",
+        "Paint Deep Shadow": "#08080E",
+        "Brush": "#F2F4FF",
+        "Brush (addl)": "#F2F4FF",
+        "Brush Light": "#92949F",
+        "Brush High": "#F7F8FF",
+        "Brush Major": "#5C5D68",
+        "Brush Minor": "#373843",
+        "Accent Paint": "#22D3EE",
+        "Accent Paint Light": "#0F5F6B",
+        "Accent Brush": "#121212",
+        "Accent Brush Light": "#6FE2F4",
+        "Key Paint": "#080912",
+        "Key Brush": "#FFFFFF",
+        "Key Brush Light": "#97989B",
+        "Black": "#AEAFBA",
+        "Gray": "#757681",
+        "White": "#FFFFFF",
+        "Red": "#FF3D71",
+        "Green": "#34E5A0",
+        "Blue": "#22D3EE",
+        "Yellow": "#FFD23F",
+        "Purple": "#E879F9",
+        "altRed": "#FF3D71",
+        "altGreen": "#34E5A0",
+        "altBlue": "#22D3EE",
+        "altYellow": "#FFD23F",
+        "altPurple": "#E879F9",
+        "altBlack": "#AEAFBA",
+        "altGray": "#757681",
+        "altWhite": "#FFFFFF"
+      }
+    }
+  ]
+}

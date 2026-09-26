@@ -599,5 +599,55 @@ namespace Nexus_Launcher.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-    }
+            
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] unlock_chime {
+            get {
+                object obj = ResourceManager.GetObject("unlock_chime", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] unlock_arpeggio {
+            get {
+                object obj = ResourceManager.GetObject("unlock_arpeggio", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] unlock_thump {
+            get {
+                object obj = ResourceManager.GetObject("unlock_thump", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] unlock_marimba {
+            get {
+                object obj = ResourceManager.GetObject("unlock_marimba", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] unlock_crystal {
+            get {
+                object obj = ResourceManager.GetObject("unlock_crystal", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+}
 }

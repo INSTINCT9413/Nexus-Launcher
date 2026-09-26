@@ -31,7 +31,7 @@ internal static class GameLauncherService
                     LaunchEpic(game);
                     break;
 
-                case "Battlenet":
+                case "Battle.net":
                     LaunchBattleNet(game);
                     break;
 

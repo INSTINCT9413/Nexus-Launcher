@@ -1,0 +1,52 @@
+{
+  "formatVersion": 1,
+  "generator": "Nexus Launcher",
+  "themes": [
+    {
+      "name": "Rosewood",
+      "skin": "WXI",
+      "author": "Nexus Launcher",
+      "description": "Warm dark timber with a muted rose accent.",
+      "colors": {
+        "Background 200": "#393434",
+        "Background 100": "#2F292A",
+        "Background 0": "#231D1E",
+        "Background -100": "#1D1819",
+        "Background -200": "#181415",
+        "Edit Background 0": "#2F292A",
+        "Edit Background -50": "#231D1E",
+        "Edit Background -100": "#3F272B",
+        "Edit Background -200": "#4F2D33",
+        "Edit Background -300": "#1B1717",
+        "Line 100": "#656162",
+        "Line 50": "#484344",
+        "Line 25": "#393434",
+        "Foreground 100": "#F1E9E9",
+        "Foreground 50": "#9A9394",
+        "Foreground 25": "#6D6667",
+        "Edit Foreground 100": "#F1E9E9",
+        "Edit Foreground 50": "#A7A0A0",
+        "Edit Foreground 25": "#716B6B",
+        "Primary Background 100": "#4D2C32",
+        "Primary Background 0": "#AE4F60",
+        "Primary Background -100": "#964453",
+        "Primary Background -200": "#813A47",
+        "Primary Foreground 100": "#FFFFFF",
+        "Primary Foreground 25": "#DBB0B7",
+        "Secondary Background 0": "#8A4553",
+        "Secondary Background -100": "#773B47",
+        "Secondary Background -200": "#66333D",
+        "Secondary Foreground 100": "#FFFFFF",
+        "Secondary Foreground 25": "#CAABB2",
+        "Black": "#BBB4B4",
+        "Gray": "#867F7F",
+        "White": "#FFFFFF",
+        "Red": "#D96A78",
+        "Green": "#3DB77E",
+        "Blue": "#4A9EE8",
+        "Yellow": "#F0A72B",
+        "Purple": "#A45CE8"
+      }
+    }
+  ]
+}

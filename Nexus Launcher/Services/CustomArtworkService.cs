@@ -1,5 +1,7 @@
 ﻿using Nexus_Launcher.Models;
+using Nexus_Launcher.Services.Library;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -48,6 +50,15 @@ namespace Nexus_Launcher.Services.Artwork
         public static readonly string FileDialogFilter =
             "Images (*.png;*.jpg;*.jpeg;*.bmp;*.gif)|" +
             "*.png;*.jpg;*.jpeg;*.bmp;*.gif";
+
+        /// <summary>
+        /// An animated gif plays as a hero. Everywhere else it is shown
+        /// as its first frame, because posters sit in a virtualised
+        /// grid behind a fixed size cache and animating them would cost
+        /// far more than it is worth.
+        /// </summary>
+        public const string AnimatedNote =
+            "Animated gifs play in the hero banner.";
 
         //--------------------------------------------------------------
         // Locations
@@ -213,7 +224,7 @@ namespace Nexus_Launcher.Services.Artwork
                     target,
                     true);
 
-                ApplyTo(game);
+                ApplyToAll(game);
 
                 CustomArtworkChanged?.Invoke(game);
 
@@ -282,7 +293,7 @@ namespace Nexus_Launcher.Services.Artwork
             if (removed && notify)
             {
                 // Rebuild the paths from the cache, then tell the UI.
-                ArtworkCache.LoadCachedArtwork(game);
+                RestoreAll(game);
 
                 CustomArtworkChanged?.Invoke(game);
             }
@@ -337,6 +348,142 @@ namespace Nexus_Launcher.Services.Artwork
         /// exist. Called from ArtworkCache.LoadCachedArtwork so every
         /// screen picks the override up without its own special case.
         /// </summary>
+        /// <summary>
+        /// Applies a game's artwork paths to every copy of that game
+        /// Nexus is holding.
+        ///
+        /// The same game exists as more than one GameInfo: the
+        /// accordion card has one, the Full Library has another. They
+        /// are separate objects, so setting artwork through one used to
+        /// leave the other pointing at the previous file, and the two
+        /// views disagreed until the next rescan.
+        /// </summary>
+        public static void ApplyToAll(
+            GameInfo game)
+        {
+            ApplyTo(game);
+
+            foreach (GameInfo other in Siblings(game))
+            {
+                ApplyTo(other);
+            }
+        }
+
+        /// <summary>
+        /// The other GameInfo objects for the same game.
+        /// </summary>
+        private static IEnumerable<GameInfo> Siblings(
+            GameInfo game)
+        {
+            string key =
+                LibraryOrganizationService.GetKey(game);
+
+            if (key == null)
+                yield break;
+
+            List<GameInfo> all;
+
+            try
+            {
+                all = LibraryService.Games.ToList();
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+
+                yield break;
+            }
+
+            foreach (GameInfo other in all)
+            {
+                if (other == null || ReferenceEquals(other, game))
+                    continue;
+
+                if (string.Equals(
+                        LibraryOrganizationService.GetKey(other),
+                        key,
+                        StringComparison.OrdinalIgnoreCase))
+                {
+                    yield return other;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Puts a game's artwork back to what the cache holds, for
+        /// every copy of it, after custom artwork is removed.
+        /// </summary>
+        private static void RestoreAll(
+            GameInfo game)
+        {
+            Revert(game);
+
+            foreach (GameInfo other in Siblings(game))
+            {
+                Revert(other);
+            }
+        }
+
+        /// <summary>
+        /// Brings one GameInfo up to date: custom artwork if there is
+        /// any, the downloaded artwork if there is not.
+        ///
+        /// Public because a view may hold a copy of a game that is not
+        /// in LibraryService, and that copy still has to be corrected
+        /// when artwork changes somewhere else.
+        /// </summary>
+        public static void Refresh(
+            GameInfo game)
+        {
+            Revert(game);
+
+            ApplyTo(game);
+        }
+
+        /// <summary>
+        /// Puts one copy of a game back to its downloaded artwork.
+        ///
+        /// Paths pointing at the file that was just deleted are cleared
+        /// first: LoadCachedArtwork only fills in what the cache has,
+        /// so on its own it would leave a game still pointing at custom
+        /// artwork that no longer exists.
+        /// </summary>
+        private static void Revert(
+            GameInfo game)
+        {
+            if (game == null)
+                return;
+
+            try
+            {
+                if (IsMissing(game.GridImagePath))
+                    game.GridImagePath = null;
+
+                if (IsMissing(game.HeroImagePath))
+                    game.HeroImagePath = null;
+
+                if (IsMissing(game.LogoPath))
+                    game.LogoPath = null;
+
+                ArtworkCache.LoadCachedArtwork(game);
+
+                game.HasArtwork =
+                    !IsMissing(game.GridImagePath) ||
+                    !IsMissing(game.HeroImagePath) ||
+                    !IsMissing(game.LogoPath);
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+            }
+        }
+
+        private static bool IsMissing(
+            string path)
+        {
+            return string.IsNullOrWhiteSpace(path) || !File.Exists(path);
+        }
+
         public static void ApplyTo(
             GameInfo game)
         {

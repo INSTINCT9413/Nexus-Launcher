@@ -1,0 +1,47 @@
+{
+  "formatVersion": 1,
+  "generator": "Nexus Launcher",
+  "themes": [
+    {
+      "name": "Midnight Ember",
+      "skin": "The Bezier",
+      "author": "Nexus Launcher",
+      "description": "Near-black charcoal warmed by an ember orange accent.",
+      "colors": {
+        "Paint": "#1B1B1E",
+        "Paint High": "#2B2B2E",
+        "Paint Shadow": "#131316",
+        "Paint Deep Shadow": "#0F0F10",
+        "Brush": "#E8E6E3",
+        "Brush (addl)": "#E8E6E3",
+        "Brush Light": "#929190",
+        "Brush High": "#F0EFED",
+        "Brush Major": "#616061",
+        "Brush Minor": "#404041",
+        "Accent Paint": "#E8722C",
+        "Accent Paint Light": "#683314",
+        "Accent Brush": "#121212",
+        "Accent Brush Light": "#F0A376",
+        "Key Paint": "#141416",
+        "Key Brush": "#FFFFFF",
+        "Key Brush Light": "#9C9C9D",
+        "Black": "#AAA9A8",
+        "Gray": "#777677",
+        "White": "#FFFFFF",
+        "Red": "#E5484D",
+        "Green": "#46A758",
+        "Blue": "#3E8FD9",
+        "Yellow": "#F0A72B",
+        "Purple": "#A45CE8",
+        "altRed": "#E5484D",
+        "altGreen": "#46A758",
+        "altBlue": "#3E8FD9",
+        "altYellow": "#F0A72B",
+        "altPurple": "#A45CE8",
+        "altBlack": "#AAA9A8",
+        "altGray": "#777677",
+        "altWhite": "#FFFFFF"
+      }
+    }
+  ]
+}

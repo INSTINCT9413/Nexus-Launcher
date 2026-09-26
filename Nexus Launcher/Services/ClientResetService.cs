@@ -36,7 +36,57 @@ namespace Nexus_Launcher.Services
         // Main reset
         // ------------------------------------------------------------
 
-        public static ResetResult ResetClient(
+        /// <summary>
+        /// Describes what a client's reset should clear, without
+        /// clearing anything. ClientResetRunner performs the work, so
+        /// it can be staged, measured and reported on.
+        /// </summary>
+        public static ClientResetPlan BuildPlan(
+            string clientName,
+            IEnumerable<string> tempFolders,
+            IEnumerable<string> cacheFolders,
+            IEnumerable<string> logFolders,
+            IEnumerable<string> crashFolders,
+            IEnumerable<string> foldersToClear,
+            IEnumerable<string> repairTools,
+            IEnumerable<string> processNames,
+            bool clearWindowsTemp = true,
+            bool clearDns = false)
+        {
+            return new ClientResetPlan
+            {
+                ClientName = clientName,
+                TempFolders = Clean(tempFolders),
+                CacheFolders = Clean(cacheFolders),
+                LogFolders = Clean(logFolders),
+                CrashFolders = Clean(crashFolders),
+                FoldersToClear = Clean(foldersToClear),
+                RepairTools = Clean(repairTools),
+                ProcessNames = Clean(processNames),
+                ClearWindowsTemp = clearWindowsTemp,
+                ClearWindowsUpdateCache = clearWindowsTemp,
+                ClearDns = clearDns
+            };
+        }
+
+        private static List<string> Clean(
+            IEnumerable<string> values)
+        {
+            List<string> result = new List<string>();
+
+            if (values == null)
+                return result;
+
+            foreach (string value in values)
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                    result.Add(value);
+            }
+
+            return result;
+        }
+
+        private static ResetResult ResetClientLegacy(
             string clientName,
             IEnumerable<string> tempFolders,
             IEnumerable<string> cacheFolders,

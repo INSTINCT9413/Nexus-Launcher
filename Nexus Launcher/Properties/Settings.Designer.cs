@@ -544,6 +544,114 @@ namespace Nexus_Launcher.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UseOnlineAccountName {
+            get {
+                return ((bool)(this["UseOnlineAccountName"]));
+            }
+            set {
+                this["UseOnlineAccountName"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AnimateHeroArtwork {
+            get {
+                return ((bool)(this["AnimateHeroArtwork"]));
+            }
+            set {
+                this["AnimateHeroArtwork"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AssociateThemeFiles {
+            get {
+                return ((bool)(this["AssociateThemeFiles"]));
+            }
+            set {
+                this["AssociateThemeFiles"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SeenTutorials {
+            get {
+                return ((string)(this["SeenTutorials"]));
+            }
+            set {
+                this["SeenTutorials"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ProfileLastViewedUtc {
+            get {
+                return ((string)(this["ProfileLastViewedUtc"]));
+            }
+            set {
+                this["ProfileLastViewedUtc"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("thump")]
+        public string UnlockSound {
+            get {
+                return ((string)(this["UnlockSound"]));
+            }
+            set {
+                this["UnlockSound"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ThemeAssociationInitialised {
+            get {
+                return ((bool)(this["ThemeAssociationInitialised"]));
+            }
+            set {
+                this["ThemeAssociationInitialised"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("*")]
+        public string ClientResetOptions {
+            get {
+                return ((string)(this["ClientResetOptions"]));
+            }
+            set {
+                this["ClientResetOptions"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoLaunchAfterReset {
+            get {
+                return ((bool)(this["AutoLaunchAfterReset"]));
+            }
+            set {
+                this["AutoLaunchAfterReset"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI")]
         public string UIFont {
             get {

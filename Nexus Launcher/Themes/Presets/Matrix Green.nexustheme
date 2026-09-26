@@ -1,0 +1,52 @@
+{
+  "formatVersion": 1,
+  "generator": "Nexus Launcher",
+  "themes": [
+    {
+      "name": "Matrix Green",
+      "skin": "WXI",
+      "author": "Nexus Launcher",
+      "description": "Near-black terminal with a phosphor green accent.",
+      "colors": {
+        "Background 200": "#2A2C2A",
+        "Background 100": "#1F221F",
+        "Background 0": "#121512",
+        "Background -100": "#0F110F",
+        "Background -200": "#0D0F0D",
+        "Edit Background 0": "#1F221F",
+        "Edit Background -50": "#121512",
+        "Edit Background -100": "#18301C",
+        "Edit Background -200": "#1B4122",
+        "Edit Background -300": "#0E100E",
+        "Line 100": "#595B59",
+        "Line 50": "#3A3D3A",
+        "Line 25": "#2A2C2A",
+        "Foreground 100": "#DFF0DF",
+        "Foreground 50": "#899489",
+        "Foreground 25": "#5C645C",
+        "Edit Foreground 100": "#DFF0DF",
+        "Edit Foreground 50": "#95A195",
+        "Edit Foreground 25": "#606860",
+        "Primary Background 100": "#1A3E21",
+        "Primary Background 0": "#2E9E44",
+        "Primary Background -100": "#28883A",
+        "Primary Background -200": "#227532",
+        "Primary Foreground 100": "#141414",
+        "Primary Foreground 25": "#20522A",
+        "Secondary Background 0": "#1F6E38",
+        "Secondary Background -100": "#1B5F30",
+        "Secondary Background -200": "#175129",
+        "Secondary Foreground 100": "#FFFFFF",
+        "Secondary Foreground 25": "#9ABEA5",
+        "Black": "#AAB7AA",
+        "Gray": "#747E74",
+        "White": "#FFFFFF",
+        "Red": "#E5484D",
+        "Green": "#43C464",
+        "Blue": "#4A9EE8",
+        "Yellow": "#F0A72B",
+        "Purple": "#A45CE8"
+      }
+    }
+  ]
+}

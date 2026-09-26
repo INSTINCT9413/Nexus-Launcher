@@ -5,8 +5,10 @@ using Microsoft.Extensions.Hosting;
 using Nexus_Launcher.Models;
 using Nexus_Launcher.Properties;
 using Nexus_Launcher.Services;
+using Nexus_Launcher.Services.Themes;
 using SQLitePCL;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
@@ -25,8 +27,33 @@ namespace Nexus_Launcher
         /// </summary>
         /// 
         public static Mutex _mutex;
+
+        /// <summary>
+        /// True once this process owns the single instance lock, so it
+        /// is only released by the instance that took it.
+        /// </summary>
+        private static bool _ownsInstanceLock;
+
+        private static bool _shuttingDown;
+
+        /// <summary>
+        /// Passed to the new process on a restart, followed by the id
+        /// of the process it is replacing.
+        ///
+        /// Without it the new instance reaches the single instance
+        /// check while the old one is still closing, decides Nexus is
+        /// already running, and asks the user what to do about a second
+        /// copy they never started.
+        /// </summary>
+        private const string RestartArgument = "--restart";
         public static MainView MainFormInstance;
         private static EventWaitHandle _showEvent;
+
+        /// <summary>
+        /// Signalled by a second instance that was started to open a
+        /// theme file.
+        /// </summary>
+        private static EventWaitHandle _openThemeEvent;
         [DllImport("user32.dll")]
         private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
@@ -101,6 +128,185 @@ namespace Nexus_Launcher
             }
         }
 
+        /// <summary>
+        /// Waits for the instance being replaced to actually exit.
+        ///
+        /// Returns true when this process was started by a restart, so
+        /// the caller knows to be patient with the instance lock even
+        /// if the wait timed out.
+        /// </summary>
+        private static bool WaitForRestartHandoff()
+        {
+            int previousId = 0;
+
+            try
+            {
+                string[] args =
+                    Environment.GetCommandLineArgs();
+
+                for (int i = 0; i < args.Length - 1; i++)
+                {
+                    if (string.Equals(
+                        args[i],
+                        RestartArgument,
+                        StringComparison.OrdinalIgnoreCase))
+                    {
+                        int.TryParse(args[i + 1], out previousId);
+
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogCrash(ex);
+            }
+
+            if (previousId <= 0)
+                return false;
+
+            try
+            {
+                using (Process previous =
+                    Process.GetProcessById(previousId))
+                {
+                    previous.WaitForExit(20000);
+                }
+            }
+            catch (ArgumentException)
+            {
+                // Already gone, which is the outcome we wanted.
+            }
+            catch (Exception ex)
+            {
+                LogCrash(ex);
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Starts a fresh copy of Nexus and closes this one.
+        ///
+        /// Replaces Application.Restart, which starts the new process
+        /// immediately and leaves the two overlapping.
+        /// </summary>
+        public static void RestartCleanly()
+        {
+            try
+            {
+                ProcessStartInfo info =
+                    new ProcessStartInfo(Application.ExecutablePath);
+
+                info.Arguments =
+                    RestartArgument + " " +
+                    Process.GetCurrentProcess().Id;
+
+                info.UseShellExecute = true;
+
+                info.WorkingDirectory =
+                    Path.GetDirectoryName(Application.ExecutablePath);
+
+                Process.Start(info);
+            }
+            catch (Exception ex)
+            {
+                LogCrash(ex);
+
+                MessageBox.Show(
+                    "Nexus Launcher could not restart itself." +
+                        Environment.NewLine + Environment.NewLine +
+                        ex.Message,
+                    "Nexus Launcher",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
+                return;
+            }
+
+            ShutdownCleanly();
+        }
+
+        /// <summary>
+        /// Ends the process in an orderly way: forms get their closing
+        /// handlers, which is where the theme is saved and the unlock
+        /// popups are dismissed, and the instance lock is handed back
+        /// rather than left for Windows to reclaim.
+        /// </summary>
+        public static void ShutdownCleanly()
+        {
+            if (_shuttingDown)
+                return;
+
+            _shuttingDown = true;
+
+            try
+            {
+                // Otherwise "close to tray" would cancel the close and
+                // the process would stay up.
+                if (MainFormInstance != null &&
+                    !MainFormInstance.IsDisposed)
+                {
+                    MainFormInstance.appExit = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogCrash(ex);
+            }
+
+            try
+            {
+                foreach (Form form in
+                    Application.OpenForms.Cast<Form>().ToList())
+                {
+                    try
+                    {
+                        form.Close();
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogCrash(ex);
+            }
+
+            ReleaseInstanceLock();
+
+            // A form that refuses to close, or a modal dialog still up,
+            // would otherwise leave the process running invisibly.
+            Task.Delay(4000).ContinueWith(x => Environment.Exit(0));
+
+            Application.Exit();
+        }
+
+        public static void ReleaseInstanceLock()
+        {
+            try
+            {
+                if (_mutex == null)
+                    return;
+
+                if (_ownsInstanceLock)
+                {
+                    _mutex.ReleaseMutex();
+
+                    _ownsInstanceLock = false;
+                }
+
+                _mutex.Dispose();
+
+                _mutex = null;
+            }
+            catch (Exception ex)
+            {
+                LogCrash(ex);
+            }
+        }
+
         private static void MainInternal()
         {
             if (!Settings.Default.Setup)
@@ -112,14 +318,40 @@ namespace Nexus_Launcher
                 return;
             }
 
-            bool createdNew;
+            // Files named on the command line. A double click on a
+            // theme file starts a whole second Nexus, and what the
+            // user wanted was for the one already running to open it.
+            List<string> themeFiles =
+                ThemeFileAssociation.FilesFromCommandLine();
+
+            bool restarting =
+                WaitForRestartHandoff();
 
             _mutex = new Mutex(
-                true,
-                "NexusLauncher_SingleInstance",
-                out createdNew);
+                false,
+                "NexusLauncher_SingleInstance");
 
-            if (!createdNew)
+            // Waiting rather than failing straight away. A restart has
+            // just asked the old instance to go, and even a plain
+            // double click can land two launches close enough together
+            // to race.
+            _ownsInstanceLock =
+                TryTakeInstanceLock(
+                    restarting
+                        ? TimeSpan.FromSeconds(25)
+                        : TimeSpan.FromSeconds(3));
+
+            if (!_ownsInstanceLock && themeFiles.Count > 0)
+            {
+                // Hand the file to the copy that is already running and
+                // say nothing. Asking "Nexus is already running, what
+                // would you like to do?" because someone opened a theme
+                // would be a strange thing to do to them.
+                if (ThemeFileAssociation.HandOff(themeFiles))
+                    return;
+            }
+
+            if (!_ownsInstanceLock)
             {
                 var mess = MessageBox.Show(
                     "Nexus Launcher is already running.\n\r\n\rDo you want to show the existing instance?(Yes)\n\r\n\rDo you want to force close the existing instance\n\rand restart?(No)\n\r\n\rDo you want to cancel and do nothing?(Cancel)",
@@ -129,6 +361,8 @@ namespace Nexus_Launcher
 
                 if (mess == DialogResult.Yes)
                 {
+                    // Bring the copy that is already running forward
+                    // and leave it at that.
                     try
                     {
                         EventWaitHandle
@@ -139,31 +373,31 @@ namespace Nexus_Launcher
                     catch
                     {
                     }
-                }
-                else
-                {
-                    if (mess == DialogResult.No)
-                    {
-                        try
-                        {
-                            Process currentProcess =
-                                Process.GetCurrentProcess();
-                            foreach (var process in Process.GetProcessesByName(currentProcess.ProcessName))
-                            {
-                                if (process.Id != currentProcess.Id)
-                                {
-                                    process.Kill();
-                                    Application.Restart();
-                                }
-                            }
-                        }
-                        catch
-                        {
-                        }
-                    }
-                }
 
                     return;
+                }
+
+                if (mess != DialogResult.No)
+                {
+                    // Cancel.
+                    return;
+                }
+
+                if (!ForceCloseOtherInstances())
+                {
+                    MessageBox.Show(
+                        "The running copy of Nexus Launcher could not " +
+                            "be closed.",
+                        "Nexus Launcher",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
+                    return;
+                }
+
+                // The lock is free now, so this process carries on
+                // starting rather than spawning yet another one.
+                _ownsInstanceLock = true;
             }
 
             _showEvent =
@@ -171,6 +405,21 @@ namespace Nexus_Launcher
                     false,
                     EventResetMode.AutoReset,
                     "NexusLauncher_Show");
+
+            _openThemeEvent =
+                new EventWaitHandle(
+                    false,
+                    EventResetMode.AutoReset,
+                    ThemeFileAssociation.OpenEventName);
+
+            // Anything left over from a crash is stale by now, and
+            // importing it at the next start would be a surprise.
+            ThemeFileAssociation.ClearInbox();
+
+            // Claims .nexustheme on first run, and re-points it at
+            // this executable if Nexus has moved since. Does nothing
+            // once the user has turned the association off.
+            ThemeFileAssociation.ApplyStartupPreference();
 
             SplashScreenManager.ShowForm(MainFormInstance, typeof(WaitForm1), true, true, false);
 
@@ -223,11 +472,94 @@ namespace Nexus_Launcher
                 }
             });
 
+            Task.Run(() =>
+            {
+                while (true)
+                {
+                    _openThemeEvent.WaitOne();
+
+                    MainFormInstance?.OpenThemeFiles(
+                        ThemeFileAssociation.TakeInbox());
+                }
+            });
+
+            // A file this instance was started with, rather than handed.
+            if (themeFiles.Count > 0)
+            {
+                List<string> startupFiles = themeFiles;
+
+                MainFormInstance.Shown += (s, e) =>
+                    MainFormInstance.OpenThemeFiles(startupFiles);
+            }
+
             Application.Run(
                 MainFormInstance);
 
-            _mutex.ReleaseMutex();
+            ReleaseInstanceLock();
         }
+        private static bool TryTakeInstanceLock(
+            TimeSpan timeout)
+        {
+            try
+            {
+                return _mutex.WaitOne(timeout, false);
+            }
+            catch (AbandonedMutexException)
+            {
+                // The previous owner died without releasing it, which
+                // still leaves this process holding the lock.
+                return true;
+            }
+            catch (Exception ex)
+            {
+                LogCrash(ex);
+
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Ends every other copy of Nexus and waits for the lock they
+        /// were holding.
+        /// </summary>
+        private static bool ForceCloseOtherInstances()
+        {
+            try
+            {
+                Process current =
+                    Process.GetCurrentProcess();
+
+                foreach (Process other in
+                    Process.GetProcessesByName(current.ProcessName))
+                {
+                    using (other)
+                    {
+                        if (other.Id == current.Id)
+                            continue;
+
+                        try
+                        {
+                            other.Kill();
+
+                            other.WaitForExit(10000);
+                        }
+                        catch (Exception ex)
+                        {
+                            LogCrash(ex);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogCrash(ex);
+
+                return false;
+            }
+
+            return TryTakeInstanceLock(TimeSpan.FromSeconds(10));
+        }
+
         private static void UpgradeSettings()
         {
             string currentVersion =

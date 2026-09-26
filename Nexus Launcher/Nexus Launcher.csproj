@@ -806,6 +806,27 @@
     <Compile Include="Services\BrowserProfileManager.cs" />
     <Compile Include="Services\ClientResetDefinitions.cs" />
     <Compile Include="Services\ClientResetService.cs" />
+    <Compile Include="Services\ClientResetRunner.cs" />
+    <Compile Include="Services\Account\NexusAccountService.cs" />
+    <Compile Include="Forms\NexusAccountWebForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ThemeImportUI.cs" />
+    <Compile Include="Forms\NexusAccountDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\ClientSettingsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ClientGeneralSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ClientResetOptionsPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ClientResetResultsView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Services\EAScannerService.cs" />
     <Compile Include="Services\EpicScannerService.cs" />
     <Compile Include="Services\GameLauncherService.cs" />
@@ -863,12 +884,21 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\AchievementFilter.cs" />
+    <Compile Include="Services\AchievementSoundService.cs" />
+    <Compile Include="Services\NotificationBadgeService.cs" />
+    <Compile Include="Services\TutorialService.cs" />
     <Compile Include="Controls\Profile\ProfileWidgets.cs" />
     <Compile Include="Services\AchievementService.cs" />
     <Compile Include="Services\HardwareInfoService.cs" />
     <Compile Include="Services\LibraryStatsService.cs" />
     <Compile Include="Services\NetworkMonitor.cs" />
     <Compile Include="Services\CustomThemeService.cs" />
+    <Compile Include="Helpers\AdornerHost.cs" />
+    <Compile Include="Helpers\ControlVisibility.cs" />
+    <Compile Include="Helpers\AnimatedImage.cs" />
+    <Compile Include="Helpers\WebViewEnvironment.cs" />
+    <Compile Include="Services\ThemeFileAssociation.cs" />
+    <Compile Include="Services\ThemePackage.cs" />
     <Compile Include="Services\LibrarySelectionService.cs" />
     <Compile Include="Services\PlayTrackingService.cs" />
     <Compile Include="Services\SidePanelPresenter.cs" />
@@ -970,6 +1000,16 @@
       <DependentUpon>MainView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
+    <None Include="Resources\unlock_chime.wav" />
+
+    <None Include="Resources\unlock_arpeggio.wav" />
+
+    <None Include="Resources\unlock_thump.wav" />
+
+    <None Include="Resources\unlock_marimba.wav" />
+
+    <None Include="Resources\unlock_crystal.wav" />
+
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

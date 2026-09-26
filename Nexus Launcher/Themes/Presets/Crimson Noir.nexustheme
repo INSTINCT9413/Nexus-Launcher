@@ -1,0 +1,47 @@
+{
+  "formatVersion": 1,
+  "generator": "Nexus Launcher",
+  "themes": [
+    {
+      "name": "Crimson Noir",
+      "skin": "The Bezier",
+      "author": "Nexus Launcher",
+      "description": "Neutral black with a deep crimson edge. Stark and quiet.",
+      "colors": {
+        "Paint": "#1A1819",
+        "Paint High": "#2A2829",
+        "Paint Shadow": "#131112",
+        "Paint Deep Shadow": "#0E0D0E",
+        "Brush": "#E9E5E5",
+        "Brush (addl)": "#E9E5E5",
+        "Brush Light": "#928F8F",
+        "Brush High": "#F1EEEE",
+        "Brush Major": "#605E5E",
+        "Brush Minor": "#3F3D3E",
+        "Accent Paint": "#C2303C",
+        "Accent Paint Light": "#57161B",
+        "Accent Brush": "#FFFFFF",
+        "Accent Brush Light": "#D77880",
+        "Key Paint": "#131112",
+        "Key Brush": "#FFFFFF",
+        "Key Brush Light": "#9C9B9B",
+        "Black": "#ABA8A8",
+        "Gray": "#777475",
+        "White": "#FFFFFF",
+        "Red": "#E04651",
+        "Green": "#46A758",
+        "Blue": "#3E8FD9",
+        "Yellow": "#F0A72B",
+        "Purple": "#A45CE8",
+        "altRed": "#E04651",
+        "altGreen": "#46A758",
+        "altBlue": "#3E8FD9",
+        "altYellow": "#F0A72B",
+        "altPurple": "#A45CE8",
+        "altBlack": "#ABA8A8",
+        "altGray": "#777475",
+        "altWhite": "#FFFFFF"
+      }
+    }
+  ]
+}

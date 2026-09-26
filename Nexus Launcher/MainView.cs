@@ -342,6 +342,69 @@ namespace Nexus_Launcher
 
             e.Handled = true;
         }
+        /// <summary>
+        /// Opens theme files: either ones Nexus was started with, or
+        /// ones handed over by a second instance that Windows started
+        /// because a .nexustheme file was double clicked.
+        /// </summary>
+        public void OpenThemeFiles(
+            System.Collections.Generic.List<string> paths)
+        {
+            if (paths == null || paths.Count == 0)
+                return;
+
+            if (InvokeRequired)
+            {
+                BeginInvoke(new Action(() => OpenThemeFiles(paths)));
+
+                return;
+            }
+
+            if (IsDisposed)
+                return;
+
+            try
+            {
+                // The window is very likely behind Explorer, or in the
+                // tray, and the import asks questions.
+                RestoreLauncher();
+
+                Nexus_Launcher.Forms.ThemeImportUI.ImportFiles(
+                    this,
+                    paths);
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+            }
+        }
+
+        /// <summary>
+        /// Tells the library page to look at the animation setting
+        /// again, after it has been changed in Settings.
+        /// </summary>
+        public void RefreshArtworkAnimation()
+        {
+            try
+            {
+                if (fullLibrary != null && !fullLibrary.IsDisposed)
+                    fullLibrary.RefreshArtworkAnimation();
+
+                // The card decides at load time whether to hand the
+                // picture box something animated, so it has to load
+                // again rather than just be told.
+                if (applicationCard != null &&
+                    applicationCard.CurrentGame != null)
+                {
+                    RefreshGameArtwork(applicationCard.CurrentGame);
+                }
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+            }
+        }
+
         public void RestoreLauncher()
         {
             if (InvokeRequired)
@@ -1373,6 +1436,43 @@ namespace Nexus_Launcher
             InitializeSidePanel();
             ApplyCustomThemingVisibility();
             InitializeAchievements();
+            await InitializeNexusAccountAsync();
+        }
+
+        /// <summary>
+        /// Brings a linked Nexus account back on startup.
+        ///
+        /// Nothing is asked of the user when the stored credentials
+        /// still work, or when there is no account at all: Nexus is
+        /// perfectly usable locally. The dialog only appears when an
+        /// account is linked but the site has stopped accepting it,
+        /// which is the one case the user has to act on.
+        /// </summary>
+        private async Task InitializeNexusAccountAsync()
+        {
+            try
+            {
+                Nexus_Launcher.Services.Account.NexusAccountService.SignInState state =
+                    await Nexus_Launcher.Services.Account
+                        .NexusAccountService.RestoreAsync();
+
+                if (state != Nexus_Launcher.Services.Account
+                        .NexusAccountService.SignInState.NeedsSignIn)
+                {
+                    return;
+                }
+
+                if (IsDisposed || !IsHandleCreated)
+                    return;
+
+                ShowNexusLoginPopup();
+            }
+            catch (Exception ex)
+            {
+                // A profile that cannot be reached must never stop
+                // Nexus from starting.
+                Program.LogCrash(ex);
+            }
         }
         public void FocusGOGSettings()
         {
@@ -3170,7 +3270,7 @@ namespace Nexus_Launcher
                     {
                         // Dispose watchers and cancel tokens
                         disposeClose();
-                        Environment.Exit(0);
+                        Program.ShutdownCleanly();
                     }
 
                 }
@@ -3277,9 +3377,7 @@ namespace Nexus_Launcher
 
         private void barButtonItem10_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            
-            Environment.Exit(0);
-            //Application.Exit();
+            Program.ShutdownCleanly();
             
         }
 
@@ -3291,10 +3389,107 @@ namespace Nexus_Launcher
         /// <summary>
         /// Opens the profile page: account, stats, rig and achievements.
         /// </summary>
+        /// <summary>
+        /// The key the profile badge is addressed by.
+        /// </summary>
+        private const string ProfileBadgeKey = "profile-unlocks";
+
+        /// <summary>
+        /// Puts a count on the profile button for achievements and
+        /// badges unlocked since the profile was last looked at.
+        ///
+        /// The unlock toast says what has just happened; this is for
+        /// everything that happened while the window was closed or the
+        /// user was elsewhere.
+        /// </summary>
+        public void RefreshProfileBadge()
+        {
+            try
+            {
+                if (IsDisposed || !IsHandleCreated)
+                    return;
+
+                DateTime? seen =
+                    ProfileLastViewed();
+
+                int count =
+                    AchievementService.UnlockedSince(seen);
+
+                NotificationBadges.Set(
+                    this,
+                    ProfileBadgeKey,
+                    barButtonItem4,
+                    count);
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+            }
+        }
+
+        private static DateTime? ProfileLastViewed()
+        {
+            try
+            {
+                string stored =
+                    Settings.Default.ProfileLastViewedUtc;
+
+                if (string.IsNullOrWhiteSpace(stored))
+                {
+                    // Never opened: nothing counts as new yet, or the
+                    // first visit would show every achievement ever
+                    // earned as unread.
+                    MarkProfileViewed();
+
+                    return null;
+                }
+
+                DateTime parsed;
+
+                if (DateTime.TryParse(
+                        stored,
+                        System.Globalization.CultureInfo.InvariantCulture,
+                        System.Globalization.DateTimeStyles.AdjustToUniversal |
+                            System.Globalization.DateTimeStyles.AssumeUniversal,
+                        out parsed))
+                {
+                    return parsed;
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+
+                return null;
+            }
+        }
+
+        private static void MarkProfileViewed()
+        {
+            try
+            {
+                Settings.Default.ProfileLastViewedUtc =
+                    DateTime.UtcNow.ToString("O");
+
+                Settings.Default.Save();
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+            }
+        }
+
         public void ShowUserAccount()
         {
             bool alreadyShowing =
                 userAccount.Visible;
+
+            // Opening the profile is reading the notification.
+            MarkProfileViewed();
+
+            NotificationBadges.Clear(ProfileBadgeKey);
 
             userAccount.Show();
             userAccount.BringToFront();
@@ -3307,29 +3502,45 @@ namespace Nexus_Launcher
         }
 
         /// <summary>
-        /// The Nexus sign in popup. Not reachable from the header for
-        /// now; kept for when online accounts are built.
+        /// The Nexus account dialog: sign in, create an account, or see
+        /// the account already linked.
+        ///
+        /// Keeps the styling of the original sign in popup but is a
+        /// dialog of its own now, because it has to host a browser view
+        /// for the parts that involve credentials.
         /// </summary>
-        private void ShowNexusLoginPopup()
+        public void ShowNexusLoginPopup()
         {
-            int width = 500;
-            int height = 800;
-            ImageCollection loginImages = new ImageCollection
+            try
             {
-                ImageSize = new Size(192, 192)
-            };
-            loginImages.AddImage(Properties.Resources.dfveffb_9b262552_e352_4348_aefc_8e699002c946, "nexus-logo");
-            loginImages.AddImage(Properties.Resources.icons8_error_24, "close");
-            Rectangle bounds = new Rectangle(
-                Location.X + (Width - width) / 2,
-                Location.Y + (Height - height) / 2,
-                width,
-                height
-            );
-            htmlContentPopup1.HtmlImages = loginImages;
-            htmlContentPopup1.Show(this, bounds);
-            //userAccount.BringToFront();
-            //userAccount.Visible = true;
+                bool showProfile;
+
+                using (Nexus_Launcher.Forms.NexusAccountDialog dialog =
+                    new Nexus_Launcher.Forms.NexusAccountDialog())
+                {
+                    dialog.ShowDialog(this);
+
+                    showProfile = dialog.LocalAccountRequested;
+                }
+
+                // "Use a local account instead" goes where the header
+                // name button goes.
+                if (showProfile)
+                    ShowUserAccount();
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+
+                XtraMessageBox.Show(
+                    this,
+                    "The account dialog could not be opened." +
+                        Environment.NewLine + Environment.NewLine +
+                        ex.Message,
+                    "Nexus Account",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
         }
 
         private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
@@ -3355,8 +3566,7 @@ namespace Nexus_Launcher
                 appExit = true;
                 Program._mutex.Dispose();
 
-                Application.Restart();
-                Environment.Exit(0);
+                Program.RestartCleanly();
             }
         }
 
@@ -3366,9 +3576,8 @@ namespace Nexus_Launcher
             if (mess == DialogResult.Yes)
             {
                 appExit = true;
-                Program._mutex.Dispose();
-                this.Close();
-                Environment.Exit(0);
+
+                Program.ShutdownCleanly();
             }
         }
 
@@ -3490,16 +3699,48 @@ namespace Nexus_Launcher
                 return;
             }
 
-            // Only redraw the card when it is the game on screen.
-            if (ReferenceEquals(
-                applicationCard.CurrentGame,
-                game))
+            // Matched on the game, not the object. The Full Library
+            // has its own GameInfo for the same game, so a change made
+            // over there arrives as a different instance and a
+            // reference check would miss it.
+            if (IsSameGame(applicationCard.CurrentGame, game))
             {
-                RefreshGameArtwork(game);
+                // Corrected explicitly rather than relying on the
+                // service having found it: the card's copy is not
+                // necessarily one of the objects LibraryService holds.
+                CustomArtworkService.Refresh(
+                    applicationCard.CurrentGame);
+
+                // The card's own copy is the one its artwork is read
+                // from, so that is the one to redraw.
+                RefreshGameArtwork(applicationCard.CurrentGame);
             }
 
             // The full library tiles read GridImagePath too.
             fullLibrary.PopulateLibrary();
+        }
+
+        /// <summary>
+        /// Whether two GameInfo objects stand for the same game.
+        /// </summary>
+        private static bool IsSameGame(
+            GameInfo a,
+            GameInfo b)
+        {
+            if (a == null || b == null)
+                return false;
+
+            if (ReferenceEquals(a, b))
+                return true;
+
+            string keyA =
+                LibraryOrganizationService.GetKey(a);
+
+            return keyA != null &&
+                string.Equals(
+                    keyA,
+                    LibraryOrganizationService.GetKey(b),
+                    StringComparison.OrdinalIgnoreCase);
         }
 
         private void RefreshGameArtwork(GameInfo game)
@@ -3515,9 +3756,40 @@ namespace Nexus_Launcher
                 CustomArtworkService.LoadUnlocked(
                     game.GridImagePath);
 
-            Image hero =
-                CustomArtworkService.LoadUnlocked(
-                    game.HeroImagePath);
+            // PictureEdit animates a multi frame image by itself, so
+            // an animated gif hero only needs loading without being
+            // flattened first, which is what the ordinary loader does.
+            //
+            // There is no loop mode that means "do not animate", so
+            // when the setting is off the flattening loader is used on
+            // purpose: a single frame image cannot animate.
+            AnimatedImage animatedHero = null;
+
+            Image hero = null;
+
+            if (Settings.Default.AnimateHeroArtwork)
+            {
+                animatedHero =
+                    AnimatedImage.Load(game.HeroImagePath);
+
+                if (animatedHero != null && !animatedHero.IsAnimated)
+                {
+                    // Nothing to play, so there is no reason to hold a
+                    // stream open for it.
+                    animatedHero.Dispose();
+
+                    animatedHero = null;
+                }
+
+                hero = animatedHero == null ? null : animatedHero.Image;
+            }
+
+            if (hero == null)
+            {
+                hero =
+                    CustomArtworkService.LoadUnlocked(
+                        game.HeroImagePath);
+            }
 
             // Nexus entries are user added programs that normally have
             // no artwork, so they fall back to the exe icon and a stock
@@ -3568,8 +3840,20 @@ namespace Nexus_Launcher
             // The hero is kept in cover mode by PictureCover, which works
             // out the zoom as soon as the image changes. Setting a zoom
             // here, as this used to, would override that fit.
+            if (animatedHero != null)
+            {
+                applicationCard.pictureEdit2.Properties
+                    .AnimatedImageLoopMode =
+                        DevExpress.Utils.AnimatedImageLoopMode.Infinite;
+            }
+
             applicationCard.pictureEdit2.Image =
                 hero ?? GetRandomNexusHeader();
+
+            // The stream under an animated image has to outlive the
+            // image, so the wrapper is held until the next game
+            // replaces it.
+            SwapCardHero(animatedHero);
 
             applicationCard.Refresh();
 
@@ -3579,6 +3863,43 @@ namespace Nexus_Launcher
             //        Image.FromFile(game.LogoPath);
             //}
         }
+        /// <summary>
+        /// The card's current hero, kept because an animated image
+        /// needs the stream it was read from to stay open underneath
+        /// it.
+        /// </summary>
+        private AnimatedImage cardHero;
+
+        private void SwapCardHero(
+            AnimatedImage next)
+        {
+            AnimatedImage previous = cardHero;
+
+            cardHero = next;
+
+            if (previous != null && !ReferenceEquals(previous, next))
+            {
+                // Detached from the control first: disposing an image a
+                // PictureEdit is still holding would fault on the next
+                // paint.
+                try
+                {
+                    if (ReferenceEquals(
+                            applicationCard.pictureEdit2.Image,
+                            previous.Image))
+                    {
+                        applicationCard.pictureEdit2.Image = null;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Program.LogCrash(ex);
+                }
+
+                previous.Dispose();
+            }
+        }
+
         private readonly Random _random = new Random();
 
         private Image GetRandomNexusHeader()
@@ -3599,6 +3920,11 @@ namespace Nexus_Launcher
                 applicationCard.pictureEdit1.Image.Dispose();
                 applicationCard.pictureEdit1.Image = null;
             }
+
+            // Through the wrapper, which detaches the image from the
+            // control before disposing it and closes the stream an
+            // animated one is reading from.
+            SwapCardHero(null);
 
             if (applicationCard.pictureEdit2.Image != null)
             {
@@ -3872,6 +4198,10 @@ namespace Nexus_Launcher
             List<UnlockEvent> unlocked)
         {
             AchievementToastService.Show(unlocked);
+
+            // The toast is only seen if the user is looking; the badge
+            // is what is left afterwards.
+            RefreshProfileBadge();
         }
 
         /// <summary>
@@ -4860,6 +5190,17 @@ namespace Nexus_Launcher
 
         private void barButtonItem16_ItemClick(object sender, ItemClickEventArgs e)
         {
+            // No Nexus account linked yet, so offer that first. Once
+            // one is linked this goes straight to the profile page,
+            // which is where the account details are shown.
+            if (!Nexus_Launcher.Services.Account
+                .NexusAccountService.IsSignedIn)
+            {
+                ShowNexusLoginPopup();
+
+                return;
+            }
+
             ShowUserAccount();
         }
     }    

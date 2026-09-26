@@ -1,0 +1,47 @@
+{
+  "formatVersion": 1,
+  "generator": "Nexus Launcher",
+  "themes": [
+    {
+      "name": "Deep Ocean",
+      "skin": "The Bezier",
+      "author": "Nexus Launcher",
+      "description": "Cold navy depths with a bright cyan current running through.",
+      "colors": {
+        "Paint": "#13202B",
+        "Paint High": "#24303A",
+        "Paint Shadow": "#0E171F",
+        "Paint Deep Shadow": "#0A1218",
+        "Brush": "#DCE8F0",
+        "Brush (addl)": "#DCE8F0",
+        "Brush Light": "#88949D",
+        "Brush High": "#E8F0F5",
+        "Brush Major": "#57646E",
+        "Brush Minor": "#37444E",
+        "Accent Paint": "#2BA6C4",
+        "Accent Paint Light": "#134B58",
+        "Accent Brush": "#121212",
+        "Accent Brush Light": "#75C5D9",
+        "Key Paint": "#0D1821",
+        "Key Brush": "#FFFFFF",
+        "Key Brush Light": "#999EA2",
+        "Black": "#A0ACB5",
+        "Gray": "#6D7A84",
+        "White": "#FFFFFF",
+        "Red": "#E5484D",
+        "Green": "#3FB58F",
+        "Blue": "#3FA9D6",
+        "Yellow": "#F0A72B",
+        "Purple": "#A45CE8",
+        "altRed": "#E5484D",
+        "altGreen": "#3FB58F",
+        "altBlue": "#3FA9D6",
+        "altYellow": "#F0A72B",
+        "altPurple": "#A45CE8",
+        "altBlack": "#A0ACB5",
+        "altGray": "#6D7A84",
+        "altWhite": "#FFFFFF"
+      }
+    }
+  ]
+}

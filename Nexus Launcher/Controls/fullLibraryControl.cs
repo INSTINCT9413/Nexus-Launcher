@@ -35,6 +35,15 @@ namespace Nexus_Launcher.Controls
 
         private Panel gridPage;
 
+        /// <summary>
+        /// Back to the grid, in the header rather than on the artwork.
+        ///
+        /// It takes the place of the header's title while a game is
+        /// open: the game's name is already the heading of the page
+        /// below, so showing it twice only cost the button a home.
+        /// </summary>
+        private readonly SimpleButton backButton = new SimpleButton();
+
         private LibraryFilter filter = new LibraryFilter();
 
         /// <summary>
@@ -130,7 +139,6 @@ namespace Nexus_Launcher.Controls
 
                 detail.Visible = false;
 
-                detail.BackRequested += ShowGrid;
 
                 detail.FavoriteToggled += game =>
                 {
@@ -142,6 +150,8 @@ namespace Nexus_Launcher.Controls
                 Controls.Add(detail);
 
                 Controls.Add(gridPage);
+
+                BuildBackButton();
 
                 // panelControl1 is the docked header from the designer
                 // and has to stay behind both pages.
@@ -155,10 +165,173 @@ namespace Nexus_Launcher.Controls
             }
         }
 
+        /// <summary>
+        /// The header's back button, lined up with the poster on the
+        /// detail page so the page reads as one column.
+        /// </summary>
+        private void BuildBackButton()
+        {
+            backButton.Text = "  Back to library";
+
+            backButton.ImageOptions.SvgImage =
+                ProfileStyle.Svg(
+                    "svgimages/icon%20builder/actions_arrow2left.svg");
+
+            backButton.ImageOptions.SvgImageSize =
+                new Size(16, 16);
+
+            backButton.AllowFocus = false;
+
+            backButton.Visible = false;
+
+            backButton.Click += (s, e) => ShowGrid();
+
+            panelControl1.Controls.Add(backButton);
+
+            panelControl1.Resize += (s, e) => LayoutBackButton();
+
+            LayoutBackButton();
+        }
+
+        /// <summary>
+        /// Positioned by hand rather than docked: it has to line up
+        /// with the poster below it, and the header's own padding is
+        /// not the same as the detail page's margin.
+        /// </summary>
+        private void LayoutBackButton()
+        {
+            const int posterLeft = 32;
+
+            const int width = 158;
+
+            const int height = 30;
+
+            // Padding only moves docked children, so this is already
+            // the header's own left edge and matches the poster.
+            int left = posterLeft;
+
+            int top =
+                Math.Max(
+                    0,
+                    (panelControl1.ClientSize.Height - height) / 2);
+
+            backButton.SetBounds(left, top, width, height);
+        }
+
+        /// <summary>
+        /// The animation setting changed, so the detail page should
+        /// decide again whether to play.
+        /// </summary>
+        public void RefreshArtworkAnimation()
+        {
+            if (detail != null && !detail.IsDisposed)
+                detail.RefreshAnimation();
+        }
+
+        //--------------------------------------------------------------
+        // First time here
+        //--------------------------------------------------------------
+
+        /// <summary>
+        /// Points out the parts of this page that are not obvious, the
+        /// first time it is opened.
+        ///
+        /// Run from OnVisibleChanged rather than Load: the page is
+        /// built with the window and would otherwise introduce itself
+        /// to someone who has not looked at it yet.
+        /// </summary>
+        private void ShowFirstRunTips()
+        {
+            if (tipsQueued || !Visible)
+                return;
+
+            if (TutorialService.HasSeen(TutorialService.FullLibrary))
+                return;
+
+            tipsQueued = true;
+
+            // Queued rather than shown: the service waits until this
+            // page is actually in front before putting markers on it,
+            // and takes them away again if something covers it. This
+            // page shares its space with the game card, the store and
+            // the profile, so being Visible is not the same as being
+            // the page on screen.
+            BeginInvoke(new Action(() =>
+            {
+                if (IsDisposed)
+                    return;
+
+                TutorialService.ShowOnce(
+                    FindForm(),
+                    TutorialService.FullLibrary,
+                    new TutorialStep
+                    {
+                        Title = "Everything, in one place",
+                        Body =
+                            "Every game from every launcher is here. " +
+                            "Click a poster to open it, then play it " +
+                            "without going back to its own launcher.",
+                        Target = () => grid
+                    },
+                    new TutorialStep
+                    {
+                        Title = "Find things quickly",
+                        Body =
+                            "Search, filter by launcher, show only " +
+                            "favourites or installed games, group them, " +
+                            "and change how big the posters are.",
+                        Target = () => filterBar,
+                        Location =
+                            DevExpress.Utils.VisualEffects
+                                .GuideFlyoutLocation.Bottom
+                    },
+                    new TutorialStep
+                    {
+                        Title = "Make it yours",
+                        Body =
+                            "A game's page lets you set your own " +
+                            "artwork, including animated gifs for the " +
+                            "banner, and mark it as a favourite.",
+                        Target = () => simpleButton1,
+                        Location =
+                            DevExpress.Utils.VisualEffects
+                                .GuideFlyoutLocation.Bottom
+                    });
+            }));
+        }
+
+        private bool tipsQueued;
+
+        /// <summary>
+        /// Guides were reset in Settings, so this page offers its own
+        /// again without the user having to navigate away and back.
+        /// </summary>
+        private void Tutorials_Reset()
+        {
+            tipsQueued = false;
+
+            if (IsDisposed)
+                return;
+
+            ShowFirstRunTips();
+        }
+
+        protected override void OnVisibleChanged(
+            EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+
+            ShowFirstRunTips();
+        }
+
         private void fullLibraryControl_Load(
             object sender,
             EventArgs e)
         {
+            TutorialService.Reset += Tutorials_Reset;
+
+            Disposed += (s, a) => TutorialService.Reset -= Tutorials_Reset;
+
             FontManager.ApplyFont(
                 this,
                 Settings.Default.UIFont);
@@ -289,7 +462,15 @@ namespace Nexus_Launcher.Controls
 
             gridPage.Visible = false;
 
-            labelControl1.Text = game.Name;
+            // The game's name is the heading of the page below, so the
+            // header gives its place to the way back instead.
+            labelControl1.Visible = false;
+
+            backButton.Visible = true;
+
+            LayoutBackButton();
+
+            backButton.BringToFront();
         }
 
         /// <summary>
@@ -305,6 +486,10 @@ namespace Nexus_Launcher.Controls
             gridPage.Visible = true;
 
             gridPage.BringToFront();
+
+            backButton.Visible = false;
+
+            labelControl1.Visible = true;
 
             labelControl1.Text = "Full Library";
 

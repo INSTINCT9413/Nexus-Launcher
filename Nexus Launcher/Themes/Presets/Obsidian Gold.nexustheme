@@ -1,0 +1,52 @@
+{
+  "formatVersion": 1,
+  "generator": "Nexus Launcher",
+  "themes": [
+    {
+      "name": "Obsidian Gold",
+      "skin": "WXI",
+      "author": "Nexus Launcher",
+      "description": "Deep obsidian with a warm brushed gold accent.",
+      "colors": {
+        "Background 200": "#333230",
+        "Background 100": "#282826",
+        "Background 0": "#1C1B19",
+        "Background -100": "#171614",
+        "Background -200": "#141312",
+        "Edit Background 0": "#282826",
+        "Edit Background -50": "#1C1B19",
+        "Edit Background -100": "#3B3120",
+        "Edit Background -200": "#4E3E24",
+        "Edit Background -300": "#161514",
+        "Line 100": "#605F5E",
+        "Line 50": "#434240",
+        "Line 25": "#333230",
+        "Foreground 100": "#F0EDE6",
+        "Foreground 50": "#979590",
+        "Foreground 25": "#686763",
+        "Edit Foreground 100": "#F0EDE6",
+        "Edit Foreground 50": "#A4A19C",
+        "Edit Foreground 25": "#6D6B67",
+        "Primary Background 100": "#4B3B23",
+        "Primary Background 0": "#B8873A",
+        "Primary Background -100": "#9E7432",
+        "Primary Background -200": "#88642B",
+        "Primary Foreground 100": "#141414",
+        "Primary Foreground 25": "#5E4825",
+        "Secondary Background 0": "#8A6A33",
+        "Secondary Background -100": "#775B2C",
+        "Secondary Background -200": "#664E26",
+        "Secondary Foreground 100": "#FFFFFF",
+        "Secondary Foreground 25": "#CABCA3",
+        "Black": "#B9B6B1",
+        "Gray": "#82807B",
+        "White": "#FFFFFF",
+        "Red": "#E5484D",
+        "Green": "#3DB77E",
+        "Blue": "#4A9EE8",
+        "Yellow": "#D9A441",
+        "Purple": "#A45CE8"
+      }
+    }
+  ]
+}

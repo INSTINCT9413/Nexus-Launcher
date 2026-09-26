@@ -1,0 +1,52 @@
+{
+  "formatVersion": 1,
+  "generator": "Nexus Launcher",
+  "themes": [
+    {
+      "name": "Monochrome",
+      "skin": "WXI",
+      "author": "Nexus Launcher",
+      "description": "Pure greyscale, not a trace of hue. Lets artwork do the talking.",
+      "colors": {
+        "Background 200": "#343434",
+        "Background 100": "#292929",
+        "Background 0": "#1D1D1D",
+        "Background -100": "#181818",
+        "Background -200": "#141414",
+        "Edit Background 0": "#292929",
+        "Edit Background -50": "#1D1D1D",
+        "Edit Background -100": "#2D2D2D",
+        "Edit Background -200": "#373737",
+        "Edit Background -300": "#171717",
+        "Line 100": "#616161",
+        "Line 50": "#434343",
+        "Line 25": "#343434",
+        "Foreground 100": "#EDEDED",
+        "Foreground 50": "#969696",
+        "Foreground 25": "#686868",
+        "Edit Foreground 100": "#EDEDED",
+        "Edit Foreground 50": "#A2A2A2",
+        "Edit Foreground 25": "#6C6C6C",
+        "Primary Background 100": "#353535",
+        "Primary Background 0": "#6E6E6E",
+        "Primary Background -100": "#5F5F5F",
+        "Primary Background -200": "#515151",
+        "Primary Foreground 100": "#FFFFFF",
+        "Primary Foreground 25": "#BEBEBE",
+        "Secondary Background 0": "#555555",
+        "Secondary Background -100": "#494949",
+        "Secondary Background -200": "#3F3F3F",
+        "Secondary Foreground 100": "#FFFFFF",
+        "Secondary Foreground 25": "#B2B2B2",
+        "Black": "#B7B7B7",
+        "Gray": "#818181",
+        "White": "#FFFFFF",
+        "Red": "#B8B8B8",
+        "Green": "#C6C6C6",
+        "Blue": "#A8A8A8",
+        "Yellow": "#D4D4D4",
+        "Purple": "#9C9C9C"
+      }
+    }
+  ]
+}

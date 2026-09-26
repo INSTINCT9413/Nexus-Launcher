@@ -2,6 +2,7 @@
 using Nexus_Launcher.Controls.Profile;
 using Nexus_Launcher.Properties;
 using Nexus_Launcher.Services;
+using Nexus_Launcher.Services.Account;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -38,6 +39,14 @@ namespace Nexus_Launcher.Controls
 
         private TextEdit nameEdit;
         private CheckEdit useWindowsName;
+
+        private CheckEdit useOnlineName;
+
+        private LabelControl accountStatus;
+
+        private SimpleButton signInButton;
+
+        private SimpleButton registerButton;
         private CheckEdit autoStart;
         private CheckEdit startMinimized;
         private CheckEdit startMaximized;
@@ -88,12 +97,49 @@ namespace Nexus_Launcher.Controls
 
             CardPanel nameCard = new CardPanel();
 
+            // Only meaningful once an account is linked, so it is
+            // hidden until then rather than sitting there greyed out.
+            useOnlineName = Check("Use my Nexus account name");
+            useOnlineName.CheckedChanged += (s, e) => UpdateNameState();
+
             CardStack.Fill(nameCard, new List<Control>
             {
                 new SectionTitle("Your name", Icon + "actions_user.svg"),
                 Hint("Nexus greets you by this name."),
+                useOnlineName,
                 useWindowsName,
                 nameEdit
+            });
+
+            // An account is optional. Signing in fills the name in from
+            // the site; skipping it leaves the local name above, which
+            // is all Nexus needs to run.
+            CardPanel accountCard = new CardPanel();
+
+            accountStatus = Hint(string.Empty);
+
+            signInButton = new SimpleButton();
+            signInButton.Text = "Sign in";
+            signInButton.Dock = DockStyle.Top;
+            signInButton.Height = 28;
+            signInButton.Click += SignIn_Click;
+
+            registerButton = new SimpleButton();
+            registerButton.Text = "Create an account";
+            registerButton.Dock = DockStyle.Top;
+            registerButton.Height = 28;
+            registerButton.Click += Register_Click;
+
+            CardStack.Fill(accountCard, new List<Control>
+            {
+                new SectionTitle(
+                    "Nexus Account",
+                    Icon + "actions_user.svg"),
+                Hint("Optional. Sign in to bring your online profile " +
+                     "into Nexus, or just use a local name below."),
+                accountStatus,
+                signInButton,
+                registerButton
             });
 
             autoStart = Check("Start Nexus when Windows starts");
@@ -112,7 +158,7 @@ namespace Nexus_Launcher.Controls
                 minimizeOnClose
             });
 
-            Stack(left, nameCard, startupCard);
+            Stack(left, accountCard, nameCard, startupCard);
 
             // Right: what Nexus opens on.
             defaultLauncher = new ComboBoxEdit();
@@ -158,6 +204,144 @@ namespace Nexus_Launcher.Controls
         /// Stacks cards down a column. Added back to front because
         /// WinForms docks the last added control to the top first.
         /// </summary>
+        private void SignIn_Click(
+            object sender,
+            EventArgs e)
+        {
+            using (Nexus_Launcher.Forms.NexusAccountDialog dialog =
+                new Nexus_Launcher.Forms.NexusAccountDialog())
+            {
+                dialog.ShowDialog(FindForm());
+            }
+
+            AdoptAccountName();
+
+            UpdateAccountState();
+        }
+
+        private void Register_Click(
+            object sender,
+            EventArgs e)
+        {
+            using (Nexus_Launcher.Forms.NexusAccountWebForm web =
+                new Nexus_Launcher.Forms.NexusAccountWebForm(
+                    Nexus_Launcher.Forms.NexusAccountWebMode.Register))
+            {
+                web.ShowDialog(FindForm());
+            }
+
+            // Registering does not sign anyone in, so the buttons stay
+            // as they were and Sign in is the next step.
+            UpdateAccountState();
+        }
+
+        /// <summary>
+        /// Uses the account's name for the local greeting too, so a
+        /// signed in user does not have to type it twice. Only fills a
+        /// blank box: a name already typed is the user's choice.
+        /// </summary>
+        private void AdoptAccountName()
+        {
+            if (!NexusAccountService.IsSignedIn)
+                return;
+
+            NexusAccount user =
+                NexusAccountService.Current;
+
+            string name =
+                user == null ? null : user.FullName;
+
+            if (string.IsNullOrWhiteSpace(name))
+                return;
+
+            if (!string.IsNullOrWhiteSpace(nameEdit.Text))
+                return;
+
+            useWindowsName.Checked = false;
+
+            nameEdit.Text = name;
+
+            UpdateNameState();
+        }
+
+        private void UpdateAccountState()
+        {
+            bool signedIn =
+                NexusAccountService.IsSignedIn;
+
+            NexusAccount user =
+                NexusAccountService.Current;
+
+            accountStatus.Text =
+                signedIn && user != null
+                    ? "Signed in as " +
+                        (string.IsNullOrWhiteSpace(user.DisplayName)
+                            ? user.Username
+                            : user.DisplayName)
+                    : "Not signed in. Nexus works fine without an account.";
+
+            signInButton.Text =
+                signedIn ? "Account settings" : "Sign in";
+
+            registerButton.Visible = !signedIn;
+
+            if (useOnlineName != null)
+            {
+                bool appeared =
+                    signedIn && !useOnlineName.Visible;
+
+                useOnlineName.Visible = signedIn;
+
+                // Default to the account's name the moment one is
+                // linked, which is what someone signing in expects.
+                if (appeared)
+                    useOnlineName.Checked = UserProfileService.UseOnlineName;
+
+                UpdateNameState();
+            }
+        }
+
+        /// <summary>
+        /// A card's height is worked out when it is filled, from the
+        /// rows as they measured then. A wrapping hint does not know
+        /// its height until it has been given a width, so the cards are
+        /// measured again once the layout has settled.
+        /// </summary>
+        protected override void OnLayout(
+            LayoutEventArgs e)
+        {
+            base.OnLayout(e);
+
+            ResizeCards(this);
+        }
+
+        private static void ResizeCards(
+            Control parent)
+        {
+            foreach (Control child in parent.Controls)
+            {
+                CardPanel card =
+                    child as CardPanel;
+
+                if (card != null)
+                {
+                    int wanted =
+                        card.Padding.Vertical;
+
+                    foreach (Control row in card.Controls)
+                    {
+                        if (row.Visible)
+                            wanted += row.Height;
+                    }
+
+                    if (card.Height != wanted)
+                        card.Height = wanted;
+                }
+
+                ResizeCards(child);
+            }
+        }
+
         private static void Stack(
             Panel column,
             params Control[] cards)
@@ -202,7 +386,16 @@ namespace Nexus_Launcher.Controls
 
             label.Text = text;
             label.Dock = DockStyle.Top;
-            label.AutoSizeMode = LabelAutoSizeMode.None;
+
+            // Wraps and grows instead of running past the card edge.
+            // The cards are narrow and these hints are sentences.
+            label.AutoSizeMode = LabelAutoSizeMode.Vertical;
+
+            label.Appearance.TextOptions.WordWrap =
+                DevExpress.Utils.WordWrap.Wrap;
+
+            label.Appearance.Options.UseTextOptions = true;
+
             label.Height = 20;
             label.Appearance.Font = ProfileStyle.Font(8.5F);
             label.Appearance.Options.UseFont = true;
@@ -217,6 +410,15 @@ namespace Nexus_Launcher.Controls
         private void LoadValues()
         {
             useWindowsName.Checked = UserProfileService.UseWindowsName;
+
+            useOnlineName.Visible =
+                UserProfileService.HasOnlineAccount;
+
+            useOnlineName.Checked =
+                UserProfileService.HasOnlineAccount &&
+                UserProfileService.UseOnlineName;
+
+            UpdateAccountState();
 
             nameEdit.Text =
                 string.IsNullOrWhiteSpace(UserProfileService.CustomName)
@@ -245,12 +447,22 @@ namespace Nexus_Launcher.Controls
         /// </summary>
         private void UpdateNameState()
         {
+            bool online =
+                useOnlineName.Visible && useOnlineName.Checked;
+
+            // The account name wins while it is selected, so the local
+            // options below it are switched off rather than looking
+            // like they still apply.
+            useWindowsName.Enabled = !online;
+
             bool windows =
                 useWindowsName.Checked;
 
-            nameEdit.Enabled = !windows;
+            nameEdit.Enabled = !online && !windows;
 
-            if (windows)
+            if (online)
+                nameEdit.Text = UserProfileService.OnlineName;
+            else if (windows)
                 nameEdit.Text = UserProfileService.WindowsName;
         }
 
@@ -272,6 +484,9 @@ namespace Nexus_Launcher.Controls
                 Settings.Default.DefaultLauncher =
                     defaultLauncher.EditValue.ToString();
             }
+
+            UserProfileService.SaveUseOnlineName(
+                useOnlineName.Visible && useOnlineName.Checked);
 
             Settings.Default.Save();
 

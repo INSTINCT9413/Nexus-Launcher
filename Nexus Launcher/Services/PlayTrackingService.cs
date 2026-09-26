@@ -47,6 +47,20 @@ namespace Nexus_Launcher.Services.Library
         private static readonly TimeSpan MinimumSession =
             TimeSpan.FromSeconds(30);
 
+        /// <summary>
+        /// How many consecutive polls have to come back empty before
+        /// the session is called over.
+        ///
+        /// One empty poll is not enough. Several launchers start a
+        /// small bootstrapper first, which exits as soon as it has
+        /// handed off to the real game, and Xbox titles in particular
+        /// go through a gamelaunchhelper.exe that is gone within
+        /// seconds. Ending on the first gap timed the bootstrapper
+        /// instead of the game and then threw the session away for
+        /// being too short.
+        /// </summary>
+        private const int EmptyPollsBeforeEnd = 3;
+
         private static readonly object sync =
             new object();
 
@@ -302,8 +316,17 @@ namespace Nexus_Launcher.Services.Library
         }
 
         /// <summary>
-        /// Waits for the game's process to show up, times it, then
-        /// records the session.
+        /// Times a session by watching for any process belonging to the
+        /// game, from the first one that appears to the last one that
+        /// exits.
+        ///
+        /// Deliberately not "find a process and wait for it to exit".
+        /// Games routinely start one process and continue in another:
+        /// a bootstrapper hands off to the real executable, launchers
+        /// re-exec through a helper, anti-cheat wrappers relaunch the
+        /// game. Following a single handle timed whichever process
+        /// happened to be found first, which for Xbox titles was a
+        /// helper that exits within seconds.
         /// </summary>
         private static async Task WatchSessionAsync(
             GameInfo game,
@@ -311,34 +334,62 @@ namespace Nexus_Launcher.Services.Library
         {
             try
             {
-                string installPath =
-                    game.InstallPath;
+                List<string> roots =
+                    BuildRoots(game);
 
-                if (string.IsNullOrWhiteSpace(installPath) ||
-                    !Directory.Exists(installPath))
+                string exeName =
+                    SafeFileName(game.ExecutablePath);
+
+                if (roots.Count == 0 && exeName == null)
                 {
                     RecordUntracked(key);
 
                     return;
                 }
 
-                Process target =
-                    await WaitForProcessAsync(installPath);
+                DateTime deadline =
+                    DateTime.UtcNow + StartupGracePeriod;
 
-                if (target == null)
+                DateTime? firstSeen = null;
+
+                DateTime lastSeen = DateTime.UtcNow;
+
+                int emptyPolls = 0;
+
+                while (true)
                 {
-                    RecordUntracked(key);
+                    bool running =
+                        IsGameRunning(roots, exeName);
 
-                    return;
+                    if (running)
+                    {
+                        if (firstSeen == null)
+                            firstSeen = DateTime.UtcNow;
+
+                        lastSeen = DateTime.UtcNow;
+
+                        emptyPolls = 0;
+                    }
+                    else if (firstSeen != null)
+                    {
+                        emptyPolls++;
+
+                        if (emptyPolls >= EmptyPollsBeforeEnd)
+                            break;
+                    }
+                    else if (DateTime.UtcNow > deadline)
+                    {
+                        // Never showed up at all.
+                        RecordUntracked(key);
+
+                        return;
+                    }
+
+                    await Task.Delay(PollInterval);
                 }
-
-                DateTime started =
-                    DateTime.UtcNow;
-
-                await WaitForExitAsync(target);
 
                 TimeSpan elapsed =
-                    DateTime.UtcNow - started;
+                    lastSeen - firstSeen.Value;
 
                 if (elapsed < MinimumSession)
                 {
@@ -403,81 +454,178 @@ namespace Nexus_Launcher.Services.Library
             Save();
         }
 
-        private static async Task<Process> WaitForProcessAsync(
-            string installPath)
+        /// <summary>
+        /// The folders a process has to be running from to count as
+        /// this game. The install folder normally, plus the folder the
+        /// executable sits in when that is somewhere else entirely,
+        /// which happens when a launcher records one and installs to
+        /// the other.
+        /// </summary>
+        private static List<string> BuildRoots(
+            GameInfo game)
         {
-            DateTime deadline =
-                DateTime.UtcNow + StartupGracePeriod;
+            List<string> roots =
+                new List<string>();
 
-            while (DateTime.UtcNow < deadline)
+            AddRoot(roots, game.InstallPath);
+
+            try
             {
-                Process found =
-                    FindProcessUnder(installPath);
-
-                if (found != null)
-                    return found;
-
-                await Task.Delay(PollInterval);
+                if (!string.IsNullOrWhiteSpace(game.ExecutablePath))
+                {
+                    AddRoot(
+                        roots,
+                        Path.GetDirectoryName(game.ExecutablePath));
+                }
+            }
+            catch (Exception)
+            {
+                // A malformed path is simply not a usable root.
             }
 
-            return null;
+            return roots;
         }
 
-        private static async Task WaitForExitAsync(
-            Process process)
+        private static void AddRoot(
+            List<string> roots,
+            string path)
         {
-            while (true)
-            {
-                try
-                {
-                    if (process.HasExited)
-                        return;
-                }
-                catch
-                {
-                    // Handle went away, treat it as exited.
-                    return;
-                }
+            if (string.IsNullOrWhiteSpace(path))
+                return;
 
-                await Task.Delay(PollInterval);
+            try
+            {
+                if (!Directory.Exists(path))
+                    return;
+
+                string root =
+                    Path.GetFullPath(path)
+                        .TrimEnd(Path.DirectorySeparatorChar) +
+                    Path.DirectorySeparatorChar;
+
+                // An empty root would match every process on the
+                // machine, since everything starts with "".
+                if (root.Length <= 1)
+                    return;
+
+                if (!roots.Contains(root, StringComparer.OrdinalIgnoreCase))
+                    roots.Add(root);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private static string SafeFileName(
+            string path)
+        {
+            try
+            {
+                return string.IsNullOrWhiteSpace(path)
+                    ? null
+                    : Path.GetFileName(path);
+            }
+            catch (Exception)
+            {
+                return null;
             }
         }
 
         /// <summary>
-        /// Finds a running process whose executable sits inside the
-        /// game's install folder.
+        /// True while any process belonging to the game is running.
+        ///
+        /// Matching on the install folder catches the game and all of
+        /// its helpers at once. The executable name is a fallback for
+        /// games whose files are not where the launcher said they
+        /// would be.
         /// </summary>
-        private static Process FindProcessUnder(
-            string installPath)
+        private static bool IsGameRunning(
+            List<string> roots,
+            string exeName)
         {
-            string root =
-                installPath.TrimEnd(
-                    Path.DirectorySeparatorChar) +
-                Path.DirectorySeparatorChar;
+            Process[] processes;
 
-            foreach (Process process in Process.GetProcesses())
+            try
             {
-                try
-                {
-                    string path =
-                        process.MainModule.FileName;
+                processes = Process.GetProcesses();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
 
-                    if (!string.IsNullOrEmpty(path) &&
-                        path.StartsWith(
-                            root,
-                            StringComparison.OrdinalIgnoreCase))
+            try
+            {
+                foreach (Process process in processes)
+                {
+                    string path = null;
+
+                    try
                     {
-                        return process;
+                        path = process.MainModule.FileName;
+                    }
+                    catch
+                    {
+                        // Protected process, or a 32/64 bit mismatch.
+                        // Nothing to be done, so fall back to the name.
+                    }
+
+                    if (!string.IsNullOrEmpty(path))
+                    {
+                        foreach (string root in roots)
+                        {
+                            if (path.StartsWith(
+                                root,
+                                StringComparison.OrdinalIgnoreCase))
+                            {
+                                return true;
+                            }
+                        }
+
+                        continue;
+                    }
+
+                    if (exeName == null)
+                        continue;
+
+                    // Process names have no extension.
+                    string name;
+
+                    try
+                    {
+                        name = process.ProcessName;
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+
+                    if (string.Equals(
+                        name + ".exe",
+                        exeName,
+                        StringComparison.OrdinalIgnoreCase))
+                    {
+                        return true;
                     }
                 }
-                catch
+            }
+            finally
+            {
+                // GetProcesses hands back live handles; the watcher
+                // polls for hours, so they have to go back.
+                foreach (Process process in processes)
                 {
-                    // Protected or 32/64 bit mismatch, nothing we can
-                    // do about those so just skip them.
+                    try
+                    {
+                        process.Dispose();
+                    }
+                    catch (Exception)
+                    {
+                    }
                 }
             }
 
-            return null;
+            return false;
         }
     }
 }

@@ -249,7 +249,6 @@
             this.webView22.Location = new System.Drawing.Point(2, 2);
             this.webView22.Name = "webView22";
             this.webView22.Size = new System.Drawing.Size(1091, 437);
-            this.webView22.Source = new System.Uri("https://guardbyte.me/downloads/Nexus%20Launcher/loading.html", System.UriKind.Absolute);
             this.webView22.TabIndex = 6;
             this.webView22.Visible = false;
             this.webView22.ZoomFactor = 1D;

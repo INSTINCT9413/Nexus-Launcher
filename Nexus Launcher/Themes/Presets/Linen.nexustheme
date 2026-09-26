@@ -1,0 +1,52 @@
+{
+  "formatVersion": 1,
+  "generator": "Nexus Launcher",
+  "themes": [
+    {
+      "name": "Linen",
+      "skin": "WXI",
+      "author": "Nexus Launcher",
+      "description": "Warm off-white paper with a deep olive accent.",
+      "colors": {
+        "Background 200": "#FBFAF7",
+        "Background 100": "#F8F6F1",
+        "Background 0": "#F5F2EA",
+        "Background -100": "#ECEAE2",
+        "Background -200": "#E6E3DB",
+        "Edit Background 0": "#FBFAF7",
+        "Edit Background -50": "#F5F2EA",
+        "Edit Background -100": "#EDEDE3",
+        "Edit Background -200": "#E3E4D5",
+        "Edit Background -300": "#DFDCD5",
+        "Line 100": "#93918C",
+        "Line 50": "#C6C4BE",
+        "Line 25": "#DCDAD3",
+        "Foreground 100": "#2B2822",
+        "Foreground 50": "#7C7972",
+        "Foreground 25": "#A8A59E",
+        "Edit Foreground 100": "#2B2822",
+        "Edit Foreground 50": "#706D66",
+        "Edit Foreground 25": "#A4A19A",
+        "Primary Background 100": "#D9DAC5",
+        "Primary Background 0": "#6B7A31",
+        "Primary Background -100": "#5C692A",
+        "Primary Background -200": "#4F5A24",
+        "Primary Foreground 100": "#FFFFFF",
+        "Primary Foreground 25": "#BCC3A2",
+        "Secondary Background 0": "#8A6A33",
+        "Secondary Background -100": "#775B2C",
+        "Secondary Background -200": "#664E26",
+        "Secondary Foreground 100": "#FFFFFF",
+        "Secondary Foreground 25": "#CABCA3",
+        "Black": "#57544E",
+        "Gray": "#908D86",
+        "White": "#FFFFFF",
+        "Red": "#C92A2F",
+        "Green": "#5F7029",
+        "Blue": "#1668C7",
+        "Yellow": "#A8761A",
+        "Purple": "#7A34C4"
+      }
+    }
+  ]
+}

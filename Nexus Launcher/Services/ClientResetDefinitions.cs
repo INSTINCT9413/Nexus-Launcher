@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nexus_Launcher.Services.Library;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -6,11 +7,54 @@ namespace Nexus_Launcher.Services
 {
     internal static class ClientResetDefinitions
     {
+        /// <summary>
+        /// The reset plan for a launcher, named as the accordion and
+        /// the statistics name it. Returns null for launchers that
+        /// have no definition yet, which the UI reports rather than
+        /// pretending to clear something.
+        /// </summary>
+        public static ClientResetPlan GetPlan(
+            string launcher)
+        {
+            switch (LibraryStatsService.Canonical(launcher))
+            {
+                case "Steam":
+                    return ResetSteam();
+
+                case "EA App":
+                    return ResetEA();
+
+                case "Epic Games":
+                    return ResetEpic();
+
+                case "Ubisoft Connect":
+                    return ResetUbisoft();
+
+                case "GOG":
+                    return ResetGOG();
+
+                case "Battle.net":
+                    return ResetBattleNet();
+
+                default:
+                    return null;
+            }
+        }
+
+        /// <summary>
+        /// Whether a launcher can be reset at all.
+        /// </summary>
+        public static bool CanReset(
+            string launcher)
+        {
+            return GetPlan(launcher) != null;
+        }
+
         // ============================================================
         // STEAM
         // ============================================================
 
-        public static ClientResetService.ResetResult ResetSteam()
+        public static ClientResetPlan ResetSteam()
         {
             string localAppData =
                 Environment.GetFolderPath(
@@ -20,7 +64,7 @@ namespace Nexus_Launcher.Services
                 Environment.GetFolderPath(
                     Environment.SpecialFolder.ApplicationData);
 
-            return ClientResetService.ResetClient(
+            return ClientResetService.BuildPlan(
                 "Steam",
 
                 // TEMP
@@ -101,7 +145,7 @@ namespace Nexus_Launcher.Services
         // EA APP
         // ============================================================
 
-        public static ClientResetService.ResetResult ResetEA()
+        public static ClientResetPlan ResetEA()
         {
             string localAppData =
                 Environment.GetFolderPath(
@@ -111,7 +155,7 @@ namespace Nexus_Launcher.Services
                 Environment.GetFolderPath(
                     Environment.SpecialFolder.ApplicationData);
 
-            return ClientResetService.ResetClient(
+            return ClientResetService.BuildPlan(
                 "EA",
 
                 // TEMP
@@ -199,7 +243,7 @@ namespace Nexus_Launcher.Services
         // EPIC GAMES
         // ============================================================
 
-        public static ClientResetService.ResetResult ResetEpic()
+        public static ClientResetPlan ResetEpic()
         {
             string localAppData =
                 Environment.GetFolderPath(
@@ -209,7 +253,7 @@ namespace Nexus_Launcher.Services
                 Environment.GetFolderPath(
                     Environment.SpecialFolder.ApplicationData);
 
-            return ClientResetService.ResetClient(
+            return ClientResetService.BuildPlan(
                 "Epic Games",
 
                 // TEMP
@@ -288,7 +332,7 @@ namespace Nexus_Launcher.Services
         // UBISOFT CONNECT
         // ============================================================
 
-        public static ClientResetService.ResetResult ResetUbisoft()
+        public static ClientResetPlan ResetUbisoft()
         {
             string localAppData =
                 Environment.GetFolderPath(
@@ -298,7 +342,7 @@ namespace Nexus_Launcher.Services
                 Environment.GetFolderPath(
                     Environment.SpecialFolder.ApplicationData);
 
-            return ClientResetService.ResetClient(
+            return ClientResetService.BuildPlan(
                 "Ubisoft Connect",
 
                 // TEMP
@@ -373,7 +417,7 @@ namespace Nexus_Launcher.Services
         // GOG GALAXY
         // ============================================================
 
-        public static ClientResetService.ResetResult ResetGOG()
+        public static ClientResetPlan ResetGOG()
         {
             string localAppData =
                 Environment.GetFolderPath(
@@ -383,7 +427,7 @@ namespace Nexus_Launcher.Services
                 Environment.GetFolderPath(
                     Environment.SpecialFolder.ApplicationData);
 
-            return ClientResetService.ResetClient(
+            return ClientResetService.BuildPlan(
                 "GOG Galaxy",
 
                 // TEMP
@@ -462,7 +506,7 @@ namespace Nexus_Launcher.Services
         // BATTLE.NET
         // ============================================================
 
-        public static ClientResetService.ResetResult ResetBattleNet()
+        public static ClientResetPlan ResetBattleNet()
         {
             string localAppData =
                 Environment.GetFolderPath(
@@ -472,7 +516,7 @@ namespace Nexus_Launcher.Services
                 Environment.GetFolderPath(
                     Environment.SpecialFolder.ApplicationData);
 
-            return ClientResetService.ResetClient(
+            return ClientResetService.BuildPlan(
                 "Battle.net",
 
                 // TEMP

@@ -1,0 +1,47 @@
+{
+  "formatVersion": 1,
+  "generator": "Nexus Launcher",
+  "themes": [
+    {
+      "name": "Paper White",
+      "skin": "The Bezier",
+      "author": "Nexus Launcher",
+      "description": "A clean warm white page with a calm indigo accent.",
+      "colors": {
+        "Paint": "#F7F6F3",
+        "Paint High": "#FBFBFA",
+        "Paint Shadow": "#E3E2E0",
+        "Paint Deep Shadow": "#CFCFCC",
+        "Brush": "#2B2A28",
+        "Brush (addl)": "#2B2A28",
+        "Brush Light": "#7D7C79",
+        "Brush High": "#1E1D1C",
+        "Brush Major": "#A9A8A6",
+        "Brush Minor": "#CECDCA",
+        "Accent Paint": "#4A5BC4",
+        "Accent Paint Light": "#D7DBF2",
+        "Accent Brush": "#FFFFFF",
+        "Accent Brush Light": "#9BA5DF",
+        "Key Paint": "#3B4A9E",
+        "Key Brush": "#FFFFFF",
+        "Key Brush Light": "#ADB3D6",
+        "Black": "#5E5D5B",
+        "Gray": "#9B9A98",
+        "White": "#FFFFFF",
+        "Red": "#CE2C31",
+        "Green": "#2F8F45",
+        "Blue": "#2F6FBF",
+        "Yellow": "#C77E10",
+        "Purple": "#8340CC",
+        "altRed": "#CE2C31",
+        "altGreen": "#2F8F45",
+        "altBlue": "#2F6FBF",
+        "altYellow": "#C77E10",
+        "altPurple": "#8340CC",
+        "altBlack": "#5E5D5B",
+        "altGray": "#9B9A98",
+        "altWhite": "#FFFFFF"
+      }
+    }
+  ]
+}

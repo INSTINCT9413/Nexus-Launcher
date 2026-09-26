@@ -1,0 +1,52 @@
+{
+  "formatVersion": 1,
+  "generator": "Nexus Launcher",
+  "themes": [
+    {
+      "name": "Twilight Indigo",
+      "skin": "WXI",
+      "author": "Nexus Launcher",
+      "description": "Indigo-tinted dark surfaces under a periwinkle accent.",
+      "colors": {
+        "Background 200": "#343441",
+        "Background 100": "#2A2A38",
+        "Background 0": "#1E1E2C",
+        "Background -100": "#191924",
+        "Background -200": "#15151F",
+        "Edit Background 0": "#2A2A38",
+        "Edit Background -50": "#1E1E2C",
+        "Edit Background -100": "#2B2C4C",
+        "Edit Background -200": "#33345F",
+        "Edit Background -300": "#171722",
+        "Line 100": "#62626B",
+        "Line 50": "#444450",
+        "Line 25": "#343441",
+        "Foreground 100": "#E9E9F5",
+        "Foreground 50": "#9494A1",
+        "Foreground 25": "#676774",
+        "Edit Foreground 100": "#E9E9F5",
+        "Edit Foreground 50": "#A0A0AD",
+        "Edit Foreground 25": "#6B6B78",
+        "Primary Background 100": "#32325C",
+        "Primary Background 0": "#6062CC",
+        "Primary Background -100": "#5354AF",
+        "Primary Background -200": "#474997",
+        "Primary Foreground 100": "#FFFFFF",
+        "Primary Foreground 25": "#B7B8E8",
+        "Secondary Background 0": "#4F5199",
+        "Secondary Background -100": "#444684",
+        "Secondary Background -200": "#3A3C71",
+        "Secondary Foreground 100": "#FFFFFF",
+        "Secondary Foreground 25": "#B0B1D1",
+        "Black": "#B4B4C1",
+        "Gray": "#7F7F8C",
+        "White": "#FFFFFF",
+        "Red": "#E5484D",
+        "Green": "#3DB77E",
+        "Blue": "#6A8FE0",
+        "Yellow": "#F0A72B",
+        "Purple": "#8C8EE8"
+      }
+    }
+  ]
+}

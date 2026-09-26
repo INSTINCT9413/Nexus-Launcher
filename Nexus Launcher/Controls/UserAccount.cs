@@ -130,13 +130,14 @@ namespace Nexus_Launcher.Services
 
                 header = new ProfileHeaderPanel();
                 header.Dock = DockStyle.Fill;
+                header.AccountRequested += ShowAccountDialog;
+                header.RefreshAccountButton();
                 groupControl5.Controls.Add(header);
 
                 // Loaded without a file lock, unlike Image.FromFile.
                 header.SetUser(
                     MainView.fullUserName,
-                    CustomArtworkService.LoadUnlocked(
-                        GetUserAccountPicturePath()));
+                    GetProfilePicture());
 
                 libraryStats = new LibraryStatsPanel();
                 libraryStats.Dock = DockStyle.Fill;
@@ -273,6 +274,54 @@ namespace Nexus_Launcher.Services
         }
 
         /// <summary>
+        /// The picture to show for the user.
+        ///
+        /// A linked account's own picture comes first, so the profile
+        /// page matches the name beside it. Everything else falls back
+        /// to the Windows account picture.
+        /// </summary>
+        private static Image GetProfilePicture()
+        {
+            if (Nexus_Launcher.Services.Account
+                .NexusAccountService.IsSignedIn)
+            {
+                Image online =
+                    Nexus_Launcher.Services.Account
+                        .NexusAccountService.LoadAvatar();
+
+                if (online != null)
+                    return online;
+            }
+
+            return CustomArtworkService.LoadUnlocked(
+                GetUserAccountPicturePath());
+        }
+
+        /// <summary>
+        /// Opens the Nexus account dialog from the profile page, so it
+        /// stays reachable after an account has been linked.
+        /// </summary>
+        private void ShowAccountDialog()
+        {
+            try
+            {
+                using (Nexus_Launcher.Forms.NexusAccountDialog dialog =
+                    new Nexus_Launcher.Forms.NexusAccountDialog())
+                {
+                    dialog.ShowDialog(FindForm());
+                }
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+            }
+
+            header.RefreshAccountButton();
+
+            RefreshUserName();
+        }
+
+        /// <summary>
         /// Shows the current display name on the profile header.
         /// </summary>
         public void RefreshUserName()
@@ -280,10 +329,11 @@ namespace Nexus_Launcher.Services
             if (!built || IsDisposed)
                 return;
 
-            // Null picture keeps the avatar that is already loaded.
             header.SetUser(
                 UserProfileService.DisplayName,
-                null);
+                GetProfilePicture());
+
+            header.RefreshAccountButton();
         }
 
         private void UserProfile_Changed()

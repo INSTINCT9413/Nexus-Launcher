@@ -268,6 +268,81 @@ namespace Nexus_Launcher.Services
                 await Task.Delay(500);
             }
         }
+        /// <summary>
+        /// Starts one launcher by name, ignoring the "start with
+        /// Nexus" preference. Used after a client reset, where the
+        /// user has asked for this client specifically.
+        ///
+        /// Reuses the startup list so the executable is found the same
+        /// way in both places.
+        /// </summary>
+        public static bool StartLauncher(
+            string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                return false;
+
+            string wanted =
+                Nexus_Launcher.Services.Library.LibraryStatsService
+                    .Canonical(name);
+
+            foreach (LauncherInfo launcher in BuildLauncherList())
+            {
+                if (!string.Equals(
+                    Nexus_Launcher.Services.Library.LibraryStatsService
+                        .Canonical(launcher.Name),
+                    wanted,
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                // Already running is a success: the point is that the
+                // client ends up open.
+                if (IsRunning(launcher.ProcessName))
+                    return true;
+
+                if (string.IsNullOrWhiteSpace(launcher.ExecutablePath) ||
+                    !File.Exists(launcher.ExecutablePath))
+                {
+                    return false;
+                }
+
+                ProcessStartInfo info =
+                    new ProcessStartInfo(launcher.ExecutablePath);
+
+                info.Arguments = launcher.Arguments ?? string.Empty;
+
+                info.UseShellExecute = true;
+
+                info.WorkingDirectory =
+                    Path.GetDirectoryName(launcher.ExecutablePath);
+
+                Process.Start(info);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool IsRunning(
+            string processName)
+        {
+            if (string.IsNullOrWhiteSpace(processName))
+                return false;
+
+            try
+            {
+                return Process.GetProcessesByName(
+                    Path.GetFileNameWithoutExtension(processName)).Length > 0;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         private static List<LauncherInfo> BuildLauncherList()
         {
             return new List<LauncherInfo>()
