@@ -5,6 +5,7 @@ using Microsoft.Web.WebView2.Core;
 using Nexus_Launcher.Helpers;
 using Nexus_Launcher.Models;
 using Nexus_Launcher.Properties;
+using Nexus_Launcher.Services;
 using Nexus_Launcher.Services.Artwork;
 using Nexus_Launcher.Services.Library;
 using System;
@@ -67,6 +68,10 @@ namespace Nexus_Launcher.Controls
                 RefreshPlayStatsDisplay();
 
                 UpdateArtworkMenuState();
+
+                // A card with no game on it has nothing to explain, so
+                // the tips wait for one to arrive.
+                ShowCardTips();
             }
         }
 
@@ -248,6 +253,116 @@ namespace Nexus_Launcher.Controls
             dropDownButton7.Text = "Artwork";
 
             AttachArtworkMenu(dropDownButton7);
+        }
+
+        //--------------------------------------------------------------
+        // First time here
+        //--------------------------------------------------------------
+
+        private bool cardTipsQueued;
+
+        /// <summary>
+        /// Walks through a game's card the first time one is opened.
+        ///
+        /// Held back until a game is actually loaded: half of what
+        /// there is to say is about this game's own play time and
+        /// artwork, and an empty card is a poor place to say it.
+        /// </summary>
+        private void ShowCardTips()
+        {
+            if (cardTipsQueued ||
+                _currentGame == null ||
+                !Visible ||
+                TutorialService.HasSeen(TutorialService.GameCard))
+            {
+                return;
+            }
+
+            cardTipsQueued = true;
+
+            // Queued rather than shown: this card shares its space
+            // with the Full Library, the store and the profile, so
+            // being Visible is not the same as being the page on
+            // screen. The service waits until it really is.
+            BeginInvoke(new Action(() =>
+            {
+                if (IsDisposed)
+                    return;
+
+                TutorialService.ShowOnce(
+                    FindForm(),
+                    TutorialService.GameCard,
+                    () => this,
+                    new[]
+                    {
+                        new TutorialStep
+                        {
+                            Title = "Play from here",
+                            Body =
+                                "This starts the game through whichever " +
+                                "launcher owns it. You do not need to " +
+                                "open that launcher yourself, and Nexus " +
+                                "stays out of the way while you play.",
+                            Target = () => dropDownButton1,
+                            Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Right
+                        },
+                        new TutorialStep
+                        {
+                            Title = "Time played",
+                            Body =
+                                "Nexus times your sessions itself by " +
+                                "watching the game, so this works even " +
+                                "for launchers that do not report it. " +
+                                "Total, last session and how many times " +
+                                "you have started it.",
+                            Target = () => labelControl4,
+                            Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Bottom
+                        },
+                        new TutorialStep
+                        {
+                            Title = "Favourites",
+                            Body =
+                                "The star marks a game as a favourite. " +
+                                "Favourites get their own group in the " +
+                                "sidebar and their own filter in the " +
+                                "Full Library.",
+                            Target = () => ratingControl1,
+                            Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Bottom
+                        },
+                        new TutorialStep
+                        {
+                            Title = "Artwork is yours to change",
+                            Body =
+                                "Set your own banner or grid image for " +
+                                "this game, animated GIFs included, or " +
+                                "put back whatever the launcher " +
+                                "supplied. What you pick shows up in " +
+                                "the Full Library too.",
+                            Target = () => dropDownButton7,
+                            Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Bottom
+                        },
+                        new TutorialStep
+                        {
+                            Title = "Its store page, right here",
+                            Body =
+                                "The game's own store page loads below, " +
+                                "so news, DLC and reviews are one click " +
+                                "away. The buttons on it reload the " +
+                                "page or open it full height, with a " +
+                                "zoom slider once it is expanded.",
+                            Target = () => panelControl2,
+                            Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Top
+                        }
+                    });
+            }));
+        }
+
+        protected override void OnVisibleChanged(
+            EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+
+            ShowCardTips();
         }
 
         private void dropDownButton1_Click(object sender, EventArgs e)

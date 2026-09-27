@@ -34,6 +34,144 @@ namespace Nexus_Launcher.Services
         private RigSummaryPanel rigSummary;
         private RigPanel rigPanel;
         private AchievementsPanel achievements;
+
+        private bool profileTipsQueued;
+
+        /// <summary>
+        /// Walks the whole profile page the first time it is opened:
+        /// the account, the statistics, the rig and the achievements.
+        ///
+        /// Each step opens the tab it belongs to, so the tour carries
+        /// the user across all three rather than stopping at whichever
+        /// tab happened to be showing.
+        /// </summary>
+        private void ShowProfileTips()
+        {
+            if (profileTipsQueued ||
+                !built ||
+                !Visible ||
+                TutorialService.HasSeen(TutorialService.Account))
+            {
+                return;
+            }
+
+            profileTipsQueued = true;
+
+            // Queued rather than shown: this page shares its space
+            // with the Full Library, the game card and the store, so
+            // being Visible is not the same as being the page on
+            // screen.
+            BeginInvoke(new Action(() =>
+            {
+                if (IsDisposed)
+                    return;
+
+                TutorialService.ShowOnce(
+                    FindForm(),
+                    TutorialService.Account,
+                    () => xtraTabControl1,
+                    new[]
+                    {
+                        new TutorialStep
+                        {
+                            Title = "Your Nexus account",
+                            Body =
+                                "Link a Nexus account here and your " +
+                                "level, experience and the badges you " +
+                                "have chosen to show off live along " +
+                                "the top. It stays signed in across " +
+                                "the store and the rest of Nexus.",
+                            Target = () => groupControl5,
+                            Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Bottom,
+                            Prepare = () =>
+                                xtraTabControl1.SelectedTabPage =
+                                    xtraTabPage1
+                        },
+                        new TutorialStep
+                        {
+                            Title = "Everything you own, counted",
+                            Body =
+                                "How many games you have, how they " +
+                                "split across launchers, how much is " +
+                                "installed and how long you have spent " +
+                                "playing. The button in this box's " +
+                                "header recounts it all.",
+                            Target = () => groupControl3,
+                            Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Top,
+                            Prepare = () =>
+                                xtraTabControl1.SelectedTabPage =
+                                    xtraTabPage1
+                        },
+                        new TutorialStep
+                        {
+                            Title = "Your machine at a glance",
+                            Body =
+                                "The short version of what you are " +
+                                "running on. Open it for the full " +
+                                "picture.",
+                            Target = () => groupControl4,
+                            Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Left,
+                            Prepare = () =>
+                                xtraTabControl1.SelectedTabPage =
+                                    xtraTabPage1
+                        },
+                        new TutorialStep
+                        {
+                            Title = "My Rig",
+                            Body =
+                                "Processor, graphics, every stick of " +
+                                "memory and every drive, read from the " +
+                                "machine itself. Handy when a game " +
+                                "asks what you are running or a forum " +
+                                "post asks for your specs.",
+                            Target = () => rigPanel,
+                            Prepare = () =>
+                                xtraTabControl1.SelectedTabPage = rigPage
+                        },
+                        new TutorialStep
+                        {
+                            Title = "Badges and achievements",
+                            Body =
+                                "Badges are milestones for your whole " +
+                                "library. Achievements are earned per " +
+                                "launcher, so each one you use has its " +
+                                "own set. Both unlock as you play.",
+                            Target = () => achievements,
+                            Prepare = () =>
+                                xtraTabControl1.SelectedTabPage =
+                                    xtraTabPage2
+                        },
+                        new TutorialStep
+                        {
+                            Title = "Narrow it down",
+                            Body =
+                                "Filter by launcher, or show only what " +
+                                "is unlocked, locked, or part way " +
+                                "there. Launchers with no games are " +
+                                "tucked away until you ask for them.",
+                            Target = () => achievements.FilterBar,
+                            Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Bottom,
+                            Prepare = () =>
+                                xtraTabControl1.SelectedTabPage =
+                                    xtraTabPage2
+                        }
+                    });
+            }));
+        }
+
+        /// <summary>
+        /// Guides were reset in Settings, so this page offers its own
+        /// again without the user having to navigate away and back.
+        /// </summary>
+        private void Tutorials_Reset()
+        {
+            profileTipsQueued = false;
+
+            if (IsDisposed)
+                return;
+
+            ShowProfileTips();
+        }
         private XtraTabPage rigPage;
 
         private bool built;
@@ -182,6 +320,8 @@ namespace Nexus_Launcher.Services
                 PlayTrackingService.Changed += Data_Changed;
                 LibraryOrganizationService.Changed += Data_Changed;
                 UserLookAndFeel.Default.StyleChanged += LookAndFeel_StyleChanged;
+
+                TutorialService.Reset += Tutorials_Reset;
 
                 Disposed += UserAccount_Disposed;
             }
@@ -370,6 +510,8 @@ namespace Nexus_Launcher.Services
 
             if (Visible)
                 RefreshProfile();
+
+            ShowProfileTips();
         }
 
         private void UserAccount_Disposed(
@@ -381,6 +523,7 @@ namespace Nexus_Launcher.Services
             PlayTrackingService.Changed -= Data_Changed;
             LibraryOrganizationService.Changed -= Data_Changed;
             UserLookAndFeel.Default.StyleChanged -= LookAndFeel_StyleChanged;
+            TutorialService.Reset -= Tutorials_Reset;
         }
     }
 }

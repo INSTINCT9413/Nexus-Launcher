@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -57,6 +57,13 @@ namespace Nexus_Launcher.Helpers
                     return false;
                 }
 
+                // A modal dialog owns the whole application while it
+                // is up. The form underneath still hit tests happily,
+                // so without this a guide marker would be drawn over
+                // a window the user cannot even reach.
+                if (IsBlockedByDialog(form))
+                    return false;
+
                 Point centre =
                     control.PointToScreen(
                         new Point(control.Width / 2, control.Height / 2));
@@ -84,6 +91,29 @@ namespace Nexus_Launcher.Helpers
 
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Whether a modal dialog other than this form is up.
+        /// </summary>
+        private static bool IsBlockedByDialog(
+            Form form)
+        {
+            foreach (Form open in Application.OpenForms)
+            {
+                if (open == null ||
+                    open.IsDisposed ||
+                    !open.Visible ||
+                    ReferenceEquals(open, form))
+                {
+                    continue;
+                }
+
+                if (open.Modal)
+                    return true;
+            }
+
+            return false;
         }
 
         /// <summary>

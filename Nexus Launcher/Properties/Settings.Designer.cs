@@ -568,6 +568,18 @@ namespace Nexus_Launcher.Properties {
 
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool StartOnFullLibrary {
+            get {
+                return ((bool)(this["StartOnFullLibrary"]));
+            }
+            set {
+                this["StartOnFullLibrary"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool AssociateThemeFiles {
             get {

@@ -180,6 +180,8 @@ namespace Nexus_Launcher
                 toggleSwitch18.IsOn = Settings.Default.RootDisplayMode;
                 toggleSwitch20.IsOn = Settings.Default.enableFullLibrary;
 
+                BuildStartLibrarySetting();
+
                 BuildAnimationSetting();
 
                 BuildUnlockSoundSetting();
@@ -348,6 +350,216 @@ namespace Nexus_Launcher
             button.DropDownControl = customThemeMenu;
 
             UpdateCustomThemeMenuState();
+
+            themeMenuButton = button;
+        }
+
+        private DropDownButton themeMenuButton;
+
+        private bool settingsTipsQueued;
+
+        /// <summary>
+        /// Opens one of the settings tabs, for a step that lives on
+        /// it. Tabs lay out as soon as they are selected, so the step
+        /// that follows can be placed straight away.
+        /// </summary>
+        private void OpenTab(
+            DevExpress.XtraBars.Navigation.TabNavigationPage page)
+        {
+            if (page != null && tabPane1 != null)
+                tabPane1.SelectedPage = page;
+        }
+
+        /// <summary>
+        /// Walks the whole settings window the first time it is
+        /// opened, tab by tab.
+        /// </summary>
+        private void ShowSettingsTips()
+        {
+            if (settingsTipsQueued ||
+                TutorialService.HasSeen(TutorialService.SettingsTour))
+            {
+                return;
+            }
+
+            settingsTipsQueued = true;
+
+            TutorialService.ShowOnce(
+                this,
+                TutorialService.SettingsTour,
+                () => tabPane1,
+                new[]
+                {
+                    new TutorialStep
+                    {
+                        Title = "Four tabs",
+                        Body =
+                            "General for how Nexus looks and behaves, " +
+                            "Supported Clients for the launchers it " +
+                            "watches, Advanced for the housekeeping, " +
+                            "and About for updates and version " +
+                            "information.",
+                        Target = () => tabNavigationPage1,
+                        Prepare = () => OpenTab(tabNavigationPage1)
+                    },
+                    new TutorialStep
+                    {
+                        Title = "Starting and closing",
+                        Body =
+                            "Whether Nexus starts with Windows, " +
+                            "minimised or maximised, whether closing " +
+                            "the window really closes it or drops it " +
+                            "into the tray, and which launchers it " +
+                            "should start alongside itself.",
+                        Target = () => groupControl1,
+                        Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Right,
+                        Prepare = () => OpenTab(tabNavigationPage1)
+                    },
+                    new TutorialStep
+                    {
+                        Title = "How it looks",
+                        Body =
+                            "Window size at startup, the font " +
+                            "everything is drawn in, how the sidebar " +
+                            "presents itself and whether the info " +
+                            "panel starts collapsed.",
+                        Target = () => groupControl5,
+                        Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Left,
+                        Prepare = () => OpenTab(tabNavigationPage1)
+                    },
+                    new TutorialStep
+                    {
+                        Title = "Themes",
+                        Body =
+                            "Pick a skin and a colour palette, or turn " +
+                            "on custom theming and build your own from " +
+                            "either of them.",
+                        Target = () => groupControl2,
+                        Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Left,
+                        Prepare = () => OpenTab(tabNavigationPage1)
+                    },
+                    new TutorialStep
+                    {
+                        Title = "Themes are files",
+                        Body =
+                            "Export a theme you built to share it, and " +
+                            "import one somebody sent you. Nexus takes " +
+                            "over theme files, so double clicking one " +
+                            "in Explorer brings it straight in.",
+                        Target = () => themeMenuButton,
+                        Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Bottom,
+                        Prepare = () => OpenTab(tabNavigationPage1)
+                    },
+                    new TutorialStep
+                    {
+                        Title = "The Full Library",
+                        Body =
+                            "The poster wall that puts every game from " +
+                            "every launcher on one page. Turn it off " +
+                            "here if you would rather work from the " +
+                            "sidebar alone.",
+                        Target = () => groupControl9,
+                        Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Right,
+                        Prepare = () => OpenTab(tabNavigationPage1)
+                    },
+                    new TutorialStep
+                    {
+                        Title = "Which launchers Nexus watches",
+                        Body =
+                            "A light beside each one shows whether it " +
+                            "was found on this machine. Switch off any " +
+                            "you do not want in the sidebar, and the " +
+                            "ones still being worked on are listed " +
+                            "underneath.",
+                        Target = () => groupControl3,
+                        Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Right,
+                        Prepare = () => OpenTab(tabNavigationPage3)
+                    },
+                    new TutorialStep
+                    {
+                        Title = "Per launcher settings",
+                        Body =
+                            "Each client has its own page in Nexus for " +
+                            "its own options, plus the reset and the " +
+                            "add and remove tools that go with it.",
+                        Target = () => simpleButton6,
+                        Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Bottom,
+                        Prepare = () => OpenTab(tabNavigationPage3)
+                    },
+                    new TutorialStep
+                    {
+                        Title = "When artwork looks wrong",
+                        Body =
+                            "Clearing the artwork cache makes Nexus " +
+                            "fetch every poster and banner again. The " +
+                            "first thing to try when a game is showing " +
+                            "the wrong picture or none at all.",
+                        Target = () => groupControl8,
+                        Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Right,
+                        Prepare = () => OpenTab(tabNavigationPage2)
+                    },
+                    new TutorialStep
+                    {
+                        Title = "Tips like this one",
+                        Body =
+                            "Every guide Nexus has, and a button to " +
+                            "make them all appear again. Worth knowing " +
+                            "about if you click through one of these " +
+                            "faster than you meant to.",
+                        Target = () => guidesGroup,
+                        Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Right,
+                        Prepare = () => OpenTab(tabNavigationPage2)
+                    },
+                    new TutorialStep
+                    {
+                        Title = "Starting over",
+                        Body =
+                            "The setup wizard can be run again at any " +
+                            "time, and the config file, the log and " +
+                            "the folder Nexus keeps them in all open " +
+                            "from here. Uninstall is at the bottom.",
+                        Target = () => groupControlSetup,
+                        Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Right,
+                        Prepare = () => OpenTab(tabNavigationPage2)
+                    },
+                    new TutorialStep
+                    {
+                        Title = "Updates",
+                        Body =
+                            "Check for a newer Nexus, see which build " +
+                            "you are on, and read the licence terms. " +
+                            "Program updates and installer updates are " +
+                            "checked separately.",
+                        Target = () => simpleButton3,
+                        Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Bottom,
+                        Prepare = () => OpenTab(tabNavigationPage4)
+                    },
+                    new TutorialStep
+                    {
+                        Title = "Nothing is saved until you say so",
+                        Body =
+                            "Changes here are held until you save " +
+                            "them, so closing the window instead " +
+                            "leaves everything as it was.",
+                        Target = () => simpleButton1,
+                        Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Top,
+                        Prepare = () => OpenTab(tabNavigationPage1)
+                    }
+                });
+        }
+
+        /// <summary>
+        /// Guides were reset from the Advanced tab, so this window can
+        /// offer its own again without being closed and reopened.
+        /// </summary>
+        private void Tutorials_Reset()
+        {
+            settingsTipsQueued = false;
+
+            if (IsDisposed)
+                return;
+
+            BeginInvoke(new Action(ShowSettingsTips));
         }
 
         /// <summary>
@@ -884,6 +1096,12 @@ namespace Nexus_Launcher
         {
 
             tabPane1.SelectedPageIndex = TabSelected;
+
+            TutorialService.Reset += Tutorials_Reset;
+
+            FormClosed += (s, a) => TutorialService.Reset -= Tutorials_Reset;
+
+            ShowSettingsTips();
         }
         public async void GetdllInfo()
         {
@@ -1796,13 +2014,98 @@ namespace Nexus_Launcher
         /// position, so the two stay together if the group is ever
         /// rearranged in the designer.
         /// </summary>
+        private ToggleSwitch startLibraryToggle;
+
+        /// <summary>
+        /// Whether Nexus opens on the Full Library rather than on the
+        /// default launcher's page.
+        ///
+        /// Sits directly under Enable Full Library, and follows it:
+        /// there is nothing to open on if the Full Library is off.
+        /// </summary>
+        private void BuildStartLibrarySetting()
+        {
+            if (startLibraryToggle != null)
+                return;
+
+            const int gap = 34;
+
+            LabelControl caption =
+                new LabelControl();
+
+            caption.BorderStyle =
+                DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+
+            caption.Text = "Show Full Library on startup";
+
+            caption.ToolTip =
+                "Nexus opens on the Full Library instead of the " +
+                "default launcher's page. The launcher is still set " +
+                "up behind it, so closing the library leaves you " +
+                "where you would have been.";
+
+            caption.SetBounds(
+                labelControl26.Left,
+                labelControl26.Top + gap,
+                labelControl26.Width + 40,
+                labelControl26.Height);
+
+            groupControl9.Controls.Add(caption);
+
+            startLibraryToggle = new ToggleSwitch();
+
+            startLibraryToggle.Properties.AllowFocused = false;
+
+            startLibraryToggle.Properties.OffText = "Disabled";
+
+            startLibraryToggle.Properties.OnText = "Enabled";
+
+            startLibraryToggle.SetBounds(
+                toggleSwitch20.Left,
+                toggleSwitch20.Top + gap,
+                toggleSwitch20.Width,
+                toggleSwitch20.Height);
+
+            startLibraryToggle.IsOn =
+                Settings.Default.StartOnFullLibrary;
+
+            startLibraryToggle.Toggled += StartLibraryToggle_Toggled;
+
+            groupControl9.Controls.Add(startLibraryToggle);
+
+            UpdateStartLibraryState();
+        }
+
+        private void StartLibraryToggle_Toggled(
+            object sender,
+            EventArgs e)
+        {
+            Settings.Default.StartOnFullLibrary =
+                startLibraryToggle.IsOn;
+
+            Settings.Default.Save();
+        }
+
+        /// <summary>
+        /// Greys the startup option out while the Full Library is off,
+        /// rather than leaving a switch that quietly does nothing.
+        /// </summary>
+        private void UpdateStartLibraryState()
+        {
+            if (startLibraryToggle == null)
+                return;
+
+            startLibraryToggle.Enabled = toggleSwitch20.IsOn;
+        }
+
         private void BuildAnimationSetting()
         {
             if (animateHeroToggle != null)
                 return;
 
-            int gap =
-                (toggleSwitch20.Top - labelControl26.Top) == 0 ? 34 : 34;
+            // Below the startup option, which sits below Enable Full
+            // Library.
+            const int gap = 68;
 
             LabelControl caption =
                 new LabelControl();
@@ -2137,6 +2440,8 @@ namespace Nexus_Launcher
 
         private void toggleSwitch20_Toggled(object sender, EventArgs e)
         {
+            UpdateStartLibraryState();
+
             if (toggleSwitch20.IsOn)
             {
                 Properties.Settings.Default.enableFullLibrary = true;

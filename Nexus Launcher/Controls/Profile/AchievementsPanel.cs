@@ -26,6 +26,17 @@ namespace Nexus_Launcher.Controls.Profile
 
         private readonly AchievementFilterBar filterBar;
 
+        /// <summary>
+        /// The filter row, so a guide can point at it.
+        /// </summary>
+        public Control FilterBar
+        {
+            get
+            {
+                return filterBar;
+            }
+        }
+
         private readonly SectionTitle badgeTitle;
         private readonly SectionTitle achievementTitle;
 

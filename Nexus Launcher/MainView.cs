@@ -1141,6 +1141,10 @@ namespace Nexus_Launcher
         }
         private async void MainView_Load_1(object sender, EventArgs e)
         {
+            TutorialService.Reset += Tutorials_Reset;
+
+            Disposed += (s, a) => TutorialService.Reset -= Tutorials_Reset;
+
             _nexusLinksService = new NexusLinksService();
             await LoadNexusLinksAsync();
             FontManager.ApplyFont(
@@ -1430,6 +1434,16 @@ namespace Nexus_Launcher
             else
             {
                 barButtonItem13.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
+            }
+
+            // Last, so it lands on top of whatever the default
+            // launcher just brought forward. That launcher is still
+            // set up underneath, so closing the library leaves the
+            // user where they would otherwise have started.
+            if (Settings.Default.enableFullLibrary &&
+                Settings.Default.StartOnFullLibrary)
+            {
+                OpenFullLibrary();
             }
                 await LauncherStartupService.StartConfiguredLaunchersAsync();
             BuildGameContextMenu();
@@ -3633,12 +3647,149 @@ namespace Nexus_Launcher
             }
         }
 
+        //--------------------------------------------------------------
+        // First time here
+        //--------------------------------------------------------------
+
+        private bool sidebarTipsQueued;
+
+        /// <summary>
+        /// The first launcher group in the sidebar, for a tip about
+        /// the buttons that appear on one when it is hovered.
+        ///
+        /// Which launchers exist depends on what is installed, so this
+        /// asks the list rather than naming one.
+        /// </summary>
+        private AccordionControlElement FirstLauncherGroup()
+        {
+            foreach (AccordionControlElement element in
+                accordionControl2.Elements)
+            {
+                if (element != null &&
+                    element.Visible &&
+                    !ReferenceEquals(element, groupNexus))
+                {
+                    return element;
+                }
+            }
+
+            return groupNexus;
+        }
+
+        /// <summary>
+        /// Walks through the sidebar the first time Nexus is opened.
+        /// </summary>
+        private void ShowSidebarTips()
+        {
+            if (sidebarTipsQueued ||
+                TutorialService.HasSeen(TutorialService.Sidebar))
+            {
+                return;
+            }
+
+            sidebarTipsQueued = true;
+
+            TutorialService.ShowOnce(
+                this,
+                TutorialService.Sidebar,
+                () => accordionControl2,
+                new[]
+                {
+                    new TutorialStep
+                    {
+                        Title = "Every launcher, one list",
+                        Body =
+                            "Each launcher Nexus found gets a group " +
+                            "here. Open one to see its games, and " +
+                            "click a game to bring up its card. The " +
+                            "box at the top searches the whole list " +
+                            "at once.",
+                        Target = () => splitContainerControl1.Panel1,
+                        Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Right
+                    },
+                    new TutorialStep
+                    {
+                        Title = "Nexus's own group",
+                        Body =
+                            "Games and programs you added yourself " +
+                            "live in here, whether or not they came " +
+                            "from a launcher. Add and remove them " +
+                            "from this group's Add / Remove tab.",
+                        Target = () => groupNexus,
+                        Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Right
+                    },
+                    new TutorialStep
+                    {
+                        Title = "Buttons on hover",
+                        Body =
+                            "Hover a launcher group and buttons appear " +
+                            "on the right of it: start that client, " +
+                            "open the folder it is installed in, or " +
+                            "rescan it for games you have installed " +
+                            "since.",
+                        Target = () => FirstLauncherGroup(),
+                        Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Right
+                    },
+                    new TutorialStep
+                    {
+                        Title = "Groups of your own",
+                        Body =
+                            "Right click a game to favourite it or " +
+                            "move it into a group you made; right " +
+                            "click one of your groups to rename, " +
+                            "reorder or delete it. Entries can also " +
+                            "be dragged into the order you want.",
+                        Target = () => splitContainerControl1.Panel1,
+                        Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Right
+                    },
+                    new TutorialStep
+                    {
+                        Title = "The panel on the right",
+                        Body =
+                            "Whatever is selected over here is " +
+                            "described over there: play time and " +
+                            "install details for a game, a summary " +
+                            "and last scan time for a launcher, plus " +
+                            "what you played recently and how the " +
+                            "machine is doing.",
+                        Target = () => sidePanel1,
+                        Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Left
+                    }
+                });
+        }
+
+        /// <summary>
+        /// Guides were reset in Settings, so the sidebar offers its
+        /// own again without a restart.
+        /// </summary>
+        private void Tutorials_Reset()
+        {
+            sidebarTipsQueued = false;
+
+            if (IsDisposed)
+                return;
+
+            ShowSidebarTips();
+        }
+
         private async void MainView_Shown(object sender, EventArgs e)
         {
+            ShowSidebarTips();
            
         }
 
         private void barButtonItem13_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            OpenFullLibrary();
+        }
+
+        /// <summary>
+        /// Brings the Full Library to the front.
+        ///
+        /// Shared by the toolbar button and by startup, so opening it
+        /// on launch cannot drift from opening it by hand.
+        /// </summary>
+        public void OpenFullLibrary()
         {
             accordionControl2.SuspendLayout();
             try

@@ -30,6 +30,14 @@ namespace Nexus_Launcher.Services
 
         public GuideFlyoutLocation Location { get; set; }
 
+        /// <summary>
+        /// Run just before this step goes on screen, for a step whose
+        /// target is on a tab that is not the open one. Opening that
+        /// tab is the step's own business: nothing else knows which
+        /// page a given step belongs to.
+        /// </summary>
+        public Action Prepare { get; set; }
+
         public TutorialStep()
         {
             Location = GuideFlyoutLocation.Default;
@@ -45,9 +53,11 @@ namespace Nexus_Launcher.Services
     /// re-introducing everything that came before it. The whole set
     /// can be replayed from Settings.
     ///
-    /// Deliberately not modal. A walkthrough that blocks the window is
-    /// something to get past; a marker that sits there is something to
-    /// read when there is a moment for it.
+    /// One marker at a time. Guide mode takes every click in the
+    /// window while it is up, so a page covered in dots the user has
+    /// to hunt for is no good; each step is opened for them, and
+    /// finishing one moves straight on to the next, opening whatever
+    /// tab that next step lives on.
     /// </summary>
     internal static class TutorialService
     {
@@ -57,11 +67,17 @@ namespace Nexus_Launcher.Services
         /// </summary>
         public const string FullLibrary = "full-library";
 
+        public const string Sidebar = "sidebar";
+
+        public const string GameCard = "game-card";
+
         public const string ClientReset = "client-reset";
 
-        public const string Achievements = "achievements";
+        public const string AddRemove = "add-remove";
 
-        public const string ThemeSharing = "theme-sharing";
+        public const string SettingsTour = "settings";
+
+        public const string Account = "account";
 
         private static readonly Dictionary<Guide, TutorialStep> steps =
             new Dictionary<Guide, TutorialStep>();
@@ -82,8 +98,9 @@ namespace Nexus_Launcher.Services
             new Dictionary<Guide, int>();
 
         /// <summary>
-        /// Guides belonging to a running tutorial, so it can be marked
-        /// seen once the last one has been read.
+        /// The marker of each running tutorial. A list of one, kept as
+        /// a list because taking a tutorial down should not care how
+        /// many markers it happens to have.
         /// </summary>
         private static readonly Dictionary<string, List<Guide>> running =
             new Dictionary<string, List<Guide>>(
@@ -135,6 +152,16 @@ namespace Nexus_Launcher.Services
             public ContainerControl Owner;
 
             public TutorialStep[] Steps;
+
+            /// <summary>
+            /// The page the whole tour belongs to, if it has one.
+            ///
+            /// A tour that walks across several tabs cannot judge
+            /// whether it is still in front by looking at the step it
+            /// is on, because the next step is on a tab that is not
+            /// open yet. The page as a whole is the honest question.
+            /// </summary>
+            public Func<object> Anchor;
         }
 
         //--------------------------------------------------------------
@@ -189,7 +216,14 @@ namespace Nexus_Launcher.Services
         {
             get
             {
-                return Seen().Count;
+                HashSet<string> seen =
+                    Seen();
+
+                // Only the ones Nexus still has. A name left over in
+                // settings from a tutorial that has since been folded
+                // into another would otherwise be counted, and the
+                // button would claim more have been read than exist.
+                return AllKeys.Count(seen.Contains);
             }
         }
 
@@ -202,10 +236,13 @@ namespace Nexus_Launcher.Services
             {
                 return new[]
                 {
+                    Sidebar,
                     FullLibrary,
+                    GameCard,
+                    AddRemove,
                     ClientReset,
-                    Achievements,
-                    ThemeSharing
+                    Account,
+                    SettingsTour
                 };
             }
         }
@@ -281,12 +318,30 @@ namespace Nexus_Launcher.Services
             if (HasSeen(key))
                 return false;
 
-            return Show(owner, key, plan);
+            return Show(owner, key, null, plan);
         }
 
         /// <summary>
-        /// Shows a tutorial whether or not it has been seen.
+        /// Shows a tutorial that walks across a page, if it has not
+        /// been shown before.
+        ///
+        /// <paramref name="page"/> is the page the whole tour belongs
+        /// to, which is what decides whether it is in front. Needed by
+        /// any tour whose later steps live on tabs that are not open
+        /// when it starts.
         /// </summary>
+        public static bool ShowOnce(
+            ContainerControl owner,
+            string key,
+            Func<object> page,
+            TutorialStep[] plan)
+        {
+            if (HasSeen(key))
+                return false;
+
+            return Show(owner, key, page, plan);
+        }
+
         /// <summary>
         /// Queues a tutorial. It appears as soon as the page it points
         /// at is actually in front of the user, and steps aside again
@@ -297,13 +352,27 @@ namespace Nexus_Launcher.Services
             string key,
             params TutorialStep[] plan)
         {
+            return Show(owner, key, null, plan);
+        }
+
+        /// <summary>
+        /// Queues a tutorial, judged in front by its page rather than
+        /// by the step it happens to be on.
+        /// </summary>
+        public static bool Show(
+            ContainerControl owner,
+            string key,
+            Func<object> page,
+            TutorialStep[] plan)
+        {
             if (plan == null || plan.Length == 0 || owner == null)
                 return false;
 
             waiting[key] = new Waiting
             {
                 Owner = owner,
-                Steps = plan
+                Steps = plan,
+                Anchor = page
             };
 
             StartWatching();
@@ -379,35 +448,8 @@ namespace Nexus_Launcher.Services
                 return false;
             }
 
-            // Ready when anything still unread is actually on show.
-            // Anchoring on the first step alone was wrong twice over:
-            // once that step has been read it is no longer a good
-            // proxy for the page, and a step further down may be the
-            // only one visible.
-            HashSet<int> alreadyRead;
-
-            if (!read.TryGetValue(key, out alreadyRead))
-                alreadyRead = new HashSet<int>();
-
-            bool ready = false;
-
-            for (int i = 0; i < pending.Steps.Length; i++)
-            {
-                if (alreadyRead.Contains(i))
-                    continue;
-
-                TutorialStep step = pending.Steps[i];
-
-                object target =
-                    step.Target == null ? null : step.Target();
-
-                if (ControlVisibility.IsReallyShowing(target))
-                {
-                    ready = true;
-
-                    break;
-                }
-            }
+            bool ready =
+                IsPageShowing(key, pending);
 
             bool onScreen =
                 running.ContainsKey(key);
@@ -436,6 +478,45 @@ namespace Nexus_Launcher.Services
         }
 
         /// <summary>
+        /// Whether this tutorial's page is the one in front.
+        /// </summary>
+        private static bool IsPageShowing(
+            string key,
+            Waiting pending)
+        {
+            // A tour that names its page is judged on that, because
+            // its later steps are on tabs that are not open yet.
+            if (pending.Anchor != null)
+                return ControlVisibility.IsReallyShowing(pending.Anchor());
+
+            // Otherwise: ready when anything still unread is actually
+            // on show. Anchoring on the first step alone was wrong
+            // twice over: once that step has been read it is no longer
+            // a good proxy for the page, and a step further down may
+            // be the only one visible.
+            HashSet<int> alreadyRead;
+
+            if (!read.TryGetValue(key, out alreadyRead))
+                alreadyRead = new HashSet<int>();
+
+            for (int i = 0; i < pending.Steps.Length; i++)
+            {
+                if (alreadyRead.Contains(i))
+                    continue;
+
+                TutorialStep step = pending.Steps[i];
+
+                object target =
+                    step.Target == null ? null : step.Target();
+
+                if (ControlVisibility.IsReallyShowing(target))
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// The marker whose flyout is open, if any.
         ///
         /// Tracked here rather than read off the manager: its
@@ -446,12 +527,505 @@ namespace Nexus_Launcher.Services
         /// </summary>
         private static Guide reading;
 
+        /// <summary>
+        /// The manager the last marker belonged to, so guide mode can
+        /// be left after it has gone.
+        /// </summary>
+        private static AdornerUIManager lastManager;
+
+        /// <summary>
+        /// The flyout panel last handed to the adorner layer, so its
+        /// position on screen can be checked once it is up.
+        /// </summary>
+        private static Control lastFlyout;
+
+        /// <summary>
+        /// How each guide's flyout placement is being corrected, and
+        /// the best placement found for it so far.
+        /// </summary>
+        private class Placing
+        {
+            public int Attempt;
+
+            public int BestOverflow = int.MaxValue;
+
+            public GuideFlyoutLocation BestLocation;
+
+            public Point BestOffset;
+        }
+
+        private static readonly Dictionary<Guide, Placing> fitting =
+            new Dictionary<Guide, Placing>();
+
+        /// <summary>
+        /// True while a flyout is being closed and reopened to move
+        /// it, which must not read as the user having closed it.
+        /// </summary>
+        private static bool placing;
+
+        /// <summary>
+        /// How close to the edge of the screen a flyout may sit.
+        /// </summary>
+        private const int ScreenMargin = 8;
+
+        /// <summary>
+        /// Placements to fall back on, in the order they are tried.
+        /// </summary>
+        private static readonly GuideFlyoutLocation[] FitOrder =
+            new[]
+            {
+                GuideFlyoutLocation.Right,
+                GuideFlyoutLocation.Left,
+                GuideFlyoutLocation.Top,
+                GuideFlyoutLocation.Bottom
+            };
+
+        /// <summary>
+        /// Two goes at each placement: one nudging where it is, one
+        /// moving on to the next placement.
+        /// </summary>
+        private static readonly int FitAttempts =
+            FitOrder.Length * 2 + 1;
+
         private static bool IsReading(
             ContainerControl owner)
         {
-            return reading != null;
+            return reading != null || placing;
         }
 
+        /// <summary>
+        /// Brings a flyout back onto the screen when it hangs off it.
+        ///
+        /// A flyout is placed beside the thing it points at, and
+        /// nothing about that placement knows how big the flyout
+        /// turned out to be. Point at something near an edge -- the
+        /// sidebar shows its launcher groups as a strip along the
+        /// bottom, which a maximised window pushes right down to the
+        /// edge of the screen -- and the buttons end up past the edge
+        /// with no way to reach them.
+        ///
+        /// Nudging it with an offset is tried first, since that keeps
+        /// the flyout beside what it points at. The control ignores
+        /// the offset for some placements, so a placement that fits
+        /// is looked for as well, and whatever came closest is used
+        /// if none of them fit.
+        /// </summary>
+        private static void FitOnScreen(
+            AdornerUIManager manager,
+            Guide guide)
+        {
+            if (manager == null || guide == null || guide.IsDisposing)
+                return;
+
+            Control panel = lastFlyout;
+
+            if (panel == null ||
+                panel.IsDisposed ||
+                !panel.IsHandleCreated)
+            {
+                return;
+            }
+
+            int dx;
+
+            int dy;
+
+            int overflow;
+
+            try
+            {
+                Rectangle now =
+                    panel.RectangleToScreen(panel.ClientRectangle);
+
+                Rectangle area =
+                    Screen.FromRectangle(now).WorkingArea;
+
+                area.Inflate(-ScreenMargin, -ScreenMargin);
+
+                dx = 0;
+
+                dy = 0;
+
+                if (now.Right > area.Right)
+                    dx = area.Right - now.Right;
+
+                if (now.Left + dx < area.Left)
+                    dx = area.Left - now.Left;
+
+                if (now.Bottom > area.Bottom)
+                    dy = area.Bottom - now.Bottom;
+
+                if (now.Top + dy < area.Top)
+                    dy = area.Top - now.Top;
+
+                overflow = Math.Abs(dx) + Math.Abs(dy);
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+
+                return;
+            }
+
+            Placing state;
+
+            if (!fitting.TryGetValue(guide, out state))
+            {
+                state = new Placing();
+
+                fitting[guide] = state;
+            }
+
+            if (overflow < state.BestOverflow)
+            {
+                state.BestOverflow = overflow;
+
+                state.BestLocation =
+                    guide.Properties.FlyoutLocation
+                        ?? GuideFlyoutLocation.Default;
+
+                state.BestOffset =
+                    guide.Properties.FlyoutOffset ?? Point.Empty;
+            }
+
+            // Where it is now is fine.
+            if (overflow == 0)
+            {
+                fitting.Remove(guide);
+
+                return;
+            }
+
+            if (state.Attempt >= FitAttempts)
+            {
+                // Nothing fits, so settle on whichever was closest.
+                fitting.Remove(guide);
+
+                if (state.BestOverflow < overflow)
+                {
+                    Apply(
+                        manager,
+                        guide,
+                        state.BestLocation,
+                        state.BestOffset,
+                        false);
+                }
+
+                return;
+            }
+
+            int attempt = state.Attempt++;
+
+            GuideFlyoutLocation where;
+
+            Point offset;
+
+            if (attempt % 2 == 0)
+            {
+                // Keep it beside what it points at, just shifted.
+                where =
+                    guide.Properties.FlyoutLocation
+                        ?? GuideFlyoutLocation.Default;
+
+                Point was =
+                    guide.Properties.FlyoutOffset ?? Point.Empty;
+
+                offset = new Point(was.X + dx, was.Y + dy);
+            }
+            else
+            {
+                where = FitOrder[(attempt / 2) % FitOrder.Length];
+
+                offset = Point.Empty;
+            }
+
+            Apply(manager, guide, where, offset, true);
+        }
+
+        /// <summary>
+        /// Moves a flyout and, when asked, looks again at where it
+        /// ended up.
+        /// </summary>
+        private static void Apply(
+            AdornerUIManager manager,
+            Guide guide,
+            GuideFlyoutLocation where,
+            Point offset,
+            bool thenCheck)
+        {
+            ContainerControl owner = manager.Owner;
+
+            try
+            {
+                placing = true;
+
+                guide.Properties.FlyoutLocation = where;
+
+                guide.Properties.FlyoutOffset = offset;
+
+                // Closed and reopened, because the placement is read
+                // when the flyout goes up rather than continuously.
+                manager.SelectElement(null);
+
+                manager.SelectElement(guide);
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+            }
+            finally
+            {
+                placing = false;
+            }
+
+            if (!thenCheck ||
+                owner == null ||
+                owner.IsDisposed ||
+                !owner.IsHandleCreated)
+            {
+                return;
+            }
+
+            try
+            {
+                owner.BeginInvoke(new Action(() =>
+                    FitOnScreen(manager, guide)));
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+            }
+        }
+
+        //--------------------------------------------------------------
+        // Guide mode
+        //--------------------------------------------------------------
+
+        /// <summary>
+        /// The window a tour is running on, and the tutorial it is for,
+        /// so Escape knows what to close.
+        /// </summary>
+        private static ContainerControl touring;
+
+        private static string touringKey;
+
+        private static bool restoreKeyPreview;
+
+        private static void EnterGuideMode(
+            AdornerUIManager manager,
+            ContainerControl owner,
+            string key)
+        {
+            manager.ShowGuides =
+                DevExpress.Utils.DefaultBoolean.True;
+
+            manager.AllowTabNavigation = true;
+
+            manager.AllowArrowKeysNavigation = true;
+
+            if (ReferenceEquals(touring, owner) && touringKey == key)
+                return;
+
+            touring = owner;
+
+            touringKey = key;
+
+            Form form =
+                owner as Form ?? owner.FindForm();
+
+            if (form == null)
+                return;
+
+            // Escape has to work. A guide mode with no way out is the
+            // whole complaint.
+            restoreKeyPreview = form.KeyPreview;
+
+            form.KeyPreview = true;
+
+            form.KeyDown -= Form_KeyDown;
+
+            form.KeyDown += Form_KeyDown;
+        }
+
+        /// <summary>
+        /// Gives the window back.
+        /// </summary>
+        private static void ExitGuideMode(
+            AdornerUIManager manager)
+        {
+            try
+            {
+                if (manager != null)
+                {
+                    manager.ShowGuides =
+                        DevExpress.Utils.DefaultBoolean.False;
+                }
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+            }
+
+            reading = null;
+
+            ContainerControl owner = touring;
+
+            touring = null;
+
+            touringKey = null;
+
+            if (owner == null || owner.IsDisposed)
+                return;
+
+            Form form =
+                owner as Form ?? owner.FindForm();
+
+            if (form == null || form.IsDisposed)
+                return;
+
+            form.KeyDown -= Form_KeyDown;
+
+            form.KeyPreview = restoreKeyPreview;
+        }
+
+        /// <summary>
+        /// Leaves guide mode if this window has no markers left on it.
+        /// </summary>
+        private static void ExitIfNothingLeft(
+            AdornerUIManager manager)
+        {
+            if (manager == null)
+                return;
+
+            foreach (AdornerElement element in manager.Elements)
+            {
+                if (element is Guide)
+                    return;
+            }
+
+            ExitGuideMode(manager);
+        }
+
+        private static void Form_KeyDown(
+            object sender,
+            KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.Escape || touringKey == null)
+                return;
+
+            e.Handled = true;
+
+            // Left for now, not dismissed: it comes back next time the
+            // page is opened.
+            string key = touringKey;
+
+            Hide(key);
+        }
+
+        private static void Select(
+            AdornerUIManager manager,
+            Guide guide,
+            string key)
+        {
+            if (manager == null || guide == null)
+                return;
+
+            ContainerControl owner = manager.Owner;
+
+            if (owner == null || owner.IsDisposed || !owner.IsHandleCreated)
+                return;
+
+            // After the current message, so the markers have been laid
+            // out before one of them is opened.
+            try
+            {
+                owner.BeginInvoke(new Action(() =>
+                {
+                    try
+                    {
+                        if (!guide.IsDisposing)
+                            manager.SelectElement(guide);
+                    }
+                    catch (Exception ex)
+                    {
+                        Program.LogCrash(ex);
+                    }
+
+                    // Checked on the next pass rather than here, so a
+                    // selection the control makes in its own time is
+                    // not mistaken for a refusal.
+                    try
+                    {
+                        owner.BeginInvoke(new Action(() =>
+                            VerifyOpened(manager, guide, key)));
+                    }
+                    catch (Exception ex)
+                    {
+                        Program.LogCrash(ex);
+                    }
+                }));
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+            }
+        }
+
+        /// <summary>
+        /// A marker that will not open is worse than no marker at all.
+        ///
+        /// Some containers hand their own sub elements to the adorner
+        /// layer and refuse to be selected as a whole; an accordion
+        /// and the settings tab pane both do. The marker appears, the
+        /// flyout never does, and because guide mode has the window
+        /// there is nothing the user can click. Step over it instead.
+        /// </summary>
+        private static void VerifyOpened(
+            AdornerUIManager manager,
+            Guide guide,
+            string key)
+        {
+            if (manager == null ||
+                guide == null ||
+                guide.IsDisposing ||
+                key == null)
+            {
+                return;
+            }
+
+            if (manager.SelectedElement != null)
+            {
+                FitOnScreen(manager, guide);
+
+                return;
+            }
+
+            List<Guide> current;
+
+            // Already moved on under its own steam.
+            if (!running.TryGetValue(key, out current) ||
+                !current.Contains(guide))
+            {
+                return;
+            }
+
+            int index;
+
+            order.TryGetValue(guide, out index);
+
+            Program.LogCrash(new InvalidOperationException(
+                "Tutorial '" + key + "' step " + (index + 1) +
+                " could not be opened: its target will not take a " +
+                "guide flyout. Skipping to the next step."));
+
+            Dismiss(guide);
+        }
+
+        /// <summary>
+        /// Puts the next unread step of a tutorial on screen, opening
+        /// whatever tab it lives on first. False when none of what is
+        /// left can be shown.
+        /// </summary>
         private static bool Present(
             string key,
             Waiting pending)
@@ -470,10 +1044,24 @@ namespace Nexus_Launcher.Services
 
                 Hook(manager);
 
-                Hide(key);
+                // One tour at a time. Guide mode takes the whole
+                // window, so two tutorials whose pages are both up --
+                // the sidebar and the Full Library, when Nexus is set
+                // to open on the library -- would put two markers on
+                // one window and fight over it. The other one stays
+                // queued and gets its turn.
+                foreach (string other in running.Keys)
+                {
+                    if (!string.Equals(
+                            other,
+                            key,
+                            StringComparison.OrdinalIgnoreCase))
+                    {
+                        return false;
+                    }
+                }
 
-                List<Guide> made =
-                    new List<Guide>();
+                Hide(key);
 
                 HashSet<int> alreadyRead;
 
@@ -482,10 +1070,25 @@ namespace Nexus_Launcher.Services
 
                 for (int index = 0; index < plan.Length; index++)
                 {
-                    TutorialStep step = plan[index];
-
                     if (alreadyRead.Contains(index))
                         continue;
+
+                    TutorialStep step = plan[index];
+
+                    // Open the tab this step is on. Selecting a tab
+                    // page lays out synchronously, so the hit test
+                    // below sees where things have just landed.
+                    if (step.Prepare != null)
+                    {
+                        try
+                        {
+                            step.Prepare();
+                        }
+                        catch (Exception ex)
+                        {
+                            Program.LogCrash(ex);
+                        }
+                    }
 
                     object target =
                         step.Target == null ? null : step.Target();
@@ -512,18 +1115,21 @@ namespace Nexus_Launcher.Services
 
                     order[guide] = index;
 
-                    made.Add(guide);
+                    running[key] =
+                        new List<Guide> { guide };
+
+                    EnterGuideMode(manager, owner, key);
+
+                    // Opened straight away rather than waiting to be
+                    // clicked. The window is taking no other input, so
+                    // leaving the user to find a small pulsing dot with
+                    // a dead window is not a fair thing to do.
+                    Select(manager, guide, key);
+
+                    return true;
                 }
 
-                if (made.Count == 0)
-                    return false;
-
-                running[key] = made;
-
-                manager.ShowGuides =
-                    DevExpress.Utils.DefaultBoolean.True;
-
-                return true;
+                return false;
             }
             catch (Exception ex)
             {
@@ -547,10 +1153,19 @@ namespace Nexus_Launcher.Services
 
             running.Remove(key);
 
+            AdornerUIManager manager = null;
+
             foreach (Guide guide in guides)
             {
+                AdornerUIManager owning;
+
+                if (owners.TryGetValue(guide, out owning))
+                    manager = owning;
+
                 Remove(guide);
             }
+
+            ExitIfNothingLeft(manager);
         }
 
         private static void Remove(
@@ -566,10 +1181,15 @@ namespace Nexus_Launcher.Services
 
             order.Remove(guide);
 
+            fitting.Remove(guide);
+
             AdornerUIManager manager;
 
             bool known =
                 owners.TryGetValue(guide, out manager);
+
+            if (known)
+                lastManager = manager;
 
             owners.Remove(guide);
 
@@ -632,12 +1252,87 @@ namespace Nexus_Launcher.Services
             {
                 reading = guide;
 
-                e.Control = BuildFlyout(guide, step);
+                lastFlyout = BuildFlyout(guide, step);
+
+                e.Control = lastFlyout;
             }
             catch (Exception ex)
             {
                 Program.LogCrash(ex);
             }
+        }
+
+        /// <summary>
+        /// The tutorial a marker belongs to, or null.
+        /// </summary>
+        private static string KeyOf(
+            Guide guide)
+        {
+            foreach (KeyValuePair<string, List<Guide>> pair in running)
+            {
+                if (pair.Value.Contains(guide))
+                    return pair.Key;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// "2 of 6", so a step that opens a different tab still reads
+        /// as part of one walk through rather than a fresh surprise.
+        /// </summary>
+        private static string Position(
+            Guide guide)
+        {
+            int index;
+
+            string key = KeyOf(guide);
+
+            Waiting pending;
+
+            if (key == null ||
+                !order.TryGetValue(guide, out index) ||
+                !waiting.TryGetValue(key, out pending) ||
+                pending.Steps.Length <= 1)
+            {
+                return string.Empty;
+            }
+
+            return "  " + (index + 1) + " of " + pending.Steps.Length;
+        }
+
+        /// <summary>
+        /// Whether anything is still unread after this step, which is
+        /// the difference between "Next" and "Got it".
+        /// </summary>
+        private static bool HasMore(
+            Guide guide)
+        {
+            int index;
+
+            string key = KeyOf(guide);
+
+            Waiting pending;
+
+            if (key == null ||
+                !order.TryGetValue(guide, out index) ||
+                !waiting.TryGetValue(key, out pending))
+            {
+                return false;
+            }
+
+            HashSet<int> alreadyRead;
+
+            if (!read.TryGetValue(key, out alreadyRead))
+                alreadyRead = new HashSet<int>();
+
+            for (int i = index + 1; i < pending.Steps.Length; i++)
+            {
+                if (!alreadyRead.Contains(i))
+                    return true;
+            }
+
+            return false;
         }
 
         private static Control BuildFlyout(
@@ -661,7 +1356,8 @@ namespace Nexus_Launcher.Services
             LabelControl title =
                 new LabelControl();
 
-            title.Text = step.Title ?? string.Empty;
+            title.Text =
+                (step.Title ?? string.Empty) + Position(guide);
 
             title.Appearance.Font =
                 ProfileStyle.Font(10.5F, FontStyle.Bold);
@@ -703,17 +1399,31 @@ namespace Nexus_Launcher.Services
 
             panel.Controls.Add(body);
 
+            // Guide mode takes every click in the window, so the way
+            // out has to be on the flyout itself. Escape does the same
+            // thing as Skip, for anyone who reaches for it.
+            SimpleButton skip =
+                new SimpleButton();
+
+            skip.Text = "Skip tips";
+
+            skip.SetBounds(pad, pad + 32 + bodyHeight, 74, 26);
+
+            skip.Click += (s, e) => BeginSkip(guide);
+
+            panel.Controls.Add(skip);
+
             SimpleButton got =
                 new SimpleButton();
 
-            got.Text = "Got it";
+            got.Text = HasMore(guide) ? "Next" : "Got it";
 
-            // Focusable on purpose: it is the only way out of the
-            // flyout, so it has to be reachable from the keyboard.
+            // Focusable on purpose: it is the way out of the flyout,
+            // so it has to be reachable from the keyboard.
 
             got.SetBounds(width - pad - 78, pad + 32 + bodyHeight, 78, 26);
 
-            got.Click += (s, e) => Dismiss(guide);
+            got.Click += (s, e) => BeginDismiss(guide);
 
             panel.Controls.Add(got);
 
@@ -747,8 +1457,102 @@ namespace Nexus_Launcher.Services
         }
 
         /// <summary>
-        /// One marker has been read. When the last of a tutorial goes,
-        /// the tutorial is done and will not come back.
+        /// Ends the whole tour, and does not offer it again.
+        /// </summary>
+        private static void BeginSkip(
+            Guide guide)
+        {
+            string key = KeyOf(guide);
+
+            if (key == null)
+            {
+                BeginDismiss(guide);
+
+                return;
+            }
+
+            AdornerUIManager manager;
+
+            ContainerControl owner =
+                owners.TryGetValue(guide, out manager) && manager != null
+                    ? manager.Owner
+                    : null;
+
+            Action finish = () =>
+            {
+                Hide(key);
+
+                waiting.Remove(key);
+
+                read.Remove(key);
+
+                StopWatching();
+
+                // Skipping is a decision, so it is remembered. Review
+                // Guides in Advanced Settings brings it back.
+                MarkSeen(key);
+            };
+
+            if (owner == null || owner.IsDisposed || !owner.IsHandleCreated)
+            {
+                finish();
+
+                return;
+            }
+
+            try
+            {
+                owner.BeginInvoke(finish);
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+
+                finish();
+            }
+        }
+
+        /// <summary>
+        /// Takes the marker away once its own click has finished.
+        ///
+        /// Tearing an adorner element down from inside the flyout it
+        /// put on screen leaves the manager mid interaction, still
+        /// holding the mouse, and the window stops responding to
+        /// anything at all.
+        /// </summary>
+        private static void BeginDismiss(
+            Guide guide)
+        {
+            AdornerUIManager manager;
+
+            ContainerControl owner =
+                owners.TryGetValue(guide, out manager) && manager != null
+                    ? manager.Owner
+                    : null;
+
+            if (owner == null ||
+                owner.IsDisposed ||
+                !owner.IsHandleCreated)
+            {
+                Dismiss(guide);
+
+                return;
+            }
+
+            try
+            {
+                owner.BeginInvoke(new Action(() => Dismiss(guide)));
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+
+                Dismiss(guide);
+            }
+        }
+
+        /// <summary>
+        /// This step has been read: on to the next, or done.
         /// </summary>
         private static void Dismiss(
             Guide guide)
@@ -756,53 +1560,98 @@ namespace Nexus_Launcher.Services
             if (ReferenceEquals(reading, guide))
                 reading = null;
 
-            string finished = null;
+            string key = KeyOf(guide);
 
-            foreach (KeyValuePair<string, List<Guide>> pair in running)
+            if (key != null)
             {
-                if (!pair.Value.Contains(guide))
-                    continue;
-
-                pair.Value.Remove(guide);
-
                 int index;
 
                 if (order.TryGetValue(guide, out index))
                 {
                     HashSet<int> alreadyRead;
 
-                    if (!read.TryGetValue(pair.Key, out alreadyRead))
+                    if (!read.TryGetValue(key, out alreadyRead))
                     {
                         alreadyRead = new HashSet<int>();
 
-                        read[pair.Key] = alreadyRead;
+                        read[key] = alreadyRead;
                     }
 
                     alreadyRead.Add(index);
                 }
 
-                if (pair.Value.Count == 0)
-                    finished = pair.Key;
-
-                break;
+                running.Remove(key);
             }
 
             Remove(guide);
 
-            if (finished == null)
+            if (key == null)
+            {
+                ExitIfNothingLeft(lastManager);
+
+                return;
+            }
+
+            Waiting pending;
+
+            if (!waiting.TryGetValue(key, out pending))
+            {
+                ExitIfNothingLeft(lastManager);
+
+                return;
+            }
+
+            // Straight on to the next step, which may well be on
+            // another tab, so the tour visibly moves rather than
+            // appearing to do nothing.
+            if (Present(key, pending))
                 return;
 
-            running.Remove(finished);
+            // Nothing left that can be shown. Everything read is the
+            // ordinary end of a tour. Steps left unread but with
+            // nowhere to point happen when a control has gone or its
+            // page was closed part way through: that is only the end
+            // if the page is still in front, otherwise the rest is
+            // owed to the user next time they open it.
+            if (AllRead(key, pending) || IsPageShowing(key, pending))
+                Finish(key);
 
-            // Read and done: it should not come back when the page is
-            // next opened.
-            waiting.Remove(finished);
+            ExitIfNothingLeft(lastManager);
+        }
 
-            read.Remove(finished);
+        private static bool AllRead(
+            string key,
+            Waiting pending)
+        {
+            HashSet<int> alreadyRead;
+
+            if (!read.TryGetValue(key, out alreadyRead))
+                return false;
+
+            for (int i = 0; i < pending.Steps.Length; i++)
+            {
+                if (!alreadyRead.Contains(i))
+                    return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// A tutorial is done with and will not be offered again.
+        /// </summary>
+        private static void Finish(
+            string key)
+        {
+            running.Remove(key);
+
+            waiting.Remove(key);
+
+            read.Remove(key);
 
             StopWatching();
 
-            MarkSeen(finished);
+            MarkSeen(key);
         }
     }
 }

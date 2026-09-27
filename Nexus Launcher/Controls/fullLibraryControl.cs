@@ -287,11 +287,11 @@ namespace Nexus_Launcher.Controls
                     },
                     new TutorialStep
                     {
-                        Title = "Make it yours",
+                        Title = "Out of date?",
                         Body =
-                            "A game's page lets you set your own " +
-                            "artwork, including animated gifs for the " +
-                            "banner, and mark it as a favourite.",
+                            "Refresh rescans your launchers for games " +
+                            "you have installed since, and fetches any " +
+                            "artwork that is missing.",
                         Target = () => simpleButton1,
                         Location =
                             DevExpress.Utils.VisualEffects

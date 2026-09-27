@@ -266,6 +266,70 @@ namespace Nexus_Launcher.Controls
             ResetSteps();
 
             UpdateResetButton();
+
+            // Only once this tab is the one being looked at.
+            xtraTabPage1.Enter += (s, e) => ShowResetTips();
+
+            xtraTabPage3.Enter += (s, e) => addRemove.ShowAddRemoveTips();
+        }
+
+        //--------------------------------------------------------------
+        // First time on this tab
+        //--------------------------------------------------------------
+
+        private bool resetTipsQueued;
+
+        /// <summary>
+        /// Explains the reset screen the first time it is opened.
+        ///
+        /// Queued rather than shown: the service waits until this tab
+        /// is actually the one in front.
+        /// </summary>
+        private void ShowResetTips()
+        {
+            if (resetTipsQueued ||
+                TutorialService.HasSeen(TutorialService.ClientReset))
+            {
+                return;
+            }
+
+            resetTipsQueued = true;
+
+            TutorialService.ShowOnce(
+                FindForm(),
+                TutorialService.ClientReset,
+                new TutorialStep
+                {
+                    Title = "Choose what goes",
+                    Body =
+                        "A reset only removes what is ticked here. " +
+                        "Caches, logs and crash dumps are safe to " +
+                        "clear; shader caches are the biggest saving " +
+                        "but games stutter once while they rebuild.",
+                    Target = () => resetOptions,
+                    Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Right
+                },
+                new TutorialStep
+                {
+                    Title = "Four stages",
+                    Body =
+                        "The client is closed, its own files are " +
+                        "cleared, then Windows temp files and finally " +
+                        "the Windows Update cache. These fill in as it " +
+                        "goes.",
+                    Target = () => stepProgress1,
+                    Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Bottom
+                },
+                new TutorialStep
+                {
+                    Title = "Your games are safe",
+                    Body =
+                        "Nothing here touches installed games or signs " +
+                        "you out. When it finishes you get a list of " +
+                        "what went and how much space it freed.",
+                    Target = () => simpleButton1,
+                    Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Bottom
+                });
         }
 
         /// <summary>

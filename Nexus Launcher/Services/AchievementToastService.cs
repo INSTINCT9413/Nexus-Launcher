@@ -133,6 +133,12 @@ namespace Nexus_Launcher.Services.Achievements
 
         private static void ShowNext()
         {
+            // A card normally releases the queue when it finishes its
+            // slide out. One that went some other way may have left
+            // this set, and a stale card here stops the queue dead.
+            if (current != null && current.IsDisposed)
+                current = null;
+
             if (current != null || pending.Count == 0)
                 return;
 
@@ -157,6 +163,12 @@ namespace Nexus_Launcher.Services.Achievements
                 AchievementSoundService.PlayUnlock();
 
                 current = toast;
+
+                // Closed or disposed without finishing: the queue
+                // still has to be released, or nothing unlocks
+                // visibly or audibly again for the rest of the
+                // session.
+                toast.Disposed += (s, e) => Release(toast);
 
                 toast.Finished += () =>
                 {
@@ -187,6 +199,43 @@ namespace Nexus_Launcher.Services.Achievements
                 Program.LogCrash(ex);
 
                 current = null;
+            }
+        }
+
+        /// <summary>
+        /// Lets the queue move on after a card that ended without
+        /// finishing its slide out.
+        ///
+        /// Only Finished used to clear this, so a card closed any
+        /// other way left the queue holding a card that no longer
+        /// existed. Everything after it queued up behind a ghost:
+        /// no popup, and no unlock sound, until Nexus was restarted.
+        /// </summary>
+        private static void Release(
+            AchievementToastForm toast)
+        {
+            if (!ReferenceEquals(current, toast))
+                return;
+
+            current = null;
+
+            if (owner == null ||
+                owner.IsDisposed ||
+                !owner.IsHandleCreated ||
+                pending.Count == 0)
+            {
+                return;
+            }
+
+            // After this teardown rather than during it, so the next
+            // card is not built inside the last one's Dispose.
+            try
+            {
+                owner.BeginInvoke(new Action(ShowNext));
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
             }
         }
 

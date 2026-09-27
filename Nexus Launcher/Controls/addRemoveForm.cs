@@ -7,6 +7,7 @@ using DevExpress.XtraEditors.Controls;
 using Nexus_Launcher.Helpers;
 using Nexus_Launcher.Models;
 using Nexus_Launcher.Properties;
+using Nexus_Launcher.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,8 +32,120 @@ namespace Nexus_Launcher.Forms
         {
             InitializeComponent();
         }
+
+        //--------------------------------------------------------------
+        // First time here
+        //--------------------------------------------------------------
+
+        private bool tipsQueued;
+
+        /// <summary>
+        /// Walks through adding and removing your own games the first
+        /// time this tab is opened.
+        ///
+        /// Public because the tab that hosts it is the thing that
+        /// knows when it has been opened.
+        /// </summary>
+        public void ShowAddRemoveTips()
+        {
+            if (tipsQueued ||
+                TutorialService.HasSeen(TutorialService.AddRemove))
+            {
+                return;
+            }
+
+            tipsQueued = true;
+
+            TutorialService.ShowOnce(
+                FindForm(),
+                TutorialService.AddRemove,
+                () => this,
+                new[]
+                {
+                    new TutorialStep
+                    {
+                        Title = "What you have added",
+                        Body =
+                            "Everything you have put into Nexus " +
+                            "yourself is listed here. Click one to " +
+                            "pick it out; its icon and name appear " +
+                            "below so you can be sure it is the right " +
+                            "one before removing it.",
+                        Target = () => galleryControl1,
+                        Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Right
+                    },
+                    new TutorialStep
+                    {
+                        Title = "Adding one",
+                        Body =
+                            "Give it a name and point Path at the " +
+                            "program or shortcut. The button beside " +
+                            "the box browses for it, and the icon is " +
+                            "taken from the file for you.",
+                        Target = () => textEdit2,
+                        Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Bottom
+                    },
+                    new TutorialStep
+                    {
+                        Title = "A whole folder at once",
+                        Body =
+                            "Turn this on and Add asks for a folder " +
+                            "instead, pulling in every shortcut and " +
+                            "program it finds there and in the folders " +
+                            "underneath. Quick, but it takes " +
+                            "everything, so aim it at a tidy folder.",
+                        Target = () => toggleSwitch1,
+                        Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Bottom
+                    },
+                    new TutorialStep
+                    {
+                        Title = "Add",
+                        Body =
+                            "The new entry appears in the Nexus group " +
+                            "in the sidebar straight away, alongside " +
+                            "the games your launchers found, and works " +
+                            "the same way.",
+                        Target = () => simpleButton1,
+                        Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Left
+                    },
+                    new TutorialStep
+                    {
+                        Title = "Removing several",
+                        Body =
+                            "With this on you can tick more than one " +
+                            "entry in the list and clear them all in " +
+                            "one go, rather than one at a time.",
+                        Target = () => toggleSwitch2,
+                        Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Top
+                    },
+                    new TutorialStep
+                    {
+                        Title = "Remove",
+                        Body =
+                            "This only takes the entry out of Nexus. " +
+                            "Nothing is uninstalled and no files are " +
+                            "deleted, so adding it again later is just " +
+                            "a matter of pointing at it once more.",
+                        Target = () => simpleButton2,
+                        Location = DevExpress.Utils.VisualEffects.GuideFlyoutLocation.Left
+                    }
+                });
+        }
+
+        /// <summary>
+        /// Guides were reset in Settings, so this tab offers its own
+        /// again the next time it is opened.
+        /// </summary>
+        private void Tutorials_Reset()
+        {
+            tipsQueued = false;
+        }
         private async void addRemoveForm_Load(object sender, EventArgs e)
         {
+            TutorialService.Reset += Tutorials_Reset;
+
+            Disposed += (s, a) => TutorialService.Reset -= Tutorials_Reset;
+
             await LoadNexusGamesAsync();
             FontManager.ApplyFont(
     this,
