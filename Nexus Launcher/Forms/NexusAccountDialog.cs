@@ -7,6 +7,8 @@ using Nexus_Launcher.Services.Account;
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Globalization;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -108,6 +110,55 @@ namespace Nexus_Launcher.Forms
             Render();
 
             Shape();
+        }
+
+        [DllImport("dwmapi.dll")]
+        private static extern int DwmSetWindowAttribute(
+            IntPtr hwnd,
+            int attribute,
+            ref int value,
+            int size);
+
+        private const int DwmBorderColor = 34;
+
+        private const int DwmColorNone = unchecked((int)0xFFFFFFFE);
+
+        /// <summary>
+        /// Drops the window border Windows draws around the dialog.
+        ///
+        /// The region clips the window to the rounded card, but that
+        /// only governs what the window itself paints. Windows 11
+        /// composes its own one pixel border around the window
+        /// rectangle afterwards, so a grey rectangle was being drawn
+        /// straight across the corners the region had cut away. It is
+        /// not the skin's doing, and no amount of styling reaches it.
+        ///
+        /// Set on every handle: a recreated handle is a new window as
+        /// far as the compositor is concerned. Older versions of
+        /// Windows do not know the attribute and fail the call, which
+        /// is harmless, because they do not draw the border either.
+        /// </summary>
+        protected override void OnHandleCreated(
+            EventArgs e)
+        {
+            base.OnHandleCreated(e);
+
+            try
+            {
+                int none = DwmColorNone;
+
+                DwmSetWindowAttribute(
+                    Handle,
+                    DwmBorderColor,
+                    ref none,
+                    sizeof(int));
+            }
+            catch (DllNotFoundException)
+            {
+            }
+            catch (EntryPointNotFoundException)
+            {
+            }
         }
 
         protected override void OnResize(
@@ -312,8 +363,12 @@ namespace Nexus_Launcher.Forms
         /// Carried over from the original popup so the dialog keeps the
         /// look it was designed with: rounded frame, floating logo, and
         /// a footer of full width buttons.
+        ///
+        /// The @Name tokens are not DevExpress palette references any
+        /// more: BuildStyles swaps them for concrete colours. See the
+        /// note there for why.
         /// </summary>
-        private const string Styles = @"
+        private const string StylesTemplate = @"
 body {
     padding: 78px 20px 20px 20px;
     margin: 0px;
@@ -438,6 +493,74 @@ body {
 .button.quiet { font-size: 12px; font-weight: normal; height: 38px; color: @Text/0.6; }
 ";
 
+        private static string Rgba(
+            Color color,
+            double alpha)
+        {
+            return string.Format(
+                CultureInfo.InvariantCulture,
+                "rgba({0}, {1}, {2}, {3:0.###})",
+                color.R,
+                color.G,
+                color.B,
+                alpha);
+        }
+
+        private static string Hex(
+            Color color)
+        {
+            return string.Format(
+                "#{0:X2}{1:X2}{2:X2}",
+                color.R,
+                color.G,
+                color.B);
+        }
+
+        /// <summary>
+        /// Fills the stylesheet in with the colours the rest of the app
+        /// uses.
+        ///
+        /// The template was written against DevExpress palette tokens,
+        /// which resolve against the skin's colour table. That table is
+        /// not what a custom theme changes: @Text comes back as black
+        /// under every one of them, light or dark, so the dialog was
+        /// drawing black text on a near black card. ProfileStyle reads
+        /// the theme properly and is what every other surface already
+        /// follows, so the dialog now takes its colours from there.
+        /// </summary>
+        private static string BuildStyles()
+        {
+            Color text =
+                ProfileStyle.TextColor;
+
+            Color card =
+                ProfileStyle.CardColor;
+
+            Color accent =
+                ProfileStyle.AccentColor;
+
+            // Whichever way the theme's accent leans, the hovered
+            // button's label has to stay legible on top of it.
+            Color onAccent =
+                ProfileStyle.Luminance(accent) < 150
+                    ? Color.White
+                    : Color.FromArgb(20, 20, 20);
+
+            // Longest first: a bare @Text would otherwise eat the
+            // start of @Text/0.55 and leave the alpha behind.
+            return StylesTemplate
+                .Replace("@Text/0.55", Rgba(text, 0.55))
+                .Replace("@Text/0.15", Rgba(text, 0.15))
+                .Replace("@Text/0.08", Rgba(text, 0.08))
+                .Replace("@Text/0.6", Rgba(text, 0.6))
+                .Replace("@Text/0.5", Rgba(text, 0.5))
+                .Replace("@ControlText/0.05", Rgba(text, 0.05))
+                .Replace("@HighlightText", Hex(onAccent))
+                .Replace("@Control", Hex(card))
+                .Replace("@Primary", Hex(accent))
+                .Replace("@Text", Hex(text));
+        }
+
         private string BuildTemplate()
         {
             NexusAccount user =
@@ -478,7 +601,7 @@ body {
             return @"
       <div class='title'>Nexus Account</div>
       <div class='subtitle'>Sign in to bring your profile into Nexus Launcher.</div>
-      <div class='note'>You sign in on nexuslauncher.guardbyte.me.
+      <div class='note'>You sign in on nexuspowered.com.
         Nexus never sees your password, and you can revoke its access
         from your profile page at any time.</div>";
         }
@@ -501,7 +624,7 @@ body {
                 string.IsNullOrWhiteSpace(user.DisplayName)
                     ? user.Username
                     : user.DisplayName) + @"</div>
-      <div class='subtitle'>Signed in to nexuslauncher.guardbyte.me</div>"
+      <div class='subtitle'>Signed in to nexuspowered.com</div>"
                 + rows + @"
       <div class='note'>Nexus reads this profile from the site.
         Use Manage profile to change any of it.</div>";
@@ -548,7 +671,14 @@ body {
             // open changes which pictures it needs.
             content.HtmlImages = BuildImages();
 
-            content.HtmlTemplate.Styles = Styles;
+            // The window is clipped to the card, but the logo circle
+            // sits outside the frame, so the form's own colour still
+            // shows through there. Left unset it defaults to the light
+            // grey system colour, which is a bright ring on a dark
+            // theme.
+            BackColor = ProfileStyle.CardColor;
+
+            content.HtmlTemplate.Styles = BuildStyles();
 
             content.HtmlTemplate.Template = BuildTemplate();
         }

@@ -1,7 +1,8 @@
-using DevExpress.LookAndFeel;
+﻿using DevExpress.LookAndFeel;
 using DevExpress.XtraWaitForm;
 using Nexus_Launcher.Controls.Profile;
 using Nexus_Launcher.Helpers;
+using Nexus_Launcher.Services.Themes;
 using Nexus_Launcher.Properties;
 using System;
 using System.Windows.Forms;
@@ -134,6 +135,14 @@ namespace Nexus_Launcher
 
             ThemesSettings settings =
                 ThemeSettingsManager.Load();
+
+            // DevExpress keeps a skin per thread, and the splash runs
+            // on its own. The custom palettes Program registered are
+            // therefore invisible here, and asking for one by name
+            // silently falls back to the stock skin, which is why this
+            // form ignored the chosen theme. Registering them again on
+            // this thread is cheap and idempotent.
+            CustomThemeService.RegisterAll();
 
             if (!string.IsNullOrWhiteSpace(
                 settings.SkinName))

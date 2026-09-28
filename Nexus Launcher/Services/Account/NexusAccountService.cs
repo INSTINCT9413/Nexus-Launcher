@@ -120,7 +120,7 @@ namespace Nexus_Launcher.Services.Account
     internal static class NexusAccountService
     {
         public const string SiteUrl =
-            "https://nexuslauncher.guardbyte.me";
+            "https://nexuspowered.com";
 
         public const string LoginUrl =
             SiteUrl + "/wp-login.php";

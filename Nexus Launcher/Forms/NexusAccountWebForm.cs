@@ -215,10 +215,10 @@ namespace Nexus_Launcher.Forms
 
                 status.Text =
                     mode == NexusAccountWebMode.Register
-                        ? "Create your account on nexuslauncher.guardbyte.me, then sign in."
+                        ? "Create your account on nexuspowered.com, then sign in."
                         : mode == NexusAccountWebMode.EditProfile
                             ? "Changes you save here are pulled back into Nexus when you close this window."
-                            : "Sign in on nexuslauncher.guardbyte.me and approve Nexus Launcher.";
+                            : "Sign in on nexuspowered.com and approve Nexus Launcher.";
 
                 Controls.Add(status);
 
@@ -298,7 +298,7 @@ namespace Nexus_Launcher.Forms
 
             loadingLabel.Appearance.Options.UseTextOptions = true;
 
-            loadingLabel.Text = "Contacting nexuslauncher.guardbyte.me...";
+            loadingLabel.Text = "Contacting nexuspowered.com...";
 
             overlay.Controls.Add(loadingLabel);
 
