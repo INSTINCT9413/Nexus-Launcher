@@ -73,6 +73,7 @@ namespace Nexus_Launcher.Services.Plugins
                 Launcher = sourceId,
                 InstallPath = found.InstallPath,
                 ExecutablePath = found.ExecutablePath,
+                Arguments = found.Arguments,
                 LaunchUri = found.LaunchUri,
                 IconPath = found.IconPath,
                 HeaderImageUrl = found.GridImageUrl,

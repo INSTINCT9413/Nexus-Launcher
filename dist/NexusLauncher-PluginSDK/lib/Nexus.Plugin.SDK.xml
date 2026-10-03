@@ -1,0 +1,402 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Nexus.Plugin.SDK</name>
+    </assembly>
+    <members>
+        <member name="T:Nexus.Plugin.NexusPluginAttribute">
+             <summary>
+             Marks a class as a Nexus plugin and describes it.
+            
+             An attribute rather than a separate manifest file: there is
+             nothing to keep in step, and the description cannot drift away
+             from the code that implements it.
+             </summary>
+        </member>
+        <member name="M:Nexus.Plugin.NexusPluginAttribute.#ctor(System.String,System.String)">
+            <param name="id">
+            A permanent, unique id, lower case, such as
+            "acme.savebackup". Used for the plugin's settings folder and
+            to remember whether the user disabled it, so it must not
+            change between releases.
+            </param>
+            <param name="name">The name shown to the user.</param>
+        </member>
+        <member name="P:Nexus.Plugin.NexusPluginAttribute.Id">
+            <summary>The permanent unique id, such as "acme.savebackup".</summary>
+        </member>
+        <member name="P:Nexus.Plugin.NexusPluginAttribute.Name">
+            <summary>The name shown in the plugin list.</summary>
+        </member>
+        <member name="P:Nexus.Plugin.NexusPluginAttribute.Author">
+            <summary>Who wrote it. Shown beside the name.</summary>
+        </member>
+        <member name="P:Nexus.Plugin.NexusPluginAttribute.Version">
+            <summary>Your own version string, such as "1.2.0".</summary>
+        </member>
+        <member name="P:Nexus.Plugin.NexusPluginAttribute.Description">
+            <summary>One line on what the plugin does.</summary>
+        </member>
+        <member name="T:Nexus.Plugin.INexusPlugin">
+            <summary>
+            Every plugin implements this. One class per plugin.
+            </summary>
+        </member>
+        <member name="M:Nexus.Plugin.INexusPlugin.Initialize(Nexus.Plugin.INexusHost)">
+             <summary>
+             Called once on startup. Register everything the plugin
+             offers here.
+            
+             Keep it quick: Nexus is still starting up. Anything slow
+             belongs on a thread of your own, or in the scan that the
+             launcher will call later anyway.
+             </summary>
+        </member>
+        <member name="M:Nexus.Plugin.INexusPlugin.Shutdown">
+            <summary>
+            Called when Nexus is closing, or when the user disables the
+            plugin. Stop timers and release anything held.
+            </summary>
+        </member>
+        <member name="T:Nexus.Plugin.INexusHost">
+            <summary>
+            What a plugin is given to work with.
+            </summary>
+        </member>
+        <member name="P:Nexus.Plugin.INexusHost.LauncherVersion">
+            <summary>The running Nexus version, such as "0.0.7.3".</summary>
+        </member>
+        <member name="P:Nexus.Plugin.INexusHost.LauncherBuild">
+            <summary>The running Nexus build number.</summary>
+        </member>
+        <member name="P:Nexus.Plugin.INexusHost.DataFolder">
+            <summary>
+            A folder of the plugin's own, already created, for settings
+            and caches. Nothing else writes here.
+            </summary>
+        </member>
+        <member name="P:Nexus.Plugin.INexusHost.Log">
+            <summary>Writes to the Nexus log, tagged with your plugin.</summary>
+        </member>
+        <member name="M:Nexus.Plugin.INexusHost.AddLibrarySource(Nexus.Plugin.ILibrarySource)">
+            <summary>
+            Contributes games to the library, under the source's own
+            heading.
+            </summary>
+        </member>
+        <member name="M:Nexus.Plugin.INexusHost.AddGameAction(Nexus.Plugin.IGameAction)">
+            <summary>
+            Adds an entry to the menu on a game.
+            </summary>
+        </member>
+        <member name="M:Nexus.Plugin.INexusHost.AddSidePanelWidget(Nexus.Plugin.ISidePanelWidget)">
+            <summary>
+            Adds a tile to the side panel, beside the system readings.
+            </summary>
+        </member>
+        <member name="M:Nexus.Plugin.INexusHost.GetSetting(System.String,System.String)">
+             <summary>
+             Reads one of your own settings, as the user left it.
+            
+             Returns the fallback until the user has changed it, so a
+             plugin never has to deal with a missing value.
+             </summary>
+        </member>
+        <member name="M:Nexus.Plugin.INexusHost.GetSetting(System.String,System.Boolean)">
+            <summary>Reads a yes or no setting of your own.</summary>
+        </member>
+        <member name="M:Nexus.Plugin.INexusHost.GetGames">
+             <summary>
+             Every game Nexus currently knows about, from every source
+             including other plugins.
+            
+             A snapshot, not a live view: call it again for fresh
+             results. Empty while Nexus is still scanning at startup,
+             so a plugin that wants the whole library should ask when
+             the user does something rather than in Initialize.
+             </summary>
+        </member>
+        <member name="E:Nexus.Plugin.INexusHost.GameLaunched">
+            <summary>Raised after a game is launched from Nexus.</summary>
+        </member>
+        <member name="E:Nexus.Plugin.INexusHost.GameExited">
+            <summary>
+            Raised when a launched game is seen to close. Not
+            guaranteed: Nexus can only time a game whose process it can
+            find, so treat this as a courtesy rather than a promise.
+            </summary>
+        </member>
+        <member name="T:Nexus.Plugin.ILogger">
+            <summary>Somewhere to write what your plugin is doing.</summary>
+        </member>
+        <member name="M:Nexus.Plugin.ILogger.Info(System.String)">
+            <summary>Ordinary progress.</summary>
+        </member>
+        <member name="M:Nexus.Plugin.ILogger.Warn(System.String)">
+            <summary>Something looks wrong but the plugin carried on.</summary>
+        </member>
+        <member name="M:Nexus.Plugin.ILogger.Error(System.String,System.Exception)">
+            <summary>Something failed. Pass the exception when there is one.</summary>
+        </member>
+        <member name="T:Nexus.Plugin.ILibrarySource">
+            <summary>
+            A place games come from: a launcher Nexus does not know about,
+            a folder of portable games, anything.
+            </summary>
+        </member>
+        <member name="P:Nexus.Plugin.ILibrarySource.Id">
+            <summary>
+            Stable id for this source, such as "amazon". Games are
+            remembered against it, so it must not change.
+            </summary>
+        </member>
+        <member name="P:Nexus.Plugin.ILibrarySource.DisplayName">
+            <summary>The heading its games appear under.</summary>
+        </member>
+        <member name="M:Nexus.Plugin.ILibrarySource.IsInstalled">
+            <summary>
+            Whether this source is present on the machine. Return false
+            and Nexus leaves the heading out entirely rather than
+            showing an empty one.
+            </summary>
+        </member>
+        <member name="M:Nexus.Plugin.ILibrarySource.Scan">
+            <summary>
+            Finds the games. Called on a background thread, so it may
+            take its time, but it must not touch the user interface.
+            Throwing is safe: the failure is logged and the rest of the
+            library still loads.
+            </summary>
+        </member>
+        <member name="T:Nexus.Plugin.PluginGame">
+            <summary>
+            A game as a plugin describes it. Only Name is required; fill in
+            whatever else is known and Nexus will do the best it can with
+            the rest, including finding artwork.
+            </summary>
+        </member>
+        <member name="P:Nexus.Plugin.PluginGame.Name">
+            <summary>What to call the game. The only required field.</summary>
+        </member>
+        <member name="P:Nexus.Plugin.PluginGame.SourceGameId">
+            <summary>
+            The source's own id for the game, if it has one. Used to
+            tell two games with the same name apart.
+            </summary>
+        </member>
+        <member name="P:Nexus.Plugin.PluginGame.InstallPath">
+            <summary>The folder the game lives in, if known.</summary>
+        </member>
+        <member name="P:Nexus.Plugin.PluginGame.ExecutablePath">
+            <summary>The executable, when there is one to run.</summary>
+        </member>
+        <member name="P:Nexus.Plugin.PluginGame.Arguments">
+             <summary>
+             Arguments for that executable.
+            
+             Several launchers will not start a game from its own exe
+             and want their own helper run instead: Wargaming games,
+             for one, are started with their folder's wgc_api.exe and
+             --open.
+             </summary>
+        </member>
+        <member name="P:Nexus.Plugin.PluginGame.LaunchUri">
+            <summary>
+            A uri that starts the game through its own launcher, such
+            as "amazon-games://play/...". Preferred over the executable
+            where the launcher needs to be involved.
+            </summary>
+        </member>
+        <member name="P:Nexus.Plugin.PluginGame.IconPath">
+            <summary>An icon file for the game, if the source has one.</summary>
+        </member>
+        <member name="P:Nexus.Plugin.PluginGame.GridImageUrl">
+            <summary>Optional artwork already on disk or on the web.</summary>
+        </member>
+        <member name="P:Nexus.Plugin.PluginGame.HeroImageUrl">
+            <summary>Wide banner artwork, if the source has one.</summary>
+        </member>
+        <member name="T:Nexus.Plugin.IGameAction">
+            <summary>
+            An entry on a game's menu: "Back up saves", "Open install
+            folder", whatever the plugin does.
+            </summary>
+        </member>
+        <member name="P:Nexus.Plugin.IGameAction.Id">
+            <summary>Stable id, used for ordering and settings.</summary>
+        </member>
+        <member name="P:Nexus.Plugin.IGameAction.Caption">
+            <summary>The text on the menu entry.</summary>
+        </member>
+        <member name="M:Nexus.Plugin.IGameAction.AppliesTo(Nexus.Plugin.GameRef)">
+            <summary>
+            Whether the entry applies to this game. Return false and it
+            is left out for that game, rather than shown greyed.
+            </summary>
+        </member>
+        <member name="M:Nexus.Plugin.IGameAction.Invoke(Nexus.Plugin.GameRef)">
+            <summary>
+            Runs the action. Called on the user interface thread, so
+            anything slow belongs on a thread of your own or the
+            launcher will appear to freeze.
+            </summary>
+        </member>
+        <member name="T:Nexus.Plugin.GameRef">
+            <summary>
+            A game as the launcher knows it, handed to plugins read only.
+            </summary>
+        </member>
+        <member name="P:Nexus.Plugin.GameRef.Name">
+            <summary>The game's name.</summary>
+        </member>
+        <member name="P:Nexus.Plugin.GameRef.SourceId">
+            <summary>Which launcher or source it came from.</summary>
+        </member>
+        <member name="P:Nexus.Plugin.GameRef.InstallPath">
+            <summary>Where it is installed, if known.</summary>
+        </member>
+        <member name="P:Nexus.Plugin.GameRef.ExecutablePath">
+            <summary>Its executable, if known.</summary>
+        </member>
+        <member name="P:Nexus.Plugin.GameRef.Played">
+            <summary>Total time played, as Nexus has recorded it.</summary>
+        </member>
+        <member name="P:Nexus.Plugin.GameRef.LastPlayedUtc">
+            <summary>When it was last played, or null if never.</summary>
+        </member>
+        <member name="T:Nexus.Plugin.GameEventArgs">
+            <summary>Carries the game a launch or exit event is about.</summary>
+        </member>
+        <member name="M:Nexus.Plugin.GameEventArgs.#ctor(Nexus.Plugin.GameRef)">
+            <summary>Creates the arguments for a game event.</summary>
+        </member>
+        <member name="P:Nexus.Plugin.GameEventArgs.Game">
+            <summary>The game the event is about.</summary>
+        </member>
+        <member name="T:Nexus.Plugin.ISidePanelWidget">
+             <summary>
+             A small read only tile in the side panel.
+            
+             Text rather than controls on purpose: the plugin says what it
+             wants to show and Nexus draws it in the current theme, so these
+             cannot look out of place and cannot break the layout.
+             </summary>
+        </member>
+        <member name="P:Nexus.Plugin.ISidePanelWidget.Id">
+            <summary>Stable id, used to remember the tile's place.</summary>
+        </member>
+        <member name="P:Nexus.Plugin.ISidePanelWidget.Title">
+            <summary>The heading on the tile.</summary>
+        </member>
+        <member name="M:Nexus.Plugin.ISidePanelWidget.GetLines">
+            <summary>
+            The lines to show. Called on a background thread on the
+            interval below.
+            </summary>
+        </member>
+        <member name="P:Nexus.Plugin.ISidePanelWidget.RefreshInterval">
+            <summary>
+            How often to ask again. Anything under five seconds is
+            treated as five.
+            </summary>
+        </member>
+        <member name="T:Nexus.Plugin.PluginSettingKind">
+            <summary>What kind of control a setting needs.</summary>
+        </member>
+        <member name="F:Nexus.Plugin.PluginSettingKind.Text">
+            <summary>A line of text.</summary>
+        </member>
+        <member name="F:Nexus.Plugin.PluginSettingKind.Toggle">
+            <summary>A tick box.</summary>
+        </member>
+        <member name="F:Nexus.Plugin.PluginSettingKind.Number">
+            <summary>A whole number.</summary>
+        </member>
+        <member name="F:Nexus.Plugin.PluginSettingKind.Folder">
+            <summary>A folder, with a Browse button.</summary>
+        </member>
+        <member name="F:Nexus.Plugin.PluginSettingKind.Choice">
+            <summary>One of a fixed list.</summary>
+        </member>
+        <member name="T:Nexus.Plugin.PluginSetting">
+             <summary>
+             One setting, as the plugin describes it.
+            
+             Declared rather than drawn: the plugin says what it needs and
+             Nexus builds the dialog in the current theme. That keeps
+             plugins free of any user interface code, and means every
+             plugin's settings look like part of the launcher instead of
+             like a bolted-on window.
+             </summary>
+        </member>
+        <member name="P:Nexus.Plugin.PluginSetting.Key">
+            <summary>How your plugin reads the value back.</summary>
+        </member>
+        <member name="P:Nexus.Plugin.PluginSetting.Label">
+            <summary>The label beside the control.</summary>
+        </member>
+        <member name="P:Nexus.Plugin.PluginSetting.Description">
+            <summary>Optional line of help under the label.</summary>
+        </member>
+        <member name="P:Nexus.Plugin.PluginSetting.Kind">
+            <summary>Which control to show. Text if not set.</summary>
+        </member>
+        <member name="P:Nexus.Plugin.PluginSetting.Default">
+            <summary>The value before the user changes anything.</summary>
+        </member>
+        <member name="P:Nexus.Plugin.PluginSetting.Choices">
+            <summary>The options, when Kind is Choice.</summary>
+        </member>
+        <member name="T:Nexus.Plugin.IPluginSettings">
+            <summary>
+            Implement this as well as INexusPlugin and your plugin gets a
+            Settings button on the Plugins page.
+            </summary>
+        </member>
+        <member name="M:Nexus.Plugin.IPluginSettings.GetSettings">
+            <summary>The settings to show, in the order to show them.</summary>
+        </member>
+        <member name="M:Nexus.Plugin.IPluginSettings.SettingsChanged(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Called after the user saves, with every value. Nexus has
+            already stored them by the time this runs, so this is only
+            for reacting to a change.
+            </summary>
+        </member>
+        <member name="T:Nexus.Plugin.PluginCommand">
+             <summary>
+             A button in the plugin's settings dialog.
+            
+             For things a plugin does on request rather than things it
+             remembers: exporting a file, clearing a cache, running a scan
+             now. Settings dialogs are where a user goes looking for a
+             plugin's own features, so they belong there rather than
+             cluttering the menu on every game.
+             </summary>
+        </member>
+        <member name="P:Nexus.Plugin.PluginCommand.Id">
+            <summary>Passed back to RunCommand when pressed.</summary>
+        </member>
+        <member name="P:Nexus.Plugin.PluginCommand.Label">
+            <summary>The text on the button.</summary>
+        </member>
+        <member name="P:Nexus.Plugin.PluginCommand.Description">
+            <summary>Optional line of help beside the button.</summary>
+        </member>
+        <member name="T:Nexus.Plugin.IPluginCommands">
+            <summary>
+            Implement this as well as INexusPlugin to put buttons in your
+            settings dialog. Works with or without IPluginSettings.
+            </summary>
+        </member>
+        <member name="M:Nexus.Plugin.IPluginCommands.GetCommands">
+            <summary>The buttons to show, in order.</summary>
+        </member>
+        <member name="M:Nexus.Plugin.IPluginCommands.RunCommand(System.String)">
+            <summary>
+            Runs one. Called on the user interface thread, so put
+            anything slow on a thread of your own.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -36,7 +36,27 @@ namespace Nexus_Launcher.Controls
 
             Controls.Add(content);
 
+            // The catalogue arrives from the site a moment after
+            // startup, so the page redraws when it does rather than
+            // showing nothing until it is reopened.
+            PluginCatalogue.Changed += CatalogueChanged;
+
+            Disposed += (s, e) =>
+                PluginCatalogue.Changed -= CatalogueChanged;
+
             Render();
+        }
+
+        private void CatalogueChanged()
+        {
+            if (IsDisposed || !IsHandleCreated)
+                return;
+
+            BeginInvoke(new Action(() =>
+            {
+                if (!IsDisposed)
+                    Render();
+            }));
         }
 
         //--------------------------------------------------------------
@@ -159,6 +179,27 @@ namespace Nexus_Launcher.Controls
             css.AppendLine("}");
             css.AppendLine(".small:hover { background-color: " + Rgba(text, 0.18) + "; }");
 
+            css.AppendLine(".badge {");
+            css.AppendLine("    font-size: 9px;");
+            css.AppendLine("    font-weight: bold;");
+            css.AppendLine("    padding: 1px 6px 1px 6px;");
+            css.AppendLine("    border-radius: 3px;");
+            css.AppendLine("    margin-left: 6px;");
+            css.AppendLine("}");
+            css.AppendLine(".badge.official { background-color: " +
+                Rgba(accent, 0.22) + "; color: " + Hex(accent) + "; }");
+            css.AppendLine(".badge.changed { background-color: " +
+                Rgba(bad, 0.20) + "; color: " + Hex(bad) + "; }");
+            css.AppendLine(".badge.newer { background-color: " +
+                Rgba(ok, 0.20) + "; color: " + Hex(ok) + "; }");
+
+            css.AppendLine(".section {");
+            css.AppendLine("    font-size: 12px;");
+            css.AppendLine("    font-weight: bold;");
+            css.AppendLine("    color: " + Hex(text) + ";");
+            css.AppendLine("    padding: 14px 4px 6px 4px;");
+            css.AppendLine("}");
+
             css.AppendLine(".empty { font-size: 11px; color: " + Hex(muted) +
                 "; padding: 20px 6px 6px 6px; }");
 
@@ -207,7 +248,16 @@ namespace Nexus_Launcher.Controls
 
                 html.AppendLine("    <div class='name'>" +
                     Escape(plugin.Name) +
-                    (plugin.IsBuiltIn ? "  (built in)" : string.Empty) +
+                    (PluginCatalogue.IsOfficial(plugin)
+                        ? "<span class='badge official'>OFFICIAL</span>"
+                        : string.Empty) +
+                    (PluginCatalogue.IsModified(plugin)
+                        ? "<span class='badge changed'>MODIFIED</span>"
+                        : string.Empty) +
+                    (PluginCatalogue.HasUpdate(plugin)
+                        ? "<span class='badge newer'>UPDATE</span>"
+                        : string.Empty) +
+
                     "</div>");
 
                 html.AppendLine("    <div class='by'>" +
@@ -217,7 +267,16 @@ namespace Nexus_Launcher.Controls
                     (string.IsNullOrWhiteSpace(plugin.Version)
                         ? string.Empty
                         : "  ·  v" + Escape(plugin.Version)) +
+                    "  ·  from " + Escape(plugin.Origin ?? "unknown") +
                     "</div>");
+
+                if (plugin.Duplicate != null)
+                {
+                    html.AppendLine("    <div class='err'>" +
+                        "Another copy of this plugin was found and " +
+                        "ignored: " + Escape(plugin.Duplicate) +
+                        "</div>");
+                }
 
                 if (!string.IsNullOrWhiteSpace(plugin.Description))
                 {
@@ -260,13 +319,78 @@ namespace Nexus_Launcher.Controls
                 html.AppendLine("</div>");
             }
 
+            BuildAvailable(html, all);
+
             html.AppendLine("<div class='note'>" +
                 "Enabling or disabling takes full effect when Nexus " +
                 "next starts. Plugins run inside Nexus: only install " +
-                "ones you trust." +
+                "ones you trust. OFFICIAL means the file matches the " +
+                "one published by Nexus, checked by its hash." +
                 "</div>");
 
             return html.ToString();
+        }
+
+        /// <summary>
+        /// The plugins Nexus publishes that are not installed yet.
+        ///
+        /// Nothing is shown at all when the list is empty or could
+        /// not be fetched: an empty "available" heading would just
+        /// look broken.
+        /// </summary>
+        private void BuildAvailable(
+            StringBuilder html,
+            List<PluginRecord> installed)
+        {
+            List<CatalogueEntry> available =
+                PluginCatalogue.Entries
+                    .Where(e => !installed.Any(p => string.Equals(
+                        p.Id, e.Id, StringComparison.OrdinalIgnoreCase)))
+                    .OrderBy(e => e.Name)
+                    .ToList();
+
+            if (available.Count == 0)
+                return;
+
+            html.AppendLine("<div class='section'>Available to install</div>");
+
+            foreach (CatalogueEntry entry in available)
+            {
+                html.AppendLine("<div class='row'>");
+                html.AppendLine("  <div class='info'>");
+
+                html.AppendLine("    <div class='name'>" +
+                    Escape(entry.Name ?? entry.Id) +
+                    (string.IsNullOrWhiteSpace(entry.Sha256)
+                        ? string.Empty
+                        : "<span class='badge official'>OFFICIAL</span>") +
+                    "</div>");
+
+                html.AppendLine("    <div class='by'>" +
+                    Escape(string.IsNullOrWhiteSpace(entry.Author)
+                        ? "Nexus Launcher"
+                        : entry.Author) +
+                    (string.IsNullOrWhiteSpace(entry.Version)
+                        ? string.Empty
+                        : "  ·  v" + Escape(entry.Version)) +
+                    (entry.Size > 0
+                        ? "  ·  " + (entry.Size / 1024) + " KB"
+                        : string.Empty) +
+                    "</div>");
+
+                if (!string.IsNullOrWhiteSpace(entry.Description))
+                {
+                    html.AppendLine("    <div class='desc'>" +
+                        Escape(entry.Description) + "</div>");
+                }
+
+                html.AppendLine("  </div>");
+
+                html.AppendLine("  <div class='btn primary' id='install:" +
+                    Escape(entry.Id) + "'>Install</div>");
+
+                html.AppendLine("</div>");
+            }
         }
 
         private void Render()
@@ -299,6 +423,13 @@ namespace Nexus_Launcher.Controls
             if (id == "add")
             {
                 AddPlugin();
+
+                return;
+            }
+
+            if (id.StartsWith("install:"))
+            {
+                InstallFromCatalogue(id.Substring("install:".Length));
 
                 return;
             }
@@ -436,6 +567,58 @@ namespace Nexus_Launcher.Controls
             }
 
             Render();
+        }
+
+        /// <summary>
+        /// Downloads a published plugin and puts it in place.
+        ///
+        /// Done on the user interface thread behind a wait cursor
+        /// rather than with a progress window: these are a few tens
+        /// of kilobytes, and a progress bar for that is more
+        /// ceremony than the wait deserves.
+        /// </summary>
+        private void InstallFromCatalogue(
+            string id)
+        {
+            CatalogueEntry entry = PluginCatalogue.Find(id);
+
+            if (entry == null)
+                return;
+
+            Cursor previous = Cursor.Current;
+
+            Cursor.Current = Cursors.WaitCursor;
+
+            try
+            {
+                PluginCatalogue.Install(entry);
+
+                XtraMessageBox.Show(
+                    this,
+                    (entry.Name ?? entry.Id) + " has been installed." +
+                        Environment.NewLine + Environment.NewLine +
+                        "Restart Nexus and it will appear above.",
+                    "Plugins",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                Program.LogCrash(ex);
+
+                XtraMessageBox.Show(
+                    this,
+                    (entry.Name ?? entry.Id) + " could not be installed." +
+                        Environment.NewLine + Environment.NewLine +
+                        ex.Message,
+                    "Plugins",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
+            finally
+            {
+                Cursor.Current = previous;
+            }
         }
 
         private void OpenFolder()

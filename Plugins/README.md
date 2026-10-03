@@ -32,11 +32,21 @@ public class HelloPlugin : INexusPlugin
 4. Build, then copy the .dll into the plugins folder and restart
    Nexus.
 
-The plugins folder is
-`%AppData%\NexusLauncher\Plugins`, and **Settings → Plugins → Open
-plugins folder** goes straight there. A plugin can be a loose .dll in
-that folder, or a folder of its own if it ships dependencies beside
-it.
+Nexus looks in two folders, and treats whatever it finds in either
+exactly the same way — there is no such thing as a built-in plugin:
+
+| Folder | Use it for |
+|---|---|
+| `%AppData%\NexusLauncher\Plugins` | **Everything, normally.** Needs no special rights and survives updates. Searched first. |
+| `Plugins` beside `Nexus Launcher.exe` | Plugins shipped with a build, or a portable install. Replaced by an update, and may need administrator rights. Searched second. |
+
+The user folder is searched first, so a copy you install yourself wins
+over one shipped beside the exe. If the same plugin id turns up in
+both, the one in use is listed with a note naming the copy that was
+ignored, rather than the second one silently disappearing.
+
+A plugin can be a loose `.dll` in either folder, or a folder of its
+own containing its dependencies.
 
 Your plugin then appears in **Settings → Plugins**, with whatever
 `Author`, `Version` and `Description` you gave it, and what it

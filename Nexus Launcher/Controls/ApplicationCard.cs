@@ -570,6 +570,14 @@ namespace Nexus_Launcher.Controls
                         "Failed to launch the application: " + ex.Message);
                 }
             }
+            else
+            {
+                // A game from a plugin source. Every branch above is
+                // a launcher Nexus knows by name, so without this the
+                // chain simply ran out: the launch was counted and
+                // nothing started.
+                GameLauncherService.LaunchFromPlugin(_currentGame);
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)

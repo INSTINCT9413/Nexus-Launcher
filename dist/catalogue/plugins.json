@@ -1,0 +1,60 @@
+{
+  "formatVersion": 1,
+  "plugins": [
+    {
+      "id": "nexus.sample",
+      "name": "Sample Plugin",
+      "author": "Nexus Launcher",
+      "version": "1.0.0",
+      "description": "A worked example of the three things a plugin can do. Safe to disable.",
+      "file": "Nexus.Plugin.Sample.dll",
+      "url": "https://nexuspowered.com/Nexus/plugins/Nexus.Plugin.Sample.dll",
+      "sha256": "32b1c2765ca918e344cb95755152535a5cbbd9551f464eb4cf11b21bc18ac77a",
+      "size": 7680
+    },
+    {
+      "id": "nexus.extralaunchers",
+      "name": "Extra Launchers",
+      "author": "Nexus Launcher",
+      "version": "1.0.0",
+      "description": "Finds games from Amazon Games, the Paradox launcher and Wargaming Game Center.",
+      "file": "Nexus.Plugin.ExtraLaunchers.dll",
+      "url": "https://nexuspowered.com/Nexus/plugins/Nexus.Plugin.ExtraLaunchers.dll",
+      "sha256": "689bbabd0e355299aa01c5e4d99c73cf84daf56404bcfc86a8473d5610d05de8",
+      "size": 14848
+    },
+    {
+      "id": "nexus.libraryexport",
+      "name": "Library Export",
+      "author": "Nexus Launcher",
+      "version": "1.1.0",
+      "description": "Exports your games and playtime to CSV or JSON. Use the buttons in its settings.",
+      "file": "Nexus.Plugin.LibraryExport.dll",
+      "url": "https://nexuspowered.com/Nexus/plugins/Nexus.Plugin.LibraryExport.dll",
+      "sha256": "c54e67e66cbe21a2d235cb145e85463ea69b72a2ea72e898e5cb9fd2654f8600",
+      "size": 10240
+    },
+    {
+      "id": "nexus.savebackup",
+      "name": "Save Backup",
+      "author": "Nexus Launcher",
+      "version": "1.0.0",
+      "description": "Zips a game's save folder, on demand or when you finish playing.",
+      "file": "Nexus.Plugin.SaveBackup.dll",
+      "url": "https://nexuspowered.com/Nexus/plugins/Nexus.Plugin.SaveBackup.dll",
+      "sha256": "f7bb604293d8c3e45d2e2ccf5c6b87c09a937c860c1deda05415c2d6c7892d3e",
+      "size": 11264
+    },
+    {
+      "id": "nexus.discordpresence",
+      "name": "Discord Rich Presence",
+      "author": "Nexus Launcher",
+      "version": "1.1.0",
+      "description": "Shows the game you are playing, or that you are browsing your library, on your Discord profile.",
+      "file": "Nexus.Plugin.DiscordPresence.dll",
+      "url": "https://nexuspowered.com/Nexus/plugins/Nexus.Plugin.DiscordPresence.dll",
+      "sha256": "95ef52fcad097980f760a488ad984b89657d5065596eb325a948a7a8ead54ece",
+      "size": 11776
+    }
+  ]
+}

@@ -217,6 +217,16 @@ namespace Nexus.Plugin
         public string ExecutablePath { get; set; }
 
         /// <summary>
+        /// Arguments for that executable.
+        ///
+        /// Several launchers will not start a game from its own exe
+        /// and want their own helper run instead: Wargaming games,
+        /// for one, are started with their folder's wgc_api.exe and
+        /// --open.
+        /// </summary>
+        public string Arguments { get; set; }
+
+        /// <summary>
         /// A uri that starts the game through its own launcher, such
         /// as "amazon-games://play/...". Preferred over the executable
         /// where the launcher needs to be involved.

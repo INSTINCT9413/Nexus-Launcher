@@ -54,6 +54,14 @@ internal static class GameLauncherService
                 case "Nexus Launcher":
                     LaunchExecutable(game);
                     break;
+
+                // Anything else is a plugin's source. Without this
+                // the switch simply fell through and nothing
+                // happened at all, which is what made plugin games
+                // look like they were ignored.
+                default:
+                    LaunchFromPlugin(game);
+                    break;
             }
         }
         catch (Exception ex)
@@ -252,6 +260,73 @@ game.LaunchUri))
                 "Failed to launch " + game.Name + ".");
         }
     }
+    /// <summary>
+    /// Starts a game that came from a plugin.
+    ///
+    /// The uri is preferred where there is one, because a launcher
+    /// that provides one usually needs to be involved in starting
+    /// its own games. Otherwise the executable, with whatever
+    /// arguments the plugin gave: several launchers want a helper
+    /// run rather than the game directly.
+    /// </summary>
+    public static void LaunchFromPlugin(GameInfo game)
+    {
+        try
+        {
+            if (!string.IsNullOrWhiteSpace(game.LaunchUri))
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = game.LaunchUri,
+                    UseShellExecute = true
+                });
+
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(game.ExecutablePath))
+                return;
+
+            ProcessStartInfo start =
+                new ProcessStartInfo
+                {
+                    FileName = game.ExecutablePath,
+                    UseShellExecute = true
+                };
+
+            if (!string.IsNullOrWhiteSpace(game.Arguments))
+                start.Arguments = game.Arguments;
+
+            // Some game executables will not start unless the
+            // working directory is their own folder.
+            try
+            {
+                string folder =
+                    System.IO.Path.GetDirectoryName(game.ExecutablePath);
+
+                if (!string.IsNullOrEmpty(folder))
+                    start.WorkingDirectory = folder;
+            }
+            catch
+            {
+            }
+
+            Process.Start(start);
+        }
+        catch (Exception ex)
+        {
+            Program.LogCrash(ex);
+
+            MessageBox.Show(
+                "Could not start " + game.Name + "." +
+                    Environment.NewLine + Environment.NewLine +
+                    ex.Message,
+                "Nexus Launcher",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning);
+        }
+    }
+
     public static void LaunchExecutable(GameInfo game)
     {
         if (string.IsNullOrEmpty(game.ExecutablePath))

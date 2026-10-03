@@ -3330,12 +3330,10 @@ namespace Nexus_Launcher
                     applicationCard.webView21.Source = new Uri(xboxStoreLink);
                     applicationCard._gameStoreLink = xboxStoreLink;
                 }
-                if (game.Launcher == "Ubisoft" || game.Launcher == "Nexus Launcher" || game.Launcher == string.Empty)
+                if (!HasStorePage(game.Launcher))
                 {
-                    
-                    applicationCard.webView21.Source = new Uri("https://nexuspowered.com/Nexus/store-not-supported.html");
-                    //MessageBox.Show("Nexus Launcher - Ubisoft Connect - " + applicationCard.webView21.Source);
-                  
+                    applicationCard.webView21.Source =
+                        new Uri(StoreNotSupportedUrl);
                 }
                 
             }
@@ -3343,6 +3341,39 @@ namespace Nexus_Launcher
             {
                 Program.LogCrash(ex);
                 // XtraMessageBox.Show( ex.Message + " "+ ex.Source+ ex.InnerException, "test");
+            }
+        }
+
+        private const string StoreNotSupportedUrl =
+            "https://nexuspowered.com/Nexus/store-not-supported.html";
+
+        /// <summary>
+        /// Whether Nexus knows a store page for this launcher.
+        ///
+        /// Asked the other way round on purpose. This used to name
+        /// the launchers that get the "not supported" page instead,
+        /// which meant anything not on that list kept whatever page
+        /// was already loaded: pick a Steam game, then a Wargaming
+        /// one, and the Steam store page stayed on screen as though
+        /// it belonged to it. Every launcher a plugin adds has no
+        /// store page by definition, so they are covered by default
+        /// now rather than needing to be listed here.
+        /// </summary>
+        private static bool HasStorePage(
+            string launcher)
+        {
+            switch (launcher)
+            {
+                case "Steam":
+                case "Epic Games":
+                case "Battle.net":
+                case "GOG":
+                case "EA":
+                case "Xbox":
+                    return true;
+
+                default:
+                    return false;
             }
         }
 
@@ -5564,6 +5595,15 @@ namespace Nexus_Launcher
             else if (applicationCard._selectedGroup == "Nexus Launcher")
             {
                 
+            }
+            else
+            {
+                // A game from a plugin source. Every branch above
+                // names a launcher Nexus knows, so without this the
+                // chain ran out and the launch was counted with
+                // nothing started.
+                GameLauncherService.LaunchFromPlugin(
+                    applicationCard.CurrentGame);
             }
         }
 

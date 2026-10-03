@@ -27,8 +27,14 @@ namespace Nexus_Launcher.Services.Plugins
 
         public string File;
 
-        /// <summary>Bundled with Nexus rather than user installed.</summary>
-        public bool IsBuiltIn;
+        /// <summary>
+        /// Where it was loaded from, for the list. Nothing behaves
+        /// differently because of it: a plugin shipped with Nexus and
+        /// one the user dropped in are the same kind of thing, and
+        /// treating them differently only made the shipped ones look
+        /// unremovable.
+        /// </summary>
+        public string Origin;
 
         public bool Enabled;
 
@@ -40,6 +46,12 @@ namespace Nexus_Launcher.Services.Plugins
         public string Error;
 
         public INexusPlugin Instance;
+
+        /// <summary>
+        /// Set when the same plugin id was found in the other folder
+        /// too, and this copy is the one in use.
+        /// </summary>
+        public string Duplicate;
 
         public bool Loaded
         {
@@ -155,10 +167,14 @@ namespace Nexus_Launcher.Services.Plugins
         //--------------------------------------------------------------
 
         /// <summary>
-        /// Shipped with Nexus. Replaced wholesale by an update, so
-        /// nothing the user owns should ever be put here.
+        /// The Plugins folder beside Nexus.exe.
+        ///
+        /// Searched second, so a copy in the user's own folder wins.
+        /// An update replaces the install folder wholesale, and under
+        /// Program Files it needs administrator rights to write to,
+        /// so nothing the user owns should ever live here.
         /// </summary>
-        public static string BuiltInFolder
+        public static string AppFolder
         {
             get
             {
@@ -169,8 +185,11 @@ namespace Nexus_Launcher.Services.Plugins
         }
 
         /// <summary>
-        /// Where the user's own plugins go. Survives updates, which is
-        /// why this is the folder the Plugins page opens.
+        /// Where the user's own plugins go, and what the Plugins page
+        /// opens and copies into.
+        ///
+        /// Searched first, needs no special rights, and survives
+        /// updates, so this is the one that matters.
         /// </summary>
         public static string UserFolder
         {
@@ -310,6 +329,11 @@ namespace Nexus_Launcher.Services.Plugins
                 Program.LogCrash(ex);
             }
 
+            // Reads its cache now and refreshes from the site in
+            // the background, so the Plugins page has something to
+            // show immediately and is never held up by the network.
+            PluginCatalogue.Start();
+
             HashSet<string> disabled = DisabledIds();
 
             foreach (string file in Discover())
@@ -322,7 +346,10 @@ namespace Nexus_Launcher.Services.Plugins
         {
             List<string> found = new List<string>();
 
-            foreach (string root in new[] { BuiltInFolder, UserFolder })
+            // The user's folder first: a copy they installed
+            // themselves should win over one sitting beside the exe,
+            // not be quietly ignored in favour of it.
+            foreach (string root in new[] { UserFolder, AppFolder })
             {
                 try
                 {
@@ -395,7 +422,7 @@ namespace Nexus_Launcher.Services.Plugins
 
                 Record(file, null, null,
                     "It needs something that is missing: " +
-                    Describe(ex));
+                    DescribeLoaderFailure(ex));
             }
             catch (Exception ex)
             {
@@ -429,7 +456,7 @@ namespace Nexus_Launcher.Services.Plugins
             }
         }
 
-        private static string Describe(
+        private static string DescribeLoaderFailure(
             ReflectionTypeLoadException ex)
         {
             StringBuilder text = new StringBuilder();
@@ -438,6 +465,21 @@ namespace Nexus_Launcher.Services.Plugins
                 text.Append(inner.Message).Append(" ");
 
             return text.ToString().Trim();
+        }
+
+        /// <summary>
+        /// Which folder a plugin came out of, in words.
+        /// </summary>
+        private static string Describe(
+            string file)
+        {
+            if (string.IsNullOrEmpty(file))
+                return "unknown";
+
+            return file.StartsWith(UserFolder,
+                       StringComparison.OrdinalIgnoreCase)
+                ? "your plugins folder"
+                : "the folder beside Nexus";
         }
 
         private static void Record(
@@ -458,8 +500,7 @@ namespace Nexus_Launcher.Services.Plugins
                 Version = info != null ? info.Version : null,
                 Description = info != null ? info.Description : null,
                 File = file,
-                IsBuiltIn = file.StartsWith(
-                    BuiltInFolder, StringComparison.OrdinalIgnoreCase),
+                Origin = Describe(file),
                 Enabled = true,
                 Error = error
             };
@@ -473,12 +514,18 @@ namespace Nexus_Launcher.Services.Plugins
             NexusPluginAttribute info,
             HashSet<string> disabled)
         {
-            if (plugins.Any(p => string.Equals(
-                    p.Id, info.Id, StringComparison.OrdinalIgnoreCase)))
+            PluginRecord already = plugins.FirstOrDefault(p =>
+                string.Equals(p.Id, info.Id,
+                    StringComparison.OrdinalIgnoreCase));
+
+            if (already != null)
             {
-                // Two copies of the same plugin. The first one found
-                // wins, which means a built in one cannot be quietly
-                // shadowed by a dropped in file.
+                // The same plugin in both folders. The first found
+                // wins, which is the user's copy, but saying so beats
+                // leaving someone to wonder why their edit had no
+                // effect.
+                already.Duplicate = file;
+
                 return;
             }
 
@@ -490,8 +537,7 @@ namespace Nexus_Launcher.Services.Plugins
                 Version = info.Version,
                 Description = info.Description,
                 File = file,
-                IsBuiltIn = file.StartsWith(
-                    BuiltInFolder, StringComparison.OrdinalIgnoreCase),
+                Origin = Describe(file),
                 Enabled = !disabled.Contains(info.Id)
             };
 

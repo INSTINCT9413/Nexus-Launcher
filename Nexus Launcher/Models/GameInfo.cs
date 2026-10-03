@@ -37,6 +37,13 @@ namespace Nexus_Launcher.Models
         public string InstallPath { get; set; }
         public string epicLauncherAppId { get; set; }
         public string ExecutablePath { get; set; }
+
+        /// <summary>
+        /// Arguments for ExecutablePath. Only plugin sources set this
+        /// so far; the built in scanners each have their own launch
+        /// routine.
+        /// </summary>
+        public string Arguments { get; set; }
         public string LaunchUri { get; set; }
         public string AppUserModelId { get; set; }
         public string HeaderImageUrl { get; set; }

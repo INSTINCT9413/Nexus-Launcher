@@ -178,67 +178,6 @@ namespace Nexus.Plugin.ExtraLaunchers
         };
 
         /// <summary>
-        /// Each {...} block inside a named JSON array.
-        ///
-        /// Paradox records its games as objects in gameLibraryPaths,
-        /// mixed in with plain strings, so this walks the brackets
-        /// rather than pretending the file is flat.
-        /// </summary>
-        public static IEnumerable<string> JsonObjects(
-            string json,
-            string arrayKey)
-        {
-            List<string> found = new List<string>();
-
-            if (string.IsNullOrEmpty(json))
-                return found;
-
-            int at = json.IndexOf("\"" + arrayKey + "\"",
-                StringComparison.OrdinalIgnoreCase);
-
-            if (at < 0)
-                return found;
-
-            int open = json.IndexOf('[', at);
-
-            if (open < 0)
-                return found;
-
-            int depth = 0;
-            int start = -1;
-
-            for (int i = open; i < json.Length; i++)
-            {
-                char c = json[i];
-
-                if (c == '{')
-                {
-                    if (depth == 0)
-                        start = i;
-
-                    depth++;
-                }
-                else if (c == '}')
-                {
-                    depth--;
-
-                    if (depth == 0 && start >= 0)
-                    {
-                        found.Add(json.Substring(start, i - start + 1));
-
-                        start = -1;
-                    }
-                }
-                else if (c == ']' && depth == 0)
-                {
-                    break;
-                }
-            }
-
-            return found;
-        }
-
-        /// <summary>
         /// Whether a path is obviously not a game.
         /// </summary>
         public static bool LooksLikePlumbing(
@@ -404,26 +343,27 @@ namespace Nexus.Plugin.ExtraLaunchers
                     continue;
                 }
 
-                // The game's own executable, started directly.
-                //
-                // Not "wgc_api.exe --open", which is what Game
-                // Center's own Start menu shortcuts use: that was
-                // tried here and it only opens Game Center at the
-                // game's page, leaving the user to press Play. The
-                // shortcut behaves the same way, so it was never a
-                // launch command to copy.
-                //
-                // wgc_api.exe is excluded from the search by name,
-                // along with the rest of the Game Center plumbing
-                // that ships in every game folder.
+                // Wargaming games are not started from their own
+                // exe. Game Center's own Start menu shortcuts run
+                // "wgc_api.exe --open" from the game folder, which
+                // brings Game Center up if it is not running and
+                // then starts the game. Running WorldOfWarships.exe
+                // directly simply does nothing.
+                string helper = Path.Combine(
+                    entry.InstallLocation, "wgc_api.exe");
+
+                bool viaGameCentre = File.Exists(helper);
+
                 games.Add(new PluginGame
                 {
                     Name = Tidy(entry.Name),
                     SourceGameId = ReadGameId(entry.InstallLocation)
                                    ?? entry.Name,
                     InstallPath = entry.InstallLocation,
-                    ExecutablePath =
-                        Uninstall.BestExe(entry.InstallLocation),
+                    ExecutablePath = viaGameCentre
+                        ? helper
+                        : Uninstall.BestExe(entry.InstallLocation),
+                    Arguments = viaGameCentre ? "--open" : null,
                     IconPath = Uninstall.IconFile(entry.Icon)
                 });
             }
@@ -690,162 +630,57 @@ namespace Nexus.Plugin.ExtraLaunchers
             return Directory.Exists(LauncherFolder);
         }
 
-        private string UserSettingsFile
-        {
-            get
-            {
-                return Path.Combine(
-                    LauncherFolder, "launcher-v2", "userSettings.json");
-            }
-        }
-
-        private string MetadataFile
-        {
-            get
-            {
-                return Path.Combine(
-                    LauncherFolder, "launcher-v2",
-                    "game-metadata", "game-metadata");
-            }
-        }
-
-        /// <summary>
-        /// Reads the launcher's own list of installed games.
-        ///
-        /// The registry is no good here: a Paradox launcher game
-        /// writes no uninstall entry at all, so scanning for the
-        /// publisher found nothing but Steam copies of Paradox
-        /// titles, which belong to Steam anyway.
-        ///
-        /// userSettings.json lists each install, and each install
-        /// has a launcher-settings.json naming its executable. That
-        /// matters: BattleTech ships BattleTech.exe beside
-        /// BattleTechLauncher.exe and a crash handler, so guessing
-        /// would pick the wrong one.
-        /// </summary>
         public IEnumerable<PluginGame> Scan()
         {
             List<PluginGame> games = new List<PluginGame>();
 
-            string settings = ReadFile(UserSettingsFile);
-
-            if (settings == null)
+            foreach (Uninstall.Entry entry in Uninstall.All())
             {
-                host.Log.Info("Paradox: no userSettings.json");
-
-                return games;
-            }
-
-            string metadata = ReadFile(MetadataFile);
-
-            foreach (string entry in
-                     Uninstall.JsonObjects(settings, "gameLibraryPaths"))
-            {
-                string gameId = Uninstall.JsonValue(entry, "gameId");
-
-                string install =
-                    Uninstall.JsonValue(entry, "installationPath");
-
-                if (string.IsNullOrWhiteSpace(gameId) ||
-                    string.IsNullOrWhiteSpace(install))
+                if (string.IsNullOrWhiteSpace(entry.Publisher) ||
+                    entry.Publisher.IndexOf("Paradox",
+                        StringComparison.OrdinalIgnoreCase) < 0)
                 {
                     continue;
                 }
 
-                install = install.Replace("\\\\", "\\");
-
-                if (!Directory.Exists(install))
+                if (string.IsNullOrWhiteSpace(entry.InstallLocation) ||
+                    !Directory.Exists(entry.InstallLocation))
                 {
-                    host.Log.Info("Paradox: " + gameId +
-                        " is listed but not on disk");
+                    // Catches the Paradox launcher itself, which
+                    // records no install location.
+                    continue;
+                }
 
+                if (Uninstall.IsAnotherStoresCopy(entry.InstallLocation))
+                {
+                    host.Log.Info(
+                        "Paradox: skipping " + entry.Name +
+                        ", it belongs to another store");
+
+                    continue;
+                }
+
+                if (!string.IsNullOrWhiteSpace(entry.Name) &&
+                    entry.Name.IndexOf("Launcher",
+                        StringComparison.OrdinalIgnoreCase) >= 0)
+                {
                     continue;
                 }
 
                 games.Add(new PluginGame
                 {
-                    Name = NameFor(metadata, gameId),
-                    SourceGameId = gameId,
-                    InstallPath = install,
-                    ExecutablePath = ExeFor(install)
+                    Name = entry.Name,
+                    SourceGameId = entry.Name,
+                    InstallPath = entry.InstallLocation,
+                    ExecutablePath = Uninstall.BestExe(
+                        entry.InstallLocation, "unins", "launcher", "crash"),
+                    IconPath = Uninstall.IconFile(entry.Icon)
                 });
             }
 
             host.Log.Info("Paradox: " + games.Count + " game(s)");
 
             return games;
-        }
-
-        private static string ReadFile(
-            string path)
-        {
-            try
-            {
-                return File.Exists(path) ? File.ReadAllText(path) : null;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// The executable the launcher records for this install.
-        /// </summary>
-        private string ExeFor(
-            string install)
-        {
-            string settings = ReadFile(
-                Path.Combine(install, "launcher-settings.json"));
-
-            if (settings != null)
-            {
-                string exe = Uninstall.JsonValue(settings, "exePath");
-
-                if (!string.IsNullOrWhiteSpace(exe))
-                {
-                    string full = Path.Combine(
-                        install, exe.Replace("/", "\\"));
-
-                    if (File.Exists(full))
-                        return full;
-
-                    host.Log.Warn("Paradox: launcher-settings names " +
-                        exe + " but it is not there");
-                }
-            }
-
-            return Uninstall.BestExe(install);
-        }
-
-        /// <summary>
-        /// The display name the launcher uses, so the library does
-        /// not end up listing "battletech".
-        /// </summary>
-        private static string NameFor(
-            string metadata,
-            string gameId)
-        {
-            if (metadata != null)
-            {
-                int at = metadata.IndexOf(
-                    "\"id\":\"" + gameId + "\"",
-                    StringComparison.OrdinalIgnoreCase);
-
-                if (at >= 0)
-                {
-                    string name = Uninstall.JsonValue(
-                        metadata.Substring(at), "name");
-
-                    if (!string.IsNullOrWhiteSpace(name))
-                        return name;
-                }
-            }
-
-            // Last resort: "battletech" reads better capitalised.
-            return gameId.Length < 2
-                ? gameId
-                : char.ToUpperInvariant(gameId[0]) + gameId.Substring(1);
         }
     }
 }
