@@ -421,6 +421,19 @@ namespace Nexus_Launcher
             // once the user has turned the association off.
             ThemeFileAssociation.ApplyStartupPreference();
 
+            // Before the splash and well before the library scan:
+            // a plugin that adds a library source has to be able to
+            // register it before anything asks what the sources are.
+            // Nothing here can stop Nexus starting - every plugin is
+            // called behind a guard that records failures instead of
+            // throwing.
+            Services.Plugins.PluginService.Start();
+
+            Services.Plugins.PluginBridge.HookPlayEvents();
+
+            Application.ApplicationExit +=
+                (s, e) => Services.Plugins.PluginService.Stop();
+
             SplashScreenManager.ShowForm(MainFormInstance, typeof(WaitForm1), true, true, false);
 
             //Batteries.Init();

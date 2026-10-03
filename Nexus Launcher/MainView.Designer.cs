@@ -147,6 +147,8 @@
             this.barLargeButtonItem2 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barStaticItem2 = new DevExpress.XtraBars.BarStaticItem();
             this.barButtonItem15 = new DevExpress.XtraBars.BarButtonItem();
+            this.barSubItem8 = new DevExpress.XtraBars.BarSubItem();
+            this.barButtonItem16 = new DevExpress.XtraBars.BarButtonItem();
             this.toggleSwitch1 = new DevExpress.XtraEditors.ToggleSwitch();
             this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
             this.checkEdit1 = new DevExpress.XtraEditors.CheckEdit();
@@ -179,8 +181,6 @@
             this.adornerUIManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(this.components);
             this.badge1 = new DevExpress.Utils.VisualEffects.Badge();
             this.htmlContentPopup1 = new DevExpress.XtraEditors.HtmlContentPopup(this.components);
-            this.barSubItem8 = new DevExpress.XtraBars.BarSubItem();
-            this.barButtonItem16 = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.accordionControl2)).BeginInit();
@@ -605,7 +605,7 @@
             accordionContextButton38.Name = "nexusStore";
             this.groupXbox.ContextButtons.Add(accordionContextButton37);
             this.groupXbox.ContextButtons.Add(accordionContextButton38);
-            this.groupXbox.ImageOptions.Image = global::Nexus_Launcher.Properties.Resources.Xbox25px;
+            this.groupXbox.ImageOptions.Image = global::Nexus_Launcher.Properties.Resources.Xbox_Emblem_300x300__Custom_;
             this.groupXbox.Name = "groupXbox";
             this.groupXbox.Text = "Xbox";
             this.groupXbox.Visible = false;
@@ -1193,6 +1193,19 @@
             this.barButtonItem15.Name = "barButtonItem15";
             this.barButtonItem15.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
             // 
+            // barSubItem8
+            // 
+            this.barSubItem8.Caption = "barSubItem8";
+            this.barSubItem8.Id = 0;
+            this.barSubItem8.Name = "barSubItem8";
+            // 
+            // barButtonItem16
+            // 
+            this.barButtonItem16.Caption = "My Account";
+            this.barButtonItem16.Id = 1;
+            this.barButtonItem16.Name = "barButtonItem16";
+            this.barButtonItem16.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem16_ItemClick);
+            // 
             // toggleSwitch1
             // 
             this.toggleSwitch1.Location = new System.Drawing.Point(15, 120);
@@ -1460,19 +1473,6 @@
             this.htmlContentPopup1.ContainerControl = this;
             this.htmlContentPopup1.HtmlTemplate.Styles = resources.GetString("htmlContentPopup1.HtmlTemplate.Styles");
             this.htmlContentPopup1.HtmlTemplate.Template = resources.GetString("htmlContentPopup1.HtmlTemplate.Template");
-            // 
-            // barSubItem8
-            // 
-            this.barSubItem8.Caption = "barSubItem8";
-            this.barSubItem8.Id = 0;
-            this.barSubItem8.Name = "barSubItem8";
-            // 
-            // barButtonItem16
-            // 
-            this.barButtonItem16.Caption = "My Account";
-            this.barButtonItem16.Id = 1;
-            this.barButtonItem16.Name = "barButtonItem16";
-            this.barButtonItem16.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem16_ItemClick);
             // 
             // MainView
             // 

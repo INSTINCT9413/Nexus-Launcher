@@ -686,6 +686,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Nexus.Plugin.SDK\Nexus.Plugin.SDK.csproj">
+      <Project>{7A31C6D4-2B55-4E0B-9C8E-4F1D2A6E5B01}</Project>
+      <Name>Nexus.Plugin.SDK</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -844,6 +850,12 @@
     <Compile Include="Services\AccordionLibraryOrganizer.cs" />
     <Compile Include="Services\LibraryGroupIcons.cs" />
     <Compile Include="Services\LibraryOrganizationService.cs" />
+    <Compile Include="Forms\LauncherInstallForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\SetupLauncherList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\SetupSettingsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -900,6 +912,16 @@
     <Compile Include="Services\ThemeFileAssociation.cs" />
     <Compile Include="Services\ThemePackage.cs" />
     <Compile Include="Services\LibrarySelectionService.cs" />
+    <Compile Include="Controls\PluginManagerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Services\Plugins\PluginSettingsStore.cs" />
+    <Compile Include="Forms\PluginSettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Services\Plugins\PluginBridge.cs" />
+    <Compile Include="Services\Plugins\PluginService.cs" />
+    <Compile Include="Services\Plugins\PluginHostContext.cs" />
     <Compile Include="Services\PlayTrackingService.cs" />
     <Compile Include="Services\SidePanelPresenter.cs" />
     <Compile Include="Services\SystemStatsService.cs" />
@@ -1001,15 +1023,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <None Include="Resources\unlock_chime.wav" />
-
     <None Include="Resources\unlock_arpeggio.wav" />
-
     <None Include="Resources\unlock_thump.wav" />
-
     <None Include="Resources\unlock_marimba.wav" />
-
     <None Include="Resources\unlock_crystal.wav" />
-
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -1050,6 +1067,7 @@
   <ItemGroup>
     <Content Include="dfveffb-9b262552-e352-4348-aefc-8e699002c946.ico" />
     <Content Include="License-LGPL.txt" />
+    <None Include="Resources\Xbox-Emblem-300x300 %28Custom%29.png" />
     <None Include="Resources\insertimage_16x16.png" />
     <None Include="Resources\zoom100_16x16.png" />
     <None Include="Resources\fill_16x16.png" />

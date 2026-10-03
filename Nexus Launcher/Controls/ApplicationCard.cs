@@ -221,7 +221,7 @@ namespace Nexus_Launcher.Controls
             // Set here rather than in the designer, so the shared
             // profile above is in place before the browser starts.
             webView22.Source =
-                new System.Uri("https://guardbyte.me/downloads/Nexus%20Launcher/loading.html");
+                new System.Uri("https://nexuspowered.com/Nexus/loading.html");
 
             // Nothing is selected yet, so the star starts disabled.
             RefreshFavoriteDisplay();

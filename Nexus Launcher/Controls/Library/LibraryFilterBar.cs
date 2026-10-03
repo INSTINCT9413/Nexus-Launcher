@@ -181,7 +181,7 @@ namespace Nexus_Launcher.Controls.Library
 
                 size.Properties.BorderStyle =
                     DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-
+                size.Properties.TickStyle = TickStyle.None;
                 size.Value = 172;
 
                 size.EditValueChanged += Size_Changed;

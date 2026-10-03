@@ -37,6 +37,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Management.Instrumentation;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1185,11 +1186,6 @@ namespace Nexus_Launcher
                     Show();
                     Activate();
                 }));
-
-                if (!Settings.Default.HideEANotice)
-                {
-                    taskDialog1.ShowDialog(this);
-                }
             }
 
             this.Text = Title;
@@ -1781,97 +1777,85 @@ namespace Nexus_Launcher
             // Xbox games were already scanned by LoadXboxGamesAsync
             LibraryService.AddGames(
                 xboxGames);
+
+            // Anything the plugins found. Last, so a plugin cannot
+            // displace a game Nexus scanned itself, and behind a
+            // guard, so a broken plugin costs only its own games.
+            LibraryService.AddGames(
+                Services.Plugins.PluginBridge.ScanPluginSources());
+
+            PopulatePluginSources();
         }
+        /// <summary>
+        /// Shows a launcher only when it is both installed and wanted.
+        ///
+        /// FindLaunchers has already put the detection result in
+        /// Visible by the time this runs. This used to overwrite that
+        /// with the setting alone, so a launcher that is not on the
+        /// machine still appeared in the sidebar whenever its Show
+        /// switch happened to be on, with nothing behind it.
+        ///
+        /// Not installed wins. The setting stays a preference about a
+        /// launcher you actually have, rather than being ignored
+        /// outright: turning Steam off still hides an installed Steam,
+        /// and turning it on cannot conjure one you have not got.
+        /// </summary>
+        private static void ApplyLauncherVisibility(
+            AccordionControlElement group,
+            bool wanted)
+        {
+            if (group == null)
+                return;
+
+            group.Visible = wanted && group.Visible;
+        }
+
         private async void ShowHideLaunchers()
         {
-            if (Settings.Default.ShowAmazon)
-            {
-                groupAmazon.Visible = true;
-            }
-            else
-            {
-                groupAmazon.Visible = false;
-            }
-            if (Settings.Default.ShowBattleNet)
-            {
-                groupBattleNet.Visible = true;
-            }
-            else
-            {
-                groupBattleNet.Visible = false;
-            }
-            if (Settings.Default.ShowEA)
-            {
-                groupEA.Visible = true;
-            }
-            else
-            {
-                groupEA.Visible = false;
-            }
-            if (Settings.Default.ShowEpic)
-            {
-                groupEpic.Visible = true;
-            }
-            else
-            {
-                groupEpic.Visible = false;
-            }
-            if (Settings.Default.ShowGOG)
-            {
-                groupGOG.Visible = true;
-            }
-            else
-            {
-                groupGOG.Visible = false;
-            }
-            if (Settings.Default.ShowParadox)
-            {
-                groupParadox.Visible = true;
-            }
-            else
-            {
-                groupParadox.Visible = false;
-            }
-            if (Settings.Default.ShowSteam)
-            {
-                groupSteam.Visible = true;
-            }
-            else
-            {
-                groupSteam.Visible = false;
-            }
-            if (Settings.Default.ShowUbisoft)
-            {
-                groupUbisoft.Visible = true;
-            }
-            else
-            {
-                groupUbisoft.Visible = false;
-            }
-            if (Settings.Default.ShowWindowsStore)
-            {
-                groupWindowsStore.Visible = true;
-            }
-            else
-            {
-                groupWindowsStore.Visible = false;
-            }
-            if (Settings.Default.ShowXbox)
-            {
-                groupXbox.Visible = true;
-            }
-            else
-            {
-                groupXbox.Visible = false;
-            }
-            if (Settings.Default.ShowWargaming)
-            {
-                groupWargaming.Visible = true;
-            }
-            else
-            {
-                groupWargaming.Visible = false;
-            }
+            ApplyLauncherVisibility(
+                groupAmazon,
+                Settings.Default.ShowAmazon);
+
+            ApplyLauncherVisibility(
+                groupBattleNet,
+                Settings.Default.ShowBattleNet);
+
+            ApplyLauncherVisibility(
+                groupEA,
+                Settings.Default.ShowEA);
+
+            ApplyLauncherVisibility(
+                groupEpic,
+                Settings.Default.ShowEpic);
+
+            ApplyLauncherVisibility(
+                groupGOG,
+                Settings.Default.ShowGOG);
+
+            ApplyLauncherVisibility(
+                groupParadox,
+                Settings.Default.ShowParadox);
+
+            ApplyLauncherVisibility(
+                groupSteam,
+                Settings.Default.ShowSteam);
+
+            ApplyLauncherVisibility(
+                groupUbisoft,
+                Settings.Default.ShowUbisoft);
+
+            ApplyLauncherVisibility(
+                groupWindowsStore,
+                Settings.Default.ShowWindowsStore);
+
+            ApplyLauncherVisibility(
+                groupXbox,
+                Settings.Default.ShowXbox);
+
+            ApplyLauncherVisibility(
+                groupWargaming,
+                Settings.Default.ShowWargaming);
+
             this.Show();
             ArtworkService.ArtworkProgressChanged +=
             ArtworkService_ArtworkProgressChanged;
@@ -1893,6 +1877,17 @@ namespace Nexus_Launcher
             groupUbisoft.Text = $"Ubisoft ({groupUbisoft.Elements.Count})";
             groupBattleNet.Text = $"Battle.net ({groupBattleNet.Elements.Count})";
             groupXbox.Text = $"Xbox ({groupXbox.Elements.Count})";
+
+            // Last of all, once the splash has gone and the window is
+            // really on screen. Started minimised there is nothing to
+            // put it in front of, and a modal dialog over an empty
+            // desktop would be a poor greeting, so the tray start is
+            // left alone.
+            if (!Settings.Default.StartMinimized &&
+                !Settings.Default.HideEANotice)
+            {
+                ShowEarlyAccessNotice();
+            }
         }
         private void ArtworkService_ArtworkProgressChanged(int completed, int total)
         {
@@ -2000,6 +1995,172 @@ namespace Nexus_Launcher
                 XtraMessageBox.Show(ex.ToString());
             }
         }
+        /// <summary>
+        /// Keeps the sidebar groups that plugins created, so they can
+        /// be refilled on a rescan rather than piling up.
+        /// </summary>
+        private readonly Dictionary<string, AccordionControlElement> pluginGroups =
+            new Dictionary<string, AccordionControlElement>(
+                StringComparer.OrdinalIgnoreCase);
+
+        /// <summary>
+        /// The sidebar group a plugin source's games belong in.
+        ///
+        /// Amazon, Paradox and Wargaming already have groups in the
+        /// designer that have simply never had anything to put in
+        /// them, so a source with one of those ids fills the real
+        /// group, complete with its icon and context buttons. Any
+        /// other source gets a group made for it.
+        /// </summary>
+        private AccordionControlElement ResolveSourceGroup(
+            string sourceId,
+            string displayName)
+        {
+            switch ((sourceId ?? string.Empty).ToLowerInvariant())
+            {
+                case "amazon": return groupAmazon;
+                case "paradox": return groupParadox;
+                case "wargaming": return groupWargaming;
+                case "steam": return groupSteam;
+                case "epic": return groupEpic;
+                case "gog": return groupGOG;
+                case "ubisoft": return groupUbisoft;
+                case "ea": return groupEA;
+                case "battlenet": return groupBattleNet;
+                case "xbox": return groupXbox;
+            }
+
+            AccordionControlElement existing;
+
+            if (pluginGroups.TryGetValue(sourceId, out existing))
+                return existing;
+
+            AccordionControlElement group =
+                new AccordionControlElement();
+
+            group.Style = ElementStyle.Group;
+
+            group.Text = displayName;
+
+            group.Name = "groupPlugin_" + sourceId;
+
+            group.ImageOptions.Image = Resources.NAicon;
+
+            accordionControl2.Elements.Add(group);
+
+            pluginGroups[sourceId] = group;
+
+            return group;
+        }
+
+        /// <summary>
+        /// Fills the sidebar from the plugin library sources.
+        ///
+        /// Until this existed a plugin could contribute games and
+        /// they would reach the Full Library but never show in the
+        /// sidebar, which made the whole feature look as though it
+        /// had done nothing.
+        /// </summary>
+        private void PopulatePluginSources()
+        {
+            foreach (Services.Plugins.PluginService.RegisteredSource entry
+                     in Services.Plugins.PluginService.Sources.ToList())
+            {
+                if (!entry.Owner.Enabled || entry.Owner.Error != null)
+                    continue;
+
+                string sourceId = null;
+                string displayName = null;
+                bool installed = false;
+
+                Services.Plugins.PluginService.Guard(entry.Owner,
+                    "describe its library source",
+                    () =>
+                    {
+                        sourceId = entry.Source.Id;
+                        displayName = entry.Source.DisplayName;
+                        installed = entry.Source.IsInstalled();
+                    });
+
+                if (string.IsNullOrWhiteSpace(sourceId))
+                    continue;
+
+                AccordionControlElement group =
+                    ResolveSourceGroup(sourceId, displayName ?? sourceId);
+
+                if (group == null)
+                    continue;
+
+                List<GameInfo> games =
+                    LibraryService.GetGames()
+                        .Where(g => string.Equals(
+                            g.Launcher, sourceId,
+                            StringComparison.OrdinalIgnoreCase))
+                        .ToList();
+
+                List<AccordionControlElement> items =
+                    new List<AccordionControlElement>();
+
+                foreach (GameInfo game in games)
+                {
+                    AccordionControlElement item =
+                        new AccordionControlElement();
+
+                    item.Text = game.Name;
+
+                    item.Style = ElementStyle.Item;
+
+                    item.Tag = game;
+
+                    item.ImageOptions.Image = LoadGameIcon(game);
+
+                    items.Add(item);
+                }
+
+                AccordionLibraryOrganizer.Arrange(
+                    group,
+                    displayName ?? sourceId,
+                    items);
+
+                group.Text = (displayName ?? sourceId) +
+                    " (" + group.Elements.Count + ")";
+
+                // Not installed means no heading at all, rather than
+                // an empty one. A source the user has switched off in
+                // Settings stays off: the setting wins over the fact
+                // that a plugin offered it.
+                group.Visible =
+                    installed &&
+                    Services.Plugins.PluginService.IsSourceVisible(sourceId);
+            }
+        }
+
+        /// <summary>
+        /// A game's icon, or the stand in when it has none.
+        /// </summary>
+        private Image LoadGameIcon(
+            GameInfo game)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(game.IconPath) &&
+                    File.Exists(game.IconPath))
+                {
+                    using (FileStream stream = new FileStream(
+                        game.IconPath, FileMode.Open, FileAccess.Read))
+                    using (Image image = Image.FromStream(stream))
+                    {
+                        return ResizeImage(image, 32, 32);
+                    }
+                }
+            }
+            catch
+            {
+            }
+
+            return Resources.NAicon;
+        }
+
         private void PopulateSteamGames(
     LauncherInfo steamInfo)
         {
@@ -3172,7 +3333,7 @@ namespace Nexus_Launcher
                 if (game.Launcher == "Ubisoft" || game.Launcher == "Nexus Launcher" || game.Launcher == string.Empty)
                 {
                     
-                    applicationCard.webView21.Source = new Uri("https://guardbyte.me/downloads/Nexus%20Launcher/store-not-supported.html");
+                    applicationCard.webView21.Source = new Uri("https://nexuspowered.com/Nexus/store-not-supported.html");
                     //MessageBox.Show("Nexus Launcher - Ubisoft Connect - " + applicationCard.webView21.Source);
                   
                 }
@@ -3492,6 +3653,109 @@ namespace Nexus_Launcher
             catch (Exception ex)
             {
                 Program.LogCrash(ex);
+            }
+        }
+
+        [DllImport("user32.dll")]
+        private static extern bool SetWindowPos(
+            IntPtr hWnd,
+            IntPtr hWndInsertAfter,
+            int x,
+            int y,
+            int cx,
+            int cy,
+            uint flags);
+
+        [DllImport("user32.dll")]
+        private static extern bool SetForegroundWindow(
+            IntPtr hWnd);
+
+        private static readonly IntPtr HwndTopmost =
+            new IntPtr(-1);
+
+        private const uint SwpNoSize = 0x0001;
+
+        private const uint SwpNoMove = 0x0002;
+
+        private const uint SwpNoActivate = 0x0010;
+
+        /// <summary>
+        /// Shows the early access notice, once loading has finished.
+        ///
+        /// It used to go up while the splash was still on screen. The
+        /// splash is topmost, so the dialog opened behind it, and
+        /// because the dialog is modal that left startup waiting on
+        /// something the user could not see. It is shown after the
+        /// splash closes instead.
+        ///
+        /// Still marked topmost: achievement toasts are topmost too
+        /// and can fire while this is up. That has to happen in the
+        /// Created event, because the dialog is a native one and there
+        /// is no window to position until then.
+        /// </summary>
+        private void ShowEarlyAccessNotice()
+        {
+            Ookii.Dialogs.WinForms.TaskDialog dialog =
+                taskDialog1;
+
+            // MainView_Load disables this button during startup. It is
+            // the only way to dismiss the notice, so it has to be back
+            // on by the time the notice is actually shown.
+            taskDialogButton1.Enabled = true;
+
+            // The old footer said "Waiting for Nexus to load", which is
+            // no longer true at this point.
+            dialog.Footer =
+                "You are running an early access build.";
+
+            // The same thing the Hide early access disclaimers switch
+            // in Settings does, offered where the user actually meets
+            // the notice. Unticked every time: the notice only appears
+            // while the setting is off.
+            dialog.VerificationText =
+                "Do not show this again";
+
+            dialog.IsVerificationChecked = false;
+
+            EventHandler bringToFront = (sender, e) =>
+            {
+                IntPtr handle =
+                    dialog.Handle;
+
+                if (handle == IntPtr.Zero)
+                    return;
+
+                SetWindowPos(
+                    handle,
+                    HwndTopmost,
+                    0,
+                    0,
+                    0,
+                    0,
+                    SwpNoMove | SwpNoSize | SwpNoActivate);
+
+                SetForegroundWindow(handle);
+            };
+
+            dialog.Created += bringToFront;
+
+            try
+            {
+                dialog.ShowDialog(this);
+            }
+            finally
+            {
+                dialog.Created -= bringToFront;
+            }
+
+            // Closing with the X still counts: the box was ticked
+            // either way, and ignoring it would just show the notice
+            // again next time.
+            if (dialog.IsVerificationChecked)
+            {
+                Settings.Default.HideEANotice = true;
+
+                Settings.Default.Save();
             }
         }
 
@@ -4114,6 +4378,7 @@ namespace Nexus_Launcher
                 Uninstall_Click);
 
             BuildLibraryOrganizationMenu();
+
         }
 
         //--------------------------------------------------------------
@@ -4531,9 +4796,22 @@ namespace Nexus_Launcher
 
         private void RefreshSystemStats()
         {
-            labelControl3.Text =
+            string text =
                 SidePanelPresenter.BuildSystemStats(
                     SystemStatsService.Read());
+
+            // Plugin tiles share this section rather than getting
+            // panels of their own: the side panel is laid out in the
+            // designer, and this keeps a plugin from being able to
+            // rearrange it.
+            string fromPlugins =
+                Services.Plugins.PluginBridge.BuildWidgetText();
+
+            if (!string.IsNullOrEmpty(fromPlugins))
+                text = text.TrimEnd() + Environment.NewLine +
+                    Environment.NewLine + fromPlugins;
+
+            labelControl3.Text = text;
         }
 
         /// <summary>
@@ -4558,6 +4836,63 @@ namespace Nexus_Launcher
         /// Refreshes the favourite caption and the list of groups the
         /// selected game can be moved into.
         /// </summary>
+        private readonly List<BarButtonItem> pluginActionItems =
+            new List<BarButtonItem>();
+
+        /// <summary>
+        /// Puts the plugins' entries on the game menu.
+        ///
+        /// Rebuilt on every right click, because a plugin is asked
+        /// whether its entry applies to the game in question and the
+        /// answer changes with the game. They go last, after a
+        /// separator, so an installed plugin can never rearrange or
+        /// outrank what Nexus itself offers.
+        /// </summary>
+        private void RefreshPluginActions()
+        {
+            foreach (BarButtonItem previous in pluginActionItems)
+            {
+                popupMenu2.RemoveLink(
+                    popupMenu2.ItemLinks.FirstOrDefault(
+                        l => l.Item == previous));
+
+                barManager1.Items.Remove(previous);
+            }
+
+            pluginActionItems.Clear();
+
+            List<Services.Plugins.PluginBridge.ResolvedAction> actions =
+                Services.Plugins.PluginBridge.GetGameActions(selectedGame);
+
+            bool first = true;
+
+            foreach (Services.Plugins.PluginBridge.ResolvedAction action
+                     in actions)
+            {
+                BarButtonItem item =
+                    new BarButtonItem(barManager1, action.Caption);
+
+                // Says where the entry came from, so a user can tell
+                // Nexus's own actions from an installed plugin's.
+                item.Hint = "From " + action.PluginName;
+
+                Action invoke = action.Invoke;
+
+                item.ItemClick += (s, e) => invoke();
+
+                BarItemLink link = popupMenu2.AddItem(item);
+
+                if (first)
+                {
+                    link.BeginGroup = true;
+
+                    first = false;
+                }
+
+                pluginActionItems.Add(item);
+            }
+        }
+
         private void RefreshLibraryOrganizationMenu()
         {
             contextFavorite.Caption =
@@ -4972,6 +5307,8 @@ namespace Nexus_Launcher
                 return;
 
             RefreshLibraryOrganizationMenu();
+
+            RefreshPluginActions();
 
             //gameContextMenu.Show(accordion, e.Location);
             popupMenu2.ShowPopup(Cursor.Position);

@@ -82,6 +82,16 @@ namespace Nexus_Launcher.Services.Library
         /// </summary>
         public static event Action<GameInfo, DateTime> GameLaunched;
 
+        /// <summary>
+        /// Raised when a session that could be timed has finished.
+        ///
+        /// Only fires for sessions Nexus managed to watch: a launch
+        /// that goes out as a uri to someone else's client often
+        /// cannot be timed at all, and those end up counted as
+        /// untracked with nothing raised here.
+        /// </summary>
+        public static event Action<GameInfo> GameExited;
+
         //--------------------------------------------------------------
         // Storage
         //--------------------------------------------------------------
@@ -422,6 +432,8 @@ namespace Nexus_Launcher.Services.Library
                 }
 
                 Save();
+
+                GameExited?.Invoke(game);
             }
             catch (Exception ex)
             {

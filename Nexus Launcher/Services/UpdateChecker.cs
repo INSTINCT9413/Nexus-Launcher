@@ -15,7 +15,7 @@ namespace Nexus_Launcher.Services
             new HttpClient();
 
         private const string LatestUrl =
-            "https://guardbyte.me/downloads/Nexus%20Launcher/latest.json";
+            "https://nexuspowered.com/Nexus/latest.json";
 
         public static async Task<UpdateInfo> CheckAsync()
         {

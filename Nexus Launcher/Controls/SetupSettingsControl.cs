@@ -52,6 +52,7 @@ namespace Nexus_Launcher.Controls
         private CheckEdit startMaximized;
         private CheckEdit minimizeOnClose;
         private CheckEdit showFullLibrary;
+        private CheckEdit startOnFullLibrary;
         private CheckEdit rememberSidePanel;
         private ComboBoxEdit defaultLauncher;
 
@@ -170,6 +171,15 @@ namespace Nexus_Launcher.Controls
             defaultLauncher.Properties.Items.AddRange(Launchers);
 
             showFullLibrary = Check("Show the Full Library page");
+
+            startOnFullLibrary = Check("Show Full Library on startup");
+
+            // Follows the page it opens: there is nothing to start on
+            // while the Full Library is switched off. Same rule as the
+            // matching pair in Settings.
+            showFullLibrary.CheckedChanged += (s, e) =>
+                UpdateStartOnFullLibraryState();
+
             rememberSidePanel = Check("Remember the side panel state");
 
             CardPanel libraryCard = new CardPanel();
@@ -180,6 +190,7 @@ namespace Nexus_Launcher.Controls
                 Hint("Which launcher Nexus opens on."),
                 defaultLauncher,
                 showFullLibrary,
+                startOnFullLibrary,
                 rememberSidePanel
             });
 
@@ -365,6 +376,19 @@ namespace Nexus_Launcher.Controls
             }
         }
 
+        /// <summary>
+        /// Greys the startup option out while the Full Library itself
+        /// is off, rather than leaving a tick that quietly does
+        /// nothing.
+        /// </summary>
+        private void UpdateStartOnFullLibraryState()
+        {
+            if (startOnFullLibrary == null || showFullLibrary == null)
+                return;
+
+            startOnFullLibrary.Enabled = showFullLibrary.Checked;
+        }
+
         private static CheckEdit Check(
             string caption)
         {
@@ -431,6 +455,9 @@ namespace Nexus_Launcher.Controls
             minimizeOnClose.Checked = Settings.Default.MinimizeOnClose;
 
             showFullLibrary.Checked = Settings.Default.enableFullLibrary;
+            startOnFullLibrary.Checked = Settings.Default.StartOnFullLibrary;
+
+            UpdateStartOnFullLibraryState();
             rememberSidePanel.Checked = Settings.Default.SidePanelRemember;
 
             defaultLauncher.EditValue =
@@ -477,6 +504,12 @@ namespace Nexus_Launcher.Controls
             Settings.Default.MinimizeOnClose = minimizeOnClose.Checked;
 
             Settings.Default.enableFullLibrary = showFullLibrary.Checked;
+
+            // Never saved as on without the page it needs, so a later
+            // startup cannot try to open something that is switched
+            // off.
+            Settings.Default.StartOnFullLibrary =
+                showFullLibrary.Checked && startOnFullLibrary.Checked;
             Settings.Default.SidePanelRemember = rememberSidePanel.Checked;
 
             if (defaultLauncher.EditValue != null)

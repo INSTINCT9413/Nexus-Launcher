@@ -568,6 +568,30 @@ namespace Nexus_Launcher.Properties {
 
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string HiddenPluginSources {
+            get {
+                return ((string)(this["HiddenPluginSources"]));
+            }
+            set {
+                this["HiddenPluginSources"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DisabledPlugins {
+            get {
+                return ((string)(this["DisabledPlugins"]));
+            }
+            set {
+                this["DisabledPlugins"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool StartOnFullLibrary {
             get {

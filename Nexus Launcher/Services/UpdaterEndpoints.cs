@@ -9,7 +9,7 @@ namespace Nexus_Launcher.Services
     internal static class UpdaterEndpoints
     {
         public const string BaseUrl =
-            "https://guardbyte.me/downloads/Nexus%20Launcher/";
+            "https://nexuspowered.com/Nexus/";
 
         public const string Latest =
             BaseUrl + "latest.json";

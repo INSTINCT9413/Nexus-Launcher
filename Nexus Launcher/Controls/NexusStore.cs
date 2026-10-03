@@ -38,7 +38,7 @@ namespace Nexus_Launcher.Controls
             // happen inside InitializeComponent and beat the line
             // above to it.
             webView22.Source =
-                new System.Uri("https://guardbyte.me/downloads/Nexus%20Launcher/loading.html");
+                new System.Uri("https://nexuspowered.com/Nexus/loading.html");
         }
 
         public async void NexusStore_Load(

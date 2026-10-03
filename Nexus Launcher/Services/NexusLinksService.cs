@@ -12,7 +12,7 @@ namespace Nexus_Launcher.Services
     {
         // Change this to the actual location of your JSON file.
         private const string ConfigUrl =
-            "https://guardbyte.me/downloads/Nexus%20Launcher/nexus-links.json";
+            "https://nexuspowered.com/Nexus/nexus-links.json";
 
         private readonly string _cachePath;
 

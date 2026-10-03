@@ -393,16 +393,6 @@ namespace Nexus_Launcher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap nexus_loader_128 {
-            get {
-                object obj = ResourceManager.GetObject("nexus_loader_128", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap NA {
             get {
                 object obj = ResourceManager.GetObject("NA", resourceCulture);
@@ -426,6 +416,16 @@ namespace Nexus_Launcher.Properties {
         internal static System.Drawing.Bitmap NAicon {
             get {
                 object obj = ResourceManager.GetObject("NAicon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap nexus_loader_128 {
+            get {
+                object obj = ResourceManager.GetObject("nexus_loader_128", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -541,6 +541,56 @@ namespace Nexus_Launcher.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] unlock_arpeggio {
+            get {
+                object obj = ResourceManager.GetObject("unlock_arpeggio", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] unlock_chime {
+            get {
+                object obj = ResourceManager.GetObject("unlock_chime", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] unlock_crystal {
+            get {
+                object obj = ResourceManager.GetObject("unlock_crystal", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] unlock_marimba {
+            get {
+                object obj = ResourceManager.GetObject("unlock_marimba", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] unlock_thump {
+            get {
+                object obj = ResourceManager.GetObject("unlock_thump", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap unnamed {
@@ -583,6 +633,26 @@ namespace Nexus_Launcher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Xbox_Emblem_300x300 {
+            get {
+                object obj = ResourceManager.GetObject("Xbox-Emblem-300x300", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Xbox_Emblem_300x300__Custom_ {
+            get {
+                object obj = ResourceManager.GetObject("Xbox-Emblem-300x300 (Custom)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Xbox25px {
             get {
                 object obj = ResourceManager.GetObject("Xbox25px", resourceCulture);
@@ -599,55 +669,5 @@ namespace Nexus_Launcher.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-            
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] unlock_chime {
-            get {
-                object obj = ResourceManager.GetObject("unlock_chime", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] unlock_arpeggio {
-            get {
-                object obj = ResourceManager.GetObject("unlock_arpeggio", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] unlock_thump {
-            get {
-                object obj = ResourceManager.GetObject("unlock_thump", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] unlock_marimba {
-            get {
-                object obj = ResourceManager.GetObject("unlock_marimba", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] unlock_crystal {
-            get {
-                object obj = ResourceManager.GetObject("unlock_crystal", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-}
+    }
 }

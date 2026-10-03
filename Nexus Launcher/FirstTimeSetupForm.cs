@@ -27,6 +27,13 @@ namespace Nexus_Launcher
         public FirstTimeSetupForm()
         {
             InitializeComponent();
+
+            // Roomier than the designer's 677x462. The launcher step
+            // lists seven launchers now, and at the old size they only
+            // fitted by scrolling, which is what made the icons look
+            // cramped in the first place. Set here rather than in the
+            // designer so the form designer cannot quietly put it back.
+            ClientSize = new Size(820, 600);
         }
 
         private void FirstTimeSetupForm_Load(object sender, EventArgs e)
@@ -34,9 +41,107 @@ namespace Nexus_Launcher
             // Disables the focus rectangle globally for all DevExpress SimpleButtons
             DevExpress.XtraEditors.WindowsFormsSettings.FocusRectStyle = DevExpress.Utils.Paint.DXDashStyle.None;
             labelControl1.Text = welcomeWizardPage1.IntroductionText.ToString();
-            FindLaunchers();
+            BuildLauncherStep();
+            BuildCompletionStep();
             AddSetupSettings();
         }
+        private Controls.SetupLauncherList launcherList;
+
+        /// <summary>
+        /// The supported launchers step.
+        ///
+        /// The page used to be seven picture boxes, nine labels and six
+        /// buttons placed by hand, which is why the icon column was a
+        /// fixed 52x254 strip that ran out of room and grew a
+        /// scrollbar, which is what squashed the icons. It is one
+        /// generated list now, filling the page, so it cannot be
+        /// squeezed, and Xbox could be added to it.
+        /// </summary>
+        private void BuildLauncherStep()
+        {
+            launcherList = new Controls.SetupLauncherList();
+
+            launcherList.Dock = DockStyle.Fill;
+
+            // The old controls stay in the designer but off this page:
+            // removing them there would fight the form designer, and
+            // several of them are still referenced by the click
+            // handlers below.
+            wizardPage1.Controls.Clear();
+
+            wizardPage1.Controls.Add(launcherList);
+        }
+
+        /// <summary>
+        /// Centres the last page.
+        ///
+        /// Its artwork, message and button were placed by hand for the
+        /// old 617x296 page, so on the roomier one they all sat left
+        /// of centre with the spacing out. They are arranged as one
+        /// centred stack now, and rearranged whenever the page
+        /// changes size, so this cannot drift again.
+        /// </summary>
+        private void BuildCompletionStep()
+        {
+            labelControl12.AutoSizeMode =
+                DevExpress.XtraEditors.LabelAutoSizeMode.None;
+
+            labelControl12.Appearance.TextOptions.HAlignment =
+                DevExpress.Utils.HorzAlignment.Center;
+
+            labelControl12.Appearance.TextOptions.WordWrap =
+                DevExpress.Utils.WordWrap.Wrap;
+
+            labelControl12.Appearance.Options.UseTextOptions = true;
+
+            completionWizardPage1.SizeChanged +=
+                (s, e) => LayoutCompletionStep();
+
+            LayoutCompletionStep();
+        }
+
+        private void LayoutCompletionStep()
+        {
+            int width = completionWizardPage1.ClientSize.Width;
+            int height = completionWizardPage1.ClientSize.Height;
+
+            if (width <= 0 || height <= 0)
+                return;
+
+            const int ArtHeight = 233;
+            const int GapAfterArt = 4;
+            const int LabelHeight = 44;
+            const int GapAfterLabel = 26;
+
+            int artWidth = Math.Min(432, width - 40);
+
+            int labelWidth = Math.Min(560, width - 40);
+
+            int total =
+                ArtHeight + GapAfterArt + LabelHeight +
+                GapAfterLabel + simpleButton7.Height;
+
+            int top = Math.Max(0, (height - total) / 2);
+
+            pictureBox7.SetBounds(
+                (width - artWidth) / 2,
+                top,
+                artWidth,
+                ArtHeight);
+
+            labelControl12.SetBounds(
+                (width - labelWidth) / 2,
+                pictureBox7.Bottom + GapAfterArt,
+                labelWidth,
+                LabelHeight);
+
+            simpleButton7.SetBounds(
+                (width - simpleButton7.Width) / 2,
+                labelControl12.Bottom + GapAfterLabel,
+                simpleButton7.Width,
+                simpleButton7.Height);
+        }
+
         private void FindLaunchers()
         {
             string steamPath = scanner.GetExe("C:\\Program Files (x86)\\Steam", "steam.exe");

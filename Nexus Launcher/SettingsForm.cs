@@ -69,10 +69,10 @@ namespace Nexus_Launcher
             // Set here rather than in the designer, so the shared
             // profile above is in place before they start.
             webView22.Source =
-                new System.Uri("https://guardbyte.me/downloads/Nexus%20Launcher/eula.html");
+                new System.Uri("https://nexuspowered.com/Nexus/eula.html");
 
             webView23.Source =
-                new System.Uri("https://guardbyte.me/downloads/Nexus%20Launcher/madewith.html");
+                new System.Uri("https://nexuspowered.com/Nexus/madewith.html");
             this.Shown += SettingsForm_Shown;
             // Setup ImageLists for the dropdowns
             // FIX: Set ImageSize on the ImageLists, not the ComboBox controls
@@ -179,6 +179,8 @@ namespace Nexus_Launcher
                 toggleSwitch17.IsOn = Settings.Default.ViewType;
                 toggleSwitch18.IsOn = Settings.Default.RootDisplayMode;
                 toggleSwitch20.IsOn = Settings.Default.enableFullLibrary;
+
+                BuildPluginsPage();
 
                 BuildStartLibrarySetting();
 
@@ -2014,6 +2016,34 @@ namespace Nexus_Launcher
         /// position, so the two stay together if the group is ever
         /// rearranged in the designer.
         /// </summary>
+        private Controls.PluginManagerControl pluginManager;
+
+        /// <summary>
+        /// Adds the Plugins page.
+        ///
+        /// Built here rather than in the designer: the page is one
+        /// docked control, and adding it by hand keeps the designer
+        /// file, which Visual Studio likes to rewrite, out of it.
+        /// </summary>
+        private void BuildPluginsPage()
+        {
+            if (pluginManager != null)
+                return;
+
+            pluginManager = new Controls.PluginManagerControl();
+
+            pluginManager.Dock = DockStyle.Fill;
+
+            DevExpress.XtraBars.Navigation.TabNavigationPage page =
+                new DevExpress.XtraBars.Navigation.TabNavigationPage();
+
+            page.Caption = "Plugins";
+
+            page.Controls.Add(pluginManager);
+
+            tabPane1.Pages.Add(page);
+        }
+
         private ToggleSwitch startLibraryToggle;
 
         /// <summary>
@@ -2628,7 +2658,7 @@ namespace Nexus_Launcher
         {
             try
             {
-                System.Diagnostics.Process.Start("https://guardbyte.me/downloads/Nexus%20Launcher/index.html#download");
+                System.Diagnostics.Process.Start("https://nexuspowered.com/Nexus/index.html#download");
             }
             catch (Exception)
             {
