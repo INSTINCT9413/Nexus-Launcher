@@ -178,7 +178,7 @@ recently played or most played.
 ---
 
 ## 📸 Gallery
-
+Gallery will be updated from time-to-time, but may not reflect the current build.
 ### Game Library
 <p align="center">
     <img src="https://github.com/INSTINCT9413/Nexus-Launcher/blob/master/Nexus%20Launcher/Assets/MainView.png" width="850">
