@@ -57,8 +57,9 @@ Nexus Launcher is designed to support games from multiple platforms.
 | EA App | ✅ Supported |
 | Ubisoft Connect | ✅ Supported |
 | Xbox / Windows Store | ✅ Supported |
-| Amazon Games | ❌ Not planned |
-| Paradox Launcher | ❌ Not planned |
+| Amazon Games | ✅ via Plugin |
+| Paradox Launcher | ✅ via Plugin |
+| Wargaming | ✅ via Plugin |
 
 > **Note:** Support status can change as development continues.
 
@@ -83,7 +84,6 @@ Nexus Launcher is designed to support games from multiple platforms.
 - [ ] Improve artwork detection
 - [ ] Cloud synchronization
 - [ ] Per-game launch options
-- [ ] Controller navigation
 
 ---
 
